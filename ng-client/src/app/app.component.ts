@@ -377,7 +377,7 @@ export class AppComponent implements OnInit {
 
   private checkP2PStatus(): void {
     this.allNodes.filter(x => x.ip).forEach(x => {
-      this._http.get(`${this.baseUrl}/api/values?ip=${x.ip}`)
+      this._http.post(`${this.baseUrl}/api/p2pstatus/checkip/${x.ip}`, null)
         .subscribe(res => {
           x.p2pEnabled = res.json();
           console.log(x.p2pEnabled);
