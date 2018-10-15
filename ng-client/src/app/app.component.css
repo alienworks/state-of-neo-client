@@ -11,3 +11,7 @@ div.box:hover {
 div.box {
     padding: 8px;
 }
+
+#middle {
+    margin-left: 0;
+}
