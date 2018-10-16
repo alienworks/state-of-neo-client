@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { DYNAMIC_TYPE } from '@angular/compiler/src/output/output_ast';
 
@@ -19,9 +19,10 @@ declare var jvm;
 
 @Component({
     selector: `app-home`,
-    templateUrl: `./home.component.html`
+    templateUrl: `./home.component.html`,
+    styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     bestBlock: number = 0;
     txCount: number;
     allNodes: any[] = [];
@@ -148,32 +149,6 @@ export class HomeComponent {
         $(window).resize(function () {
             $('#world-map').css('height', '412px');
         });
-    }
-
-    hoverOffNode(node: any) {
-        let map = $('#world-map').vectorMap('get', 'mapObject');
-        map.clearSelectedMarkers();
-        map.label.css('display', 'none');
-    }
-
-    getClassForNodeLatency(node: any) {
-        if (node.latency && node.latency < 500) {
-            return 'text-success';
-        } else if (node.latency >= 500 && node.latency < 2500) {
-            return 'text-warning';
-        } else {
-            return 'text-danger';
-        }
-    }
-
-    getClassForNodeUptime(node: any) {
-        if (node.upTime && node.upTime >= 98) {
-            return 'text-success';
-        } else if (node.upTime < 98 && node.upTime >= 93) {
-            return 'text-warning';
-        } else {
-            return 'text-danger';
-        }
     }
 
     private getAverageBlockTime() {

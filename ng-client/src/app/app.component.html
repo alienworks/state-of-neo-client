@@ -1,36 +1,3 @@
 <div id="wrapper">
-    <app-header></app-header>
-
-    <section id="middle">
-        <div id="content" class="padding-20">
-            <div class="row">
-                <div class="col-sm-6" style="padding-left: 0">
-                    <div id="main-panel" class="panel panel-default" style="margin-bottom: 0">
-                        <div class="panel-body" style="height: 100%">
-                            <!-- <app-header-stats></app-header-stats> -->
-
-                            <div>
-                                <div id="world-map">
-                                    <!-- Vectorial World Map -->
-                                </div>
-                            </div>
-                            <app-footer-stats></app-footer-stats>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6" style="padding-left: 5px; padding-right: 0">
-                    <div id="nodes-panel" class="panel panel-default" style="overflow-y: scroll; margin-bottom: 0">
-                        <div class="panel-body" *ngIf="allNodes">
-                             <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card> 
-                            <!-- <div class="col-sm-6" *ngFor="let node of allNodes; let i = index">
-                                <h4 style="color: #666; font-weight: bold; white-space: nowrap; font-size: 16px">
-                                    {{node.successUrl ? node.successUrl : node.ip}}
-                                </h4>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <router-outlet></router-outlet>
 </div>

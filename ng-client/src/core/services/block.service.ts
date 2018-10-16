@@ -1,17 +1,15 @@
-import { Injectable, OnInit, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import { NodeService } from 'src/core/services/node.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class BlockService implements OnInit {
+export class BlockService {
     public bestBlock: number = 0;
     public BestBlockChanged = new EventEmitter<number>();
 
-    constructor(private _nodeService: NodeService) { }
-
-    ngOnInit(): void {
+    constructor(private _nodeService: NodeService) { 
         this.subscribeToEvents();
     }
 

@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from 'src/components/home.component';
 import { IconComponent } from './icon.component';
 import { HeaderComponent } from './../components/common/header.component';
 import { HeaderStatsComponent } from 'src/components/common/header-stats.component';
@@ -23,6 +25,7 @@ import { BlockService } from 'src/core/services/block.service';
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     IconComponent,
     HeaderComponent,
     HeaderStatsComponent,
@@ -32,10 +35,15 @@ import { BlockService } from 'src/core/services/block.service';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot([
+      { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', redirectTo: 'home' }
+    ])
   ],
   providers: [
-    SignalRService, NodesSignalRService, BlocksSignalRService, 
+    SignalRService, NodesSignalRService, BlocksSignalRService,
     TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
     NodeRpcService, NodeService, BlockService
   ],

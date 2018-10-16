@@ -21,6 +21,7 @@ export class HeaderStatsComponent {
         this._blockService.BestBlockChanged.subscribe((block: number) => {
             this.bestBlock = block;
             this.updateBestBlock(this.bestBlock);
+            this.secondsSinceLastBlock = 0;
         });
     }
 
