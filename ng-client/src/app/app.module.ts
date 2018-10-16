@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 import { IconComponent } from './icon.component';
-import { HeaderComponent } from './../components/common/header.component';
+import { NavigationComponent } from './../components/common/navigation.component';
 import { HeaderStatsComponent } from 'src/components/common/header-stats.component';
 import { FooterStatsComponent } from 'src/components/common/footer-stats.component';
 import { NodeCardComponent } from 'src/components/nodes/node-card.component';
@@ -27,7 +27,7 @@ import { BlockService } from 'src/core/services/block.service';
     AppComponent,
     HomeComponent,
     IconComponent,
-    HeaderComponent,
+    NavigationComponent,
     HeaderStatsComponent,
     FooterStatsComponent,
     NodeCardComponent
