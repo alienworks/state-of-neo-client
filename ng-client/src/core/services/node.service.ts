@@ -1,4 +1,4 @@
-import { Injectable, OnInit, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { NodesSignalRService } from 'src/core/services/nodes-signal-r.service';
@@ -9,68 +9,32 @@ import * as CONST from '../common/constants';
 @Injectable({
     providedIn: 'root'
 })
-export class NodeService implements OnInit {
+export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
-    public NodeBlockInfo = new EventEmitter<number>();
-    public UpdateNodes = new EventEmitter<any[]>();
-    public UpdateMarkers = new EventEmitter<any[]>();
+    public nodeBlockInfo = new EventEmitter<number>();
+    public rpcEnabledNodes = new EventEmitter<number>();
+    public updateNodes = new EventEmitter<any[]>();
+    public updateMarkers = new EventEmitter<any[]>();
 
     constructor(private http: Http,
         private _nodeSignalRService: NodesSignalRService,
         private _nodeRpcService: NodeRpcService) {
-            
+
         this.http.get(`${CONST.BASE_URL}/api/node`)
             .subscribe(res => {
-                let nodes = res.json()
-                console.log(nodes);
-                let that = this;
-                nodes.forEach(x => {
-                    if (that.allNodes.find(z => that.getNodeDisplayText(z) == that.getNodeDisplayText(x))) {
-                        return;
-                    }
-
-                    x.p2pEnabled = true;
-                    that.allNodes.push(x);
-                })
-
-                this.allNodes.forEach(x => {
-                    this.markers.push({
-                        latLng: [x.latitude, x.longitude], name: that.getNodeDisplayText(x)
-                    });
-                });
-
+                let nodes = res.json();
+                this.updateAllNodes(res.json());
                 this.sort();
                 this.updateNodesData();
             }, err => {
                 console.log(`error getting nodes`, err);
             });
-         }
-
-    ngOnInit(): void {
     }
 
     private subscribeToEvents() {
         this._nodeSignalRService.messageReceived.subscribe((nodes: any[]) => {
-            console.log(nodes);
-            let that = this;
-            nodes.forEach(x => {
-                if (that.allNodes.find(z => that.getNodeDisplayText(z) == that.getNodeDisplayText(x))) {
-                    return;
-                }
-
-                x.p2pEnabled = true;
-                that.allNodes.push(x);
-            })
-
-            let markers = [];
-            this.allNodes.forEach(x => {
-                markers.push({
-                    latLng: [x.latitude, x.longitude], name: that.getNodeDisplayText(x)
-                });
-            });
-            this.markers = markers;
-
+            this.updateAllNodes(nodes);
             this.sort();
             this.updateNodesData();
         });
@@ -85,14 +49,42 @@ export class NodeService implements OnInit {
     }
 
     updateNodesData() {
+        console.log(`this.allNodes`, this.allNodes);
         this.getVersion(this.allNodes);
         this.getConnectionsCount(this.allNodes);
         this.getRawMemPool(this.allNodes);
         this.getBlockCount(this.allNodes);
         this.checkP2PStatus();
+        this.updateAllMarkers();
 
-        this.UpdateNodes.emit(this.allNodes);
-        this.UpdateMarkers.emit(this.markers);
+        this.updateNodes.emit(this.allNodes);
+        this.updateMarkers.emit(this.markers);
+        this.rpcEnabledNodes.emit(this.allNodes.filter(x => x.rpcEnabled).length);
+    }
+
+    updateAllNodes(nodes: any): void {
+        let that = this;
+        nodes.forEach(x => {
+            if (that.allNodes.find(z => that.getNodeDisplayText(z) == that.getNodeDisplayText(x))) {
+                return;
+            }
+
+            x.p2pEnabled = true;
+            that.allNodes.push(x);
+        });
+    }
+
+    updateAllMarkers(): void {
+        let markers = [];
+        this.allNodes.forEach(x => {
+            markers.push({
+                latLng: [x.latitude, x.longitude],
+                name: this.getNodeDisplayText(x),
+                version: x.version,
+                blockCount: x.blockCount
+            });
+        });
+        this.markers = markers;
     }
 
     private getPeers(nodes: any[]) {
@@ -119,7 +111,6 @@ export class NodeService implements OnInit {
             this.http.post(`${CONST.BASE_URL}/api/p2pstatus/checkip/${x.ip}`, null)
                 .subscribe(res => {
                     x.p2pEnabled = res.json();
-                    console.log(x.p2pEnabled);
                 }, err => {
                     console.log(err);
                 })
@@ -174,7 +165,7 @@ export class NodeService implements OnInit {
                     let response = res.json();
                     x.blockCount = response.result;
 
-                    this.NodeBlockInfo.emit(response.result);
+                    this.nodeBlockInfo.emit(response.result);
                     this.sort();
                 }, err => {
                     x.rpcEnabled = false;

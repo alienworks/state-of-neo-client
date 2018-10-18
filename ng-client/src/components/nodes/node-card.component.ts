@@ -15,7 +15,7 @@ export class NodeCardComponent {
     constructor(private _blockService: BlockService) { }
 
     private subscribeToEvents() {
-        this._blockService.BestBlockChanged.subscribe((block: number) => {
+        this._blockService.bestBlockChanged.subscribe((block: number) => {
             this.latestBlock = block;
         })
     }

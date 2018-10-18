@@ -7,17 +7,17 @@ import { NodeService } from 'src/core/services/node.service';
 })
 export class BlockService {
     public bestBlock: number = 0;
-    public BestBlockChanged = new EventEmitter<number>();
+    public bestBlockChanged = new EventEmitter<number>();
 
     constructor(private _nodeService: NodeService) { 
         this.subscribeToEvents();
     }
 
     private subscribeToEvents(): void {
-        this._nodeService.NodeBlockInfo.subscribe((x: number) => {
+        this._nodeService.nodeBlockInfo.subscribe((x: number) => {
             if (this.bestBlock < x) {
                 this.bestBlock = x;
-                this.BestBlockChanged.emit(this.bestBlock);
+                this.bestBlockChanged.emit(this.bestBlock);
             }
         })
     }

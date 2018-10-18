@@ -1,0 +1,8 @@
+.map-label,
+.map-label h4 {
+    color: white;
+}
+
+.map-label p {
+    margin: 0 0 0 10px !important;
+}

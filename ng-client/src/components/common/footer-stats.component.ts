@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { TransAvgCountSignalRService } from 'src/core/services/trans-avg-count-signal-r.service';
 
 import * as CONST from './../../core/common/constants';
-import { NodeService } from "src/core/services/node.service";
 
 @Component({
     selector: `app-footer-stats`,
@@ -14,8 +13,7 @@ export class FooterStatsComponent {
     blocksCountStart: number = Date.now();
     blocksCounted: number = 0;
 
-    constructor(private _transAvgCountService: TransAvgCountSignalRService,
-    private _nodeService: NodeService) {
+    constructor(private _transAvgCountService: TransAvgCountSignalRService) {
         this._transAvgCountService.init(`${CONST.BASE_URL}/hubs/trans-average-count`);
         this.subscribeToEvents();
     }
@@ -23,9 +21,6 @@ export class FooterStatsComponent {
     private subscribeToEvents(): void {
         this._transAvgCountService.messageReceived.subscribe((avCount: number) => {
             this.txAvCount = avCount;
-        });
-        this._nodeService.NodeBlockInfo.subscribe(x=>{
-            console.log(x)
         });
     }
 
