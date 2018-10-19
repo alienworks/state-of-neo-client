@@ -31,18 +31,18 @@ export class HomeComponent implements OnInit {
     }
 
     get savedRpc() {
-        return this.allNodes.filter(x => x.type == 'RPC');
+        return this.allNodes.filter(x => x.type === 'RPC');
     }
 
     get rpcEnabled() {
-        return this.allNodes.filter(x => x.type == 'RPC' && x.rpcEnabled);
+        return this.allNodes.filter(x => x.type === 'RPC' && x.rpcEnabled);
     }
 
     ngOnInit() {
         this.allNodes = this._nodeService.getNodes();
-        
+
         // window height - header - body padding top and bottom
-        let height = $(window).height() - 50 - 20 - 20;
+        const height = $(window).height() - 50 - 20 - 20;
         $('#nodes-panel').css('height', height + 'px');
         $('#main-panel').css('height', height + 'px');
     }

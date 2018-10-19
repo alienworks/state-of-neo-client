@@ -9,16 +9,16 @@ declare var $;
     styleUrls: [`./map.component.css`]
 })
 export class MapComponent implements OnInit {
-    constructor(private _nodeService: NodeService){}
+    constructor(private _nodeService: NodeService) { }
 
     ngOnInit(): void {
         this.subscribeToEvents();
     }
 
-    private subscribeToEvents(){
+    private subscribeToEvents() {
         this._nodeService.updateMarkers.subscribe((markers: any[]) => {
             this.initMap(markers);
-        })
+        });
     }
 
     private initMap(markers) {
@@ -58,7 +58,7 @@ export class MapComponent implements OnInit {
             }
         });
 
-        let map = $('#world-map').vectorMap('get', 'mapObject');
+        const map = $('#world-map').vectorMap('get', 'mapObject');
 
         $(window).resize(function () {
             $('#world-map').css('height', '412px');

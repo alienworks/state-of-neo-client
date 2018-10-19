@@ -1,3 +1,9 @@
+.custom-navbar {
+    border: none;
+    border-radius: 0;
+    background: #4b5354;
+}
+
 .header-title {
     letter-spacing: 3px; 
     color: #FFF; 
@@ -15,4 +21,8 @@
 .header-net {
     color: white;
     cursor: pointer;
+}
+
+.navbar-nav a {
+    font-weight: bolder;
 }

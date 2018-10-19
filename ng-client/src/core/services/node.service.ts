@@ -23,7 +23,7 @@ export class NodeService {
 
         this.http.get(`${CONST.BASE_URL}/api/node`)
             .subscribe(res => {
-                let nodes = res.json();
+                const nodes = res.json();
                 this.updateAllNodes(res.json());
                 this.sort();
                 this.updateNodesData();
@@ -63,19 +63,20 @@ export class NodeService {
     }
 
     updateAllNodes(nodes: any): void {
-        let that = this;
+        const that = this;
         nodes.forEach(x => {
-            if (that.allNodes.find(z => that.getNodeDisplayText(z) == that.getNodeDisplayText(x))) {
+            if (that.allNodes.find(z => that.getNodeDisplayText(z) === that.getNodeDisplayText(x))) {
                 return;
             }
 
+            x.displayText = this.getNodeDisplayText(x);
             x.p2pEnabled = true;
             that.allNodes.push(x);
         });
     }
 
     updateAllMarkers(): void {
-        let markers = [];
+        const markers = [];
         this.allNodes.forEach(x => {
             markers.push({
                 latLng: [x.latitude, x.longitude],
@@ -89,14 +90,15 @@ export class NodeService {
 
     private getPeers(nodes: any[]) {
         nodes.forEach(x => {
-            let url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            let requestStart = Date.now();
+            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
+            const requestStart = Date.now();
             this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
                 .subscribe(res => {
                     x.lastResponseTime = Date.now();
                     // x.latency = x.lastResponseTime - requestStart;
-                    let json = res.json();
+                    const json = res.json();
                     if (json.result) {
+                        // tslint:disable-next-line:radix
                         x.peers = parseInt(json.result.connected.length);
                         this.sort();
                     } else {
@@ -113,7 +115,7 @@ export class NodeService {
                     x.p2pEnabled = res.json();
                 }, err => {
                     console.log(err);
-                })
+                });
         });
     }
 
@@ -123,8 +125,9 @@ export class NodeService {
                 .subscribe(res => {
                     x.lastResponseTime = Date.now();
                     //   x.latency = x.lastResponseTime - requestStart;
-                    let json = res.json();
+                    const json = res.json();
                     if (json.result) {
+                        // tslint:disable-next-line:radix
                         x.connected = parseInt(json.result);
                         this.sort();
                     } else {
@@ -136,14 +139,14 @@ export class NodeService {
 
     private getVersion(nodes: any[]) {
         nodes.forEach(x => {
-            let url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            let requestStart = Date.now();
+            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
+            const requestStart = Date.now();
             this._nodeRpcService.callRpcMethod(x.successUrl, 'getversion', 3)
                 .subscribe(res => {
-                    let now = Date.now();
+                    const now = Date.now();
                     x.lastResponseTime = now;
                     x.latency = Math.round((now - requestStart));
-                    let response = res.json();
+                    const response = res.json();
                     x.version = response.result.useragent;
                     x.rpcEnabled = true;
                     this.sort();
@@ -156,13 +159,13 @@ export class NodeService {
 
     private getBlockCount(nodes: any[]) {
         nodes.forEach(x => {
-            let url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            let requestStart = Date.now();
+            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
+            const requestStart = Date.now();
             this._nodeRpcService.callRpcMethod(x.successUrl, 'getblockcount', 3)
                 .subscribe(res => {
-                    let now = Date.now();
+                    const now = Date.now();
                     x.lastResponseTime = now;
-                    let response = res.json();
+                    const response = res.json();
                     x.blockCount = response.result;
 
                     this.nodeBlockInfo.emit(response.result);
@@ -171,18 +174,18 @@ export class NodeService {
                     x.rpcEnabled = false;
                     x.latency = 0;
                 });
-        })
+        });
     }
 
     private getRawMemPool(nodes: any[]) {
         nodes.forEach(x => {
-            let url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            let requestStart = Date.now();
+            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
+            const requestStart = Date.now();
             this._nodeRpcService.callRpcMethod(x.successUrl, 'getrawmempool', 1)
                 .subscribe(res => {
                     x.lastResponseTime = Date.now();
                     //    x.latency = x.lastResponseTime - requestStart;
-                    let response = res.json();
+                    const response = res.json();
                     x.pendingTransactions = response.result.length;
                     this.sort();
                 });
@@ -197,9 +200,9 @@ export class NodeService {
                 return -1;
             }
 
-            if (x.type != 'RPC' && y.type == 'RPC') {
+            if (x.type !== 'RPC' && y.type === 'RPC') {
                 return 1;
-            } else if (x.type == 'RPC' && y.type != 'RPC') {
+            } else if (x.type === 'RPC' && y.type !== 'RPC') {
                 return -1;
             }
 
@@ -207,7 +210,7 @@ export class NodeService {
                 return 1;
             } else if (x.blockCount && !y.blockCount) {
                 return -1;
-            } else if (x.blockCount != y.blockCount) {
+            } else if (x.blockCount !== y.blockCount) {
                 return y.blockCount - x.blockCount;
             }
 
@@ -215,7 +218,7 @@ export class NodeService {
                 return 1;
             } else if (!y.connected && x.connected) {
                 return -1;
-            } else if (x.connected != y.connected) {
+            } else if (x.connected !== y.connected) {
                 return y.connected - x.connected;
             }
 

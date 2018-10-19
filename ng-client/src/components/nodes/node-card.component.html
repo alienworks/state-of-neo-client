@@ -3,7 +3,7 @@
     <div style="background: transparent; color: #666; border: 1px solid #999; margin-bottom: 15px; cursor: pointer; min-height: 180px"
         [style.background-color]="node.rpcEnabled ? 'transparent' : '#EEE'" class="box default">
         <div class="box-title" style="padding-top: 0; padding-bottom: 0">
-            <h4 style="color: #666; font-weight: bold; white-space: nowrap; font-size: 16px">{{getNodeDisplayText(node)}}</h4>
+            <h4 style="color: #666; font-weight: bold; white-space: nowrap; font-size: 16px">{{node.displayText}}</h4>
             <span style="font-size: 1.2em" *ngIf="node.blockCount">
                 <i class="fas fa-cube"></i> 
                 #{{node.blockCount | number}}

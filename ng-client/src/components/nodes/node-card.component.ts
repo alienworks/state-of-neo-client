@@ -8,7 +8,7 @@ declare var $;
     templateUrl: './node-card.component.html'
 })
 export class NodeCardComponent {
-    latestBlock: number = 0;
+    latestBlock = 0;
     @Input() node: any;
     @Input() index: number;
 
@@ -17,27 +17,27 @@ export class NodeCardComponent {
     private subscribeToEvents() {
         this._blockService.bestBlockChanged.subscribe((block: number) => {
             this.latestBlock = block;
-        })
+        });
     }
 
     hoverOffNode(node: any) {
-        let map = $('#world-map').vectorMap('get', 'mapObject');
+        const map = $('#world-map').vectorMap('get', 'mapObject');
         map.clearSelectedMarkers();
         map.label.css('display', 'none');
     }
 
     hoverNode(node: any) {
-        let marker = this.getMarkerByName(this.getNodeDisplayText(node));
+        const marker = this.getMarkerByName(this.getNodeDisplayText(node));
         marker.element.isHovered = true;
 
-        let coords = {
+        const coords = {
             x: marker.element.properties.cx,
             y: marker.element.properties.cy
-        }
+        };
 
-        let index = marker.element.properties['data-index'];
+        const index = marker.element.properties['data-index'];
 
-        let map = $('#world-map').vectorMap('get', 'mapObject');
+        const map = $('#world-map').vectorMap('get', 'mapObject');
         map.setSelectedMarkers(index);
     }
 
@@ -46,7 +46,7 @@ export class NodeCardComponent {
     }
 
     getClassForNodeBlocks(node: any) {
-        let difference = this._blockService.bestBlock - node.blockCount;
+        const difference = this._blockService.bestBlock - node.blockCount;
         if (difference <= 1) {
             return '';
         }
@@ -83,10 +83,10 @@ export class NodeCardComponent {
     }
 
     getMarkerByName(name: string): any {
-        let map = $('#world-map').vectorMap('get', 'mapObject');
+        const map = $('#world-map').vectorMap('get', 'mapObject');
 
-        for (var propName in map.markers) {
-            if (map.markers[propName].config.name == name) {
+        for (const propName in map.markers) {
+            if (map.markers[propName].config.name === name) {
                 return map.markers[propName];
             }
         }

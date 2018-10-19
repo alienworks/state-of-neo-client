@@ -6,10 +6,10 @@ import { NodeService } from 'src/core/services/node.service';
     providedIn: 'root'
 })
 export class BlockService {
-    public bestBlock: number = 0;
+    public bestBlock = 0;
     public bestBlockChanged = new EventEmitter<number>();
 
-    constructor(private _nodeService: NodeService) { 
+    constructor(private _nodeService: NodeService) {
         this.subscribeToEvents();
     }
 
@@ -19,6 +19,6 @@ export class BlockService {
                 this.bestBlock = x;
                 this.bestBlockChanged.emit(this.bestBlock);
             }
-        })
+        });
     }
 }

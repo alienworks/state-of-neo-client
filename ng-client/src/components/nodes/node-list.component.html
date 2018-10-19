@@ -1,0 +1,11 @@
+<h1>NODES</h1>
+
+<div class="row">
+    <div class="col-md-3" *ngFor="let node of allNodes">
+        <a routerLink="/node/{{node.displayText}}" routerLinkActive="router-link-active">
+            <h4>{{node.displayText}}</h4>
+            <h4>{{node.version}}</h4>
+            <h4>{{node.blockCount}}</h4>
+        </a>
+    </div>
+</div>

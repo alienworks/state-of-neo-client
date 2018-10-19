@@ -1,17 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from "@angular/http";
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
-import { MapComponent } from 'src/components/common/map.component';
-import { IconComponent } from './icon.component';
-import { NavigationComponent } from './../components/common/navigation.component';
-import { HeaderStatsComponent } from 'src/components/common/header-stats.component';
-import { FooterStatsComponent } from 'src/components/common/footer-stats.component';
-import { NodeCardComponent } from 'src/components/nodes/node-card.component';
 
 import { SignalRService } from 'src/core/services/signal-r.service';
 import { NodesSignalRService } from 'src/core/services/nodes-signal-r.service';
@@ -22,17 +16,19 @@ import { TransAvgCountSignalRService } from 'src/core/services/trans-avg-count-s
 import { FailP2PSignalRService } from 'src/core/services/fail-p2p-signal-r.service';
 import { NodeService } from 'src/core/services/node.service';
 import { BlockService } from 'src/core/services/block.service';
+import { TxDetailsComponent, TxListComponent } from '../components/tx';
+import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent } from '../components/common';
+import { BlockDetailsComponent, BlockListComponent } from '../components/block';
+import { NodeCardComponent, NodeDetailsComponent, NodeListComponent } from '../components/nodes';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    IconComponent,
-    MapComponent,
-    NavigationComponent,
-    HeaderStatsComponent,
-    FooterStatsComponent,
-    NodeCardComponent
+    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
+    NodeCardComponent, NodeDetailsComponent, NodeListComponent,
+    BlockListComponent, BlockDetailsComponent,
+    TxDetailsComponent, TxListComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +36,12 @@ import { BlockService } from 'src/core/services/block.service';
     FormsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
+      { path: 'nodes', component: NodeListComponent },
+      { path: 'node/:id', component: NodeDetailsComponent },
+      { path: 'blocks', component: BlockListComponent },
+      { path: 'block/:hash', component: BlockDetailsComponent },
+      { path: 'transactions', component: TxListComponent },
+      { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
     ])
