@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
 import { NodesSignalRService } from 'src/core/services/nodes-signal-r.service';
 import { NodeRpcService } from 'src/core/services/node-rpc.service';
 
 import * as CONST from '../common/constants';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,15 @@ export class NodeService {
 
     public getNodes(): any[] {
         return this.allNodes;
+    }
+
+    protected getJsonHeaders(): RequestOptions {
+        const headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        return new RequestOptions({ headers: headers });
+    }
+
+    public getConsensusNodes(): Observable<Response> {
+        return this.http.get(`https://neo.org/consensus/getvalidators`, this.getJsonHeaders());
     }
 
     getNodeDisplayText(node: any) {

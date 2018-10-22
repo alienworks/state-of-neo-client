@@ -1,11 +1,22 @@
-<h1>NODES</h1>
-
 <div class="row">
-    <div class="col-md-3" *ngFor="let node of allNodes">
-        <a routerLink="/node/{{node.displayText}}" routerLinkActive="router-link-active">
-            <h4>{{node.displayText}}</h4>
-            <h4>{{node.version}}</h4>
-            <h4>{{node.blockCount}}</h4>
-        </a>
+    <div class="col-md-10 col-sm-8 col-xs-12 text-center">
+        <h3 class="bold">NODES</h3>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-12 text-center">
+        <h3 class="bold">CONSENSUS NODES</h3>
+    </div>
+    <div class="col-md-10 col-sm-8 col-xs-12 row no-margin no-padding">
+        <div class="col-md-3 row no-margin padding-10" *ngFor="let node of allNodes">
+            <div class="col-lg-12 no-margin padding-5 border-box-shadow">
+                <a routerLink="/node/{{node.displayText}}" routerLinkActive="router-link-active">
+                    <h4>{{node.displayText}}</h4>
+                    <h4>{{node.version}}</h4>
+                    <h4>{{node.blockCount}}</h4>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-12 text-center">
+        <app-consensus-list></app-consensus-list>
     </div>
 </div>

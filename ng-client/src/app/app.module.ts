@@ -19,14 +19,14 @@ import { BlockService } from 'src/core/services/block.service';
 import { TxDetailsComponent, TxListComponent } from '../components/tx';
 import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
-import { NodeCardComponent, NodeDetailsComponent, NodeListComponent } from '../components/nodes';
+import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
-    NodeCardComponent, NodeDetailsComponent, NodeListComponent,
+    NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
     TxDetailsComponent, TxListComponent
   ],

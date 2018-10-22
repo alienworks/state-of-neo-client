@@ -30,3 +30,13 @@
 .no-margin {
     margin: 0 !important;
 }
+
+.border-box-shadow {
+    border: 1px solid #EFEFEF !important;
+    box-shadow: 3px 3px 5px #B1B1B1;
+    height: 100%;
+}
+
+.box-shadowed {
+    box-shadow: 3px 3px 5px #B1B1B1;
+}
