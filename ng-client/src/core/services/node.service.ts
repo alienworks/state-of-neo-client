@@ -22,7 +22,7 @@ export class NodeService {
         private _nodeSignalRService: NodesSignalRService,
         private _nodeRpcService: NodeRpcService) {
 
-        this.http.get(`${CONST.BASE_URL}/api/node`)
+        this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
                 const nodes = res.json();
                 this.updateAllNodes(res.json());
@@ -45,13 +45,17 @@ export class NodeService {
         return this.allNodes;
     }
 
+    public getNode(id: number): Observable<Response> {
+        return this.http.get(`${CONST.BASE_URL}/api/node/get/${id}`);
+    }
+
     protected getJsonHeaders(): RequestOptions {
         const headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         return new RequestOptions({ headers: headers });
     }
 
     public getConsensusNodes(): Observable<Response> {
-        return this.http.get(`https://neo.org/consensus/getvalidators`, this.getJsonHeaders());
+        return this.http.get(`${CONST.BASE_URL}/api/node/consensus`, this.getJsonHeaders());
     }
 
     getNodeDisplayText(node: any) {
@@ -60,11 +64,14 @@ export class NodeService {
 
     updateNodesData() {
         console.log(`this.allNodes`, this.allNodes);
-        this.getVersion(this.allNodes);
-        this.getConnectionsCount(this.allNodes);
-        this.getRawMemPool(this.allNodes);
-        this.getBlockCount(this.allNodes);
-        this.checkP2PStatus();
+        this.allNodes.forEach(x => {
+            this.getConnectionsCount(x);
+            this.getVersion(x);
+            this.getRawMemPool(x);
+            this.getBlockCount(x);
+            this.checkP2PStatus(x);
+            this.sort();
+        });
         this.updateAllMarkers();
 
         this.updateNodes.emit(this.allNodes);
@@ -98,108 +105,91 @@ export class NodeService {
         this.markers = markers;
     }
 
-    private getPeers(nodes: any[]) {
-        nodes.forEach(x => {
-            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            const requestStart = Date.now();
-            this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
-                .subscribe(res => {
-                    x.lastResponseTime = Date.now();
-                    // x.latency = x.lastResponseTime - requestStart;
-                    const json = res.json();
-                    if (json.result) {
-                        // tslint:disable-next-line:radix
-                        x.peers = parseInt(json.result.connected.length);
-                        this.sort();
-                    } else {
-                        console.log(res);
-                    }
-                });
-        });
+    private getPeers(x: any) {
+        this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
+            .subscribe(res => {
+                x.lastResponseTime = Date.now();
+
+                const json = res.json();
+                if (json.result) {
+                    // tslint:disable-next-line:radix
+                    x.peers = parseInt(json.result.connected.length);
+                } else {
+                    console.log(res);
+                }
+            });
     }
 
-    private checkP2PStatus(): void {
-        this.allNodes.filter(x => x.ip).forEach(x => {
+    private checkP2PStatus(x): void {
+        if (x && x.ip) {
             this.http.post(`${CONST.BASE_URL}/api/p2pstatus/checkip/${x.ip}`, null)
                 .subscribe(res => {
                     x.p2pEnabled = res.json();
                 }, err => {
                     console.log(err);
                 });
-        });
+        }
     }
 
-    private getConnectionsCount(nodes: any[]) {
-        nodes.forEach(x => {
-            this._nodeRpcService.callRpcMethod(x.successUrl, 'getconnectioncount', 1)
-                .subscribe(res => {
-                    x.lastResponseTime = Date.now();
-                    //   x.latency = x.lastResponseTime - requestStart;
-                    const json = res.json();
-                    if (json.result) {
-                        // tslint:disable-next-line:radix
-                        x.connected = parseInt(json.result);
-                        this.sort();
-                    } else {
-                        console.log(res);
-                    }
-                });
-        });
-    }
+    private getConnectionsCount(x: any) {
+        this._nodeRpcService.callRpcMethod(x.successUrl, 'getconnectioncount', 1)
+            .subscribe(res => {
+                x.lastResponseTime = Date.now();
 
-    private getVersion(nodes: any[]) {
-        nodes.forEach(x => {
-            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            const requestStart = Date.now();
-            this._nodeRpcService.callRpcMethod(x.successUrl, 'getversion', 3)
-                .subscribe(res => {
-                    const now = Date.now();
-                    x.lastResponseTime = now;
-                    x.latency = Math.round((now - requestStart));
-                    const response = res.json();
-                    x.version = response.result.useragent;
-                    x.rpcEnabled = true;
+                const json = res.json();
+                if (json.result) {
+                    // tslint:disable-next-line:radix
+                    x.connected = parseInt(json.result);
                     this.sort();
-                }, err => {
-                    x.rpcEnabled = false;
-                    x.latency = 0;
-                });
-        });
+                } else {
+                    console.log(res);
+                }
+            });
     }
 
-    private getBlockCount(nodes: any[]) {
-        nodes.forEach(x => {
-            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            const requestStart = Date.now();
-            this._nodeRpcService.callRpcMethod(x.successUrl, 'getblockcount', 3)
-                .subscribe(res => {
-                    const now = Date.now();
-                    x.lastResponseTime = now;
-                    const response = res.json();
-                    x.blockCount = response.result;
+    private getVersion(x: any) {
+        const requestStart = Date.now();
+        this._nodeRpcService.callRpcMethod(x.successUrl, 'getversion', 3)
+            .subscribe(res => {
+                const now = Date.now();
+                x.lastResponseTime = now;
+                x.latency = Math.round((now - requestStart));
 
-                    this.nodeBlockInfo.emit(response.result);
-                    this.sort();
-                }, err => {
-                    x.rpcEnabled = false;
-                    x.latency = 0;
-                });
-        });
+                const response = res.json();
+                x.version = response.result.useragent;
+                x.rpcEnabled = true;
+            }, err => {
+                x.rpcEnabled = false;
+                x.latency = 0;
+            });
     }
 
-    private getRawMemPool(nodes: any[]) {
-        nodes.forEach(x => {
-            const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-            const requestStart = Date.now();
-            this._nodeRpcService.callRpcMethod(x.successUrl, 'getrawmempool', 1)
-                .subscribe(res => {
-                    x.lastResponseTime = Date.now();
-                    //    x.latency = x.lastResponseTime - requestStart;
-                    const response = res.json();
-                    x.pendingTransactions = response.result.length;
-                    this.sort();
-                });
-        });
+    public getBlockCount(x: any) {
+        this._nodeRpcService.callRpcMethod(x.successUrl, 'getblockcount', 3)
+            .subscribe(res => {
+                const now = Date.now();
+                x.lastResponseTime = now;
+                const response = res.json();
+                x.blockCount = response.result;
+
+                this.nodeBlockInfo.emit(response.result);
+            }, err => {
+                x.rpcEnabled = false;
+                x.latency = 0;
+            });
+    }
+
+    private getRawMemPool(x: any) {
+        const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
+        const requestStart = Date.now();
+        this._nodeRpcService.callRpcMethod(x.successUrl, 'getrawmempool', 1)
+            .subscribe(res => {
+                x.lastResponseTime = Date.now();
+                //    x.latency = x.lastResponseTime - requestStart;
+                const response = res.json();
+                x.pendingTransactions = response.result.length;
+                this.sort();
+            });
     }
 
     private sort() {

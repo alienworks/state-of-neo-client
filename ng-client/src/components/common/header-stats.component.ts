@@ -27,10 +27,12 @@ export class HeaderStatsComponent {
         this.subscribeToEvents();
 
         setInterval(() => {
-            if (this.headerInfo !== null && this.headerInfo.createdOn !== null) {
-                const now = new Date().getTime();
-                const then = new Date(this.headerInfo.createdOn).getTime();
-                this.secondsSinceLastBlock = Math.floor((now - then) / 1000);
+            if (this.headerInfo != null) {
+                if (this.headerInfo.createdOn != null) {
+                    const now = new Date().getTime();
+                    const then = new Date(this.headerInfo.createdOn).getTime();
+                    this.secondsSinceLastBlock = Math.floor((now - then) / 1000);
+                }
             }
         }, 1000);
     }

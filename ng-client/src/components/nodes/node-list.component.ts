@@ -4,7 +4,8 @@ import { NodeService } from '../../core/services/node.service';
 
 @Component({
     selector: `app-node-list`,
-    templateUrl: './node-list.component.html'
+    templateUrl: './node-list.component.html',
+    styleUrls: ['./node-list.component.css']
 })
 export class NodeListComponent implements OnInit {
     allNodes: any[];
@@ -15,5 +16,15 @@ export class NodeListComponent implements OnInit {
         this.allNodes = this._nodeService.getNodes();
 
         this._nodeService.updateNodes.subscribe((nodes: any[]) => this.allNodes = nodes);
+    }
+
+    getClassForNodeLatency(node: any) {
+        if (node.latency && node.latency < 500) {
+            return 'text-success';
+        } else if (node.latency >= 500 && node.latency < 2500) {
+            return 'text-warning';
+        } else {
+            return 'text-danger';
+        }
     }
 }

@@ -1,1 +1,2 @@
-export * from './header-info.model';
+export * from './info.models';
+export * from './node.models';
