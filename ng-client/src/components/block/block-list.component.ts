@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BlockService } from '../../core/services/block.service';
+import { BlockService } from '../../core/services/data/block.service';
 
 @Component({
     templateUrl: `./block-list.component.html`

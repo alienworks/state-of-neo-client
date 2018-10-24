@@ -1,7 +1,7 @@
-import { Component, EventEmitter } from '@angular/core';
-import { BlockService } from 'src/core/services/block.service';
-import { NodeService } from 'src/core/services/node.service';
-import { BlocksSignalRService } from 'src/core/services/blocks-signal-r.service';
+import { Component } from '@angular/core';
+import { BlockService } from '../../core/services/data/block.service';
+import { NodeService } from '../../core/services/data/node.service';
+import { BlocksSignalRService } from '../../core/services/signal-r/blocks-signal-r.service';
 
 import * as CONST from '../../core/common/constants';
 import { HeaderInfoModel } from '../../models';

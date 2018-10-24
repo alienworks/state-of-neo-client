@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NodeService } from 'src/core/services/node.service';
+import { NodeService } from '../../core/services/data/node.service';
+import { Router } from '@angular/router';
 
 declare var $;
 
@@ -9,7 +10,7 @@ declare var $;
     styleUrls: [`./map.component.css`]
 })
 export class MapComponent implements OnInit {
-    constructor(private _nodeService: NodeService) { }
+    constructor(private _nodeService: NodeService, private router: Router) { }
 
     ngOnInit(): void {
         this.subscribeToEvents();
@@ -36,15 +37,19 @@ export class MapComponent implements OnInit {
             onMarkerSelected: (e: any, code: string, isSelected: boolean, selectedMarkers: any[]) => {
                 $('div.jvectormap-container').trigger('markerLabelShow', [map.label, code]);
             },
+            onMarkerOut: (e: any, code: string) => {
+                this.clearMarkers();
+            },
             onMarkerClick: (e: any, code: string) => {
-
+                this.clearMarkers();
+                this.router.navigate(['/node/' + markers[code].id]);
             },
             onRegionLabelShow: (e: any) => {
                 e.preventDefault();
             },
             onMarkerLabelShow: (e: any, label: any, code: string) => {
                 label.html(`
-                    <div class="map-label padding-5">
+                    <div class="map-label padding-5" id="map-label-${code}">
                         <h4 style="color: white">${markers[code].name}</h4>
                         <p class="no-margin">
                             ${markers[code].version}
@@ -63,5 +68,9 @@ export class MapComponent implements OnInit {
         $(window).resize(function () {
             $('#world-map').css('height', '412px');
         });
+    }
+
+    private clearMarkers(): void {
+        $.each($('.jvectormap-label'), (x, y) => $(y).css('display', 'none'));
     }
 }

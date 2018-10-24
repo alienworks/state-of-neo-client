@@ -1,10 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
-import { NodesSignalRService } from 'src/core/services/nodes-signal-r.service';
-import { NodeRpcService } from 'src/core/services/node-rpc.service';
+import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
+import { NodeRpcService } from './node-rpc.service';
 
-import * as CONST from '../common/constants';
+import * as CONST from '../../common/constants';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -96,6 +96,7 @@ export class NodeService {
         const markers = [];
         this.allNodes.forEach(x => {
             markers.push({
+                id: x.id,
                 latLng: [x.latitude, x.longitude],
                 name: this.getNodeDisplayText(x),
                 version: x.version,

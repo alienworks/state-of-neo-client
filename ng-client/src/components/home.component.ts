@@ -3,7 +3,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { DYNAMIC_TYPE } from '@angular/compiler/src/output/output_ast';
 
 
-import { NodeService } from 'src/core/services/node.service';
+import { NodeService } from '../core/services/data/node.service';
 
 import * as CONST from '../core/common/constants';
 

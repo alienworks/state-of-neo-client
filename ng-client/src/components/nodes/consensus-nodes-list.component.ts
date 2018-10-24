@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NodeService } from '../../core/services/node.service';
+import { NodeService } from '../../core/services/data/node.service';
 import { ConsensusNodeModel } from '../../models';
 
 @Component({

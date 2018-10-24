@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BlockService } from 'src/core/services/block.service';
+import { BlockService } from '../../core/services/data/block.service';
 
 declare var $;
 

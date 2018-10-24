@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NodeService } from '../../core/services/node.service';
+import { NodeService } from '../../core/services/data/node.service';
 
 @Component({
     selector: `app-node-list`,

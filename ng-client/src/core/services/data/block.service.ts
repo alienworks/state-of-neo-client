@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { NodeService } from 'src/core/services/node.service';
+import { NodeService } from './node.service';
 
 @Injectable({
     providedIn: 'root'

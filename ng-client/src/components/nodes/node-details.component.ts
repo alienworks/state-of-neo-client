@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NodeService } from '../../core/services/node.service';
-import { BlockService } from '../../core/services/block.service';
+import { NodeService } from '../../core/services/data/node.service';
+import { BlockService } from '../../core/services/data/block.service';
 
 @Component({
     templateUrl: `./node-details.component.html`
