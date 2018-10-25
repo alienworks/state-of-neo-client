@@ -1,0 +1,33 @@
+.card, .card h4 {
+    color: #666; 
+}
+
+.card {
+    background: transparent; 
+    border: 1px solid #999; 
+    margin-bottom: 15px; 
+    cursor: pointer; 
+    min-height: 170px;
+}
+
+@media only screen and (max-width: 1720px) {
+    .card {
+        height: 200px;
+    }
+}
+
+.card-header {
+    font-weight: bold; 
+    white-space: nowrap; 
+    font-size: 16px;
+}
+
+.card-version {
+    font-size: 0.75em;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.card .img-container {
+    height: 55px;
+}

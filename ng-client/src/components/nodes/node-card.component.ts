@@ -5,7 +5,8 @@ declare var $;
 
 @Component({
     selector: `app-node-card`,
-    templateUrl: './node-card.component.html'
+    templateUrl: './node-card.component.html',
+    styleUrls: ['./node-card.component.css']
 })
 export class NodeCardComponent {
     latestBlock = 0;

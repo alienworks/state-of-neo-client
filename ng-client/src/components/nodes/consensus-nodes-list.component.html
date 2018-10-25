@@ -4,9 +4,9 @@
     </h3>
 </div>
 
-<div class="row no-margin panel-body" *ngIf="nodes && nodes.length > 0">
+<div class="row no-margin panel-body word-wraped" *ngIf="nodes && nodes.length > 0">
     <div class="col-md-12 row margin-2 padding-2 border-box-shadow match" *ngFor="let node of nodes">
-        <div class="col-md-12">
+        <div class="col-md-12 no-padding">
             <span *ngIf="node.Active" class="text-success bold">Consensus node</span>
             <span *ngIf="!node.Active" class="text-primary bold">Candidate node</span>
             <br>
