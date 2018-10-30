@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // Components
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import {
     BrowserModule,
     HttpModule,
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'nodes', component: NodeListComponent },
