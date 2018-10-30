@@ -58,6 +58,10 @@ export class NodeService {
         return this.http.get(`${CONST.BASE_URL}/api/node/consensus`, this.getJsonHeaders());
     }
 
+    public getNodesApi(page: number = 1, pageSize: number = 10): any {
+        return this.http.get(`${CONST.BASE_URL}/api/node/page?page=${page}&pageSize=${pageSize}`, this.getJsonHeaders());
+    }
+
     getNodeDisplayText(node: any) {
         return node.successUrl ? node.successUrl : node.ip;
     }
@@ -67,7 +71,6 @@ export class NodeService {
         this.allNodes.forEach(x => {
             this.getConnectionsCount(x);
             this.getVersion(x);
-            this.getRawMemPool(x);
             this.getBlockCount(x);
             this.checkP2PStatus(x);
             this.sort();
@@ -106,7 +109,7 @@ export class NodeService {
         this.markers = markers;
     }
 
-    private getPeers(x: any) {
+    public getPeers(x: any) {
         this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
@@ -132,7 +135,7 @@ export class NodeService {
         }
     }
 
-    private getConnectionsCount(x: any) {
+    public getConnectionsCount(x: any) {
         this._nodeRpcService.callRpcMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
@@ -148,7 +151,7 @@ export class NodeService {
             });
     }
 
-    private getVersion(x: any) {
+    public getVersion(x: any) {
         const requestStart = Date.now();
         this._nodeRpcService.callRpcMethod(x.successUrl, 'getversion', 3)
             .subscribe(res => {
@@ -172,6 +175,7 @@ export class NodeService {
                 x.lastResponseTime = now;
                 const response = res.json();
                 x.blockCount = response.result;
+                console.log(x);
 
                 this.nodeBlockInfo.emit(response.result);
             }, err => {
@@ -180,16 +184,12 @@ export class NodeService {
             });
     }
 
-    private getRawMemPool(x: any) {
-        const url = `${x.protocol}://${x.url ? x.url : x.ip}:${x.port}`;
-        const requestStart = Date.now();
+    public getRawMemPool(x: any) {
         this._nodeRpcService.callRpcMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
-                //    x.latency = x.lastResponseTime - requestStart;
                 const response = res.json();
-                x.pendingTransactions = response.result.length;
-                this.sort();
+                x.pendingTransactions = response.result;
             });
     }
 

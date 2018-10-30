@@ -1,3 +1,22 @@
+export class BaseNodeModel {
+    id: number;
+    ip: string;
+    url: string;
+    successUrl: string;
+    port?: number;
+    protocol: string;
+    version: string;
+    type: string;
+    height?: number;
+    peers?: number;
+    memoryPool?: number;
+    locale: string;
+    location: string;
+    longitude?: number;
+    latitude?: number;
+    blockCount: number;
+}
+
 export class ConsensusNodeModel {
     PublicKey: string;
     Votes: number;
