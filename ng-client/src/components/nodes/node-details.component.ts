@@ -20,7 +20,10 @@ export class NodeDetailsComponent implements OnInit {
         });
 
         setInterval(() => {
-            this._nodeService.getBlockCount(this.node);
+            if (this.node != null) {
+                this._nodeService.getBlockCount(this.node);
+                this._nodeService.getRawMemPool(this.node);
+            }
         }, 5000);
     }
 
@@ -30,6 +33,7 @@ export class NodeDetailsComponent implements OnInit {
         this._nodeService.getNode(this.id)
             .subscribe((node: any) => {
                 this.node = node.json();
+                this._nodeService.getRawMemPool(this.node);
             });
     }
 }
