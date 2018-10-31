@@ -60,3 +60,13 @@
     word-wrap: break-word;
     word-break: break-all;
 }
+
+.stat {
+    font-size: 1.5em;
+}
+
+.info-signiture {
+    font-style: italic;
+    font-size: 0.5em;
+    padding-right: 10px;
+}
