@@ -42,7 +42,7 @@ import {
       { path: 'nodes', component: NodeListComponent },
       { path: 'node/:id', component: NodeDetailsComponent },
       { path: 'blocks', component: BlockListComponent },
-      { path: 'block/:hash', component: BlockDetailsComponent },
+      { path: 'block/:index', component: BlockDetailsComponent },
       { path: 'transactions', component: TxListComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },

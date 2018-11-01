@@ -3,8 +3,10 @@
         <div class="text-primary">
             <div style="font-size: 20px; "><strong>BEST BLOCK</strong></div>
             <div id="last-block-stats" style="white-space: nowrap;">
-                <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.5em"></i>
-                #{{headerInfo.height | number}}
+                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active">
+                    <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.5em"></i>
+                    #{{headerInfo.height | number}}
+                </a>
             </div>
         </div>
     </div>
@@ -25,7 +27,7 @@
     <div class="col-sm-3">
         <div class="text-primary">
             <div style="font-size: 20px; "><strong>SIZE</strong></div>
-            <i class="fas fa-file"></i>
+            <i class="fas fa-microchip"></i>
             {{headerInfo.size}}
         </div>
     </div>

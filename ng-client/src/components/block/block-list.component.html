@@ -1,3 +1,37 @@
-
-
-<h1>Block list view</h1>
+<div class="row no-margin no-padding ">
+    <div class="col-md-6 row no-margin no-padding">
+        <div class="col-md-12 padding-5 text-center">
+            <h3 class="bold">NODES</h3>
+        </div>
+        <div class="row col-md-12 no-margin panel-body padding-10" *ngIf="pageResults">
+            <div class="col-md-12 row no-margin padding-5 border-box-shadow stat" stat *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active">
+                    <div class="col-md-12 text-center">
+                        {{block.hash}}
+                    </div>
+                    <div class="col-md-12 row no-margin no-padding text-center">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <i class="fas fa-cube"></i> #{{block.height}}
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <i class="fas fa-handshake"></i> {{block.transactionsCount}}
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <i class="fas fa-file"></i> {{block.size}}
+                        </div>
+                        <div class="col-md-12 no-padding no-margin text-right">
+                            <span class="info-signiture">/ {{block.finalizedAt | date:'dd / MMM / yyyy'}} /</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-12 padding-10 text-center">
+                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+            </div>
+        </div>
+        <div class="row col-md-12 no-margin text-center padding-10" *ngIf="!pageResults || pageResults.items.length == 0">
+            No blocks found
+        </div>
+    </div>
+</div>
