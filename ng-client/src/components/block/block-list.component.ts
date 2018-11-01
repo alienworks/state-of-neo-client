@@ -16,7 +16,7 @@ export class BlockListComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this._blockService.getBlocksPage(page)
+        this._blockService.getBlocksPage(page, 20)
             .subscribe(x => {
                 this.pageResults = x.json() as PageResultModel<BlockListModel>;
                 console.log(this.pageResults);

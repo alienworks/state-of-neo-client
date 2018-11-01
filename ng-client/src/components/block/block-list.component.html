@@ -4,11 +4,8 @@
             <h3 class="bold">BLOCKS</h3>
         </div>
         <div class="row col-md-12 no-margin panel-body padding-10" *ngIf="pageResults">
-            <div class="col-md-12 row no-margin padding-5 border-box-shadow stat" stat *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+            <div class="col-md-12 row no-margin padding-5 stat margin-bot-10" *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                 <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active">
-                    <div class="col-md-12">
-                        {{block.hash}}
-                    </div>
                     <div class="col-md-12 row no-margin no-padding">
                         <div class="col-md-3 col-sm-3 col-xs-4">
                             <i class="fas fa-cube"></i> #{{block.height}}
@@ -20,7 +17,7 @@
                             <i class="fas fa-file"></i> {{block.size}}
                         </div>
                         <div class="col-md-3 no-padding no-margin text-right">
-                            <span class="info-signiture">/ {{block.finalizedAt | date:'dd / MMM / yyyy'}} /</span>
+                            {{block.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}
                         </div>
                     </div>
                 </a>

@@ -12,4 +12,9 @@ export class TxService {
         if (blockHash) { url += `&blockHash=${blockHash}`; }
         return this.http.get(url);
     }
+
+    get(hash: string) {
+        return this.http.get(`${CONST.BASE_URL}/api/transactions/get/${hash}`);
+    }
 }
+
