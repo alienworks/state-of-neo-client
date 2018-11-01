@@ -1,3 +1,22 @@
-<h1>TX LIST</h1>
+<div class="row col-md-12 no-margin padding-10 panel-body word-wraped">
+    <div class="row col-md-12 col-sm-12 col-xs-12 padding-5 custom-vcenter" 
+        *ngFor="let tx of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }" 
+        style="margin: 0 0 10px 0">
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <app-tx-icon [type]="tx.type"></app-tx-icon>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8">
+            <a routerLink="/transaction/{{tx.hash}}">
+                {{tx.hash}}
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 italic">
+            {{tx.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}
+        </div>
+    </div>
 
-<a [routerLink]="['/transaction/asjdasjdkhasjdkahjk']">Link</a>
+    <div class="col-md-12 padding-10 text-center">
+        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+        <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+    </div>
+</div>

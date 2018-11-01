@@ -9,14 +9,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 
-import { TxDetailsComponent, TxListComponent } from '../components/tx';
+import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent } from '../components/tx';
 import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 
 // Services
 import { NetService } from '../core/services';
-import { NodeRpcService, NodeService, BlockService } from '../core/services/data';
+import { NodeRpcService, NodeService, BlockService, TxService } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
   NodesSignalRService, BlocksSignalRService,
@@ -30,7 +30,7 @@ import {
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
-    TxDetailsComponent, TxListComponent
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +43,7 @@ import {
       { path: 'node/:id', component: NodeDetailsComponent },
       { path: 'blocks', component: BlockListComponent },
       { path: 'block/:index', component: BlockDetailsComponent },
-      { path: 'transactions', component: TxListComponent },
+      { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
@@ -57,7 +57,7 @@ import {
     NodesSignalRService, BlocksSignalRService,
     TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
     // Data services
-    NodeRpcService, NodeService, BlockService
+    NodeRpcService, NodeService, BlockService, TxService
   ],
   bootstrap: [AppComponent]
 })
