@@ -10,7 +10,8 @@ declare var $;
 
 @Component({
     selector: `app-header-stats`,
-    templateUrl: './header-stats.component.html'
+    templateUrl: './header-stats.component.html',
+    styleUrls: ['./header-stats.component.css']
 })
 export class HeaderStatsComponent {
     secondsSinceLastBlock = 0;
