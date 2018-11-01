@@ -20,10 +20,7 @@ export class NodeDetailsComponent implements OnInit {
         });
 
         setInterval(() => {
-            if (this.node != null) {
-                this._nodeService.getBlockCount(this.node);
-                this._nodeService.getRawMemPool(this.node);
-            }
+            this.updateNodeInfo();
         }, 5000);
     }
 
@@ -33,7 +30,26 @@ export class NodeDetailsComponent implements OnInit {
         this._nodeService.getNode(this.id)
             .subscribe((node: any) => {
                 this.node = node.json();
-                this._nodeService.getRawMemPool(this.node);
+                this.updateNodeInfo();
             });
+    }
+
+    getClassForNodeLatency(node: any) {
+        if (node.latency && node.latency < 500) {
+            return 'text-success';
+        } else if (node.latency >= 500 && node.latency < 2500) {
+            return 'text-warning';
+        } else {
+            return 'text-danger';
+        }
+    }
+
+    updateNodeInfo() {
+        if (this.node != null) {
+            this._nodeService.getRawMemPool(this.node);
+            this._nodeService.getBlockCount(this.node);
+            this._nodeService.getVersion(this.node);
+            this._nodeService.getConnectionsCount(this.node);
+        }
     }
 }

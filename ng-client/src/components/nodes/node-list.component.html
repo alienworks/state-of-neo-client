@@ -16,12 +16,12 @@
                             </div>
                             <div class="col-md-12 no-margin padding-5 row" *ngIf="node.blockCount">
                                 <div class="col-md-4 col-sm-6 col-xs-6">
-                                    <span class="node-stat">
+                                    <span class="stat">
                                         <i class="fas fa-code-branch"></i> {{node.version}}
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-sm-6 col-xs-6">
-                                    <span class="node-stat">
+                                    <span class="stat">
                                         <i class="fas fa-cube"></i> #{{node.blockCount}}
                                         <span *ngIf="bestBlock - node.blockCount == 0" class="text-success">
                                             <i class="fas fa-check-circle"></i>
@@ -32,18 +32,18 @@
                                     </span>
                                 </div>
                                 <div class="col-md-2 col-sm-6 col-xs-6">
-                                    <span class="node-stat">
+                                    <span class="stat">
                                         <i class="fas fa-plug"></i> {{node.connected}}
                                     </span>
                                 </div>
                                 <div class="col-md-2 col-sm-6 col-xs-6 text-right">
-                                    <span class="node-stat {{getClassForNodeLatency(node)}}">
+                                    <span class="stat {{getClassForNodeLatency(node)}}">
                                         <i class="fas fa-signal"></i> {{node.latency}} ms
                                     </span>
                                 </div>
                             </div>
                             <div class="col-md-12 no-margin padding-5 row" *ngIf="!node.blockCount">
-                                <span class="node-stat text-danger">
+                                <span class="stat text-danger">
                                     <i class="fas fa-times-circle"></i> No connection can be made
                                 </span>
                             </div>

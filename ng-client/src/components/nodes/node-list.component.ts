@@ -6,8 +6,7 @@ import { BlockService } from '../../core/services/data';
 
 @Component({
     selector: `app-node-list`,
-    templateUrl: './node-list.component.html',
-    styleUrls: ['./node-list.component.css']
+    templateUrl: './node-list.component.html'
 })
 export class NodeListComponent implements OnInit {
     pageResults: PageResultModel<BaseNodeModel>;
