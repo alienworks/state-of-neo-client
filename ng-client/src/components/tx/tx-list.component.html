@@ -1,5 +1,5 @@
 <div class="row col-md-12 no-margin padding-10 panel-body word-wraped">
-    <div class="row col-md-12 col-sm-12 col-xs-12 padding-5 custom-vcenter margin-bot-10" *ngFor="let tx of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+    <div class="row col-md-12 col-sm-12 col-xs-12 padding-5 custom-vcenter margin-bot-10" *ngFor="let tx of pageResults?.items | paginate: { id: 'server', itemsPerPage: pageResults?.metaData.pageSize, currentPage: pageResults?.metaData.pageNumber, totalItems: pageResults?.metaData.totalItemCount }">
         <div class="col-md-1 col-sm-1 col-xs-1">
             <app-tx-icon [type]="tx.type"></app-tx-icon>
         </div>

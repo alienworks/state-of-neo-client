@@ -12,6 +12,14 @@ export class TxDetailsModel extends BaseTxModel {
     version: number;
     blockHash: string;
     blockHeight: number;
+    assets: TransactedAssetModel[]
+}
+
+export class TransactedAssetModel {
+    amount: number;
+    assetType: AssetTypeEnum;
+    fromAddress: string;
+    toAddress: string;
 }
 
 export enum TxTypeEnum {
@@ -24,4 +32,10 @@ export enum TxTypeEnum {
     StateTransaction = 144,
     PublishTransaction = 208,
     InvocationTransaction = 209
+}
+
+export enum AssetTypeEnum {
+    NEO = 0,
+    GAS = 1,
+    NEP5 = 2
 }

@@ -9,6 +9,7 @@ import { TxService } from '../../core/services/data';
 export class TxListComponent implements OnInit, OnChanges {
     @Input() blockHash: string;
     @Input() pageSize = 10;
+    @Input() address: string = null;
     pageResults: PageResultModel<BaseTxModel>;
 
     constructor(private _txService: TxService) { }
@@ -22,7 +23,7 @@ export class TxListComponent implements OnInit, OnChanges {
     }
 
     getPage(page: number): void {
-        this._txService.getPage(page, this.pageSize, this.blockHash)
+        this._txService.getPage(page, this.pageSize, this.blockHash, this.address)
             .subscribe(x => {
                 this.pageResults = x.json() as PageResultModel<BaseTxModel>;
             }, err => {
