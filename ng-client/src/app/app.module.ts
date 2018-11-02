@@ -18,7 +18,7 @@ import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent } 
 // Services
 import { DatePipe } from '@angular/common';
 import { NetService } from '../core/services';
-import { NodeRpcService, NodeService, BlockService, TxService, ChartService, TxService } from '../core/services/data';
+import { NodeRpcService, NodeService, BlockService, TxService, ChartService, AddressService } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
   NodesSignalRService, BlocksSignalRService,
