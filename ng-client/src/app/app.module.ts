@@ -10,14 +10,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 
 import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent } from '../components/tx';
-import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent } from '../components/common';
+import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent } from '../components/address';
 
 // Services
+import { DatePipe } from '@angular/common';
 import { NetService } from '../core/services';
-import { NodeRpcService, NodeService, BlockService, TxService, AddressService } from '../core/services/data';
+import { NodeRpcService, NodeService, BlockService, TxService, ChartService, TxService } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
   NodesSignalRService, BlocksSignalRService,
@@ -28,7 +29,7 @@ import {
   declarations: [
     AppComponent,
     HomeComponent,
-    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
+    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent,
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent,
@@ -54,6 +55,8 @@ import {
     ])
   ],
   providers: [
+    // NG
+    DatePipe,
     // Common services
     NetService,
     // SignalR services
@@ -61,7 +64,7 @@ import {
     NodesSignalRService, BlocksSignalRService, AddressService,
     TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
     // Data services
-    NodeRpcService, NodeService, BlockService, TxService
+    NodeRpcService, NodeService, BlockService, TxService, ChartService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,13 @@
+<div>
+    <div class="stat text-center" *ngIf="timeTypes">
+        <span *ngFor="let type of timeTypes">
+            <a (click)="changeTimeType(type.key)">
+                <i class="far fa-square" *ngIf="!type.selected"></i>
+                <i class="fas fa-check-square" *ngIf="type.selected"></i>
+                 {{type.key}}
+            </a>
+        </span>
+    </div>
+    <!-- <canvas id="{{nonce}}" height="200px"></canvas> -->
+    <canvas id="{{endpoint}}" height="200px"></canvas>
+</div>
