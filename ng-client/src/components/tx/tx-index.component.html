@@ -1,10 +1,19 @@
 <div class="row col-md-12 no-margin no-padding">
-    <div class="col-md-8 row no-margin padding-10">
+    <div class="col-md-6 col-sm-6 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 padding-5 text-center">
             <h3 class="bold">TRANSACTIONS</h3>
         </div>
         <div class="col-md-12 panel-body">
             <app-tx-list [pageSize]="20"></app-tx-list>
         </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12 no-margin padding-10">
+        <div class="col-md-12 padding-5 text-center">
+            <h3><strong>STATS</strong></h3>
+        </div>
+        <div class="row no-margin padding-10 col-md-12 panel-body">
+            <canvas id="myChart" height="200px"></canvas>
+        </div>
+        
     </div>
 </div>
