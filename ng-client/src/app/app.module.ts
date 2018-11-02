@@ -13,10 +13,11 @@ import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent 
 import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
+import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent } from '../components/address';
 
 // Services
 import { NetService } from '../core/services';
-import { NodeRpcService, NodeService, BlockService, TxService } from '../core/services/data';
+import { NodeRpcService, NodeService, BlockService, TxService, AddressService } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
   NodesSignalRService, BlocksSignalRService,
@@ -30,6 +31,7 @@ import {
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
+    AddressListComponent, AddressDetailsComponent, AddressIndexComponent,
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent
   ],
   imports: [
@@ -41,6 +43,8 @@ import {
       { path: 'home', component: HomeComponent },
       { path: 'nodes', component: NodeListComponent },
       { path: 'node/:id', component: NodeDetailsComponent },
+      { path: 'address', component: AddressIndexComponent },
+      { path: 'address/:address', component: AddressDetailsComponent },
       { path: 'blocks', component: BlockListComponent },
       { path: 'block/:index', component: BlockDetailsComponent },
       { path: 'transactions', component: TxIndexComponent },
@@ -54,7 +58,7 @@ import {
     NetService,
     // SignalR services
     SignalRService,
-    NodesSignalRService, BlocksSignalRService,
+    NodesSignalRService, BlocksSignalRService, AddressService,
     TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
     // Data services
     NodeRpcService, NodeService, BlockService, TxService

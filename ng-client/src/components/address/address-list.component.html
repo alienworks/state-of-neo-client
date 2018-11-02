@@ -1,0 +1,32 @@
+<div class="row no-margin no-padding ">
+    <div class="col-md-12 row no-margin no-padding">
+        <div *ngIf="isLoading" class="text-center" style="padding-top: 30px">
+            <i class="fa-4x fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="pageResults && !isLoading">
+            <div class="col-md-6 col-sm-6 col-xs-6 row padding-5 no-margin" *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">
+                    <div class="col-md-12 row no-margin padding-10 border-box-shadow">
+                        <div class="col-md-10 col-sm-10 col-xs-10">
+                            <i class="fas fa-cube"></i> {{address.address}}
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                            {{address.transactions}} <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <i class="fas fa-clock"></i> <small> {{address.lastTransactionTime | date:'dd-MM-yyyy | hh:mm:ss'}}</small>
+                            <span class="pull-right">NEO: {{getBalance(address.balances, 'NEO')}} | GAS: {{getBalance(address.balances, 'GAS')}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-12 padding-10 text-center">
+                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+            </div>
+        </div>
+        <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">
+            No addresses found
+        </div>
+    </div>
+</div>

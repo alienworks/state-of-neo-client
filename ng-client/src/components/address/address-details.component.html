@@ -1,0 +1,36 @@
+<div class="row no-margin">
+    <div class="col-sm-8" style="padding-left: 0">
+        <div class="panel panel-default" style="margin-bottom: 0">
+            <div class="panel-body">
+                <div>
+                    <a [routerLink]="['/address']" routerLinkActive="router-link-active">
+                        <h4 style="font-weight: bold; color: #333">Back to Addresses</h4>
+                    </a>                    
+                    <h3 style="margin-top: 0; font-weight: bold; color: #333">{{addressDetails?.address}}</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="custom-vcenter" style="font-size: 32px">
+                        NEO {{getBalance('NEO') | number}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="custom-vcenter" style="font-size: 32px">
+                        GAS {{getBalance('GAS') | number}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4" style="padding-left: 5px; padding-right: 0">
+        <div class="panel panel-default" style="margin-bottom: 0">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis">
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Last Transactions
+                </h2>
+            </header>
+            <div class="panel-body">
+                <app-tx-list [address]="address"></app-tx-list>
+            </div>
+        </div>
+    </div>
+</div>
