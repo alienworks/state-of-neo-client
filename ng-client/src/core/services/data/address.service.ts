@@ -35,6 +35,14 @@ export class AddressService {
         return this.http.get(`${CONST.BASE_URL}/api/address/get/${address}`);
     }
 
+    public getTopNeo() {
+        return this.http.get(`${CONST.BASE_URL}/api/address/topneo`);
+    }
+
+    public getTopGas() {
+        return this.http.get(`${CONST.BASE_URL}/api/address/topgas`);
+    }
+
     public getChartData() {
         return this.http.post(`${CONST.BASE_URL}/api/address/chart`, {
             unitOfTime: 1

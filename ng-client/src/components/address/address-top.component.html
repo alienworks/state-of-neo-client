@@ -1,0 +1,30 @@
+<div class="row no-margin no-padding">
+    <div class="col-md-6 row no-margin no-padding">
+        <div *ngIf="isLoadingNeo" class="text-center" style="padding-top: 30px">
+            <i class="fa-4x fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="topNeo && !isLoadingNeo">
+            <h3 class="bold text-center margin-bottom-30">NEO</h3>
+            <div class="col-md-12 col-sm-12 col-xs-12 row padding-5 no-margin" *ngFor="let address of topNeo">
+                <app-address-list-item [address]="address"></app-address-list-item>
+            </div>
+        </div>
+        <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!topNeo || topNeo.length == 0) && !isLoadingNeo">
+            No addresses found
+        </div>
+    </div>
+    <div class="col-md-6 row no-margin no-padding">
+        <div *ngIf="isLoadingGas" class="text-center" style="padding-top: 30px">
+            <i class="fa-4x fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="topGas && !isLoadingGas">
+            <h3 class="bold text-center margin-bottom-30">GAS</h3>
+            <div class="col-md-12 col-sm-12 col-xs-12 row padding-5 no-margin" *ngFor="let address of topGas">
+                <app-address-list-item [address]="address"></app-address-list-item>
+            </div>
+        </div>
+        <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!topGas || topGas.length == 0) && !isLoadingGas">
+            No addresses found
+        </div>
+    </div>
+</div>

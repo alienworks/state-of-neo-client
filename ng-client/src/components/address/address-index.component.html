@@ -1,8 +1,18 @@
 <div class="row col-md-12 no-margin no-padding">
     <div class="col-md-8 col-sm-8 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 panel-body">
-            <h3 class="bold text-center margin-bottom-10">ADDRESSES</h3>
-            <app-address-list [pageSize]="20"></app-address-list>
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="tab" href="#last"><h3 class="bold text-center margin-bottom-10">LAST ACTIVE</h3></a></li>
+                <li><a data-toggle="tab" href="#top"><h3 class="bold text-center margin-bottom-10">TOP</h3></a></li>
+            </ul>
+            <div class="tab-content" style="padding-top: 15px">
+                <div id="last" class="tab-pane fade in active">
+                    <app-address-list [pageSize]="20"></app-address-list>
+                </div>
+                <div id="top" class="tab-pane fade">
+                    <app-address-top></app-address-top>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12 no-margin padding-10">

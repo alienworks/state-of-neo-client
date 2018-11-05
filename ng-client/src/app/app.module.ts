@@ -16,7 +16,7 @@ import {
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
-import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent } from '../components/address';
+import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent, AddressListItemComponent, AddressTopComponent } from '../components/address';
 import { AssetDetailsComponent, AssetIndexComponent, AssetListComponent } from '../components/asset';
 
 // Services
@@ -38,7 +38,7 @@ import {TimeAgoPipe} from 'time-ago-pipe';
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent, LoaderComponent,
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
-    AddressListComponent, AddressDetailsComponent, AddressIndexComponent,
+    AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent, AddressTopComponent,
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent,
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TimeAgoPipe
