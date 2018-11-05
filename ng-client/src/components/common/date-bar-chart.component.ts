@@ -45,7 +45,7 @@ export class DateBarChartComponent implements OnInit {
     }
 
     getChart() {
-        $(`#${this.id}`).hide();
+        $(`#container-${this.id}`).hide();
         this.isLoading = true;
         this.chartService.getChart(this.endpoint, this.filter)
             .subscribe(x => {
@@ -93,7 +93,7 @@ export class DateBarChartComponent implements OnInit {
         });
 
         this.isLoading = false;
-        $(`#${this.id}`).show(1000);
+        $(`#container-${this.id}`).show(1000);
     }
 
     onDropdownChange(event) {

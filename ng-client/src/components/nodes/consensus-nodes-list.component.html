@@ -1,48 +1,55 @@
-<div class="row text-center" *ngIf="nodes && nodes.length > 0">
-    <h3 class="bold">
-        CONSENSUS NODES {{getConsensusOnly().length}} / {{nodes.length}}
-    </h3>
-</div>
-
-<div class="row no-margin panel-body word-wraped" *ngIf="nodes && nodes.length > 0">
-    <div class="col-md-12 row margin-2 padding-2 border-box-shadow match" *ngFor="let node of nodes">
-        <div class="col-md-12 no-padding">
-            <span *ngIf="node.Active" class="text-success bold">Consensus node</span>
-            <span *ngIf="!node.Active" class="text-primary bold">Candidate node</span>
-            <br>
-            <strong>{{node.PublicKey}}</strong>
-            <br>
-            <span>
-                <a (click)="showNodeInfo(node.PublicKey)" *ngIf="node.Info">
-                    <i class="fas fa-arrow-alt-circle-down" *ngIf="!node.ShowInfo"></i>
-                    <i class="fas fa-arrow-alt-circle-up" *ngIf="node.ShowInfo"></i>
-                </a>
-            </span>
+<div class="row no-margin padding-10">
+    <div class="row no-margin padding-5 panel-body word-wraped">
+        <div class="col-md-12 no-margin no-padding text-center">
+            <h3 class="bold">
+                CONSENSUS NODES 
+                <span *ngIf="nodes && nodes.length > 0">
+                    {{getConsensusOnly().length}} / {{nodes.length}}
+                </span>
+            </h3>
         </div>
-        <div class="col-md-12 row no-margin padding-2" *ngIf="node.Info && node.ShowInfo">
-            <div class="col-md-4 custom-vcenter">
-                <img src="{{getLogo(node.Info.Logo)}}" class="img img-responsive" alt="">
-            </div>
-            <div class="col-md-8 text-left">
-                <h4>
-                    <strong>
-                        <a href="{{node.Info.Website}}">
-                            {{node.Info.Organization}}
-                        </a>
-                    </strong>
-                </h4>
-                <p><strong>Votes: </strong>{{node.Votes}}</p>
-                <p>
-                    {{node.Info.Summary}}
-                </p>
-                <p *ngIf="node.Info.SocialAccount">
-                    <span class="padding-2" *ngFor="let socialLink of getSocialLinks(node.Info.SocialAccount)">
-                        <a href="{{socialLink.value}}" target="blank">
-                            <i class="fab fa-{{socialLink.type}}" style="font-size: 2em; margin-right: 5px;"></i>
+        <div class="row no-margin no-padding" *ngIf="nodes && nodes.length > 0">
+            <div class="col-md-12 margin-2 padding-2 border-box-shadow match" *ngFor="let node of nodes">
+                <div class="col-md-12 no-padding">
+                    <span *ngIf="node.Active" class="text-success bold">Consensus node</span>
+                    <span *ngIf="!node.Active" class="text-primary bold">Candidate node</span>
+                    <br>
+                    <strong>{{node.PublicKey}}</strong>
+                    <br>
+                    <span>
+                        <a (click)="showNodeInfo(node.PublicKey)" *ngIf="node.Info">
+                            <i class="fas fa-arrow-alt-circle-down" *ngIf="!node.ShowInfo"></i>
+                            <i class="fas fa-arrow-alt-circle-up" *ngIf="node.ShowInfo"></i>
                         </a>
                     </span>
-                </p>
+                </div>
+                <div class="col-md-12 row no-margin padding-2" *ngIf="node.Info && node.ShowInfo">
+                    <div class="col-md-4 custom-vcenter">
+                        <img src="{{getLogo(node.Info.Logo)}}" class="img img-responsive" alt="">
+                    </div>
+                    <div class="col-md-8 text-left">
+                        <h4>
+                            <strong>
+                                <a href="{{node.Info.Website}}">
+                                    {{node.Info.Organization}}
+                                </a>
+                            </strong>
+                        </h4>
+                        <p><strong>Votes: </strong>{{node.Votes}}</p>
+                        <p>
+                            {{node.Info.Summary}}
+                        </p>
+                        <p *ngIf="node.Info.SocialAccount">
+                            <span class="padding-2" *ngFor="let socialLink of getSocialLinks(node.Info.SocialAccount)">
+                                <a href="{{socialLink.value}}" target="blank">
+                                    <i class="fab fa-{{socialLink.type}}" style="font-size: 2em; margin-right: 5px;"></i>
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
+        <app-loader *ngIf="!(nodes && nodes.length > 0)"></app-loader>
     </div>
 </div>

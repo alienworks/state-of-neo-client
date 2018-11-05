@@ -9,16 +9,19 @@ import { BlockDetailsModel } from '../../models/block.models';
 export class BlockDetailsComponent implements OnInit {
     index: string | number;
     block: BlockDetailsModel = new BlockDetailsModel();
+    isLoading = true;
 
     constructor(private route: ActivatedRoute,
         private _blockService: BlockService) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.route.params.subscribe(params => {
             this.index = +params['index'];
             this._blockService.getBlock(this.index)
                 .subscribe(x => {
                     this.block = x.json() as BlockDetailsModel;
+                    this.isLoading = false;
                 });
         });
     }

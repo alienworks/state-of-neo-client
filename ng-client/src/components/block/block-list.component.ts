@@ -8,6 +8,7 @@ import { PageResultModel } from '../../models';
 })
 export class BlockListComponent implements OnInit {
     pageResults: PageResultModel<BlockListModel>;
+    isLoading = true;
 
     constructor(private _blockService: BlockService) { }
 
@@ -16,10 +17,11 @@ export class BlockListComponent implements OnInit {
     }
 
     getPage(page: number): void {
+        this.isLoading = true;
         this._blockService.getBlocksPage(page, 32)
             .subscribe(x => {
                 this.pageResults = x.json() as PageResultModel<BlockListModel>;
-                console.log(this.pageResults);
+                this.isLoading = false;
             }, err => {
                 console.log(err);
             });

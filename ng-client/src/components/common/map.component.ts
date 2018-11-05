@@ -10,6 +10,9 @@ declare var $;
     styleUrls: [`./map.component.css`]
 })
 export class MapComponent implements OnInit {
+    mapSelector = '#world-map';
+    isLoading = true;
+
     constructor(private _nodeService: NodeService, private router: Router) { }
 
     ngOnInit(): void {
@@ -23,10 +26,9 @@ export class MapComponent implements OnInit {
     }
 
     private initMap(markers) {
-        console.log(`markers`, markers);
-        $('#world-map').html('');
-        $('#world-map').css('height', '412px');
-        $('#world-map').vectorMap({
+        $(this.mapSelector).html('');
+        $(this.mapSelector).css('height', '412px');
+        $(this.mapSelector).vectorMap({
             map: 'world_mill_en',
             backgroundColor: 'transparent',
             markers: markers,
@@ -63,11 +65,10 @@ export class MapComponent implements OnInit {
             }
         });
 
-        const map = $('#world-map').vectorMap('get', 'mapObject');
-
-        $(window).resize(function () {
-            $('#world-map').css('height', '412px');
-        });
+        const map = $(this.mapSelector).vectorMap('get', 'mapObject');
+        $(this.mapSelector).css('height', '412px');
+        $(this.mapSelector).show();
+        this.isLoading = false;
     }
 
     private clearMarkers(): void {

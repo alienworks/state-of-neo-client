@@ -1,18 +1,16 @@
 <div class="row col-md-12 no-margin padding-10">
-    <div class="row col-md-8 no-margin padding-10 panel-body stat">
+    <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
         <div class="col-md-12 padding-10">
             <h3><strong>Transaction details</strong></h3>
             {{tx.hash}}
             <br>
             <app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}
         </div>
-
         <div class="padding-10">
             <div class="col-md-12" *ngFor="let asset of tx?.assets">
                 <small *ngIf="asset.fromAddress" style="font-size: 0.7em">{{asset.fromAddress}} sent </small><strong>{{asset.amount}} {{getAssetName(asset.assetType)}}</strong> to <small style="font-size: 0.7em">{{asset.toAddress}}</small>
             </div>
         </div>
-
         <div class="col-md-12 row no-margin padding-10">
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
                 <a routerLink="/block/{{tx?.blockHeight}}">
@@ -38,4 +36,5 @@
             </div>
         </div>
     </div>
+    <app-loader *ngIf="isLoading"></app-loader>
 </div>
