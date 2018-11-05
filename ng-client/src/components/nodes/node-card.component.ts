@@ -13,7 +13,9 @@ export class NodeCardComponent {
     @Input() node: any;
     @Input() index: number;
 
-    constructor(private _blockService: BlockService) { }
+    constructor(private _blockService: BlockService) {
+        this.subscribeToEvents();
+    }
 
     private subscribeToEvents() {
         this._blockService.bestBlockChanged.subscribe((block: number) => {
