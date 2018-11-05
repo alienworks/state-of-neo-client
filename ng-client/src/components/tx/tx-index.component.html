@@ -12,7 +12,8 @@
             <h3><strong>STATS</strong></h3>
         </div>
         <div class="row no-margin padding-10 col-md-12 panel-body">
-            <app-date-bar-chart [endpoint]="'transactions/chart'" [unitOfTime]="unitOfTime"></app-date-bar-chart>
+            <app-total-gas-claimed></app-total-gas-claimed>
+            <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
         </div>
     </div>
 </div>

@@ -31,7 +31,7 @@ export class AddressService {
         return this.http.get(`${CONST.BASE_URL}/api/address/list?page=${page}&pageSize=${pageSize}`);
     }
 
-    public getAddress(address: string) {        
+    public getAddress(address: string) {
         return this.http.get(`${CONST.BASE_URL}/api/address/get/${address}`);
     }
 

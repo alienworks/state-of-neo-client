@@ -7,7 +7,8 @@ export class ChartDataItemModel {
 export class ChartFilterModel {
     startDate: Date;
     endDate: Date;
-    unitOfTime: UnitOfTime;
+    endPeriod: number;
+    unitOfTime = UnitOfTime.Day;
 }
 
 export enum UnitOfTime {

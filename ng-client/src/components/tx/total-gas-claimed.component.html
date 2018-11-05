@@ -1,0 +1,8 @@
+<div class="row no-margin padding-10 col-md-12 text-center" *ngIf="!isLoading">
+    <h3 class="no-margin warm-cyan">
+        <strong>
+            TOTAL GAS CLAIMED {{total}}
+        </strong>
+    </h3>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { ChartFilterModel, UnitOfTime } from '../../../models';
+import { ChartFilterModel } from '../../../models';
 
 import * as CONST from './../../common/constants';
 

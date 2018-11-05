@@ -1,13 +1,39 @@
-<div>
-    <div class="stat text-center" *ngIf="timeTypes">
-        <span *ngFor="let type of timeTypes">
-            <a (click)="changeTimeType(type.key)">
-                <i class="far fa-square" *ngIf="!type.selected"></i>
-                <i class="fas fa-check-square" *ngIf="type.selected"></i>
-                 {{type.key}}
+<div class="row no-margin no-padding">
+    <div class="col-md-12 row padding-10 no-margin custom-vcenter">
+        <div class="col-md-8 col-sm-9 col-xs-12 padding-5 stat" *ngIf="timeTypes">
+            <span *ngFor="let type of timeTypes">
+                <a (click)="changeTimeType(type.key)">
+                    <i class="far fa-square" *ngIf="!type.selected"></i>
+                    <i class="fas fa-check-square warm-cyan" *ngIf="type.selected"></i>
+                    {{type.key}}
+                </a>
+            </span>
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-12 padding-5 text-right" *ngIf="periodOptions">
+            <span class="stat">
+                Last
+            </span>
+            <select class="padding-5" (change)="onDropdownChange($event)">
+                <option value="{{period.key}}" *ngFor="let period of periodOptions">{{period.key}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding no-margin">
+        <canvas id="{{id}}" height="200px"></canvas>
+    </div>
+    <div class="col-md-12 text-center no-margin padding-10 stat">
+        <span>
+            <a (click)="toggleChartType()">
+                <i class="far fa-square" *ngIf="!isChartTypeLine()"></i>
+                <i class="fas fa-check-square warm-cyan" *ngIf="isChartTypeLine()"></i>
+                Line
+            </a>
+            <a (click)="toggleChartType()">
+                <i class="far fa-square" *ngIf="isChartTypeLine()"></i>
+                <i class="fas fa-check-square warm-cyan" *ngIf="!isChartTypeLine()"></i>
+                Bar
             </a>
         </span>
     </div>
-    <!-- <canvas id="{{nonce}}" height="200px"></canvas> -->
-    <canvas id="{{endpoint}}" height="200px"></canvas>
 </div>
+<app-loader *ngIf="isLoading"></app-loader>

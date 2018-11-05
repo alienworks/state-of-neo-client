@@ -18,5 +18,9 @@ export class TxService {
     get(hash: string) {
         return this.http.get(`${CONST.BASE_URL}/api/transactions/get/${hash}`);
     }
+
+    getTotalGasClaimed() {
+        return this.http.get(`${CONST.BASE_URL}/api/transactions/totalclaimed`);
+    }
 }
 

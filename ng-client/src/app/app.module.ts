@@ -9,8 +9,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 
-import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent } from '../components/tx';
-import { MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent } from '../components/common';
+import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent } from '../components/tx';
+import {
+  MapComponent, NavigationComponent, HeaderStatsComponent,
+  FooterStatsComponent, DateBarChartComponent, LoaderComponent
+} from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent } from '../components/address';
@@ -29,11 +32,11 @@ import {
   declarations: [
     AppComponent,
     HomeComponent,
-    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent,
+    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent, LoaderComponent,
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent,
-    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent
   ],
   imports: [
     BrowserModule,

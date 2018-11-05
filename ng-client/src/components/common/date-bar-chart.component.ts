@@ -4,36 +4,50 @@ import { DatePipe } from '@angular/common';
 import Chart from 'chart.js';
 import { ChartService } from '../../core/services/data';
 
+declare var $;
+
 @Component({
     selector: 'app-date-bar-chart',
     templateUrl: './date-bar-chart.component.html'
 })
 export class DateBarChartComponent implements OnInit {
-    id = 'date-bar-chart';
-    chartData: ChartDataItemModel[];
-    timeTypes: any[];
-    chart: Chart;
-    @Input() unitOfTime: UnitOfTime;
     @Input() endpoint: string;
+    @Input() label: string;
+    @Input() chartType = 'line';
+
+    chart: Chart;
+    chartData: ChartDataItemModel[];
+    filter = new ChartFilterModel();
+    id: string;
+    isLoading = true;
+    timeTypes: any[];
+    periodOptions: any[];
 
     constructor(private datePipe: DatePipe,
         private chartService: ChartService) { }
 
     ngOnInit(): void {
+        this.id = this.endpoint.toLowerCase().replace('/', '-');
         this.timeTypes = Object.keys(UnitOfTime)
             .filter(x => isNaN(Number(x)))
             .map(x => {
-                const selected = this.unitOfTime === UnitOfTime[x];
+                const selected = this.filter.unitOfTime === UnitOfTime[x];
                 return { key: x, selected };
+            });
+
+        this.periodOptions = new Array(31).fill(1)
+            .map((x, i) => {
+                const selected = i === 0 ? true : false;
+                return { key: i + 6, selected };
             });
 
         this.getChart();
     }
 
     getChart() {
-        const data = new ChartFilterModel();
-        data.unitOfTime = this.unitOfTime;
-        this.chartService.getChart(this.endpoint, data)
+        $(`#${this.id}`).hide();
+        this.isLoading = true;
+        this.chartService.getChart(this.endpoint, this.filter)
             .subscribe(x => {
                 this.chartData = x.json() as ChartDataItemModel[];
                 this.initChart();
@@ -41,13 +55,13 @@ export class DateBarChartComponent implements OnInit {
     }
 
     initChart() {
-        const ctx = document.getElementById(this.endpoint);
+        const ctx = document.getElementById(this.id);
         this.chart = new Chart(ctx, {
-            type: 'bar',
+            type: this.chartType,
             data: {
                 labels: this.getChartLabels(),
                 datasets: [{
-                    label: 'Transactions',
+                    label: this.label,
                     data: this.getChartData(),
                     backgroundColor: '#079098',
                     // backgroundColor: [
@@ -77,6 +91,15 @@ export class DateBarChartComponent implements OnInit {
                 }
             }
         });
+
+        this.isLoading = false;
+        $(`#${this.id}`).show(1000);
+    }
+
+    onDropdownChange(event) {
+        this.filter.endPeriod = +event.target.value;
+        this.chart.destroy();
+        this.getChart();
     }
 
     private getChartData() {
@@ -86,19 +109,37 @@ export class DateBarChartComponent implements OnInit {
 
     private getChartLabels() {
         let format = 'dd/MM/yy';
-        if (this.unitOfTime === UnitOfTime.Hour) { format = 'HH:mm|dd/MMM'; }
-        if (this.unitOfTime === UnitOfTime.Day) { format = 'dd/MM/yyyy'; }
-        if (this.unitOfTime === UnitOfTime.Month) { format = 'MMM yyyy'; }
+        if (this.filter.unitOfTime === UnitOfTime.Hour) { format = 'HH:mm|dd/MMM'; }
+        if (this.filter.unitOfTime === UnitOfTime.Day) { format = 'dd/MM/yyyy'; }
+        if (this.filter.unitOfTime === UnitOfTime.Month) { format = 'MMM yyyy'; }
         const result = this.chartData.map(x => this.datePipe.transform(x.startDate, format));
         return result;
     }
 
     changeTimeType(key: string) {
-        this.unitOfTime = UnitOfTime[key];
+        this.filter.unitOfTime = UnitOfTime[key];
         this.timeTypes.forEach(x => {
             x.key === key ? x.selected = true : x.selected = false;
         });
         this.chart.destroy();
         this.getChart();
+    }
+
+    toggleChartType() {
+        if (this.chartType === 'line') {
+            this.chartType = 'bar';
+        } else {
+            this.chartType = 'line';
+        }
+
+        this.chart.destroy();
+        this.initChart();
+    }
+
+    isChartTypeLine() {
+        if (this.chartType === 'line') {
+            return true;
+        }
+        return false;
     }
 }

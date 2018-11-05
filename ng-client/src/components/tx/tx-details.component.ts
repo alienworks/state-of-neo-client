@@ -25,7 +25,7 @@ export class TxDetailsComponent implements OnInit {
     }
 
     getTypeName(): string {
-        if (this.tx == null) return '';
+        if (this.tx === null) { return ''; }
         return TxTypeEnum[this.tx.type];
     }
 

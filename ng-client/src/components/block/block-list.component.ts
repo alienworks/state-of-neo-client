@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockService } from '../../core/services/data/block.service';
 import { BlockListModel } from '../../models/block.models';
-import { PageResultModel, UnitOfTime } from '../../models';
+import { PageResultModel } from '../../models';
 
 @Component({
     templateUrl: `./block-list.component.html`
 })
 export class BlockListComponent implements OnInit {
     pageResults: PageResultModel<BlockListModel>;
-    unitOfTime = UnitOfTime.Hour;
 
     constructor(private _blockService: BlockService) { }
 
