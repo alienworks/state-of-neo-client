@@ -12,4 +12,8 @@ export class ChartService {
     getChart(endpoint: string, data: ChartFilterModel) {
         return this.http.post(`${CONST.BASE_URL}/api/${endpoint}`, data);
     }
+
+    getChartGet(endpoint: string) {
+        return this.http.get(`${CONST.BASE_URL}/api/${endpoint}`);
+    }
 }
