@@ -1,0 +1,35 @@
+<div class="row no-margin">
+    <div class="col-sm-8" style="padding-left: 0">
+        <div class="panel panel-default" style="margin-bottom: 0">
+            <div class="panel-body">
+                <div>                  
+                    <h2 style="margin-top: 0; font-weight: bold; color: #333">{{model.name}}</h2>
+                    <a [routerLink]="['/asset']" routerLinkActive="router-link-active">
+                        <h4 style="font-weight: bold; color: #333">Back to Assets</h4>
+                    </a>  
+                </div>   
+                <div>
+                    Total supply: {{model.totalSupply | number}}
+                </div>  
+                <div>
+                    Transactions: {{model.transactionsCount | number}}
+                </div>   
+                <div>
+                    Addresses: {{model.addressesCount | number}}
+                </div>              
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4" style="padding-left: 5px; padding-right: 0">
+        <div class="panel panel-default" style="margin-bottom: 0">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis">
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Last Transactions
+                </h2>
+            </header>
+            <div class="panel-body">
+                <app-tx-list [address]="address"></app-tx-list>
+            </div>
+        </div>
+    </div>
+</div>

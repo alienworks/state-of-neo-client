@@ -1,4 +1,5 @@
 export * from './address.models';
+export * from './asset.models';
 export * from './info.models';
 export * from './node.models';
 export * from './page.models';
