@@ -15,6 +15,7 @@ export class DateBarChartComponent implements OnInit {
     chart: Chart;
     @Input() unitOfTime: UnitOfTime;
     @Input() endpoint: string;
+    @Input() label: string;
 
     constructor(private datePipe: DatePipe,
         private chartService: ChartService) { }
@@ -47,7 +48,7 @@ export class DateBarChartComponent implements OnInit {
             data: {
                 labels: this.getChartLabels(),
                 datasets: [{
-                    label: 'Transactions',
+                    label: this.label,
                     data: this.getChartData(),
                     backgroundColor: '#079098',
                     // backgroundColor: [

@@ -2,39 +2,39 @@
     <div class="row col-md-8 no-margin padding-10 panel-body stat">
         <div class="col-md-12 padding-10">
             <h3><strong>Transaction details</strong></h3>
-            {{tx?.hash}}
+            {{tx.hash}}
             <br>
             <app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}
         </div>
 
         <div class="padding-10">
             <div class="col-md-12" *ngFor="let asset of tx?.assets">
-                <small style="font-size: 0.7em">{{asset.fromAddress}}</small> sent <strong>{{asset.amount}} {{getAssetName(asset.assetType)}}</strong> to <small style="font-size: 0.7em">{{asset.toAddress}}</small>
+                <small *ngIf="asset.fromAddress" style="font-size: 0.7em">{{asset.fromAddress}} sent </small><strong>{{asset.amount}} {{getAssetName(asset.assetType)}}</strong> to <small style="font-size: 0.7em">{{asset.toAddress}}</small>
             </div>
         </div>
 
         <div class="col-md-12 row no-margin padding-10">
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
                 <a routerLink="/block/{{tx?.blockHeight}}">
-                    <i class="fas fa-cube"></i> #{{tx?.blockHeight}}
+                    <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
                 </a>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <i class="fas fa-microchip"></i> {{tx?.size}} Bytes
+                <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                {{tx?.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding" title="{{tx.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}">
+                {{tx.finalizedAt | timeAgo}}
             </div>
         </div>
         <div class="col-md-12 row no-margin padding-10">
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <i class="fas fa-code-branch"></i> Version {{tx?.version}}                
+                <i class="fas fa-code-branch"></i> Version {{tx.version}}                
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <i class="fas fa-book"></i> {{tx?.systemFee}} GAS System Fee
+                <i class="fas fa-book"></i> {{tx.systemFee | number}} GAS System Fee
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <i class="fas fa-briefcase"></i> {{tx?.networkFee}} GAS Network Fee
+                <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
             </div>
         </div>
     </div>

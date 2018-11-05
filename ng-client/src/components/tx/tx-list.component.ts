@@ -15,11 +15,28 @@ export class TxListComponent implements OnInit, OnChanges {
     constructor(private _txService: TxService) { }
 
     ngOnInit(): void {
-        this.getPage(1);
+        // this.getPage(1);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.getPage(1);
+    ngOnChanges(change: SimpleChanges): void {
+        console.log(change);
+        if (change.blockHash) {
+            if (change.blockHash.currentValue != change.blockHash.previousValue || change.blockHash.isFirstChange) {
+                this.getPage(1);
+            }
+        }
+
+        if (change.address) {
+            if (change.address.currentValue != change.address.previousValue || change.address.isFirstChange) {
+                this.getPage(1);
+            }
+        }
+
+        if (change.pageSize) {
+            if (change.pageSize.currentValue != change.pageSize.previousValue || change.pageSize.isFirstChange) {
+                this.getPage(1);
+            }
+        }
     }
 
     getPage(page: number): void {
