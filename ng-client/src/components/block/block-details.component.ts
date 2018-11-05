@@ -8,7 +8,7 @@ import { BlockDetailsModel } from '../../models/block.models';
 })
 export class BlockDetailsComponent implements OnInit {
     index: string | number;
-    block: BlockDetailsModel;
+    block: BlockDetailsModel = new BlockDetailsModel();
 
     constructor(private route: ActivatedRoute,
         private _blockService: BlockService) { }

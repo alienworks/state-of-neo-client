@@ -10,6 +10,5 @@ export class AddressIndexComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
     }
 }

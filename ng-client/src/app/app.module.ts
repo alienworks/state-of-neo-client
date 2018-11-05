@@ -28,6 +28,8 @@ import {
   TransAvgCountSignalRService, FailP2PSignalRService, TransCountSignalRService
 } from '../core/services/signal-r';
 
+import {TimeAgoPipe} from 'time-ago-pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +38,8 @@ import {
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     BlockListComponent, BlockDetailsComponent,
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent,
-    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

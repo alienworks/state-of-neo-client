@@ -9,7 +9,7 @@ import { AddressDetailsModel, BaseTxModel } from '../../models';
 export class AddressDetailsComponent implements OnInit {
     isLoading: boolean;
     address: string;
-    addressDetails: AddressDetailsModel;
+    addressDetails: AddressDetailsModel = new AddressDetailsModel();
     transactions: BaseTxModel[];
 
     constructor(private route: ActivatedRoute,
@@ -31,7 +31,7 @@ export class AddressDetailsComponent implements OnInit {
     }
 
     getBalance(name: string) {
-        return this.addressDetails == null 
+        return this.addressDetails.balances == null 
             ? 0 
             : this.addressDetails.balances.find(x => x.name == name) == null 
                 ? 0 
@@ -39,7 +39,7 @@ export class AddressDetailsComponent implements OnInit {
     }
 
     getTokens() {
-        return this.addressDetails == null
+        return this.addressDetails.balances == null
             ? []
             : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS');
     }

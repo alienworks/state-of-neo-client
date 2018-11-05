@@ -8,7 +8,7 @@ import { TxDetailsModel, TxTypeEnum, AssetTypeEnum } from '../../models';
 })
 export class TxDetailsComponent implements OnInit {
     hash: string;
-    tx: TxDetailsModel;
+    tx: TxDetailsModel = new TxDetailsModel();
 
     constructor(private route: ActivatedRoute,
         private txService: TxService) { }
