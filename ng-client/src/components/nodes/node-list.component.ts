@@ -11,6 +11,7 @@ import { BlockService } from '../../core/services/data';
 export class NodeListComponent implements OnInit {
     pageResults: PageResultModel<BaseNodeModel>;
     bestBlock: number;
+    isLoading = true;
 
     constructor(private _nodeService: NodeService, private _blockService: BlockService) { }
 
@@ -19,21 +20,15 @@ export class NodeListComponent implements OnInit {
 
         this._blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
-        this._nodeService.getNodesApi(1)
-            .subscribe(page => {
-                this.pageResults = page.json() as PageResultModel<BaseNodeModel>;
-                this.updateNodesList();
-
-                setInterval(() => {
-                    this.updateNodesList();
-                }, 5000);
-            });
+        this.getPage(1);
     }
 
     getPage(page: number): void {
-        this._nodeService.getNodesApi(page)
+        this.isLoading = true;
+        this._nodeService.getNodesApi(page, 2)
             .subscribe(pageResults => {
                 this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
+                this.isLoading = false;
                 this.updateNodesList();
 
                 setInterval(() => {

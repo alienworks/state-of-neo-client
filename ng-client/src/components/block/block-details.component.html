@@ -1,4 +1,4 @@
-<div class="row no-margin no-padding">
+<div class="row no-margin no-padding" *ngIf="!isLoading">
     <div class="col-md-12 row no-margin panel-body padding-10">
         <div class="col-md-8 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
             <div class="col-md-12 row no-margin padding-10 custom-vcenter text-center">
@@ -74,3 +74,4 @@
         No such block found
     </div>
 </div>
+<app-loader *ngIf="isLoading"></app-loader>

@@ -9,16 +9,19 @@ import { TxDetailsModel, TxTypeEnum, AssetTypeEnum } from '../../models';
 export class TxDetailsComponent implements OnInit {
     hash: string;
     tx: TxDetailsModel = new TxDetailsModel();
+    isLoading = true;
 
     constructor(private route: ActivatedRoute,
         private txService: TxService) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.hash = this.route.snapshot.paramMap.get('hash');
 
         this.txService.get(this.hash)
             .subscribe(x => {
                 this.tx = x.json() as TxDetailsModel;
+                this.isLoading = false;
             }, err => {
                 console.log(err);
             });

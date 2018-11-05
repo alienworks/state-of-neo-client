@@ -14,6 +14,7 @@
             <div class="panel-body" *ngIf="allNodes">
                 <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card>
             </div>
+            <app-loader *ngIf="!allNodes" [title]="'Nodes'"></app-loader>
         </div>
     </div>
 </div>

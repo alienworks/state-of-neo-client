@@ -1,44 +1,45 @@
-<div class="row no-margin no-padding ">
-    <div class="col-md-8 row no-margin no-padding">
-        <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="pageResults">
+<div class="row no-margin no-padding">
+    <div class="col-md-8 row no-margin padding-10">
+        <div class="row col-md-12 no-margin panel-body padding-5">
             <h3 class="bold text-center margin-bottom-10">BLOCKS</h3>
-            <div class="col-md-3 col-sm-3 col-xs-4 row padding-5 no-margin"  
-                *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
-                <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}">
-                    <div class="col-md-12 row no-margin padding-10 border-box-shadow">
-                        <div class="col-md-7 col-sm-7 col-xs-7">
-                            <i class="fas fa-cube"></i> #{{block.height | number}}
+            <div class="row no-margin no-padding" *ngIf="pageResults && !isLoading">
+                <div class="col-md-3 col-sm-3 col-xs-4 row padding-5 no-margin" *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                    <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}">
+                        <div class="col-md-12 row no-margin padding-10 border-box-shadow">
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <i class="fas fa-cube"></i> #{{block.height | number}}
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-xs-5 text-right">
+                                {{block.transactionsCount | number}} <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <i class="fas fa-clock"></i> <small> {{block.finalizedAt | timeAgo}}</small>
+                            </div>
+                            <div class="col-md-5 col-sm-5 col-xs-5 text-right">
+                                {{block.size | number}} <i class="fas fa-microchip"></i>
+                            </div>
                         </div>
-                        <div class="col-md-5 col-sm-5 col-xs-5 text-right">
-                            {{block.transactionsCount | number}} <i class="fas fa-handshake"></i>
-                        </div>
-                        <div class="col-md-7 col-sm-7 col-xs-7">
-                            <i class="fas fa-clock"></i> <small> {{block.finalizedAt | timeAgo}}</small>
-                        </div>
-                        <div class="col-md-5 col-sm-5 col-xs-5 text-right">
-                            {{block.size | number}} <i class="fas fa-microchip"></i>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+                <div class="col-md-12 padding-10 text-center">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                </div>
             </div>
-            <div class="col-md-12 padding-10 text-center">
-                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
-            </div>
-        </div>
-        <div class="row col-md-12 no-margin text-center padding-10" *ngIf="!pageResults || pageResults.items.length == 0">
-            No blocks found
+            <app-loader *ngIf="isLoading"></app-loader>
         </div>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10 panel-body">
-        <div class="col-md-12 no-padding text-center">
-            <h3><strong>STATS</strong></h3>
-        </div>
-        <div class="row no-margin padding-10 col-md-12">
-            <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Blocks'"></app-date-bar-chart>
-        </div>
-        <div class="row no-margin padding-10 col-md-12">
-            <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Blocks size'"></app-date-bar-chart>
+    <div class="row col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
+        <div class="row no-margin no-padding panel-body">
+            <div class="col-md-12 no-padding text-center">
+                <h3><strong>STATS</strong></h3>
+            </div>
+            <div class="row no-margin padding-10 col-md-12">
+                <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Blocks'"></app-date-bar-chart>
+            </div>
+            <div class="row no-margin padding-10 col-md-12">
+                <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Blocks size'"></app-date-bar-chart>
+            </div>
         </div>
     </div>
 </div>
