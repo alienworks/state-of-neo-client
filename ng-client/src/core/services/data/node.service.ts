@@ -67,7 +67,6 @@ export class NodeService {
     }
 
     updateNodesData() {
-        console.log(`this.allNodes`, this.allNodes);
         this.allNodes.forEach(x => {
             this.getConnectionsCount(x);
             this.getVersion(x);

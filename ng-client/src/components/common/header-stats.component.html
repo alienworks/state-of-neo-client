@@ -3,7 +3,7 @@
         <div class="text-primary">
             <div style="font-size: 20px; "><strong>BEST BLOCK</strong></div>
             <div id="last-block-stats" style="white-space: nowrap;">
-                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active">
+                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
                     <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.5em"></i>
                     #{{headerInfo.height | number}}
                 </a>
@@ -13,22 +13,28 @@
     <div class="col-sm-3 col-xs-6 header-stat">
         <div class="text-primary">
             <div style="font-size: 20px; "><strong>LAST BLOCK</strong></div>
-            <i class="fa fa-hourglass-end spin"></i>
-            {{secondsSinceLastBlock | number}} s ago
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+                <i class="fa fa-hourglass-end spin"></i>
+                {{secondsSinceLastBlock | number}} s ago
+            </a>
         </div>
     </div>
     <div class="col-sm-3 col-xs-6 header-stat">
         <div class="text-primary">
-            <div style="font-size: 20px; "><strong>TX COUNT</strong></div>
-            <i class="fas fa-handshake"></i>
-            {{headerInfo.transactionCount | number}}
+            <div style="font-size: 20px; "><strong>TX COUNT</strong></div>            
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+                <i class="fas fa-handshake"></i>
+                {{headerInfo.transactionCount | number}}
+            </a>
         </div>
     </div>
     <div class="col-sm-3 col-xs-6 header-stat">
         <div class="text-primary">
-            <div style="font-size: 20px; "><strong>SIZE</strong></div>
-            <i class="fas fa-microchip"></i>
-            {{headerInfo.size | number}}
+            <div style="font-size: 20px; "><strong>SIZE</strong></div>            
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+                <i class="fas fa-microchip"></i>
+                {{headerInfo.size | number}}
+            </a>
         </div>
     </div>
 </div>

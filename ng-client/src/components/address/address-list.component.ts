@@ -20,7 +20,7 @@ export class AddressListComponent implements OnInit {
 
     getPage(page: number): void {
         this.isLoading = true;
-        this.addressService.getAddressesPage(page, 32)
+        this.addressService.getAddressesPage(page, this.pageSize)
             .subscribe(x => {
                 this.pageResults = x.json() as PageResultModel<AddressListModel>;
                 this.isLoading = false;

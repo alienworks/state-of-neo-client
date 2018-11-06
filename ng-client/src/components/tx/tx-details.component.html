@@ -7,8 +7,15 @@
             <app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}
         </div>
         <div class="padding-10">
-            <div class="col-md-12" *ngFor="let asset of tx?.assets">
-                <small *ngIf="asset.fromAddress" style="font-size: 0.7em">{{asset.fromAddress}} sent </small><strong>{{asset.amount}} {{getAssetName(asset.assetType)}}</strong> to <small style="font-size: 0.7em">{{asset.toAddress}}</small>
+            <div class="col-md-6">
+                <div *ngFor="let asset of tx?.globalIncomingAssets">
+                    <strong><small *ngIf="asset.fromAddress" style="font-size: 0.7em">{{asset.fromAddress}}</small> sent {{asset.amount}} {{getAssetName(asset.assetType)}}</strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div *ngFor="let asset of tx?.globalOutgoingAssets">
+                    <strong><small *ngIf="asset.toAddress" style="font-size: 0.7em">{{asset.toAddress}}</small> received {{asset.amount}} {{getAssetName(asset.assetType)}}</strong>
+                </div>
             </div>
         </div>
         <div class="col-md-12 row no-margin padding-10">
