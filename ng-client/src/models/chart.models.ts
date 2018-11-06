@@ -1,5 +1,6 @@
 export class ChartDataItemModel {
     startDate: Date;
+    label: string;
     unitOfTime: UnitOfTime;
     value: number;
 }

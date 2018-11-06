@@ -12,7 +12,7 @@ export class TxDetailsModel extends BaseTxModel {
     version: number;
     blockHash: string;
     blockHeight: number;
-    assets: TransactedAssetModel[]
+    assets: TransactedAssetModel[];
 }
 
 export class TransactedAssetModel {

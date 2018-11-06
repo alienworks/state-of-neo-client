@@ -25,7 +25,7 @@ export class NodeListComponent implements OnInit {
 
     getPage(page: number): void {
         this.isLoading = true;
-        this._nodeService.getNodesApi(page, 2)
+        this._nodeService.getNodesApi(page)
             .subscribe(pageResults => {
                 this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
                 this.isLoading = false;

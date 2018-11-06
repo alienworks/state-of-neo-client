@@ -35,6 +35,6 @@ export class AddressTopComponent implements OnInit {
             }, err => {
                 this.isLoadingGas = false;
                 console.log(err);
-            });    
+            });
     }
 }

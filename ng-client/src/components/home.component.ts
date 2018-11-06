@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
-import { DYNAMIC_TYPE } from '@angular/compiler/src/output/output_ast';
-
+import { Http } from '@angular/http';
 
 import { NodeService } from '../core/services/data/node.service';
 
-import * as CONST from '../core/common/constants';
-
 declare var $;
-declare var jvm;
 
 @Component({
     selector: `app-home`,
@@ -51,9 +46,5 @@ export class HomeComponent implements OnInit {
         this._nodeService.updateNodes.subscribe((nodes: any) => {
             this.allNodes = nodes;
         });
-    }
-
-    private getRandomCoordinate() {
-        return parseFloat((Math.random() * 90).toFixed(2));
     }
 }

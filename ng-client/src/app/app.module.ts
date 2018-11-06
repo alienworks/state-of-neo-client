@@ -12,35 +12,49 @@ import { HomeComponent } from 'src/components/home.component';
 import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent } from '../components/tx';
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
-  FooterStatsComponent, DateBarChartComponent, LoaderComponent
+  FooterStatsComponent, DateBarChartComponent, PieChartComponent,
+  LoaderComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
-import { AddressIndexComponent, AddressDetailsComponent, AddressListComponent, AddressListItemComponent, AddressTopComponent } from '../components/address';
+import {
+  AddressIndexComponent, AddressDetailsComponent, AddressListComponent,
+  AddressListItemComponent, AddressTopComponent
+} from '../components/address';
 import { AssetDetailsComponent, AssetIndexComponent, AssetListComponent } from '../components/asset';
 
 // Services
 import { DatePipe } from '@angular/common';
 import { NetService } from '../core/services';
-import { NodeRpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService } from '../core/services/data';
+import {
+  NodeRpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
+} from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
   NodesSignalRService, BlocksSignalRService,
   TransAvgCountSignalRService, FailP2PSignalRService, TransCountSignalRService
 } from '../core/services/signal-r';
 
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, DateBarChartComponent, LoaderComponent,
+    // Common
+    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
+    DateBarChartComponent, LoaderComponent, PieChartComponent,
+    // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
+    // Block
     BlockListComponent, BlockDetailsComponent,
+    // Address
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent, AddressTopComponent,
+    // Assets
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent,
+    // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
+    // Libs
     TimeAgoPipe
   ],
   imports: [

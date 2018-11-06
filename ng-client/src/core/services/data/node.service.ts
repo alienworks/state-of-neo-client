@@ -71,8 +71,9 @@ export class NodeService {
             this.getConnectionsCount(x);
             this.getVersion(x);
             this.getBlockCount(x);
-            this.checkP2PStatus(x);
+            this.getPeers(x);
             this.sort();
+            console.log(x.url, x);
         });
         this.updateAllMarkers();
 
@@ -111,15 +112,22 @@ export class NodeService {
     public getPeers(x: any) {
         this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
-                x.lastResponseTime = Date.now();
-
                 const json = res.json();
+
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.peers = parseInt(json.result.connected.length);
                 } else {
-                    console.log(res);
+                    x.peers = 0;
                 }
+
+                if (x.peers > 0) {
+                    x.p2pEnabled = true;
+                } else {
+                    x.p2pEnabled = false;
+                }
+            }, err => {
+                x.p2pEnabled = false;
             });
     }
 
@@ -174,7 +182,6 @@ export class NodeService {
                 x.lastResponseTime = now;
                 const response = res.json();
                 x.blockCount = response.result;
-                console.log(x);
 
                 this.nodeBlockInfo.emit(response.result);
             }, err => {

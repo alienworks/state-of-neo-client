@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
-import { ChartDataItemModel, UnitOfTime, ChartFilterModel } from '../../models';
 import { DatePipe } from '@angular/common';
+
+import { ChartService } from './../../../core/services/data';
+import { ChartDataItemModel, UnitOfTime, ChartFilterModel } from './../../../models';
+import * as CONST from './../../../core/common/constants';
+
 import Chart from 'chart.js';
-import { ChartService } from '../../core/services/data';
 
 declare var $;
 
@@ -63,10 +66,8 @@ export class DateBarChartComponent implements OnInit {
                 datasets: [{
                     label: this.label,
                     data: this.getChartData(),
-                    backgroundColor: '#079098',
-                    // backgroundColor: [
-                    //     '#079098', '#cad04a', '#456177', '#869514', '#e3e7e8', '#272c2f', '#6b6e73', '#e3e7e8', '#6AF9C4'
-                    // ],
+                    backgroundColor: CONST.MainThemeColor,
+                    // backgroundColor: CONST.ColorPalet,
                     borderWidth: 1
                 }]
             },
