@@ -27,6 +27,14 @@ export class TxDetailsComponent implements OnInit {
             });
     }
 
+    get incomingAssets() {
+        return this.tx.globalIncomingAssets.sort(x => x.amount);
+    }
+
+    get outgoingAssets() {
+        return this.tx.globalOutgoingAssets.sort(x => x.amount);
+    }
+
     getTypeName(): string {
         if (this.tx === null) { return ''; }
         return TxTypeEnum[this.tx.type];

@@ -1,20 +1,28 @@
 <div class="row col-md-12 no-margin padding-10">
     <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
         <div class="col-md-12 padding-10">
-            <h3><strong>Transaction details</strong></h3>
             {{tx.hash}}
-            <br>
-            <app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}
+            <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
         </div>
-        <div class="padding-10">
-            <div class="col-md-6">
-                <div *ngFor="let asset of tx?.globalIncomingAssets">
-                    <strong><small *ngIf="asset.fromAddress" style="font-size: 0.7em">{{asset.fromAddress}}</small> sent {{asset.amount}} {{getAssetName(asset.assetType)}}</strong>
+        <div >
+            <div class="col-md-6" style="padding-top: 20px; padding-bottom: 20px">
+                <div *ngFor="let asset of incomingAssets">
+                    <strong *ngIf="asset.fromAddress">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/address/{{asset.toAddress}}">{{asset.fromAddress}}</a>
+                        </small>
+                        sent {{asset.amount | number}} {{getAssetName(asset.assetType)}}
+                    </strong>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div *ngFor="let asset of tx?.globalOutgoingAssets">
-                    <strong><small *ngIf="asset.toAddress" style="font-size: 0.7em">{{asset.toAddress}}</small> received {{asset.amount}} {{getAssetName(asset.assetType)}}</strong>
+            <div class="col-md-6" style="padding-top: 20px; padding-bottom: 20px">
+                <div *ngFor="let asset of outgoingAssets">
+                    <strong *ngIf="asset.toAddress">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
+                        </small>
+                        received {{asset.amount | number}} {{getAssetName(asset.assetType)}}
+                    </strong>
                 </div>
             </div>
         </div>

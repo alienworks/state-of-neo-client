@@ -1,18 +1,18 @@
 <div class="row col-md-12 no-margin no-padding">
     <div class="col-md-8 col-sm-6 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 panel-body">
-            <h3 class="bold text-center margin-bottom-10">TRANSACTIONS</h3>
-            <app-tx-list [pageSize]="20"></app-tx-list>
+            <h3 class="bold text-center margin-bottom-10 text-grey">TRANSACTIONS</h3>
+            <app-tx-list [pageSize]="26"></app-tx-list>
         </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
         <div class="row no-margin padding-10 col-md-12 panel-body">
             <div class="col-md-12 text-center">
-                <h3 class="bold no-margin">STATS</h3>
+                <h3 class="bold no-margin text-grey">STATS</h3>
             </div>
             <app-total-gas-claimed></app-total-gas-claimed>
             <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
-            <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transactions Types'"></app-pie-chart>
+            <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>
         </div>
     </div>
 </div>

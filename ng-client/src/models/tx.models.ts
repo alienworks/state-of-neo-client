@@ -13,6 +13,8 @@ export class TxDetailsModel extends BaseTxModel {
     blockHash: string;
     blockHeight: number;
     assets: TransactedAssetModel[];
+    globalIncomingAssets: TransactedAssetModel[];
+    globalOutgoingAssets: TransactedAssetModel[];
 }
 
 export class TransactedAssetModel {

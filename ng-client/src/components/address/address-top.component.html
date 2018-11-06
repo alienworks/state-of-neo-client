@@ -4,7 +4,7 @@
             <i class="fa-4x fas fa-spinner fa-spin"></i>
         </div>
         <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="topNeo && !isLoadingNeo">
-            <h3 class="bold text-center margin-bottom-30">NEO</h3>
+            <h3 class="bold text-center margin-bottom-30 text-grey">NEO</h3>
             <div class="col-md-12 col-sm-12 col-xs-12 row padding-5 no-margin" *ngFor="let address of topNeo">
                 <app-address-list-item [address]="address"></app-address-list-item>
             </div>
@@ -18,7 +18,7 @@
             <i class="fa-4x fas fa-spinner fa-spin"></i>
         </div>
         <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="topGas && !isLoadingGas">
-            <h3 class="bold text-center margin-bottom-30">GAS</h3>
+            <h3 class="bold text-center margin-bottom-30 text-grey">GAS</h3>
             <div class="col-md-12 col-sm-12 col-xs-12 row padding-5 no-margin" *ngFor="let address of topGas">
                 <app-address-list-item [address]="address"></app-address-list-item>
             </div>

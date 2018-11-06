@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, } from '@angular/core';
 import { ChartService } from 'src/core/services/data';
 import { ChartDataItemModel } from 'src/models';
 import * as CONST from 'src/core/common/constants';
@@ -29,6 +29,7 @@ export class PieChartComponent implements OnInit {
         this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
                 this.data = x.json() as ChartDataItemModel[];
+                console.log(this.data);
                 this.initChart();
             }, err => console.log(`could not load pie-chart from ${this.endpoint}`, err));
     }

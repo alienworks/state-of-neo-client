@@ -2,7 +2,7 @@
     <div class="col-md-12 row no-margin no-padding">
         <app-loader *ngIf="isLoading"></app-loader>
         <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="pageResults && !isLoading">
-            <h3 class="bold text-center margin-bottom-30">ADDRESSES</h3>
+            <h3 class="bold text-center margin-bottom-30 text-grey">ADDRESSES</h3>
             <div class="col-md-6 col-sm-6 col-xs-6 row padding-5 no-margin" *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                 <app-address-list-item [address]="address" ></app-address-list-item>
             </div>            

@@ -1,7 +1,7 @@
 <div class="row no-margin no-padding">
     <div class="col-md-8 row no-margin padding-10">
         <div class="row col-md-12 no-margin panel-body padding-5">
-            <h3 class="bold text-center margin-bottom-10">BLOCKS</h3>
+            <h3 class="bold text-center margin-bottom-10 text-grey">BLOCKS</h3>
             <div class="row no-margin no-padding" *ngIf="pageResults && !isLoading">
                 <div class="col-md-3 col-sm-3 col-xs-4 row padding-5 no-margin" *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                     <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}">
@@ -12,10 +12,10 @@
                             <div class="col-md-5 col-sm-5 col-xs-5 text-right">
                                 {{block.transactionsCount | number}} <i class="fas fa-handshake"></i>
                             </div>
-                            <div class="col-md-7 col-sm-7 col-xs-7">
+                            <div class="col-md-7 col-sm-7 col-xs-7 text-grey">
                                 <i class="fas fa-clock"></i> <small> {{block.finalizedAt | timeAgo}}</small>
                             </div>
-                            <div class="col-md-5 col-sm-5 col-xs-5 text-right">
+                            <div class="col-md-5 col-sm-5 col-xs-5 text-right text-grey">
                                 {{block.size | number}} <i class="fas fa-microchip"></i>
                             </div>
                         </div>
