@@ -1,6 +1,6 @@
 <div class="row no-margin no-padding" *ngIf="!isLoading">
-    <div class="col-md-12 row no-margin panel-body padding-10">
-        <div class="col-md-8 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
+    <div class="col-md-8 row no-margin panel-body">
+        <div class="col-md-12 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
             <div class="col-md-12 row no-margin padding-10 custom-vcenter text-center">
                 <div class="col-md-1 col-sm-1 col-xs-1 stat">
                     <a routerLink="/block/{{block.height + 1}}" style="margin-right: 10px;">
@@ -63,15 +63,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 col-sm-12 col-xs-12 row no-margin padding-10">
+        <div class="col-md-12 padding-10 row no-margin text-center" *ngIf="!block">
+            No such block found
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12 row no-margin">
+        <div class="panel-body">
             <div class="text-center stat word-wraped">
                 <i class="fas fa-handshake"></i> TRANSACTIONS LIST
             </div>
-            <app-tx-list [blockHash]="block.hash"></app-tx-list>
+            <app-tx-list [blockHash]="block.hash" [pageSize]="12"></app-tx-list>
         </div>
-    </div>
-    <div class="col-md-12 padding-10 row no-margin text-center" *ngIf="!block">
-        No such block found
     </div>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>

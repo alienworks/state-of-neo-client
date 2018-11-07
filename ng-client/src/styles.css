@@ -86,3 +86,11 @@
 .text-grey {
     color: #676a6c !important;
 }
+
+.ngx-pagination .current {
+    background: #337ab7 !important;
+}
+
+li.active a h3 {
+    color: #337ab7 !important;
+}

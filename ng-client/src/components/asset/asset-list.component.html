@@ -19,9 +19,11 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-12 padding-10 text-center">
-                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+            <div class="col-md-12 text-center">
+                <div style="padding-top: 25px">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                </div>
             </div>
         </div>
         <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">

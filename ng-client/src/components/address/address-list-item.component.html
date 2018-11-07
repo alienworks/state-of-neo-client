@@ -1,13 +1,13 @@
 <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">
     <div class="col-md-12 row no-margin padding-10 border-box-shadow">
-        <div class="col-md-10 col-sm-10 col-xs-10">
+        <div class="col-md-9 col-sm-9 col-xs-9">
             <i class="fas fa-cube"></i> {{address.address}}
         </div>
-        <div class="col-md-2 col-sm-2 col-xs-2 text-right text-primary">
-            {{address.transactions}} <i class="fas fa-handshake"></i>
+        <div class="col-md-3 col-sm-3 col-xs-3 text-right text-primary">
+            {{address.transactions | number}} <i class="fas fa-handshake"></i>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 text-grey" style="padding-top: 5px; ">
-            <span title="{{address.lastTransactionTime | date:'dd-MM-yyyy | hh:mm:ss'}}"><small><i class="fas fa-clock"></i> {{address.lastTransactionTime | timeAgo}}</small></span>
+            <span title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}"><small><i class="fas fa-clock"></i> {{address.lastTransactionTime | timeAgo}}</small></span>
             <small class="pull-right text-grey">NEO: {{getBalance(address.balances, 'NEO') | number}}&nbsp;&nbsp;GAS: {{getBalance(address.balances, 'GAS') | number}}</small>
         </div>
     </div>

@@ -3,12 +3,15 @@
         <app-loader *ngIf="isLoading"></app-loader>
         <div class="row col-md-12 no-margin panel-body padding-5" *ngIf="pageResults && !isLoading">
             <h3 class="bold text-center margin-bottom-30 text-grey">ADDRESSES</h3>
-            <div class="col-md-6 col-sm-6 col-xs-6 row padding-5 no-margin" *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+            <div class="col-md-6 col-sm-6 col-xs-6 row padding-5 no-margin" 
+                *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                 <app-address-list-item [address]="address" ></app-address-list-item>
             </div>            
-            <div class="col-md-12 padding-10 text-center">
-                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+            <div class="col-md-12 text-center">
+                <div style="padding-top: 25px">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                </div>
             </div>
         </div>
         <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">

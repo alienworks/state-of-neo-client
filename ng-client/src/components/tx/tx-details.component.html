@@ -1,7 +1,7 @@
 <div class="row col-md-12 no-margin padding-10">
     <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
         <div class="col-md-12 padding-10">
-            {{tx.hash}}
+            <strong>{{tx.hash}}</strong>
             <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
         </div>
         <div >
@@ -35,7 +35,7 @@
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
                 <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding" title="{{tx.finalizedAt | date:'dd-MM-yyyy | hh:mm:ss'}}">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
                 {{tx.finalizedAt | timeAgo}}
             </div>
         </div>

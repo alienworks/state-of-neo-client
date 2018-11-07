@@ -9,13 +9,15 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3 italic">
-            {{tx.finalizedAt | timeAgo}}
+            <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{tx.finalizedAt | timeAgo}}</div>
         </div>
     </div>
 
-    <div class="col-md-12 padding-10 text-center">
-        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-        <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+    <div class="col-md-12 text-center">
+        <div style="padding-top: 25px">
+            <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+            <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+        </div>
     </div>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>
