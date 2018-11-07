@@ -1,30 +1,9 @@
 <div class="row col-md-12 no-margin padding-10">
+    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">TRANSACTION</h2>
     <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
-        <div class="col-md-12 padding-10">
+        <div class="col-md-12 padding-10" style="margin-bottom: 20px; font-size: 1.15em">
             <strong>{{tx.hash}}</strong>
             <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
-        </div>
-        <div >
-            <div class="col-md-6" style="padding-top: 20px; padding-bottom: 20px">
-                <div *ngFor="let asset of incomingAssets">
-                    <strong *ngIf="asset.fromAddress">
-                        <small style="font-size: 0.8em">
-                            <a routerLink="/address/{{asset.toAddress}}">{{asset.fromAddress}}</a>
-                        </small>
-                        sent {{asset.amount | number}} {{getAssetName(asset.assetType)}}
-                    </strong>
-                </div>
-            </div>
-            <div class="col-md-6" style="padding-top: 20px; padding-bottom: 20px">
-                <div *ngFor="let asset of outgoingAssets">
-                    <strong *ngIf="asset.toAddress">
-                        <small style="font-size: 0.8em">
-                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
-                        </small>
-                        received {{asset.amount | number}} {{getAssetName(asset.assetType)}}
-                    </strong>
-                </div>
-            </div>
         </div>
         <div class="col-md-12 row no-margin padding-10">
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
@@ -32,22 +11,78 @@
                     <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
                 </a>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center">
                 <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                {{tx.finalizedAt | timeAgo}}
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                <i class="fas fa-clock"></i> {{tx.finalizedAt | timeAgo}}
             </div>
         </div>
         <div class="col-md-12 row no-margin padding-10">
             <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
                 <i class="fas fa-code-branch"></i> Version {{tx.version}}                
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center">
                 <i class="fas fa-book"></i> {{tx.systemFee | number}} GAS System Fee
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right">
                 <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6" style="padding-top: 30px; padding-bottom: 20px">
+                <div *ngFor="let asset of incomingAssets">
+                    <strong *ngIf="asset.fromAddress">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
+                        </small>
+                        <span style="font-size: 0.65em" class="label label-danger"><strong>sent</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
+                    </strong>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top: 30px; padding-bottom: 20px">
+                <div *ngFor="let asset of outgoingAssets">
+                    <strong *ngIf="asset.toAddress">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
+                        </small>
+                        <span style="font-size: 0.65em" class="label label-success"><strong>received</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 no-margin">
+        <div class="panel panel-default" *ngIf="tx?.witnesses && tx?.witnesses.length">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis">
+                    <i class="fas fa-users" style="margin-left: 15px; margin-right: 20px"></i> Witnesses
+                </h2>
+            </header>
+            <div class="panel-body">
+                <div *ngFor="let witness of tx?.witnesses">
+                    <strong>{{witness.address}}</strong>
+                    <div class="padding-10 word-wraped">
+                        <div><strong>Invocation script</strong></div>
+                        {{witness.invocationScriptAsHexString}}
+                    </div>
+                    <div class="padding-10 word-wraped">
+                        <div><strong>Verification script</strong></div>
+                        {{witness.verificationScriptAsHexString}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" *ngIf="tx?.attributes && tx?.attributes.length">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis">
+                    <i class="fas fa-database" style="margin-left: 15px; margin-right: 20px"></i> Attributes
+                </h2>
+            </header>
+            <div class="panel-body">
+                <div *ngFor="let attribute of tx?.attributes; let i = index" class="padding-5 word-wraped">
+                    <div><span class="label label-success">{{attribute.type}}</span> {{attribute.dataAsHexString}}</div>                    
+                </div>
             </div>
         </div>
     </div>

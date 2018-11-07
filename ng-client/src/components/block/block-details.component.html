@@ -1,5 +1,6 @@
-<div class="row no-margin no-padding" *ngIf="!isLoading">
-    <div class="col-md-8 row no-margin panel-body">
+<div class="row no-margin no-padding">
+    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">BLOCK</h2>
+    <div class="col-md-8 row no-margin panel-body" *ngIf="!isLoading">
         <div class="col-md-12 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
             <div class="col-md-12 row no-margin padding-10 custom-vcenter text-center">
                 <div class="col-md-1 col-sm-1 col-xs-1 stat">
@@ -31,7 +32,7 @@
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <i class="far fa-check-circle"></i> Validator
                     <br>
-                    {{block.validator}}
+                    <a routerLink="/address/{{block.validatorAddress}}" >{{block.validator}}</a>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <i class="fab fa-connectdevelop"></i> Consensus Data
@@ -68,11 +69,15 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12 row no-margin">
-        <div class="panel-body">
-            <div class="text-center stat word-wraped">
-                <i class="fas fa-handshake"></i> TRANSACTIONS LIST
+        <div class="panel panel-default">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis">
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> TRANSACTIONS
+                </h2>
+            </header>
+            <div class="panel-body">
+                <app-tx-list [pageResults]="transactions"></app-tx-list>
             </div>
-            <app-tx-list [blockHash]="block.hash" [pageSize]="12"></app-tx-list>
         </div>
     </div>
 </div>

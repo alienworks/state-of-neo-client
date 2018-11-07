@@ -94,3 +94,7 @@
 li.active a h3 {
     color: #337ab7 !important;
 }
+
+.label {
+    padding-top: 0.1em !important;
+}

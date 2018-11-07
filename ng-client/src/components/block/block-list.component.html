@@ -1,7 +1,7 @@
 <div class="row no-margin no-padding">
+    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">BLOCKS</h2>
     <div class="col-md-8 row no-margin padding-10">
         <div class="row col-md-12 no-margin panel-body padding-5">
-            <h3 class="bold text-center margin-bottom-10 text-grey">BLOCKS</h3>
             <div class="row no-margin no-padding" *ngIf="pageResults && !isLoading">
                 <div class="col-md-3 col-sm-3 col-xs-4 row padding-5 no-margin" *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                     <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
