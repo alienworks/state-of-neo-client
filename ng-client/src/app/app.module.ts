@@ -9,7 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 
-import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent } from '../components/tx';
+import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent, TxListTableComponent } from '../components/tx';
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
@@ -54,7 +54,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     // Assets
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
-    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent, TxListTableComponent,
     // Libs
     TimeAgoPipe
   ],
