@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from '../../core/services/data';
 import { AddressDetailsModel, BaseTxModel } from '../../models';
+import { PageResultModel } from '../../models';
+import { TxService } from '../../core/services/data';
 
 @Component({
     templateUrl: `./address-details.component.html`
@@ -10,14 +12,17 @@ export class AddressDetailsComponent implements OnInit {
     isLoading: boolean;
     address: string;
     addressDetails: AddressDetailsModel = new AddressDetailsModel();
-    transactions: BaseTxModel[];
+    transactions: PageResultModel<BaseTxModel>;
 
     constructor(private route: ActivatedRoute,
-        private addressService: AddressService) { }
+        private addressService: AddressService,
+        private txService: TxService) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.address = params['address'];
+
+            this.getTransactionsPage(1);
 
             this.isLoading = true;
             this.addressService.getAddress(this.address)
@@ -42,5 +47,14 @@ export class AddressDetailsComponent implements OnInit {
         return this.addressDetails.balances == null
             ? []
             : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS');
+    }
+
+    getTransactionsPage(page: number): void {
+        this.txService.getPage(page, 10, null, this.address)
+            .subscribe(x => {
+                this.transactions = x.json() as PageResultModel<BaseTxModel>;
+            }, err => {
+                console.log(err);
+            });
     }
 }

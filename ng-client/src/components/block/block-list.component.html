@@ -1,37 +1,35 @@
-<div class="row no-margin no-padding">
-    <div class="col-md-8 row no-margin padding-10">
-        <div class="row col-md-12 no-margin panel-body padding-5">
-            <h3 class="bold text-center margin-bottom-10 text-grey">BLOCKS</h3>
-            <div class="row no-margin no-padding" *ngIf="pageResults && !isLoading">
-                <div class="col-md-3 col-sm-3 col-xs-4 row padding-5 no-margin" *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
-                    <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                        <div class="col-md-12 row no-margin padding-10 border-box-shadow">
-                            <div class="col-md-7 col-sm-7 col-xs-7">
-                                <i class="fas fa-cube"></i> #{{block.height | number}}
-                            </div>
-                            <div class="col-md-5 col-sm-5 col-xs-5 text-right">
-                                {{block.transactionsCount | number}} <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="col-md-7 col-sm-7 col-xs-7 text-grey">
-                                <div title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}"><i class="fas fa-clock"></i> <small> {{block.finalizedAt | timeAgo}}</small></div>
-                            </div>
-                            <div class="col-md-5 col-sm-5 col-xs-5 text-right text-grey">
-                                {{block.size | number}} <i class="fas fa-microchip"></i>
-                            </div>
+<div class="row">
+    <h2 class="bold text-grey section-title">BLOCKS</h2>
+    <div class="col-md-8">
+        <div class="panel-body" *ngIf="pageResults && !isLoading">
+            <div class="col-md-3 col-sm-3 col-xs-4" style="padding-left: 10px; padding-right: 10px; margin-bottom: 20px; " *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                    <div class="col-md-12 row no-margin padding-10 border-box-shadow">
+                        <div class="col-md-7 col-sm-7 col-xs-7" style="margin-bottom: 10px;">
+                            <i class="fas fa-cube"></i> #{{block.height | number}}
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-12 padding-10 text-center">
-                    <div style="padding-top: 25px">
-                        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                        <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                        <div class="col-md-5 col-sm-5 col-xs-5 text-right text-success" style="margin-bottom: 10px;">
+                            {{block.transactionsCount | number}} <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-7 text-grey">
+                            <div title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}"><i class="fas fa-clock"></i> <small> {{block.finalizedAt | timeAgo}}</small></div>
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-5 text-right text-grey">
+                            <small>{{block.size | number}} <i class="fas fa-microchip"></i></small>
+                        </div>
                     </div>
+                </a>
+            </div>
+            <div class="col-md-12 padding-10 text-center">
+                <div style="padding-top: 25px">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
                 </div>
             </div>
-            <app-loader *ngIf="isLoading"></app-loader>
         </div>
+        <app-loader *ngIf="isLoading"></app-loader>
     </div>
-    <div class="row col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
+    <div class="row col-md-4">
         <div class="row no-margin no-padding panel-body">
             <div class="col-md-12 no-padding text-center">
                 <h3><strong>STATS</strong></h3>

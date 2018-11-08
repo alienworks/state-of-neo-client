@@ -11,8 +11,10 @@ export class TxDetailsComponent implements OnInit {
     tx: TxDetailsModel = new TxDetailsModel();
     isLoading = true;
 
-    constructor(private route: ActivatedRoute,
-        private txService: TxService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private txService: TxService
+    ) { }
 
     ngOnInit(): void {
         this.isLoading = true;

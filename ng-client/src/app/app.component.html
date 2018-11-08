@@ -1,7 +1,45 @@
 <div id="wrapper">
+    <!-- <aside id="aside">
+        <nav id="sideNav">
+            <ul class="nav nav-list">
+                <li class="active el_primary" id="el_0">
+                    <a class="dashboard" [routerLink]="['/']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="el_primary" id="el_1">
+                    <a [routerLink]="['/nodes']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-bar-chart-o"></i> <span>Nodes</span>
+                    </a>
+                </li>
+                <li class="el_primary" id="el_2">
+                    <a [routerLink]="['/blocks']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-table"></i> <span>Blocks</span>
+                    </a>
+                </li>
+                <li class="el_primary" id="el_3">
+                    <a  [routerLink]="['/transactions']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-pencil-square-o"></i> <span>Transactions</span>
+                    </a>
+                </li>
+                <li class="el_primary" id="el_4">
+                    <a [routerLink]="['/address']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-gears"></i> <span>Addresses</span>
+                    </a>
+                </li>
+                <li class="el_primary" id="el_5">
+                    <a [routerLink]="['/asset']" routerLinkActive="router-link-active">
+                        <i class="main-icon fa fa-book"></i> <span>Assets</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <span id="asidebg"></span>
+    </aside> -->
     <app-nav></app-nav>
 
-    <div class="container-fluid" style="padding-bottom: 15px;">
+    <div class="container-fluid" style="padding-bottom: 15px; padding-left: 25px; padding-right: 25px">
         <app-header-stats></app-header-stats>
         <router-outlet></router-outlet>
     </div>

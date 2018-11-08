@@ -1,11 +1,12 @@
-<div class="row no-margin">
+<div class="row col-md-12 no-margin no-padding">
+    <h2 class="bold text-grey section-title">ADDRESS</h2>
     <div class="col-sm-8" style="padding-left: 0">
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey">
                 <div>                  
-                    <h2 style="margin-top: 0; font-weight: bold; ">{{addressDetails.address}}</h2>
+                    <h3 class="text-grey" style="margin-top: 0; font-weight: bold; ">{{addressDetails.address}}</h3>
                     <a [routerLink]="['/address']" routerLinkActive="router-link-active">
-                        <h4 style="font-weight: bold; ">Back to Addresses</h4>
+                        Back to Addresses
                     </a>  
                 </div>
                 <div class="col-md-6">
@@ -18,6 +19,11 @@
                         GAS {{getBalance('GAS') | number}}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12" *ngFor="let balance of getTokens()">
+                        {{balance.name}} : {{balance.balance}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -25,11 +31,11 @@
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Last Transactions
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Transactions
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [address]="address"></app-tx-list>
+                <app-tx-list [pageResults]="transactions"></app-tx-list>
             </div>
         </div>
     </div>

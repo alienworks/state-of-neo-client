@@ -1,0 +1,40 @@
+<div class="row">
+    <app-loader *ngIf="isLoading"></app-loader>
+    <div class="col-md-12" *ngIf="pageResults && !isLoading" style="padding-top: 10px">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-4">Address</th>
+                    <th class="col-md-2">Last Transaction</th>
+                    <th class="col-md-2">Transactions</th>
+                    <th class="col-md-2">Balances</th>
+                    <th class="col-md-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                    <td>
+                        <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active"><strong>{{address.address}}</strong></a>
+                    </td>
+                    <td title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}"><i class="fas fa-clock"></i>&nbsp;{{address.lastTransactionTime | timeAgo}}</td>
+                    <td><i class="fas fa-handshake"></i>&nbsp;{{address.transactions | number}}</td>
+                    <td class="text-success">
+                        <small><strong>NEO:</strong> {{getBalance(address.balances, 'NEO') | number}}</small>
+                    </td>
+                    <td class="text-success">
+                        <small><strong>GAS:</strong> {{getBalance(address.balances, 'GAS') | number}}</small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>              
+        <div class="col-md-12 text-center">
+            <div style="padding-top: 25px">
+                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">
+        No addresses found
+    </div>
+</div>
