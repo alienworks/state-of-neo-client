@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
         this.allNodes = this._nodeService.getNodes();
 
         // window height - header - body padding top and bottom
-        const height = $(window).height() - 50 - 20 - 20;
+        const height = $(window).height() - 50 - 70 - 20 - 20;
         $('#nodes-panel').css('height', height + 'px');
         $('#main-panel').css('height', height + 'px');
     }

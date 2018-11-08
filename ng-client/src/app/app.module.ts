@@ -19,9 +19,9 @@ import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 import {
   AddressIndexComponent, AddressDetailsComponent, AddressListComponent,
-  AddressListItemComponent, AddressTopComponent
+  AddressListItemComponent, AddressTopComponent, AddressListTableComponent, AddressTopTableComponent
 } from '../components/address';
-import { AssetDetailsComponent, AssetIndexComponent, AssetListComponent } from '../components/asset';
+import { AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent } from '../components/asset';
 
 // Services
 import { DatePipe } from '@angular/common';
@@ -49,9 +49,10 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     // Block
     BlockListComponent, BlockDetailsComponent,
     // Address
-    AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent, AddressTopComponent,
+    AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent, 
+    AddressTopComponent, AddressListTableComponent, AddressTopTableComponent,
     // Assets
-    AssetDetailsComponent, AssetIndexComponent, AssetListComponent,
+    AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     // Libs

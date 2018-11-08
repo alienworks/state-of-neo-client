@@ -1,5 +1,5 @@
 <div class="row col-md-12 no-margin padding-10">
-    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">TRANSACTION</h2>
+    <h2 class="bold text-grey section-title">TRANSACTION</h2>
     <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
         <div class="col-md-12 padding-10" style="margin-bottom: 20px; font-size: 1.15em">
             <strong>{{tx.hash}}</strong>
@@ -35,7 +35,7 @@
                     <strong *ngIf="asset.fromAddress">
                         <small style="font-size: 0.8em">
                             <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
-                        </small>
+                        </small>&nbsp;
                         <span style="font-size: 0.65em" class="label label-danger"><strong>sent</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
                     </strong>
                 </div>
@@ -45,7 +45,7 @@
                     <strong *ngIf="asset.toAddress">
                         <small style="font-size: 0.8em">
                             <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
-                        </small>
+                        </small>&nbsp;
                         <span style="font-size: 0.65em" class="label label-success"><strong>received</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
                     </strong>
                 </div>

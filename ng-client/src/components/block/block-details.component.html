@@ -1,5 +1,5 @@
 <div class="row no-margin no-padding">
-    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">BLOCK</h2>
+    <h2 class="bold text-grey section-title">BLOCK</h2>
     <div class="col-md-8 row no-margin panel-body" *ngIf="!isLoading">
         <div class="col-md-12 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
             <div class="col-md-12 row no-margin padding-10 custom-vcenter text-center">
@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <div class="col-md-10 col-sm-10 col-xs-10">
-                    <h3 class="no-margin"><strong>{{block.hash}}</strong></h3>
+                    <h3 class="no-margin text-grey"><strong>{{block.hash}}</strong></h3>
                 </div>
                 <div class="col-md-1 col-sm-1 col-xs-1 stat">
                     <a routerLink="/block/{{block.height - 1}}">
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-12 row no-margi padding-5">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <h3>
+                    <h3 class="text-grey">
                         <strong>Bytecode Invocation Script</strong>
                     </h3>
                     <div class="border-box-shadow padding-5">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <h3>
+                    <h3 class="text-grey">
                         <strong>Bytecode Verification Script</strong>
                     </h3>
                     <div class="border-box-shadow padding-5">

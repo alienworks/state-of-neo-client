@@ -91,10 +91,57 @@
     background: #337ab7 !important;
 }
 
-li.active a h3 {
+li.active a h3, li.active a h4 {
     color: #337ab7 !important;
 }
 
 .label {
     padding-top: 0.1em !important;
+}
+
+body {
+    padding-top: 50px !important;
+}
+
+.text-warm {
+    color: #079098;
+}
+
+.fas {
+    display: inline-block;
+    font: normal normal normal 14px/1;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+i.fas {
+    text-decoration: none !important;
+}
+
+.box .box-title i.fas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 70px;
+    color: rgba(0,0,0,0.1);
+}
+
+.box {
+    margin-bottom: 0 !important;
+}
+
+.box .box-title {
+    padding-bottom: 10px !important;
+    padding-top: 0 !important;
+}
+
+.section-title {
+    padding-left: 15px !important; 
+    margin-bottom: 10px !important;
+    margin-top: 0 !important;
+}
+
+#aside {
+    top: 0;
 }

@@ -1,22 +1,26 @@
-<div class="row col-md-12 no-margin no-padding">
-    <h2 class="bold text-grey" style="padding-left: 15px; margin-bottom: 10px">ADDRESSES</h2>
-    <div class="col-md-8 col-sm-8 col-xs-12 row no-margin padding-10">
-        <div class="col-md-12 panel-body">
+<div class="row">
+    <h2 class="bold text-grey section-title">ADDRESSES</h2>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="panel-body">
             <ul class="nav nav-pills text-grey">
-                <li class="active"><a data-toggle="tab" href="#last"><h3 class="bold text-center margin-bottom-10 ">LAST ACTIVE</h3></a></li>
-                <li><a data-toggle="tab" href="#top"><h3 class="bold text-center margin-bottom-10 text-grey">TOP 100</h3></a></li>
+                <li class="active"><a data-toggle="tab" href="#last"><h4 class="bold text-center margin-bottom-10 text-grey">LAST ACTIVE</h4></a></li>
+                <li><a data-toggle="tab" href="#top-neo"><h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 NEO</h4></a></li>
+                <li><a data-toggle="tab" href="#top-gas"><h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 GAS</h4></a></li>
             </ul>
             <div class="tab-content" style="padding-top: 15px">
                 <div id="last" class="tab-pane fade in active">
-                    <app-address-list [pageSize]="14"></app-address-list>
+                    <app-address-list-table [pageResults]="activeAddresses" (emitGetPage)="getPage($event)"></app-address-list-table>
                 </div>
-                <div id="top" class="tab-pane fade">
-                    <app-address-top></app-address-top>
+                <div id="top-neo" class="tab-pane fade">
+                    <app-address-top-table [model]="topNeo"></app-address-top-table>
+                </div>
+                <div id="top-gas" class="tab-pane fade">
+                    <app-address-top-table [model]="topGas"></app-address-top-table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12 no-margin padding-10">
+    <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="row no-margin padding-10 col-md-12 panel-body">
             <app-total-gas-claimed></app-total-gas-claimed>
             <app-date-bar-chart [endpoint]="'address/chart'" [label]="'Addresses'"></app-date-bar-chart>
