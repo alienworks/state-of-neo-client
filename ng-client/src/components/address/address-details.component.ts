@@ -59,7 +59,7 @@ export class AddressDetailsComponent implements OnInit {
                 : this.addressDetails.balances.find(x => x.name == name).balance;
     }
 
-    getTokens() {
+    get tokens() {
         return this.addressDetails.balances == null
             ? []
             : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS');
