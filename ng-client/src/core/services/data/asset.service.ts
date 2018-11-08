@@ -27,8 +27,8 @@ export class AssetService {
         });
     }
 
-    public getAssetsPage(page: number = 1, pageSize: number = 10) {
-        return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}`);
+    public getAssetsPage(page: number = 1, pageSize: number = 10, global: boolean = true) {
+        return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
     }
 
     public getAsset(hash: string) {

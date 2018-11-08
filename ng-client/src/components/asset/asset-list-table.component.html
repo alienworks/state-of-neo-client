@@ -2,7 +2,7 @@
     <div *ngIf="isLoading" class="text-center" style="padding-top: 30px">
         <i class="fa-4x fas fa-spinner fa-spin"></i>
     </div>
-    <div class="col-md-12" *ngIf="pageResults && !isLoading">
+    <div class="col-md-12" *ngIf="model && !isLoading">
         <table class="table table-responsive">
             <thead>
                 <tr>
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let asset of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                <tr *ngFor="let asset of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
                     <td><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active"><strong>{{asset.name}}</strong></a></td>
                     <td><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active">{{asset.hash}}</a></td>
                     <td class="text-success">{{asset.totalSupply | number}}</td>
@@ -29,11 +29,11 @@
         <div class="col-md-12 text-center">
             <div style="padding-top: 25px">
                 <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                <pagination-controls (pageChange)="getPage($event)" id="server-{{name}}"></pagination-controls>
             </div>
         </div>
     </div>
-    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">
+    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!model || model.items.length == 0) && !isLoading">
         No assets found
     </div>
 </div>

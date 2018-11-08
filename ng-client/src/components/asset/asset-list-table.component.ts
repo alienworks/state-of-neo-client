@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AssetService } from '../../core/services/data';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { AssetListModel } from '../../models';
 import { PageResultModel } from '../../models';
 
@@ -7,27 +6,33 @@ import { PageResultModel } from '../../models';
     selector: 'app-asset-list-table',
     templateUrl: `./asset-list-table.component.html`
 })
-export class AssetListTableComponent implements OnInit {
-    @Input() pageSize: number;
+export class AssetListTableComponent implements OnChanges {
+    @Input() model: PageResultModel<AssetListModel>;
+    @Input() name: string;
+    @Output() emitModelUpdate: EventEmitter<any> = new EventEmitter();
     isLoading: boolean;
-    pageResults: PageResultModel<AssetListModel>;
 
-    constructor(private assets: AssetService) { }
+    get paginateConfig() {
+        return  { 
+            id: 'server-' + this.name, 
+            itemsPerPage: this.model ? this.model.metaData.PageSize : 16, 
+            currentPage: this.model ? this.model.metaData.PageNumber : 1, 
+            totalItems: this.model ? this.model.metaData.TotalItemCount : 1
+        }
+    };
 
-    ngOnInit(): void {
-        this.getPage(1);
+    constructor() { 
+        this.isLoading = true;
     }
 
-    getPage(page: number): void {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.model.currentValue) {
+            this.isLoading = false;
+        }
+    }
+
+    getPage(page: number) {
         this.isLoading = true;
-        this.assets.getAssetsPage(page, 32)
-            .subscribe(x => {
-                this.pageResults = x.json() as PageResultModel<AssetListModel>;
-                this.isLoading = false;
-                console.log(this.pageResults);
-            }, err => {
-                this.isLoading = false;
-                console.log(err);
-            });
+        this.emitModelUpdate.emit(page);
     }
 }
