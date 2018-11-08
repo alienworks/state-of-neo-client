@@ -3,29 +3,35 @@
     <div class="col-sm-8" style="padding-left: 0">
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey">
-                <div>                  
+                <div class="col-md-8">              
                     <h3 class="text-grey" style="margin-top: 0; font-weight: bold; ">{{addressDetails.address}}</h3>
-                    <a [routerLink]="['/address']" routerLinkActive="router-link-active">
-                        Back to Addresses
-                    </a>  
-                </div>
-                <div class="col-md-offset-2 col-md-2">
-                    <div class="box success">
-                        <div class="box-title noborder">
-                            <h4>NEO {{getBalance('NEO') | number}}</h4>
-                            <small class="block"></small>
-                            <i class="fa fa-globe"></i>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <div class="box success">
+                                <div class="box-title noborder">
+                                    <h4>NEO {{getBalance('NEO') | number}}</h4>
+                                    <small class="block"></small>
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-2 col-md-4">
+                            <div class="box success">
+                                <div class="box-title noborder">
+                                    <h4>GAS {{getBalance('GAS') | number}}</h4>
+                                    <small class="block"></small>
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-offset-4 col-md-2">
-                    <div class="box success">
-                        <div class="box-title noborder">
-                            <h4>GAS {{getBalance('GAS') | number}}</h4>
-                            <small class="block"></small>
-                            <i class="fa fa-globe"></i>
-                        </div>
+
+                    <div class="row">
+
                     </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <app-pie-chart [endpoint]="transactionsEndpoint" [label]="'Total Transactions - ' + transactions.metaData.totalItemCount"></app-pie-chart>
                 </div>
                 <div class="row">
                     <div class="col-md-12" *ngFor="let balance of getTokens()">
@@ -43,7 +49,7 @@
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [pageResults]="transactions"></app-tx-list>
+                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
             </div>
         </div>
     </div>

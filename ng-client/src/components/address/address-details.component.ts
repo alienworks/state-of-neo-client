@@ -35,6 +35,22 @@ export class AddressDetailsComponent implements OnInit {
         });
     }
 
+    get transactionsEndpoint() {
+        return 'address/TransactionsChart/' + this.address;
+    }
+
+    get globalBalances() {
+        return this.addressDetails.balances == null
+            ? []
+            : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS' && x.name != 'GAS');
+    }
+
+    get nepFiveTokens() {
+        return this.addressDetails.balances == null
+            ? []
+            : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS' && x.name != 'GAS');
+    }
+
     getBalance(name: string) {
         return this.addressDetails.balances == null 
             ? 0 

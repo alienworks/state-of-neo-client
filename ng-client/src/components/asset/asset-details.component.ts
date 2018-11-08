@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AssetService } from '../../core/services/data';
+import { AssetService, TxService } from '../../core/services/data';
 import { AssetDetailsModel } from '../../models';
+import { BaseTxModel } from '../../models';
+import { PageResultModel } from '../../models';
 
 @Component({
     templateUrl: `./asset-details.component.html`
@@ -10,9 +12,11 @@ export class AssetDetailsComponent implements OnInit {
     isLoading: boolean;
     hash: string;
     model: AssetDetailsModel = new AssetDetailsModel();
+    transactions: PageResultModel<BaseTxModel>;
 
     constructor(private route: ActivatedRoute,
-        private assets: AssetService) { }
+        private assets: AssetService,
+        private txService: TxService) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -27,5 +31,15 @@ export class AssetDetailsComponent implements OnInit {
                     console.log(this.model);
                 });
         });
+    }
+
+    getTransactionsPage(page: number) {
+        this.txService.getPage(page, 10)
+            .subscribe(x => {
+                this.transactions = x.json() as PageResultModel<BaseTxModel>;
+            }, err => {
+                console.log(err);
+            });
+
     }
 }
