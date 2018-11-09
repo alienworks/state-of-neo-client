@@ -40,9 +40,12 @@ export class DateBarChartComponent implements OnInit {
 
         this.periodOptions = new Array(31).fill(1)
             .map((x, i) => {
-                const selected = i === 0 ? true : false;
-                return { key: i + 6, selected };
-            });
+                if (i % 6 === 0) {
+                    const selected = i === 0 ? true : false;
+                    return { key: i + 6, selected };
+                }
+            })
+            .filter(x => x !== undefined);
 
         this.getChart();
     }
