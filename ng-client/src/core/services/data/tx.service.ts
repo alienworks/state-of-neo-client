@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import * as CONST from './../../common/constants';
+import { UnitOfTime } from '../../../models';
 
 @Injectable()
 export class TxService {
@@ -21,6 +22,14 @@ export class TxService {
 
     getTotalGasClaimed() {
         return this.http.get(`${CONST.BASE_URL}/api/transactions/totalclaimed`);
+    }
+
+    total(): any {
+        return this.http.get(`${CONST.BASE_URL}/api/transactions/total`);
+    }
+
+    averagePer(unit: UnitOfTime): any {
+        return this.http.get(`${CONST.BASE_URL}/api/transactions/averageper?unit=${unit}`);
     }
 }
 

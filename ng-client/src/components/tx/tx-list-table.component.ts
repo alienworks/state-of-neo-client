@@ -9,12 +9,12 @@ export class TxListTableComponent implements OnChanges {
     @Input() model: PageResultModel<BaseTxModel>;
     @Output() emitGetPage: EventEmitter<any> = new EventEmitter();
     isLoading: boolean;
-    
+
     constructor() {
         this.isLoading = true;
     }
 
-    ngOnChanges(changes: SimpleChanges) {        
+    ngOnChanges(changes: SimpleChanges) {
         if (changes.model.currentValue) {
             this.isLoading = false;
         }

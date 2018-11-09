@@ -42,27 +42,27 @@ export class AddressDetailsComponent implements OnInit {
     get globalBalances() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS' && x.name != 'GAS');
+            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS' && x.name !== 'GAS');
     }
 
     get nepFiveTokens() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS' && x.name != 'GAS');
+            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS' && x.name !== 'GAS');
     }
 
     getBalance(name: string) {
-        return this.addressDetails.balances == null 
-            ? 0 
-            : this.addressDetails.balances.find(x => x.name == name) == null 
-                ? 0 
-                : this.addressDetails.balances.find(x => x.name == name).balance;
+        return this.addressDetails.balances == null
+            ? 0
+            : this.addressDetails.balances.find(x => x.name === name) == null
+                ? 0
+                : this.addressDetails.balances.find(x => x.name === name).balance;
     }
 
     get tokens() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.name != 'NEO' && x.name != 'GAS');
+            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS');
     }
 
     getTransactionsPage(page: number): void {

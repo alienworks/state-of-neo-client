@@ -36,4 +36,16 @@ export class BlockService {
         if (typeof input === 'number') { type = 'byheight'; }
         return this.http.get(`${CONST.BASE_URL}/api/block/${type}/${input}`);
     }
+
+    public getAverageTxCount() {
+        return this.http.get(`${CONST.BASE_URL}/api/block/averagetxcount`);
+    }
+
+    public getAverageSize() {
+        return this.http.get(`${CONST.BASE_URL}/api/block/averagesize`);
+    }
+
+    public getAverageTime() {
+        return this.http.get(`${CONST.BASE_URL}/api/block/averagetime`);
+    }
 }

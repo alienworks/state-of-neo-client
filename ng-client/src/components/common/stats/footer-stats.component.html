@@ -1,0 +1,73 @@
+<div class="row" style="margin-top: 15px">
+    <div class="col-md-3" style="padding-right: 10px">
+        <app-footer-stats-box [title]="'Blocks'" [subtitle]="'blocks to date'" [icon]="'cube'" [link]="'blocks'"
+            [value]="latestBlock" *ngIf="latestBlock">
+        </app-footer-stats-box>
+        <app-loader *ngIf="!latestBlock"></app-loader>
+        <div class="row no-margin footer-stats-table-row">
+            <app-footer-stats-tr *ngIf="avgTxCount" [title]="'tx per block'" [value]="avgTxCount">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!avgTxCount" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="avgTime" [title]="'block time (seconds)'" [value]="avgTime">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!avgTime" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="avgSize" [title]="'block size (bytes)'" [value]="avgSize">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!avgSize" [iconScale]="1"></app-loader>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left: 10px; padding-right: 10px">
+        <app-footer-stats-box [title]="'Transactions'" [subtitle]="'transactions total'" [icon]="'handshake'" [link]="'transactions'"
+            [value]="totalTx" *ngIf="totalTx">
+        </app-footer-stats-box>
+        <app-loader *ngIf="!totalTx"></app-loader>
+        <div class="row no-margin footer-stats-table-row">
+            <app-footer-stats-tr *ngIf="avgPerSecond" [title]="'tx per (second)'" [value]="avgPerSecond">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!avgPerSecond" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="avgPerDay" [title]="'tx per (day)'" [value]="avgPerDay">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!avgPerDay" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="claimedGas" [title]="'total gas claimed'" [value]="claimedGas">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!claimedGas" [iconScale]="1"></app-loader>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left: 10px; padding-right: 10px">
+        <app-footer-stats-box [title]="'Addresses'" [subtitle]="'addresses created'" [icon]="'user'" [link]="'address'"
+            [value]="totalAddressCount" *ngIf="totalAddressCount">
+        </app-footer-stats-box>
+        <app-loader *ngIf="!latestBlock"></app-loader>
+        <div class="row no-margin footer-stats-table-row">
+            <app-footer-stats-tr *ngIf="addrCreatedLastDay" [title]="'new last day'" [value]="addrCreatedLastDay">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!addrCreatedLastDay" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="addrCreatedLastMonth" [title]="'new last month'" [value]="addrCreatedLastMonth">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!addrCreatedLastMonth" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="lastActiveAddresses" [title]="'active last 3 months'" [value]="lastActiveAddresses">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!lastActiveAddresses" [iconScale]="1"></app-loader>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left: 10px; ">
+        <app-footer-stats-box [title]="'Assets'" [subtitle]="'unique assets'" [icon]="'dollar-sign'" [link]="'asset'"
+            [value]="17" *ngIf="latestBlock">
+        </app-footer-stats-box>
+        <app-loader *ngIf="!latestBlock"></app-loader>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-md-8"></th>
+                    <th class="col-md-4"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><small>total transactions</small></td>
+                    <td class="text-right"><small class="badge">286,832</small></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
