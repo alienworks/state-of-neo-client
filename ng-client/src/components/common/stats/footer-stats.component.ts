@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BlockService, TxService, AddressService } from 'src/core/services/data';
-import { UnitOfTime } from '../../../models';
+import { BlockService, TxService, AddressService, AssetService } from 'src/core/services/data';
+import { UnitOfTime, AssetType } from '../../../models';
 
 @Component({
     selector: `app-footer-stats`,
@@ -26,9 +26,16 @@ export class FooterStatsComponent implements OnInit {
     addrCreatedLastDay: number;
     addrCreatedLastMonth: number;
 
+    // Assets
+    totalAssetCount: number;
+    neoAndGasTxCount: number;
+    nep5Assets = -1;
+    nep5AssetTxCount = -1;
+
     constructor(private blockService: BlockService,
         private txService: TxService,
-        private addrService: AddressService) { }
+        private addrService: AddressService,
+        private assetService: AssetService) { }
 
     ngOnInit(): void {
         this.subscribeToEvents();
@@ -60,6 +67,18 @@ export class FooterStatsComponent implements OnInit {
             .subscribe(x => { this.addrCreatedLastDay = x.json() as number; });
         this.addrService.getCreatedLast(UnitOfTime.Month)
             .subscribe(x => { this.addrCreatedLastMonth = x.json() as number; });
+
+        // Assets
+        this.assetService.getAssetCount([])
+            .subscribe(x => { this.totalAssetCount = x.json() as number; });
+        this.assetService.getAssetTxCount([AssetType.GAS, AssetType.NEO])
+            .subscribe(x => { this.neoAndGasTxCount = x.json() as number; });
+        this.assetService.getAssetCount([AssetType.NEP5])
+            .subscribe(x => {
+                this.nep5Assets = x.json() as number;
+            });
+        this.assetService.getAssetTxCount([AssetType.NEP5])
+            .subscribe(x => { this.nep5AssetTxCount = x.json() as number; });
     }
 
     private subscribeToEvents() {

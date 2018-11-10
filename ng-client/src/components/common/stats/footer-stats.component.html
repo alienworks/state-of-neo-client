@@ -52,22 +52,19 @@
     </div>
     <div class="col-md-3" style="padding-left: 10px; ">
         <app-footer-stats-box [title]="'Assets'" [subtitle]="'unique assets'" [icon]="'dollar-sign'" [link]="'asset'"
-            [value]="17" *ngIf="latestBlock">
+            [value]="totalAssetCount" *ngIf="totalAssetCount">
         </app-footer-stats-box>
         <app-loader *ngIf="!latestBlock"></app-loader>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-md-8"></th>
-                    <th class="col-md-4"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><small>total transactions</small></td>
-                    <td class="text-right"><small class="badge">286,832</small></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row no-margin footer-stats-table-row">
+            <app-footer-stats-tr *ngIf="neoAndGasTxCount" [title]="'neo/gas transactions'" [value]="neoAndGasTxCount">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="!neoAndGasTxCount" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="nep5Assets >= 0" [title]="'nep5 tokens'" [value]="nep5Assets">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="nep5Assets < 0" [iconScale]="1"></app-loader>
+            <app-footer-stats-tr *ngIf="nep5AssetTxCount >= 0" [title]="'nep5 transactions'" [value]="nep5AssetTxCount">
+            </app-footer-stats-tr>
+            <app-loader *ngIf="nep5AssetTxCount < 0" [iconScale]="1"></app-loader>
+        </div>
     </div>
 </div>
