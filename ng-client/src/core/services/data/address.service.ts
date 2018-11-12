@@ -4,6 +4,7 @@ import { NodeService } from './node.service';
 import { Http } from '@angular/http';
 
 import * as CONST from '../../common/constants';
+import { UnitOfTime } from '../../../models';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +48,17 @@ export class AddressService {
         return this.http.post(`${CONST.BASE_URL}/api/address/chart`, {
             unitOfTime: 1
         });
+    }
+
+    public getActive() {
+        return this.http.get(`${CONST.BASE_URL}/api/address/active`);
+    }
+
+    public getCreated() {
+        return this.http.get(`${CONST.BASE_URL}/api/address/created`);
+    }
+
+    public getCreatedLast(unit: UnitOfTime) {
+        return this.http.get(`${CONST.BASE_URL}/api/address/createdlast?unit=${unit}`);
     }
 }

@@ -1,0 +1,11 @@
+<div class="box default">
+    <div class="box-title">
+        <!-- add .noborder class if box-body is removed -->
+        <h4><strong>{{title}}</strong></h4>
+        <small class="block">{{value | number}} {{subtitle}}</small>
+        <i class="fas fa-{{icon}}"></i>
+    </div>
+    <div class="box-body text-center" style="padding-top: 10px">
+        <a routerLink="/{{link}}" routerLinkActive="router-link-active" class="btn btn-xs btn-success">more</a>
+    </div>
+</div>

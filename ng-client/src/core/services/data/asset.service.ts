@@ -4,6 +4,7 @@ import { NodeService } from './node.service';
 import { Http } from '@angular/http';
 
 import * as CONST from '../../common/constants';
+import { AssetType } from '../../../models';
 
 @Injectable({
     providedIn: 'root'
@@ -27,8 +28,8 @@ export class AssetService {
         });
     }
 
-    public getAssetsPage(page: number = 1, pageSize: number = 10) {
-        return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}`);
+    public getAssetsPage(page: number = 1, pageSize: number = 10, global: boolean = true) {
+        return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
     }
 
     public getAsset(hash: string) {
@@ -39,5 +40,13 @@ export class AssetService {
         return this.http.post(`${CONST.BASE_URL}/api/assets/chart`, {
             unitOfTime: 1
         });
+    }
+
+    public getAssetCount(type: AssetType[]) {
+        return this.http.post(`${CONST.BASE_URL}/api/assets/count`, type);
+    }
+
+    public getAssetTxCount(type: AssetType[]) {
+        return this.http.post(`${CONST.BASE_URL}/api/assets/txcount`, type);
     }
 }

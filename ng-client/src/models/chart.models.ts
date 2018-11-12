@@ -13,6 +13,7 @@ export class ChartFilterModel {
 }
 
 export enum UnitOfTime {
+    Second,
     Hour,
     Day,
     Month

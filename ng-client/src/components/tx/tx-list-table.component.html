@@ -1,0 +1,45 @@
+
+<div class="row">
+    <div class="col-md-12" >
+        <app-loader *ngIf="isLoading"></app-loader>
+        <table class="table table-responsive" *ngIf="!isLoading">
+            <thead>
+                <tr>
+                    <th class="col-md-1">
+                        Type
+                    </th>
+                    <th class="col-md-9">
+                        Hash
+                    </th>
+                    <th class="col-md-2">
+                        Time
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tx of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
+                    <td style="padding-top: 5px; padding-bottom: 5px">
+                        <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="font-size: 1.8em">
+                            <app-tx-icon [type]="tx.type"></app-tx-icon>
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px">
+                        <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" class="text-grey">
+                            <strong>{{tx.hash}}</strong>
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
+                        <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{tx.finalizedAt | timeAgo}}</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="col-md-12 text-center">
+            <div style="padding-top: 25px">
+                <div class="spinner" [ngClass]="{ 'hidden': !isLoading }"></div>
+                <pagination-controls (pageChange)="update($event)" id="server"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

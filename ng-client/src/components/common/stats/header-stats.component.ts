@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BlockService } from '../../core/services/data/block.service';
-import { NodeService } from '../../core/services/data/node.service';
-import { BlocksSignalRService } from '../../core/services/signal-r/blocks-signal-r.service';
 
-import * as CONST from '../../core/common/constants';
-import { HeaderInfoModel } from '../../models';
+import { BlockService, NodeService } from 'src/core/services/data';
+import { HeaderInfoModel } from 'src/models';
+import { BlocksSignalRService } from 'src/core/services/signal-r';
+
+import * as CONST from 'src/core/common/constants';
 
 declare var $;
 

@@ -2,7 +2,7 @@
     <h2 class="bold text-grey section-title">BLOCKS</h2>
     <div class="col-md-8">
         <div class="panel-body" *ngIf="pageResults && !isLoading">
-            <div class="col-md-3 col-sm-3 col-xs-4" style="padding-left: 10px; padding-right: 10px; margin-bottom: 20px; " *ngFor="let block of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+            <div class="col-md-3 col-sm-3 col-xs-4" style="padding-left: 10px; padding-right: 10px; margin-bottom: 20px; " *ngFor="let block of pageResults?.items | paginate: { id: 'server', itemsPerPage: pageResults?.metaData.pageSize, currentPage: pageResults?.metaData.pageNumber, totalItems: pageResults?.metaData.totalItemCount }">
                 <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
                     <div class="col-md-12 row no-margin padding-10 border-box-shadow">
                         <div class="col-md-7 col-sm-7 col-xs-7" style="margin-bottom: 10px;">

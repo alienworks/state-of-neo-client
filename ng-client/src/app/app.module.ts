@@ -3,17 +3,21 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 
-import { TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent } from '../components/tx';
+import {
+  TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
+  TotalGasClaimedComponent, TxListTableComponent
+} from '../components/tx';
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -21,10 +25,11 @@ import {
   AddressIndexComponent, AddressDetailsComponent, AddressListComponent,
   AddressListItemComponent, AddressTopComponent, AddressListTableComponent, AddressTopTableComponent
 } from '../components/address';
-import { AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent } from '../components/asset';
+import {
+  AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent
+} from '../components/asset';
 
 // Services
-import { DatePipe } from '@angular/common';
 import { NetService } from '../core/services';
 import {
   NodeRpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
@@ -42,19 +47,19 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     AppComponent,
     HomeComponent,
     // Common
-    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent,
-    DateBarChartComponent, LoaderComponent, PieChartComponent,
+    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
+    FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent,
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
     BlockListComponent, BlockDetailsComponent,
     // Address
-    AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent, 
+    AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent,
     AddressTopComponent, AddressListTableComponent, AddressTopTableComponent,
     // Assets
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
-    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent, TxListTableComponent,
     // Libs
     TimeAgoPipe
   ],

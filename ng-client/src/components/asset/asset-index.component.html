@@ -2,10 +2,21 @@
     <h2 class="bold text-grey section-title">ASSETS</h2>
     <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="panel-body">
-            <app-asset-list-table [pageSize]="16"></app-asset-list-table>
+            <ul class="nav nav-pills text-grey">
+                <li class="active"><a data-toggle="tab" href="#global"><h4 class="bold text-center margin-bottom-10 text-grey">GLOBAL</h4></a></li>
+                <li><a data-toggle="tab" href="#nep-5"><h4 class="bold text-center margin-bottom-10 text-grey">NEP-5</h4></a></li>
+            </ul>
+            <div class="tab-content" style="padding-top: 15px">
+                <div id="global" class="tab-pane fade in active">
+                    <app-asset-list-table [model]="global" [name]="'global'" (emitModelUpdate)="getGlobalPage($event)"></app-asset-list-table>
+                </div>
+                <div id="nep-5" class="tab-pane fade">
+                    <app-asset-list-table [model]="nep" [name]="'nep'" (emitModelUpdate)="getNepPage($event)"></app-asset-list-table>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left: 10px">
         <div class="panel-body">
             <app-total-gas-claimed></app-total-gas-claimed>
             <app-date-bar-chart [endpoint]="'address/chart'" [label]="'Addresses'"></app-date-bar-chart>

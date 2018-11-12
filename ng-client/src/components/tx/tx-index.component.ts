@@ -15,7 +15,7 @@ export class TxIndexComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this.txService.getPage(page, 24)
+        this.txService.getPage(page, 14)
             .subscribe(x => {
                 this.transactions = x.json() as PageResultModel<BaseTxModel>;
             }, err => {

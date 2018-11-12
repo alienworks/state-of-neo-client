@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PageResultModel, BaseTxModel } from '../../models';
 
 @Component({
@@ -6,5 +6,10 @@ import { PageResultModel, BaseTxModel } from '../../models';
     templateUrl: `./tx-list.component.html`
 })
 export class TxListComponent {
-    @Input() pageResults: PageResultModel<BaseTxModel>;
+    @Input() model: PageResultModel<BaseTxModel>;
+    @Output() emitGetPage: EventEmitter<any> = new EventEmitter();
+
+    getPage(page: number) {
+        this.emitGetPage.emit(page);
+    }
 }

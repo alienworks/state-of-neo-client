@@ -3,26 +3,55 @@
     <div class="col-sm-8" style="padding-left: 0">
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey">
-                <div>                  
+                <div class="col-md-8">              
                     <h3 class="text-grey" style="margin-top: 0; font-weight: bold; ">{{addressDetails.address}}</h3>
-                    <a [routerLink]="['/address']" routerLinkActive="router-link-active">
-                        Back to Addresses
-                    </a>  
-                </div>
-                <div class="col-md-6">
-                    <div class="custom-vcenter" style="font-size: 32px">
-                        NEO {{getBalance('NEO') | number}}
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-4">
+                            <div class="box success">
+                                <div class="box-title noborder">
+                                    <h4>NEO {{getBalance('NEO') | number}}</h4>
+                                    <small class="block"></small>
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-2 col-md-4">
+                            <div class="box success">
+                                <div class="box-title noborder">
+                                    <h4>GAS {{getBalance('GAS') | number}}</h4>
+                                    <small class="block"></small>
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px" *ngIf="tokens && tokens.length">
+                        <div class="col-md-offset-1 col-md-10">
+                            <h4 class="text-grey " style="margin-bottom: 5px"><strong>NEP-5 Tokens</strong></h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-8">Name</th>
+                                        <th class="col-md-4">Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let token of tokens">
+                                        <td>
+                                            <strong>{{token.name}}</strong>
+                                        </td>
+                                        <td>
+                                            {{token.balance}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="custom-vcenter" style="font-size: 32px">
-                        GAS {{getBalance('GAS') | number}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12" *ngFor="let balance of getTokens()">
-                        {{balance.name}} : {{balance.balance}}
-                    </div>
+                <div class="col-md-4 text-right">
+                    <app-pie-chart [endpoint]="transactionsEndpoint" [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount"></app-pie-chart>
                 </div>
             </div>
         </div>
@@ -35,7 +64,7 @@
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [pageResults]="transactions"></app-tx-list>
+                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
             </div>
         </div>
     </div>

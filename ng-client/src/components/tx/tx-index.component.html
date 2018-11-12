@@ -2,7 +2,7 @@
     <h2 class="bold text-grey section-title">TRANSACTIONS</h2>
     <div class="col-md-8 col-sm-6 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 panel-body">
-            <app-tx-list [pageResults]="transactions"></app-tx-list>
+            <app-tx-list-table [model]="transactions" (emitGetPage)="getPage($event)"></app-tx-list-table>
         </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
