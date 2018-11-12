@@ -53,9 +53,9 @@ export class FooterStatsComponent implements OnInit {
 
         // Addresses
         this.addrService.getCreated()
-            .subscribe(x => { this.totalAddressCount = x.json() as number; });
-        // this.addrService.getActive()
-        //     .subscribe(x => { this.lastActiveAddresses = x.json() as number; });
+            .subscribe(x => this.totalAddressCount = x.json() as number);
+        this.addrService.getActive()
+             .subscribe(x => { this.lastActiveAddresses = x.json() as number; });
         this.addrService.getCreatedLast(UnitOfTime.Day)
             .subscribe(x => { this.addrCreatedLastDay = x.json() as number; });
         this.addrService.getCreatedLast(UnitOfTime.Month)
