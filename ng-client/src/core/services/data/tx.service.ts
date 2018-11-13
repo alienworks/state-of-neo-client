@@ -8,11 +8,12 @@ import { UnitOfTime } from '../../../models';
 export class TxService {
     constructor(private http: Http) { }
 
-    getPage(page: number = 1, pageSize: number = 10, blockHash: string = null, address: string = null) {
+    getPage(page: number = 1, pageSize: number = 10, blockHash: string = null, address: string = null, asset: string = null) {
         let url = `${CONST.BASE_URL}/api/transactions/list?page=${page}&pageSize=${pageSize}`;
         if (blockHash) { url += `&blockHash=${blockHash}`; }
         if (address) { url += `&address=${address}`; }
-
+        if (asset) { url += `&asset=${asset}`; }
+console.log(url);
         return this.http.get(url);
     }
 

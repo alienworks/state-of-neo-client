@@ -29,7 +29,7 @@
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [model]="" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
+                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
             </div>
         </div>
     </div>

@@ -22,6 +22,8 @@ export class AssetDetailsComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.hash = params['hash'];
 
+            this.getTransactionsPage(1);
+
             this.isLoading = true;
             this.assets.getAsset(this.hash)
                 .subscribe(x => {
@@ -34,12 +36,11 @@ export class AssetDetailsComponent implements OnInit {
     }
 
     getTransactionsPage(page: number) {
-        this.txService.getPage(page, 10)
+        this.txService.getPage(page, 10, null, null, this.hash)
             .subscribe(x => {
                 this.transactions = x.json() as PageResultModel<BaseTxModel>;
             }, err => {
                 console.log(err);
             });
-
     }
 }
