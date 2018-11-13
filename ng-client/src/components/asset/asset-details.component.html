@@ -2,22 +2,86 @@
     <h2 class="bold text-grey section-title">ASSET</h2>
     <div class="col-sm-8" style="padding-left: 0">
         <div class="panel panel-default" style="margin-bottom: 0">
-            <div class="panel-body">
-                <div>                  
-                    <h2 style="margin-top: 0; font-weight: bold; color: #333">{{model.name}}</h2>
-                    <a [routerLink]="['/asset']" routerLinkActive="router-link-active">
-                        <h4 style="font-weight: bold; color: #333">Back to Assets</h4>
-                    </a>  
-                </div>   
-                <div>
-                    Total supply: {{model.totalSupply | number}}
-                </div>  
-                <div>
-                    Transactions: {{model.transactionsCount | number}}
-                </div>   
-                <div>
-                    Addresses: {{model.addressesCount | number}}
-                </div>              
+            <div class="panel-body text-grey">
+                <h3 class="text-grey" style="margin-top: 0; font-weight: bold; " [style.margin-bottom]="model.symbol ? 0 : '32px'">{{model.name}}</h3>
+                <h4 *ngIf="model.symbol" class="text-grey" style="margin-top: 0; ">({{model.symbol}})</h4>
+                <div class="col-md-4">
+                    <table class="table" *ngIf="!isLoading">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Total supply
+                                </td>
+                                <td>
+                                    {{model.totalSupply | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Decimals
+                                </td>
+                                <td>
+                                    {{model.decimals | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total addresses
+                                </td>
+                                <td>
+                                    {{model.addressesCount | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Active addresses last month
+                                </td>
+                                <td>
+                                    {{model.activeAddressesLastMonth | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    New addresses last month
+                                </td>
+                                <td>
+                                    {{model.newAddressesLastMonth | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total transactions
+                                </td>
+                                <td>
+                                    {{model.transactionsCount | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Average transacted value
+                                </td>
+                                <td>
+                                    {{model.averageTransactedValue | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Median transacted value
+                                </td>
+                                <td>
+                                    {{model.medianTransactedValue | number}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <app-loader *ngIf="isLoading"></app-loader>
+                </div>
+                <div class="col-md-4">
+                    <app-date-bar-chart *ngIf="hash" [endpoint]="'address/assetchart?assetHash=' + hash" [label]="'Addresses'"></app-date-bar-chart>                
+                </div>
+                <div class="col-md-4">
+                    <app-date-bar-chart *ngIf="hash" [endpoint]="'transactions/assetchart?assetHash=' + hash" [label]="'Transactions'"></app-date-bar-chart>                
+                </div>
             </div>
         </div>
     </div>
@@ -25,7 +89,7 @@
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Last Transactions
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Transactions
                 </h2>
             </header>
             <div class="panel-body">
