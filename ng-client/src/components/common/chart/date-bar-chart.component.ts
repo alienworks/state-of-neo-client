@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { ChartService } from './../../../core/services/data';
@@ -26,11 +26,12 @@ export class DateBarChartComponent implements OnInit {
     timeTypes: any[];
     periodOptions: any[];
 
-    constructor(private datePipe: DatePipe,
+    constructor(
+        private datePipe: DatePipe,
         private chartService: ChartService) { }
 
     ngOnInit(): void {
-        this.id = this.endpoint.toLowerCase().replace(/\//g, '-');
+        this.id = this.endpoint.toLowerCase().replace(/\/?=/g, '-');
         this.timeTypes = Object.keys(UnitOfTime)
             .filter(x => isNaN(Number(x)))
             .slice(1)
