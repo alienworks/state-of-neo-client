@@ -22,6 +22,7 @@ export class BlockDetailsComponent implements OnInit {
         this.isLoading = true;
         this.route.params.subscribe(params => {
             this.index = +params['index'];
+            if (params['index'].startsWith('0x')) { this.index = params['index']; }
             this.blockService.getBlock(this.index)
                 .subscribe(x => {
                     this.block = x.json() as BlockDetailsModel;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockService, TxService, AddressService, AssetService } from 'src/core/services/data';
-import { UnitOfTime, AssetType } from '../../../models';
+import { UnitOfTime, AssetTypeEnum } from '../../../models';
 
 @Component({
     selector: `app-footer-stats`,
@@ -71,13 +71,13 @@ export class FooterStatsComponent implements OnInit {
         // Assets
         this.assetService.getAssetCount([])
             .subscribe(x => { this.totalAssetCount = x.json() as number; });
-        this.assetService.getAssetTxCount([AssetType.GAS, AssetType.NEO])
+        this.assetService.getAssetTxCount([AssetTypeEnum.GAS, AssetTypeEnum.NEO])
             .subscribe(x => { this.neoAndGasTxCount = x.json() as number; });
-        this.assetService.getAssetCount([AssetType.NEP5])
+        this.assetService.getAssetCount([AssetTypeEnum.NEP5])
             .subscribe(x => {
                 this.nep5Assets = x.json() as number;
             });
-        this.assetService.getAssetTxCount([AssetType.NEP5])
+        this.assetService.getAssetTxCount([AssetTypeEnum.NEP5])
             .subscribe(x => { this.nep5AssetTxCount = x.json() as number; });
     }
 

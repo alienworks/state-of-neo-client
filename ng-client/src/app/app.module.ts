@@ -12,7 +12,7 @@ import { HomeComponent } from 'src/components/home.component';
 
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
-  TotalGasClaimedComponent, TxListTableComponent
+  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent
 } from '../components/tx';
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
@@ -32,7 +32,7 @@ import {
 // Services
 import { NetService } from '../core/services';
 import {
-  NodeRpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
+  RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
@@ -59,7 +59,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     // Assets
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
-    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent, TxListTableComponent,
+    TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
+    TxListTableComponent, TxUnconfirmedComponent,
     // Libs
     TimeAgoPipe
   ],
@@ -80,6 +81,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
       { path: 'block/:index', component: BlockDetailsComponent },
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
+      { path: 'transaction/:hash/:nodeid', component: TxUnconfirmedComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
     ])
@@ -94,7 +96,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     NodesSignalRService, BlocksSignalRService, AddressService, AssetService,
     TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
     // Data services
-    NodeRpcService, NodeService, BlockService, TxService, ChartService
+    RpcService,
+    NodeService, BlockService, TxService, ChartService
   ],
   bootstrap: [AppComponent]
 })

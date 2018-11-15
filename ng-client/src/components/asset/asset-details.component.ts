@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssetService, TxService } from '../../core/services/data';
-import { AssetDetailsModel } from '../../models';
-import { BaseTxModel } from '../../models';
+import { BaseTxModel, AssetDetailsModel } from '../../models';
 import { PageResultModel } from '../../models';
 
 @Component({
