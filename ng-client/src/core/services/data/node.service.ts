@@ -90,6 +90,7 @@ export class NodeService {
 
             x.displayText = this.getNodeDisplayText(x);
             x.p2pEnabled = true;
+            x.isWalletOpen = false;
             that.allNodes.push(x);
         });
     }
@@ -184,6 +185,15 @@ export class NodeService {
                 x.lastResponseTime = Date.now();
                 const response = res.json();
                 x.pendingTransactions = response.result;
+            });
+    }
+
+    public getWalletState(x: any) {
+        this._nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
+            .subscribe(res => {
+                x.isWalletOpen = true;
+            }, err => {
+                x.isWalletOpen = false;
             });
     }
 

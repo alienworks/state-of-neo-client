@@ -10,6 +10,7 @@ export class NodeDetailsComponent implements OnInit {
     id: number;
     node: any;
     bestBlock: number;
+    p = 1;
 
     constructor(private route: ActivatedRoute,
         private _nodeService: NodeService,
@@ -50,6 +51,7 @@ export class NodeDetailsComponent implements OnInit {
             this._nodeService.getBlockCount(this.node);
             this._nodeService.getVersion(this.node);
             this._nodeService.getConnectionsCount(this.node);
+            this._nodeService.getWalletState(this.node);
         }
     }
 }
