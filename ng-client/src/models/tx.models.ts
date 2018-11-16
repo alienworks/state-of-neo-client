@@ -1,3 +1,5 @@
+import { TransactedAssetModel } from './asset.models';
+
 export class BaseTxModel {
     hash: string;
     size: number;
@@ -6,22 +8,59 @@ export class BaseTxModel {
     finalizedAt: Date;
 }
 
-export class TxDetailsModel extends BaseTxModel {
-    networkFee: number;
-    systemFee: number;
-    version: number;
-    blockHash: string;
-    blockHeight: number;
+export class TxAssetsModel extends BaseTxModel {
     assets: TransactedAssetModel[];
     globalIncomingAssets: TransactedAssetModel[];
     globalOutgoingAssets: TransactedAssetModel[];
 }
 
-export class TransactedAssetModel {
-    amount: number;
-    assetType: AssetTypeEnum;
-    fromAddress: string;
-    toAddress: string;
+export class TxDetailsModel extends TxAssetsModel {
+    networkFee: number;
+    systemFee: number;
+    version: number;
+    blockHash: string;
+    blockHeight: number;
+}
+
+export class TxUnconfirmedDetailsViewModel {
+    txid: string;
+    size: number;
+    type: TxTypeEnum;
+    version: string;
+    attributes: TxAttribute[];
+    vin: TxVin[];
+    vout: TxVout[];
+    sys_fee: number;
+    net_fee: number;
+    scripts: TxScript[];
+    script: string;
+    gas: string;
+
+    blockhash: string;
+    confirmations: string;
+    blocktime: number;
+}
+
+export class TxVout {
+    n: number;
+    value: number;
+    asset: string;
+    address: string;
+}
+
+export class TxVin {
+    txid: string;
+    vout: number;
+}
+
+export class TxAttribute {
+    usage: string;
+    data: string;
+}
+
+export class TxScript {
+    invocation: string;
+    verification: string;
 }
 
 export enum TxTypeEnum {
@@ -34,10 +73,4 @@ export enum TxTypeEnum {
     StateTransaction = 144,
     PublishTransaction = 208,
     InvocationTransaction = 209
-}
-
-export enum AssetTypeEnum {
-    NEO = 0,
-    GAS = 1,
-    NEP5 = 2
 }

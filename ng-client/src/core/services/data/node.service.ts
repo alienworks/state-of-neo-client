@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
 import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
-import { NodeRpcService } from './node-rpc.service';
+import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
 import { Observable } from 'rxjs';
@@ -20,11 +20,10 @@ export class NodeService {
 
     constructor(private http: Http,
         private _nodeSignalRService: NodesSignalRService,
-        private _nodeRpcService: NodeRpcService) {
+        private _nodeRpcService: RpcService) {
 
         this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
-                const nodes = res.json();
                 this.updateAllNodes(res.json());
                 this.sort();
                 this.updateNodesData();
@@ -71,7 +70,7 @@ export class NodeService {
             this.getConnectionsCount(x);
             this.getVersion(x);
             this.getBlockCount(x);
-            this.getPeers(x);
+            // this.getPeers(x);
             this.sort();
             console.log(x.url, x);
         });
@@ -91,6 +90,7 @@ export class NodeService {
 
             x.displayText = this.getNodeDisplayText(x);
             x.p2pEnabled = true;
+            x.isWalletOpen = false;
             that.allNodes.push(x);
         });
     }
@@ -110,7 +110,7 @@ export class NodeService {
     }
 
     public getPeers(x: any) {
-        this._nodeRpcService.callRpcMethod(x.successUrl, 'getpeers', 1)
+        this._nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
                 const json = res.json();
 
@@ -131,19 +131,8 @@ export class NodeService {
             });
     }
 
-    private checkP2PStatus(x): void {
-        if (x && x.ip) {
-            this.http.post(`${CONST.BASE_URL}/api/p2pstatus/checkip/${x.ip}`, null)
-                .subscribe(res => {
-                    x.p2pEnabled = res.json();
-                }, err => {
-                    console.log(err);
-                });
-        }
-    }
-
     public getConnectionsCount(x: any) {
-        this._nodeRpcService.callRpcMethod(x.successUrl, 'getconnectioncount', 1)
+        this._nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
 
@@ -160,7 +149,7 @@ export class NodeService {
 
     public getVersion(x: any) {
         const requestStart = Date.now();
-        this._nodeRpcService.callRpcMethod(x.successUrl, 'getversion', 3)
+        this._nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
             .subscribe(res => {
                 const now = Date.now();
                 x.lastResponseTime = now;
@@ -176,7 +165,7 @@ export class NodeService {
     }
 
     public getBlockCount(x: any) {
-        this._nodeRpcService.callRpcMethod(x.successUrl, 'getblockcount', 3)
+        this._nodeRpcService.callMethod(x.successUrl, 'getblockcount', 3)
             .subscribe(res => {
                 const now = Date.now();
                 x.lastResponseTime = now;
@@ -191,11 +180,20 @@ export class NodeService {
     }
 
     public getRawMemPool(x: any) {
-        this._nodeRpcService.callRpcMethod(x.successUrl, 'getrawmempool', 1)
+        this._nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
                 const response = res.json();
                 x.pendingTransactions = response.result;
+            });
+    }
+
+    public getWalletState(x: any) {
+        this._nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
+            .subscribe(res => {
+                x.isWalletOpen = true;
+            }, err => {
+                x.isWalletOpen = false;
             });
     }
 

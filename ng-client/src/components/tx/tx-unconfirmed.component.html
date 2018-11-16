@@ -1,0 +1,158 @@
+<div class="row col-md-12 no-margin padding-10">
+    <h2 class="bold text-grey section-title">
+        TRANSACTION
+    </h2>
+    <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="tx">
+        <div class="col-md-12 padding-10" style="margin-bottom: 20px; font-size: 1.15em">
+            <span *ngIf="!tx?.confirmations" class="text-danger">
+                <i class="fas fa-times-circle"></i> UNCONFIRMED
+            </span>
+            <span *ngIf="tx?.confirmations">
+                <i class="fas fa-check-circle"></i> CONFIRMED
+            </span>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#raw-tx" *ngIf="raw">
+                SEE RAW
+            </button>
+            <br>
+            <strong>{{tx.txid}}</strong>
+            <span class="pull-right">
+                <app-tx-icon [type]="tx?.type"></app-tx-icon> {{tx.type}}
+            </span>
+        </div>
+        <div class="col-md-12 row no-margin padding-10">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
+                <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center">
+                <i class="fas fa-book"></i> {{tx.sys_fee | number}} GAS System Fee
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right">
+                <i class="fas fa-briefcase"></i> {{tx.net_fee | number}} GAS Network Fee
+            </div>
+        </div>
+        <div class="col-md-12 row no-margin padding-10" *ngIf="tx.confirmations">
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
+                <i class="fas fa-handshake text-success"></i> {{tx.confirmations}} Confirmations
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center word-wraped">
+                <a routerLink="/block/{{tx.blockhash}}">
+                    <i class="fas fa-cube"></i> {{tx.blockhash}}
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right">
+                <i class="fas fa-hourglass-start"></i> {{tx.blocktime}}
+            </div>
+        </div>
+        <div>
+            <div class="col-md-12 col-sm-12 col-xs-12 word-wraped padding-10" *ngIf="tx?.vin">
+                <div *ngFor="let input of tx.vin">
+                    <strong *ngIf="input">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/transaction/{{input.txid}}">
+                                <i class="fas fa-angle-double-left"></i> prev
+                            </a>
+                        </small>
+                    </strong>
+                    <div *ngIf="prevtx?.length">
+                        <div *ngFor="let prev of prevtx">
+                            <strong *ngIf="prev.toAddress">
+                                <small style="font-size: 0.8em">
+                                    <a routerLink="/address/{{prev.toAddress}}">{{prev.toAddress}}</a>
+                                </small>&nbsp;
+                                <span style="font-size: 0.65em" class="label label-danger">
+                                    <strong>sent</strong>&nbsp;
+                                    <span class="badge">{{prev.amount | number}}</span>&nbsp;
+                                    <strong>{{getAssetName(prev.assetType)}}</strong></span>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 text-right padding-10" *ngIf="tx?.vout" style="border-top: 1px solid #ddd">
+                <div *ngFor="let output of tx.vout">
+                    <strong *ngIf="output.address">
+                        <small style="font-size: 0.8em">
+                            <a routerLink="/address/{{output.address}}">{{output.address}}</a>
+                        </small>&nbsp;
+                        <span style="font-size: 0.65em" class="label label-success">
+                            <strong>received</strong>
+                            &nbsp;
+                            <span class="badge">{{output.value | number}}</span>
+                            &nbsp;
+                            <strong>
+                                <a routerLink="/asset/{{output.asset}}">
+                                    {{getAssetName(output.asset)}}
+                                </a>
+                            </strong>
+                        </span>
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-4 no-margin" *ngIf="tx && tx.scripts">
+        <div class="col-md-12 no-margin panel-body">
+            <div class="panel panel-default" *ngIf="tx?.scripts && tx?.scripts.length">
+                <header class="panel-heading">
+                    <h2 class="panel-title elipsis">
+                        <i class="fas fa-users" style="margin-left: 15px; margin-right: 20px"></i> Scripts
+                    </h2>
+                </header>
+                <div class="panel-body padding-5">
+                    <div *ngFor="let script of tx?.scripts | paginate: {itemsPerPage: 5, currentPage: p}">
+                        <div class="padding-2 word-wraped">
+                            <div><strong>Invocation</strong></div>
+                            {{script.invocation}}
+                        </div>
+                        <div class="padding-2 word-wraped">
+                            <div><strong>Verification</strong></div>
+                            {{script.verification}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-padding no-margin text-center">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+            <div class="panel panel-default" *ngIf="tx?.attributes && tx?.attributes.length">
+                <header class="panel-heading">
+                    <h2 class="panel-title elipsis">
+                        <i class="fas fa-database" style="margin-left: 15px; margin-right: 20px"></i> Attributes
+                    </h2>
+                </header>
+                <div class="panel-body">
+                    <div *ngFor="let attribute of tx?.attributes; let i = index" class="padding-5 word-wraped">
+                        <div><span class="label label-success">{{attribute.type}}</span> {{attribute.dataAsHexString}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" *ngIf="tx?.script">
+                <header class="panel-heading">
+                    <h2 class="panel-title elipsis">
+                        <i class="fas fa-database" style="margin-left: 15px; margin-right: 20px"></i> Script
+                    </h2>
+                </header>
+                <div class="padding-10 word-wraped">
+                    <div><strong>Verification</strong></div>
+                    {{tx.script}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-loader *ngIf="!tx"></app-loader>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="raw-tx" tabindex="-1" role="dialog" aria-labelledby="raw-tx-label"
+    *ngIf="raw">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-uppercase" id="raw-tx-label">Raw Transaction data</h4>
+            </div>
+            <div class="modal-body">
+                <pre class="no-margin">{{raw | json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>

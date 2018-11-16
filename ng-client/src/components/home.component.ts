@@ -13,10 +13,7 @@ declare var $;
 export class HomeComponent implements OnInit {
     allNodes: any[] = [];
 
-    constructor(
-        private _http: Http,
-        private _nodeService: NodeService
-    ) {
+    constructor(private _nodeService: NodeService) {
         this.subscribeToEvents();
 
         setInterval(() => {

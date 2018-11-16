@@ -42,7 +42,7 @@
                                             <strong>{{token.name}}</strong>
                                         </td>
                                         <td>
-                                            {{token.balance}}
+                                            {{token.balance | number}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <app-pie-chart [endpoint]="transactionsEndpoint" [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount"></app-pie-chart>
+                    <app-pie-chart *ngIf="address" [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount"></app-pie-chart>
                 </div>
             </div>
         </div>
