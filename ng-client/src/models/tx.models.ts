@@ -8,15 +8,18 @@ export class BaseTxModel {
     finalizedAt: Date;
 }
 
-export class TxDetailsModel extends BaseTxModel {
+export class TxAssetsModel extends BaseTxModel {
+    assets: TransactedAssetModel[];
+    globalIncomingAssets: TransactedAssetModel[];
+    globalOutgoingAssets: TransactedAssetModel[];
+}
+
+export class TxDetailsModel extends TxAssetsModel {
     networkFee: number;
     systemFee: number;
     version: number;
     blockHash: string;
     blockHeight: number;
-    assets: TransactedAssetModel[];
-    globalIncomingAssets: TransactedAssetModel[];
-    globalOutgoingAssets: TransactedAssetModel[];
 }
 
 export class TxUnconfirmedDetailsViewModel {

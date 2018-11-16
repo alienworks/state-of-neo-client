@@ -22,6 +22,10 @@ export class TxService {
         return this.http.get(`${CONST.BASE_URL}/api/transactions/get/${hash}`);
     }
 
+    getAssets(hash: string) {
+        return this.http.get(`${CONST.BASE_URL}/api/transactions/getassets/${hash}`);
+    }
+
     getUnconfirmed(url: string, hash: string) {
         return this.rpc.callMethod(url, 'getrawtransaction', 1, [hash, 1]);
     }
