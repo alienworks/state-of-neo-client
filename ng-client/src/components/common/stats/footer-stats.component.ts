@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockService, TxService, AddressService, AssetService } from 'src/core/services/data';
 import { UnitOfTime, AssetTypeEnum } from '../../../models';
+import { StatsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     selector: `app-footer-stats`,
@@ -35,7 +36,8 @@ export class FooterStatsComponent implements OnInit {
     constructor(private blockService: BlockService,
         private txService: TxService,
         private addrService: AddressService,
-        private assetService: AssetService) { }
+        private assetService: AssetService,
+        private statsSrService: StatsSignalRService) { }
 
     ngOnInit(): void {
         this.subscribeToEvents();
@@ -51,16 +53,16 @@ export class FooterStatsComponent implements OnInit {
         // Txs
         this.txService.getTotalGasClaimed()
             .subscribe((x) => { this.claimedGas = x.json() as number; });
-        this.txService.total()
-            .subscribe((x) => { this.totalTx = x.json() as number; });
+        this.statsSrService.txCountUpdate
+            .subscribe((x) => this.totalTx = x);
         this.txService.averagePer(UnitOfTime.Second)
             .subscribe((x) => { this.avgPerSecond = x.json() as number; });
         this.txService.averagePer(UnitOfTime.Day)
             .subscribe((x) => { this.avgPerDay = x.json() as number; });
 
         // Addresses
-        this.addrService.getCreated()
-            .subscribe(x => this.totalAddressCount = x.json() as number);
+        this.statsSrService.addressCountUpdate
+            .subscribe(x => this.totalAddressCount = x);
         this.addrService.getActive()
              .subscribe(x => { this.lastActiveAddresses = x.json() as number; });
         this.addrService.getCreatedLast(UnitOfTime.Day)
@@ -69,8 +71,8 @@ export class FooterStatsComponent implements OnInit {
             .subscribe(x => { this.addrCreatedLastMonth = x.json() as number; });
 
         // Assets
-        this.assetService.getAssetCount([])
-            .subscribe(x => { this.totalAssetCount = x.json() as number; });
+        this.statsSrService.assetsCountUpdate
+            .subscribe(x => this.totalAssetCount = x);
         this.assetService.getAssetTxCount([AssetTypeEnum.GAS, AssetTypeEnum.NEO])
             .subscribe(x => { this.neoAndGasTxCount = x.json() as number; });
         this.assetService.getAssetCount([AssetTypeEnum.NEP5])

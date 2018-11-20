@@ -15,13 +15,13 @@ export class SignalRService {
         this.startConnection();
     }
 
-    private createConnection(connection: string) {
+    protected createConnection(connection: string) {
         this._hubConnection = new HubConnectionBuilder()
             .withUrl(connection)
             .build();
     }
 
-    private startConnection(): void {
+    protected startConnection(): void {
         this._hubConnection
             .start()
             .then(() => {
@@ -35,7 +35,7 @@ export class SignalRService {
             });
     }
 
-    private registerOnServerEvents(): void {
+    protected registerOnServerEvents(): void {
         this._hubConnection.on('Receive', (message: any) => {
             this.messageReceived.emit(message);
         });
@@ -43,7 +43,7 @@ export class SignalRService {
 
     public registerAdditionalEvent<T>(eventName: string, emitter: EventEmitter<T>): void {
         this._hubConnection.on(eventName, (message: T) => {
-            this.messageReceived.emit(message);
+            emitter.emit(message);
         });
     }
 }
