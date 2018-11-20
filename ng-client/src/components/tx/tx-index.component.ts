@@ -6,8 +6,9 @@ import { TxService } from '../../core/services/data';
     templateUrl: './tx-index.component.html'
 })
 export class TxIndexComponent implements OnInit {
-    transactions: PageResultModel<BaseTxModel>
-    
+    transactions: PageResultModel<BaseTxModel>;
+    count: number;
+
     constructor(private txService: TxService) { }
 
     ngOnInit() {

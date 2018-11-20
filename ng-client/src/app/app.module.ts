@@ -36,8 +36,7 @@ import {
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
-  NodesSignalRService, BlocksSignalRService,
-  TransAvgCountSignalRService, FailP2PSignalRService, TransCountSignalRService
+  NodesSignalRService, BlocksSignalRService, FailP2PSignalRService, StatsSignalRService
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -94,7 +93,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     // SignalR services
     SignalRService,
     NodesSignalRService, BlocksSignalRService, AddressService, AssetService,
-    TransCountSignalRService, TransAvgCountSignalRService, FailP2PSignalRService,
+    StatsSignalRService, FailP2PSignalRService,
     // Data services
     RpcService,
     NodeService, BlockService, TxService, ChartService

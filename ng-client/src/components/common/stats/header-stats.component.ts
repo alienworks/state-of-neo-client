@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { BlockService, NodeService } from 'src/core/services/data';
 import { HeaderInfoModel } from 'src/models';
-import { BlocksSignalRService } from 'src/core/services/signal-r';
+import { BlocksSignalRService, StatsSignalRService } from 'src/core/services/signal-r';
 
 import * as CONST from 'src/core/common/constants';
 
@@ -22,9 +22,7 @@ export class HeaderStatsComponent {
     constructor(
         private _blockService: BlockService,
         private _nodeService: NodeService,
-        private _blockSignalRService: BlocksSignalRService) {
-        this._blockSignalRService.init(`${CONST.BASE_URL}/hubs/block`);
-
+        private statsSrService: StatsSignalRService) {
         this.subscribeToEvents();
 
         setInterval(() => {
@@ -49,7 +47,7 @@ export class HeaderStatsComponent {
             this.rpcEnabled = x;
         });
 
-        this._blockSignalRService.messageReceived.subscribe((x: HeaderInfoModel) => {
+        this.statsSrService.headerUpdate.subscribe((x: HeaderInfoModel) => {
             this.headerInfo = x;
         });
     }
