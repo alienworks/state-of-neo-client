@@ -44,43 +44,41 @@ export class FooterStatsComponent implements OnInit {
 
         // Blocks
         this.blockService.getAverageSize()
-            .subscribe((x) => { this.avgSize = x.json() as number; });
+            .subscribe(x => this.avgSize = x.json() as number);
         this.blockService.getAverageTime()
-            .subscribe((x) => { this.avgTime = x.json() as number; });
+            .subscribe(x => this.avgTime = x.json() as number);
         this.blockService.getAverageTxCount()
-            .subscribe((x) => { this.avgTxCount = x.json() as number; });
+            .subscribe(x => this.avgTxCount = x.json() as number);
 
         // Txs
-        this.txService.getTotalGasClaimed()
-            .subscribe((x) => { this.claimedGas = x.json() as number; });
+        this.statsSrService.totalClaimedUpdate
+            .subscribe(x => this.claimedGas = x);
         this.statsSrService.txCountUpdate
-            .subscribe((x) => this.totalTx = x);
+            .subscribe(x => this.totalTx = x);
         this.txService.averagePer(UnitOfTime.Second)
-            .subscribe((x) => { this.avgPerSecond = x.json() as number; });
+            .subscribe(x => this.avgPerSecond = x.json() as number);
         this.txService.averagePer(UnitOfTime.Day)
-            .subscribe((x) => { this.avgPerDay = x.json() as number; });
+            .subscribe(x => this.avgPerDay = x.json() as number);
 
         // Addresses
         this.statsSrService.addressCountUpdate
             .subscribe(x => this.totalAddressCount = x);
         this.addrService.getActive()
-             .subscribe(x => { this.lastActiveAddresses = x.json() as number; });
+            .subscribe(x => this.lastActiveAddresses = x.json() as number);
         this.addrService.getCreatedLast(UnitOfTime.Day)
-            .subscribe(x => { this.addrCreatedLastDay = x.json() as number; });
+            .subscribe(x => this.addrCreatedLastDay = x.json() as number);
         this.addrService.getCreatedLast(UnitOfTime.Month)
-            .subscribe(x => { this.addrCreatedLastMonth = x.json() as number; });
+            .subscribe(x => this.addrCreatedLastMonth = x.json() as number);
 
         // Assets
         this.statsSrService.assetsCountUpdate
             .subscribe(x => this.totalAssetCount = x);
         this.assetService.getAssetTxCount([AssetTypeEnum.GAS, AssetTypeEnum.NEO])
-            .subscribe(x => { this.neoAndGasTxCount = x.json() as number; });
+            .subscribe(x => this.neoAndGasTxCount = x.json() as number);
         this.assetService.getAssetCount([AssetTypeEnum.NEP5])
-            .subscribe(x => {
-                this.nep5Assets = x.json() as number;
-            });
+            .subscribe(x => this.nep5Assets = x.json() as number);
         this.assetService.getAssetTxCount([AssetTypeEnum.NEP5])
-            .subscribe(x => { this.nep5AssetTxCount = x.json() as number; });
+            .subscribe(x => this.nep5AssetTxCount = x.json() as number);
     }
 
     private subscribeToEvents() {

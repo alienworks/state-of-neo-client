@@ -10,6 +10,7 @@ export class StatsSignalRService extends SignalRService {
     txCountUpdate = new EventEmitter<number>();
     addressCountUpdate = new EventEmitter<number>();
     assetsCountUpdate = new EventEmitter<number>();
+    totalClaimedUpdate = new EventEmitter<number>();
     headerUpdate = new EventEmitter<any>();
 
     constructor() {
@@ -25,5 +26,6 @@ export class StatsSignalRService extends SignalRService {
         this.registerAdditionalEvent('address-count', this.addressCountUpdate);
         this.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
         this.registerAdditionalEvent('header', this.headerUpdate);
+        this.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
     }
 }
