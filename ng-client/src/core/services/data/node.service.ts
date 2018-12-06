@@ -7,9 +7,7 @@ import { RpcService } from './node-rpc.service';
 import * as CONST from '../../common/constants';
 import { Observable } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
