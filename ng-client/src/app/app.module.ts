@@ -17,7 +17,7 @@ import {
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -40,6 +40,7 @@ import {
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { TimestampFormatPipe } from '../core/pipes';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     HomeComponent,
     // Common
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
-    FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent,
+    FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
@@ -61,7 +62,9 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TxListTableComponent, TxUnconfirmedComponent,
     // Libs
-    TimeAgoPipe
+    TimeAgoPipe,
+    // Custom pipes
+    TimestampFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -88,6 +91,8 @@ import { TimeAgoPipe } from 'time-ago-pipe';
   providers: [
     // NG
     DatePipe,
+    // Custom
+    TimestampFormatPipe,
     // Common services
     NetService,
     // SignalR services
