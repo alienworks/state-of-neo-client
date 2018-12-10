@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { NodeService } from '../../core/services/data/node.service';
 import { PageResultModel, BaseNodeModel } from '../../models';
@@ -8,10 +8,11 @@ import { BlockService } from '../../core/services/data';
     selector: `app-node-list`,
     templateUrl: './node-list.component.html'
 })
-export class NodeListComponent implements OnInit {
+export class NodeListComponent implements OnInit, OnDestroy {
     pageResults: PageResultModel<BaseNodeModel>;
     bestBlock: number;
     isLoading = true;
+    interval: number;
 
     constructor(private _nodeService: NodeService, private _blockService: BlockService) { }
 
@@ -23,6 +24,12 @@ export class NodeListComponent implements OnInit {
         this.getPage(1);
     }
 
+    ngOnDestroy(): void {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+    }
+
     getPage(page: number): void {
         this.isLoading = true;
         this._nodeService.getNodesApi(page)
@@ -31,7 +38,7 @@ export class NodeListComponent implements OnInit {
                 this.isLoading = false;
                 this.updateNodesList();
 
-                setInterval(() => {
+                this.interval = window.setInterval(() => {
                     this.updateNodesList();
                 }, 5000);
             });

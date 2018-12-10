@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
@@ -6,11 +6,12 @@ import { BlockService } from '../../core/services/data/block.service';
 @Component({
     templateUrl: `./node-details.component.html`
 })
-export class NodeDetailsComponent implements OnInit {
+export class NodeDetailsComponent implements OnInit, OnDestroy {
     id: number;
     node: any;
     bestBlock: number;
     p = 1;
+    interval: number;
 
     constructor(private route: ActivatedRoute,
         private _nodeService: NodeService,
@@ -20,9 +21,15 @@ export class NodeDetailsComponent implements OnInit {
             this.bestBlock = x;
         });
 
-        setInterval(() => {
+        this.interval = window.setInterval(() => {
             this.updateNodeInfo();
         }, 5000);
+    }
+
+    ngOnDestroy(): void {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
     }
 
     ngOnInit(): void {
@@ -32,6 +39,10 @@ export class NodeDetailsComponent implements OnInit {
             .subscribe((node: any) => {
                 this.node = node.json();
                 this.updateNodeInfo();
+
+                if (this.node.firstRuntime) {
+                    this.node.trackedSeconds = this.getSecondsSinceTrackingStarted();
+                }
             });
     }
 
@@ -53,5 +64,15 @@ export class NodeDetailsComponent implements OnInit {
             this._nodeService.getConnectionsCount(this.node);
             this._nodeService.getWalletState(this.node);
         }
+    }
+
+    getSecondsSinceTrackingStarted(): number {
+        if (this.node.secondsOnline && this.node.firstRuntime) {
+            const currentDate = Date.now().valueOf();
+            const totalSeconds = Math.floor(currentDate / 1000) - this.node.firstRuntime;
+            return totalSeconds;
+        }
+
+        return 0;
     }
 }

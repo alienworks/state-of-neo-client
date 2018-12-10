@@ -1,0 +1,13 @@
+<div *ngIf="percent">
+    <div class="text-center padding-5" *ngIf="title">
+        {{title}}
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" [ngStyle]="{'width': percent + '%'}">
+            {{percent}}%
+        </div>
+        <div class="progress-bar progress-bar-danger" [ngStyle]="{'width': (100 - percent) + '%'}">
+            {{(100 - percent).toFixed(1)}}%
+        </div>
+    </div>
+</div>

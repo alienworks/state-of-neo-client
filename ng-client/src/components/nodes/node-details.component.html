@@ -33,9 +33,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 stat">
-                    <div class="padding-5">
-                        <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet {{node.isWalletOpen ? 'Open' : 'Closed'}}
+                <div class="col-md-12 no-margin padding-5 stat">
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-left">
+                        <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet
+                        {{node.isWalletOpen ? 'Open' : 'Closed'}}
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center" *ngIf="node.firstRuntime" title="{{node.firstRuntime | stampToDate | timeAgo}}">
+                        <i class="fas fa-clock"></i> Tracked since {{node.firstRuntime}}
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-right" *ngIf="node.latestRuntime" title="{{node.latestRuntime | stampToDate | timeAgo}}">
+                        <i class="fas fa-stamp"></i> Last checked {{node.latestRuntime}}
+                    </div>
+                    <div class="col-12 padding-5 no-margin" *ngIf="node.trackedSeconds">
+                        <app-percent-bar [title]="'Uptime %'" [total]="node.trackedSeconds" [current]="node.secondsOnline / 1000"></app-percent-bar>
                     </div>
                 </div>
                 <div class="col-md-12 no-margin padding-5 row">
