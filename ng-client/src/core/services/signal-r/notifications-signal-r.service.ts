@@ -8,6 +8,7 @@ import * as CONST from '../../common/constants';
 @Injectable()
 export class NotificationsSignalRService extends SignalRService {
     allNotificationsReceive = new EventEmitter<NotificationModel>();
+    contractNotificationUpdate = new EventEmitter<NotificationModel>();
     unsubscribed = new EventEmitter<string>();
 
     constructor() {
@@ -20,5 +21,6 @@ export class NotificationsSignalRService extends SignalRService {
     private subscribeEvents() {
         this.registerAdditionalEvent('all', this.allNotificationsReceive);
         this.registerAdditionalEvent('unsubscribed', this.allNotificationsReceive);
+        this.registerAdditionalEvent('contract', this.contractNotificationUpdate);
     }
 }

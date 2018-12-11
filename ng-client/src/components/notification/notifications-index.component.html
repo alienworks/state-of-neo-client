@@ -1,19 +1,29 @@
 <div class="row">
     <h2 class="bold text-grey section-title">NOTIFICATIONS</h2>
     <div class="col-md-12">
-        <div class="panel-body" *ngIf="allNotifications">
-            <div class="col-md-12" style="padding: 5px 0">
+        <div class="panel-body" *ngIf="notifications">
+            <div class="col-md-12" style="padding: 5px 0" *ngIf="!contractFilter">
                 <div class="col-md-3 col-sm-4 col-xs-10 no-padding">
                     <input type="text" class="form-control" placeholder="Contract hash" [(ngModel)]="contract"></div>
                 <div class="col-md-9 col-sm-8 col-xs-2">
-                    <a class="btn btn-default" (click)="subscribeToContract()">
-                        <i class="fas fa-search"></i>
+                    <a class="btn btn-info" (click)="subscribeToContract(contract)">
+                        <i class="fas fa-search no-padding"></i>
                     </a>
                 </div>
-                <small class="italic">( browse through the 1000 most recent )</small>
             </div>
+
+            <div class="col-md-12" style="padding: 5px 0" *ngIf="contractFilter">
+                <strong style="margin-bottom: 20px; font-size: 1.15em">
+                    {{contract}}
+                    <a class="btn btn-warning text-center" (click)="unsubscribeToContract(contract)">
+                        <i class="fas fa-times no-padding"></i>
+                    </a>
+                </strong>
+            </div>
+            <small class="italic">( browse through the 1000 most recent )</small>
+
             <div class="col-md-12 no-padding no-margin">
-                <app-not-list [notifications]="allNotifications" [title]="contract"></app-not-list>
+                <app-not-list (contractFilter)="subscribeToContract($event)" [notifications]="notifications" [title]="contract"></app-not-list>
             </div>
         </div>
     </div>

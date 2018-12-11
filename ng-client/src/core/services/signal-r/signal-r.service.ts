@@ -41,6 +41,10 @@ export class SignalRService {
         });
     }
 
+    public invokeOnServerEvent(serverMethod: string, value: string): void {
+        this._hubConnection.send(serverMethod, value);
+    }
+
     public registerAdditionalEvent<T>(eventName: string, emitter: EventEmitter<T>): void {
         this._hubConnection.on(eventName, (message: T) => {
             emitter.emit(message);

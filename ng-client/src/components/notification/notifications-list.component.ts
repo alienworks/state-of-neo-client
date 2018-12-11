@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationModel } from 'src/models';
 
 @Component({
@@ -9,4 +9,9 @@ import { NotificationModel } from 'src/models';
 export class NotificationsListComponent {
     @Input() notifications: NotificationModel[];
     @Input() title = 'ALL';
+    @Output() contractFilter = new EventEmitter<string>();
+
+    filter(hash: string): void {
+        this.contractFilter.emit(hash);
+    }
 }
