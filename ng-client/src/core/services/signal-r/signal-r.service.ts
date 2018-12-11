@@ -21,7 +21,7 @@ export class SignalRService {
             .build();
     }
 
-    protected startConnection(): void {
+    protected startConnection(): any {
         this._hubConnection
             .start()
             .then(() => {

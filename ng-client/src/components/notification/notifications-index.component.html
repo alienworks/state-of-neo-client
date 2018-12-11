@@ -1,0 +1,25 @@
+<div class="row">
+    <h2 class="bold text-grey section-title">NOTIFICATIONS</h2>
+    <div class="col-md-12">
+        <div class="panel-body" *ngIf="allNotifications">
+            <div class="col-md-12" style="padding: 5px 0">
+                <div class="col-md-3 col-sm-4 col-xs-10 no-padding">
+                    <input type="text" class="form-control" placeholder="Contract hash" [(ngModel)]="contract"></div>
+                <div class="col-md-9 col-sm-8 col-xs-2">
+                    <a class="btn btn-default" (click)="subscribeToContract()">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </div>
+                <small class="italic">( browse through the 1000 most recent )</small>
+            </div>
+            <div class="col-md-12 no-padding no-margin">
+                <app-not-list [notifications]="allNotifications" [title]="contract"></app-not-list>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row col-md-6">
+        <div class="panel-body">
+            <app-not-list></app-not-list>
+        </div>
+    </div> -->
+</div>

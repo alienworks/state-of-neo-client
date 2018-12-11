@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { BlockService, NodeService } from 'src/core/services/data';
 import { HeaderInfoModel } from 'src/models';
-import { BlocksSignalRService, StatsSignalRService } from 'src/core/services/signal-r';
+import { StatsSignalRService } from 'src/core/services/signal-r';
 
 import * as CONST from 'src/core/common/constants';
 

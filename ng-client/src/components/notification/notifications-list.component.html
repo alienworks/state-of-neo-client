@@ -1,0 +1,14 @@
+<div class="stat">
+    <strong style="margin-bottom: 20px; font-size: 1.15em">{{title}}</strong>
+
+    <div class="console" *ngIf="notifications">
+        <p *ngFor="let notification of notifications" class="consoletext no-margin padding-2">
+            [<span title="{{notification.timestamp | stampToDate}}">{{notification.timestamp}}</span>] : 
+            <span style="color: #808000">{{notification.contractHash}}</span> - 
+            [<span style="color: #228B22">{{notification.type}}</span>] : 
+            <span *ngFor="let value of notification.values; let i = index">
+                {{value}} {{i === notification.values.length - 1 ? '' : '|'}}
+            </span>
+        </p>
+    </div>
+</div>
