@@ -33,5 +33,6 @@ export class NotificationsIndexComponent {
     unsubscribeToContract() {
         this.notificationsSignalR.invokeOnServerEvent('Unsubscribe', this.contract);
         this.contractFilter = false;
+        this.contract = null;
     }
 }

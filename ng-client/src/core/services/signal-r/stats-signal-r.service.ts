@@ -3,9 +3,7 @@ import { SignalRService } from './signal-r.service';
 
 import * as CONST from 'src/core/common/constants';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class StatsSignalRService extends SignalRService {
     txCountUpdate = new EventEmitter<number>();
     addressCountUpdate = new EventEmitter<number>();
