@@ -21,7 +21,7 @@ export class SignalRService {
             .build();
     }
 
-    protected startConnection(): void {
+    protected startConnection(): any {
         this._hubConnection
             .start()
             .then(() => {
@@ -39,6 +39,10 @@ export class SignalRService {
         this._hubConnection.on('Receive', (message: any) => {
             this.messageReceived.emit(message);
         });
+    }
+
+    public invokeOnServerEvent(serverMethod: string, value: string): void {
+        this._hubConnection.send(serverMethod, value);
     }
 
     public registerAdditionalEvent<T>(eventName: string, emitter: EventEmitter<T>): void {

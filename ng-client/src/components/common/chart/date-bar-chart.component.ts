@@ -57,7 +57,7 @@ export class DateBarChartComponent implements OnInit {
         this.isLoading = true;
         this.chartService.getChart(this.endpoint, this.filter)
             .subscribe(x => {
-                this.chartData = x.json() as ChartDataItemModel[];
+                this.chartData = (x.json() as ChartDataItemModel[]).reverse();
                 this.initChart();
             }, err => console.log(err));
     }

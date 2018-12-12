@@ -36,11 +36,12 @@ import {
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
-  NodesSignalRService, BlocksSignalRService, FailP2PSignalRService, StatsSignalRService
+  NodesSignalRService, StatsSignalRService, NotificationsSignalRService
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { TimestampFormatPipe } from '../core/pipes';
+import { NotificationsIndexComponent, NotificationsListComponent } from 'src/components/notification';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,8 @@ import { TimestampFormatPipe } from '../core/pipes';
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TxListTableComponent, TxUnconfirmedComponent,
+    // Notifications
+    NotificationsIndexComponent, NotificationsListComponent,
     // Libs
     TimeAgoPipe,
     // Custom pipes
@@ -84,6 +87,7 @@ import { TimestampFormatPipe } from '../core/pipes';
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: 'transaction/:hash/:nodeid', component: TxUnconfirmedComponent },
+      { path: 'notifications', component: NotificationsIndexComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
     ])
@@ -97,11 +101,10 @@ import { TimestampFormatPipe } from '../core/pipes';
     NetService,
     // SignalR services
     SignalRService,
-    NodesSignalRService, BlocksSignalRService, AddressService, AssetService,
-    StatsSignalRService, FailP2PSignalRService,
+    NodesSignalRService, StatsSignalRService, NotificationsSignalRService,
     // Data services
     RpcService,
-    NodeService, BlockService, TxService, ChartService
+    NodeService, BlockService, TxService, ChartService, AddressService, AssetService,
   ],
   bootstrap: [AppComponent]
 })

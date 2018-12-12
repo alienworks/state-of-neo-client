@@ -1,0 +1,14 @@
+<div class="stat">
+    <div class="console" *ngIf="notifications">
+        <p *ngFor="let notification of notifications" class="consoletext no-margin padding-2">
+            [<span title="{{notification.timestamp | stampToDate}}">{{notification.timestamp}}</span>] :
+            <span title="{{notification.contractName}}" style="color: #808000; cursor: pointer;" (click)="filter(notification.contractHash)">
+                {{notification.contractHash}}
+            </span> -
+            [<span style="color: #228B22">{{notification.type}}</span>] :
+            <span *ngFor="let value of notification.values; let i = index" title="{{i === 0 ? notification.type : 'This is hex string representation'}}">
+                {{value}} {{i === notification.values.length - 1 ? '' : '|'}}
+            </span>
+        </p>
+    </div>
+</div>
