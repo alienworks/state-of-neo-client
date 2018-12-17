@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
 
 @Component({
-    templateUrl: `./node-details.component.html`
+    templateUrl: `./node-details.component.html`,
+    styles: ['body { overflow-y: scroll !important; }'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NodeDetailsComponent implements OnInit, OnDestroy {
     id: number;
