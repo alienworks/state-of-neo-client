@@ -51,7 +51,7 @@ export class PieChartComponent implements OnInit {
                     borderWidth: 1
                 }]
             },
-            options: { }
+            options: {}
         });
 
         this.isLoading = false;
@@ -59,7 +59,7 @@ export class PieChartComponent implements OnInit {
     }
 
     private getChartLabels(): any {
-        const result = this.data.map(x => x.label);
+        const result = this.data.filter(x => x.value > 5).map(x => x.label);
         return result;
     }
 

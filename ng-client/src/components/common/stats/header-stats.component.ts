@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 import { BlockService, NodeService } from 'src/core/services/data';
 import { HeaderInfoModel } from 'src/models';
@@ -15,14 +15,11 @@ declare var $;
 })
 export class HeaderStatsComponent {
     secondsSinceLastBlock = 0;
-    bestBlock = 0;
-    rpcEnabled = 0;
     headerInfo: HeaderInfoModel;
 
-    constructor(
-        private _blockService: BlockService,
-        private _nodeService: NodeService,
-        private statsSrService: StatsSignalRService) {
+    headerUpdate = new EventEmitter<HeaderInfoModel>();
+
+    constructor(private statsSrService: StatsSignalRService) {
         this.subscribeToEvents();
 
         setInterval(() => {
@@ -37,22 +34,14 @@ export class HeaderStatsComponent {
     }
 
     private subscribeToEvents(): void {
-        this._blockService.bestBlockChanged.subscribe((block: number) => {
-            this.bestBlock = block;
-            this.updateBestBlock(this.bestBlock);
-            this.secondsSinceLastBlock = 0;
-        });
-
-        this._nodeService.rpcEnabledNodes.subscribe((x: number) => {
-            this.rpcEnabled = x;
-        });
-
-        this.statsSrService.headerUpdate.subscribe((x: HeaderInfoModel) => {
+        this.statsSrService.registerAdditionalEvent('header', this.headerUpdate);
+        this.headerUpdate.subscribe((x: HeaderInfoModel) => {
             this.headerInfo = x;
+            this.updateBestBlock();
         });
     }
 
-    private updateBestBlock(height: number): void {
+    private updateBestBlock(): void {
         $('#last-block-icon').addClass('fa-spin');
         $('#last-block-icon').css('animation-play-state', 'running');
         setTimeout(() => $('#last-block-icon').css('animation-play-state', 'paused'), 2080);
