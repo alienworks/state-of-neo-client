@@ -17,7 +17,7 @@ import {
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -50,6 +50,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     // Common
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
+    HorizontalBarChartComponent,
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
