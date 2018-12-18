@@ -69,16 +69,18 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12 row no-margin">
-        <div class="panel panel-default">
+        <div class="panel panel-default" *ngIf="transactions">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> TRANSACTIONS
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> 
+                    TRANSACTIONS <span class="bold" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">{{transactions.metaData.totalItemCount}}</span>
                 </h2>
             </header>
             <div class="panel-body">
                 <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
             </div>
         </div>
+        <app-loader *ngIf="transactions"></app-loader>
     </div>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>
