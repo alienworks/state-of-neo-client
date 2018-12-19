@@ -138,9 +138,12 @@ export class NodeService {
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.connected = parseInt(json.result);
+                    x.p2pEnabled = true;
+
                     this.sort();
                 } else {
                     console.log(res);
+                    x.p2pEnabled = false;
                 }
             });
     }

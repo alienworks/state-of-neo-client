@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
+import { StatsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     templateUrl: `./node-details.component.html`
