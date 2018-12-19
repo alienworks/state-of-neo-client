@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { PageResultModel, BaseTxModel } from '../../models';
+import { PageResultModel, BaseTxModel, TxTypeEnum } from '../../models';
 
 @Component({
     selector: 'app-tx-list',
@@ -23,5 +23,9 @@ export class TxListComponent implements OnChanges {
         if (changes.model) {
             this.isLoading = false;
         }
+    }
+
+    getTypeName(index: number): string {
+        return TxTypeEnum[index];
     }
 }

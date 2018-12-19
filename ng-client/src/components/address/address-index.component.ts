@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { AddressService } from '../../core/services/data';
 import { AddressListModel } from '../../models';
 import { PageResultModel } from '../../models';
+import { StatsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     templateUrl: './address-index.component.html'
@@ -11,12 +12,23 @@ export class AddressIndexComponent implements OnInit {
     topNeo: AddressListModel[];
     topGas: AddressListModel[];
 
-    constructor(private addresses: AddressService) {
+    totalCount: number;
+    totalCountUpdate = new EventEmitter<number>();
+
+    constructor(private addresses: AddressService, private statsService: StatsSignalRService) {
     }
 
     ngOnInit(): void {
         this.getPage(1);
         this.getTopAddresses();
+        this.subscribeToEvents();
+    }
+
+    private subscribeToEvents(): void {
+        this.statsService.registerAdditionalEvent('address-count', this.totalCountUpdate);
+        this.totalCountUpdate.subscribe((x: number) => {
+            this.totalCount = x;
+        });
     }
 
     getPage(page: number): void {
@@ -29,7 +41,7 @@ export class AddressIndexComponent implements OnInit {
             });
     }
 
-    getTopAddresses() {        
+    getTopAddresses() {
         this.addresses.getTopNeo()
             .subscribe(x => {
                 this.topNeo = x.json() as AddressListModel[];

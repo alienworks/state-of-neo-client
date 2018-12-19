@@ -3,9 +3,15 @@
     <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="panel-body">
             <ul class="nav nav-pills text-grey">
-                <li class="active"><a data-toggle="tab" href="#last"><h4 class="bold text-center margin-bottom-10 text-grey">LAST ACTIVE</h4></a></li>
-                <li><a data-toggle="tab" href="#top-neo"><h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 NEO</h4></a></li>
-                <li><a data-toggle="tab" href="#top-gas"><h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 GAS</h4></a></li>
+                <li class="active"><a data-toggle="tab" href="#last">
+                        <h4 class="bold text-center margin-bottom-10 text-grey">LAST ACTIVE</h4>
+                    </a></li>
+                <li><a data-toggle="tab" href="#top-neo">
+                        <h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 NEO</h4>
+                    </a></li>
+                <li><a data-toggle="tab" href="#top-gas">
+                        <h4 class="bold text-center margin-bottom-10 text-grey">TOP 100 GAS</h4>
+                    </a></li>
             </ul>
             <div class="tab-content" style="padding-top: 15px">
                 <div id="last" class="tab-pane fade in active">
@@ -22,8 +28,15 @@
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
         <div class="row no-margin padding-10 col-md-12 panel-body">
-            <app-total-gas-claimed></app-total-gas-claimed>
+            <div class="row no-margin padding-10 col-md-12 text-center" *ngIf="!totalCount">
+                <h3 class="no-margin warm-cyan">
+                    <strong>
+                        TOTAL ADDRESS NUMBER {{totalCount | number}}
+                    </strong>
+                </h3>
+            </div>
+            <app-loader *ngIf="totalCount"></app-loader>
             <app-date-bar-chart [endpoint]="'address/chart'" [label]="'New Addresses'"></app-date-bar-chart>
-        </div>        
+        </div>
     </div>
 </div>
