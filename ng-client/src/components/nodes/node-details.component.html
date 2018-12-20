@@ -19,8 +19,9 @@
                     </span>
                 </div>
                 <div class="col-md-12">
-                    <span *ngIf="bestBlock && node.blockCount">
+                    <span *ngIf="node.blockCount" title="{{node.lastBlockStamp ? (node.lastBlockStamp | stampToDate) : ''}}">
                         <i class="fas fa-cube"></i> Latest block : {{node.blockCount}}
+                        <span *ngIf="node.lastBlockStamp">({{node.lastBlockStamp | stampToDate | timeAgo}})</span>
                         <i class="fa fa-arrow-down text-warning" *ngIf="node.blockCount - bestBlock < 0"></i>
                         <i class="fas fa-check text-success" *ngIf="node.blockCount - bestBlock >= 0"></i>
                         <span *ngIf="node.blockCount - bestBlock < 0">({{node.blockCount - bestBlock}})</span>
