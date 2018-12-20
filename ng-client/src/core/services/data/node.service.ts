@@ -6,6 +6,7 @@ import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
 import { Observable } from 'rxjs';
+import { BaseBlockModel } from 'src/models/block.models';
 
 @Injectable()
 export class NodeService {
@@ -36,6 +37,12 @@ export class NodeService {
             this.sort();
             this.updateNodesData();
         });
+    }
+
+    public getBlockStamp(input: string | number) {
+        let type = 'hash';
+        if (typeof input === 'number') { type = 'height'; }
+        return this.http.get(`${CONST.BASE_URL}/api/block/stampby${type}/${input}`);
     }
 
     public getNodes(): any[] {
@@ -165,13 +172,22 @@ export class NodeService {
             });
     }
 
-    public getBlockCount(x: any) {
+    public getBlockCount(x: any, getStamp: boolean = false) {
         this._nodeRpcService.callMethod(x.successUrl, 'getblockcount', 3)
             .subscribe(res => {
                 const now = Date.now();
                 x.lastResponseTime = now;
                 const response = res.json();
+                x.lastBlockCount = x.blockCount;
                 x.blockCount = response.result;
+
+                if (getStamp && x.lastBlockCount !== x.blockCount) {
+                    this.getBlockStamp(+x.blockCount)
+                        .subscribe(y => {
+                            const block = y.json() as BaseBlockModel;
+                            x.lastBlockStamp = block.timestamp;
+                        }, err => console.log(err));
+                }
 
                 this.nodeBlockInfo.emit(response.result);
             }, err => {

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
-import { StatsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     templateUrl: `./node-details.component.html`
@@ -60,7 +59,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     updateNodeInfo() {
         if (this.node != null) {
             this._nodeService.getRawMemPool(this.node);
-            this._nodeService.getBlockCount(this.node);
+            this._nodeService.getBlockCount(this.node, true);
             this._nodeService.getVersion(this.node);
             this._nodeService.getConnectionsCount(this.node);
             this._nodeService.getWalletState(this.node);
