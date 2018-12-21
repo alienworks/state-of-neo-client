@@ -37,7 +37,7 @@
         <app-footer-stats-box [title]="'Addresses'" [subtitle]="'addresses created'" [icon]="'user'" [link]="'address'"
             [value]="totalAddressCount" *ngIf="totalAddressCount">
         </app-footer-stats-box>
-        <app-loader *ngIf="!latestBlock"></app-loader>
+        <app-loader *ngIf="!totalAddressCount"></app-loader>
         <div class="row no-margin footer-stats-table-row">
             <app-footer-stats-tr *ngIf="addrCreatedLastDay" [title]="'new last day'" [value]="addrCreatedLastDay">
             </app-footer-stats-tr>
@@ -54,7 +54,7 @@
         <app-footer-stats-box [title]="'Assets'" [subtitle]="'global assets'" [icon]="'dollar-sign'" [link]="'asset'"
             [value]="totalAssetCount" *ngIf="totalAssetCount">
         </app-footer-stats-box>
-        <app-loader *ngIf="!latestBlock"></app-loader>
+        <app-loader *ngIf="!totalAssetCount"></app-loader>
         <div class="row no-margin footer-stats-table-row">
             <app-footer-stats-tr *ngIf="nep5Assets >= 0" [title]="'nep5 tokens'" [value]="nep5Assets">
             </app-footer-stats-tr>
