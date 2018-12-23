@@ -1,4 +1,7 @@
 <div class="row no-margin no-padding" id="container-{{id}}" style="display: none">
+    <div class="col-md-12" *ngIf="label">
+        <h3 class="bold uppercase no-margin text-grey text-center" style="white-space: nowrap">{{label}}</h3>
+    </div>
     <div class="col-md-12 row padding-10 no-margin custom-vcenter">
         <div class="col-md-8 col-sm-9 col-xs-12 padding-5 stat" *ngIf="timeTypes">
             <span *ngFor="let type of timeTypes">
