@@ -42,7 +42,7 @@
                         </td>
                         <td>
                             <div *ngIf="node.blockCount">
-                                {{node.blockCount}}
+                                {{node.blockCount | number}}
                                 <i class="fas fa-check-circle text-success" *ngIf="bestBlock - node.blockCount == 0"></i>
                                 {{bestBlock - node.blockCount == 0 ? '' : '(-' + (bestBlock - node.blockCount) + ')'}}
                             </div>
