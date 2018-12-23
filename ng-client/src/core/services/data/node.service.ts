@@ -5,16 +5,17 @@ import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
 import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { BaseBlockModel } from 'src/models/block.models';
 
 @Injectable()
 export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
-    public nodeBlockInfo = new EventEmitter<number>();
-    public rpcEnabledNodes = new EventEmitter<number>();
-    public updateNodes = new EventEmitter<any[]>();
+    public nodeBlockInfo = new BehaviorSubject<number>(0);
+    public rpcEnabledNodes = new BehaviorSubject<number>(0);
+    public restEnabledNodes = new BehaviorSubject<number>(0);
+    public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
     private isStopped = false;
@@ -90,13 +91,17 @@ export class NodeService {
             this.getBlockCount(x);
             // this.getPeers(x);
             this.sort();
-            console.log(x.url, x);
         });
+
         this.updateAllMarkers();
 
-        this.updateNodes.emit(this.allNodes);
         this.updateMarkers.emit(this.markers);
-        this.rpcEnabledNodes.emit(this.allNodes.filter(x => x.rpcEnabled).length);
+
+        this.updateNodes.next(this.allNodes);
+        this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
+        this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
+
+        setTimeout(x => console.log(this.allNodes), 5000);
     }
 
     updateAllNodes(nodes: any): void {
@@ -211,6 +216,7 @@ export class NodeService {
 
                         node.latency = Math.round((now - requestStart));
                         node.blockCount = response.height;
+                        this.nodeBlockInfo.next(node.blockCount);
                     }, err => console.log(err));
             } else if (node.service === 'neoNotification') {
                 const requestStart = Date.now();
@@ -223,6 +229,7 @@ export class NodeService {
                         node.latency = Math.round((now - requestStart));
                         node.version = response.version;
                         node.blockCount = response.current_height;
+                        this.nodeBlockInfo.next(node.blockCount);
                     }, err => {
                         console.log(err);
                     });
@@ -244,7 +251,7 @@ export class NodeService {
                             }, err => console.log(err));
                     }
 
-                    this.nodeBlockInfo.emit(response.result);
+                    this.nodeBlockInfo.next(response.result);
                 }, err => {
                     node.rpcEnabled = false;
                     node.latency = 0;

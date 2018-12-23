@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockService } from '../../core/services/data/block.service';
+import { CommonStateService } from '../../core/services/';
 import { BlockListModel } from '../../models/block.models';
 import { PageResultModel } from '../../models';
 
@@ -10,13 +11,17 @@ export class BlockListComponent implements OnInit {
     pageResults: PageResultModel<BlockListModel>;
     isLoading = true;
 
-    constructor(private _blockService: BlockService) { }
+    constructor(private _blockService: BlockService,
+        private state: CommonStateService
+    ) { }
 
     ngOnInit(): void {
         this.getPage(1);
     }
 
     getPage(page: number): void {
+        this.state.changeRoute('blocks');
+
         this.isLoading = true;
         this._blockService.getBlocksPage(page, 32)
             .subscribe(x => {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { AssetListModel } from '../../models';
 import { PageResultModel } from '../../models';
 
@@ -10,10 +11,14 @@ export class AssetIndexComponent implements OnInit {
     global: PageResultModel<AssetListModel>;
     nep: PageResultModel<AssetListModel>;
 
-    constructor(private assetsService: AssetService) {
+    constructor(private assetsService: AssetService,
+        private state: CommonStateService
+    ) {
     }
 
     ngOnInit(): void {
+        this.state.changeRoute('assets');
+
         this.getGlobalPage(1);
         this.getNepPage(1);
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssetService, TxService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { BaseTxModel, AssetDetailsModel } from '../../models';
 import { PageResultModel } from '../../models';
 
@@ -15,9 +16,12 @@ export class AssetDetailsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
         private assets: AssetService,
-        private txService: TxService) { }
+        private txService: TxService,
+        private state: CommonStateService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('asset');
+
         this.route.params.subscribe(params => {
             this.hash = params['hash'];
 

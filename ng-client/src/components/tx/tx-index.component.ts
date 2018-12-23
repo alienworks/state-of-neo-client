@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageResultModel, BaseTxModel } from '../../models';
 import { TxService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 
 @Component({
     templateUrl: './tx-index.component.html'
@@ -9,9 +10,13 @@ export class TxIndexComponent implements OnInit {
     transactions: PageResultModel<BaseTxModel>;
     count: number;
 
-    constructor(private txService: TxService) { }
+    constructor(private txService: TxService,
+        private state: CommonStateService
+    ) { }
 
     ngOnInit() {
+        this.state.changeRoute('transactions');
+
         this.getPage(1);
     }
 

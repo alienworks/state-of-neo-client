@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { AddressDetailsModel, BaseTxModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { TxService } from '../../core/services/data';
@@ -16,9 +17,12 @@ export class AddressDetailsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
         private addressService: AddressService,
+        private state: CommonStateService,
         private txService: TxService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('address');
+
         this.route.params.subscribe(params => {
             this.address = params['address'];
 

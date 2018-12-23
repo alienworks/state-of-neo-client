@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { NodeService } from '../../core/services/data/node.service';
+import { CommonStateService } from '../../core/services';
 import { PageResultModel, BaseNodeModel } from '../../models';
 import { BlockService } from '../../core/services/data';
 
@@ -17,11 +18,17 @@ export class NodeListComponent implements OnInit, OnDestroy {
     page = 1;
     nodes: any[] = [];
 
-    constructor(private nodeService: NodeService, private blockService: BlockService) { }
+    constructor(
+        private nodeService: NodeService,
+        private state: CommonStateService,
+        private blockService: BlockService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('nodes');
         this.nodeService.startService();
         this.nodes = this.nodeService.getNodes();
+
+        this.bestBlock = this.blockService.bestBlock;
 
         this.interval =
             window.setInterval(() => {

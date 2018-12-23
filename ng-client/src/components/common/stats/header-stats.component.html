@@ -1,57 +1,69 @@
-<div class="row text-primary " *ngIf="headerInfo" style="font-size: 1.4em; padding-left: 10px; padding-right: 10px; margin-bottom: 10px; margin-top: 5px">
-    <div class="col-sm-2 col-xs-6 text-left">
+<div class="row text-primary " *ngIf="headerInfo" style="font-size: 1.4em; padding-left: 10px; padding-right: 10px; margin-bottom: 10px; margin-top: 15px">        
+    <div class="col-md-2">        
+        <h2 class="bold text-grey section-title" style="text-transform: uppercase">{{state.currentRoute | async}}</h2>        
+    </div>
+    <div class="col-sm-2 col-xs-6 text-right" style="padding-right: 50px">
+        <div>
+            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
+                <div style="font-size: 14px; "><strong class="text-success">CONSENSUS NODES</strong></div>            
+                <i class="fas fa-desktop"></i>
+                {{consensusNodes}}
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-1 col-xs-6 text-right">
+        <div>
+            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
+                <div style="font-size: 14px; "><strong class="text-success">RPC NODES</strong></div>            
+                <i class="fas fa-server"></i>
+                {{nodeService.rpcEnabledNodes | async}}
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-1 col-xs-6 text-right">
+        <div style="padding-right: 15px">
+            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
+                <div style="font-size: 14px; "><strong class="text-success">REST NODES</strong></div>            
+                <i class="fas fa-server"></i>
+                {{nodeService.restEnabledNodes | async}}
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-1 col-xs-6 text-left" style="padding-left: 25px">
         <div>
             <div id="last-block-stats" style="white-space: nowrap;">
                 <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
-                <div style="font-size: 14px; "><strong>LAST BLOCK</strong></div>
-                <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.4em"></i>
+                    <div style="font-size: 14px; "><strong>LAST BLOCK</strong></div>
+                    <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.4em"></i>
                     #{{headerInfo.height | number}}
                 </a>
             </div>
         </div>
-    </div>
+    </div>    
     <div class="col-sm-2 col-xs-6 text-center">
         <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="{{headerInfo.timestamp | stampToDate | date}}">
                 <div style="font-size: 14px; "><strong>TIMESTAMP</strong></div>
                 <i class="fa fa-hourglass-end spin"></i>
                 {{secondsSinceLastBlock | number}} s ago
             </a>
         </div>
     </div>
-    <div class="col-sm-2 col-xs-6 text-center">
+    <div class=" col-sm-1 col-xs-6 text-center">
         <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Transactions">
                 <div style="font-size: 14px; "><strong>TX COUNT</strong></div>            
                 <i class="fas fa-handshake"></i>
                 {{headerInfo.transactionCount | number}}
             </a>
         </div>
     </div>
-    <div class="col-sm-2 col-xs-6 text-right">
+    <div class="col-sm-1 col-xs-6 text-center">
         <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
+            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Bytes">
                 <div style="font-size: 14px; "><strong>SIZE</strong></div>            
                 <i class="fas fa-microchip"></i>
                 {{headerInfo.size | number}}
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-2 col-xs-6 text-right">
-        <div>
-            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
-                <div style="font-size: 14px; "><strong class="text-success">RPC NODES</strong></div>            
-                <i class="fas fa-server"></i>
-                32
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-2 col-xs-6 text-right">
-        <div>
-            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
-                <div style="font-size: 14px; "><strong class="text-success">CONSENSUS NODES</strong></div>            
-                <i class="fas fa-desktop"></i>
-                7
             </a>
         </div>
     </div>

@@ -12,7 +12,9 @@ export class AssetListComponent implements OnInit {
     isLoading: boolean;
     pageResults: PageResultModel<AssetListModel>;
 
-    constructor(private assets: AssetService) { }
+    constructor(
+        private assets: AssetService
+    ) { }
 
     ngOnInit(): void {
         this.getPage(1);
