@@ -10,6 +10,23 @@
                     <h4 class="bold stat">Name : {{node.url}}</h4>
                     <h5 class="bold">Endpoint we are checking : {{node.successUrl}}</h5>
                 </div>
+                <div class="col-md-12 padding-5 row custom-vcenter" *ngIf="node.blockCount">
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
+                        {{node.latency}} 
+                        <br>
+                        <i class="fas fa-signal"></i> ms
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
+                        RPC
+                        <br>
+                        <i class="fas {{(node.rpcEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}">
+                        P2P
+                        <br>
+                        <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <span *ngIf="node.blockCount">
                         <i class="fa fa-check-circle"></i> Online
@@ -20,12 +37,11 @@
                 </div>
                 <div class="col-md-12">
                     <span *ngIf="node.blockCount" title="{{node.lastBlockStamp ? (node.lastBlockStamp | stampToDate) : ''}}">
-                        <i class="fas fa-cube"></i> Latest block : {{node.blockCount}}
+                        <i class="fas fa-cube"></i> Latest block: # {{node.blockCount | number}}
                         <span *ngIf="node.lastBlockStamp">({{node.lastBlockStamp | stampToDate | timeAgo}})</span>
                         <i class="fa fa-arrow-down text-warning" *ngIf="node.blockCount - bestBlock < 0"></i>
-                        <i class="fas fa-check text-success" *ngIf="node.blockCount - bestBlock >= 0"></i>
+                        <i class="fas fa-check text-success" *ngIf="node.blockCount - bestBlock >= 0" title="Same as network best block"></i>
                         <span *ngIf="node.blockCount - bestBlock < 0">({{node.blockCount - bestBlock}})</span>
-                        <span *ngIf="node.blockCount - bestBlock >= 0"> Same as network best block</span>
                     </span>
                 </div>
                 <div class="col-md-12">
@@ -37,31 +53,16 @@
                     <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet
                     {{node.isWalletOpen ? 'Open' : 'Closed'}}
                 </div>
-                <div class="col-md-12" *ngIf="node.firstRuntime" title="{{node.firstRuntime | stampToDate | timeAgo}}">
-                    <i class="fas fa-clock"></i> Tracked since {{node.firstRuntime}}
+                <div class="col-md-12" *ngIf="node.firstRuntimeDate" title="{{node.firstRuntime | stampToDate | date}}">
+                    <i class="fas fa-clock"></i> Tracked since: {{node.firstRuntime | stampToDate | date | timeAgo}}
                 </div>
-                <div class="col-md-12" *ngIf="node.latestRuntime" title="{{node.latestRuntime | stampToDate | timeAgo}}">
-                    <i class="fas fa-stamp"></i> Last checked {{node.latestRuntime}}
+                <div class="col-md-12" *ngIf="node.latestRuntimeDate" title="{{node.latestRuntime | stampToDate | date}}">
+                    <i class="fas fa-stamp"></i> Last checked: {{node.latestRuntime | stampToDate | timeAgo}}
                 </div>
                 <div class="col-md-12">
                     <span>
-                        <i class="fas fa-plug"></i> Peers : {{node.connected}}
+                        <i class="fas fa-plug"></i> Peers: {{node.connected}}
                     </span>
-                </div>
-                <div class="col-md-12 no-margin padding-5 row custom-vcenter" *ngIf="node.blockCount">
-                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
-                        RPC
-                        <br>
-                        <i class="fas {{(node.rpcEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}">
-                        P2P
-                        <br>
-                        <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4 text-right {{getClassForNodeLatency(node)}}">
-                        {{node.latency}} <i class="fas fa-signal"></i>
-                    </div>
                 </div>
                 <div class="col-md-12 no-margin padding-5">
                     <div class="col-12 padding-5 no-margin" *ngIf="node.trackedSeconds">
