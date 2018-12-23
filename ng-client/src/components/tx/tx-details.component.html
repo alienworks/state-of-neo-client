@@ -1,56 +1,101 @@
 <div class="row col-md-12 no-margin padding-10">
-    <h2 class="bold text-grey section-title">TRANSACTION</h2>
     <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
         <div class="col-md-12 padding-10" style="margin-bottom: 20px; font-size: 1.15em">
             <strong>{{tx.hash}}</strong>
             <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
         </div>
-        <div class="col-md-12 row no-margin padding-10">
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <a routerLink="/block/{{tx?.blockHeight}}">
-                    <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center">
-                <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                <i class="fas fa-clock"></i> {{tx.finalizedAt | timeAgo}}
-            </div>
-        </div>
-        <div class="col-md-12 row no-margin padding-10">
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding">
-                <i class="fas fa-code-branch"></i> Version {{tx.version}}                
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-center">
-                <i class="fas fa-book"></i> {{tx.systemFee | number}} GAS System Fee
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 no-padding text-right">
-                <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
-            </div>
-        </div>
-        <div>
-            <div class="col-md-6" style="padding-top: 30px; padding-bottom: 20px">
-                <div *ngFor="let asset of incomingAssets">
-                    <strong *ngIf="asset.fromAddress">
-                        <small style="font-size: 0.8em">
-                            <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
-                        </small>&nbsp;
-                        <span style="font-size: 0.65em" class="label label-danger"><strong>sent</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
-                    </strong>
+        <div class="row no-margin padding-10">
+            <div class="col-md-4">
+                <div class="margin-bot-10">
+                    <a routerLink="/block/{{tx?.blockHeight}}">
+                        <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
+                    </a>
+                </div>
+                <div class="margin-bot-10">
+                    <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
+                </div>
+                <div class="margin-bot-10" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                    <i class="fas fa-clock"></i> {{tx.finalizedAt | timeAgo}}
+                </div>
+                <div class="margin-bot-10">
+                    <i class="fas fa-code-branch"></i> Version {{tx.version}}     
+                </div>
+                <div class="margin-bot-10">
+                    <i class="fas fa-book"></i> {{tx.systemFee | number}} GAS System Fee
+                </div>
+                <div class="margin-bot-10">
+                    <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
                 </div>
             </div>
-            <div class="col-md-6" style="padding-top: 30px; padding-bottom: 20px">
-                <div *ngFor="let asset of outgoingAssets">
+            <div class="col-md-8">
+                <h4 class="text-center">GLOBAL ASSETS</h4>
+                <div *ngFor="let asset of incomingAssets" style="margin-top: 8px">
+                    <strong *ngIf="asset.fromAddress">
+                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #d9534f; color: white; display: inline-block;">
+                            <strong>SENT</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                        </div>&nbsp;
+                        <small style="font-size: 0.65em">
+                            <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
+                        </small>
+                    </strong>
+                </div>
+                <br>
+                <div class="text-right" *ngFor="let asset of outgoingAssets" style="margin-top: 8px">
                     <strong *ngIf="asset.toAddress">
-                        <small style="font-size: 0.8em">
+                        <small style="font-size: 0.65em">
                             <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
                         </small>&nbsp;
-                        <span style="font-size: 0.65em" class="label label-success"><strong>received</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong></span>
+                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
+                            <strong>RECEIVED</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                        </div>
                     </strong>
                 </div>
+                <h4 class="text-center " style="margin-top: 40px">NEP-5 TOKENS</h4>
+                <div class="text-right" *ngFor="let asset of tokenAssets" style="margin-top: 8px">
+                    <div class="row">
+                        <div class="col-md-5 text-left">                            
+                            <div *ngIf="asset.fromAddress">
+                                <strong>
+                                    <small style="font-size: 0.65em">
+                                        <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
+                                    </small>
+                                </strong>
+                            </div>
+                            <div *ngIf="!asset.fromAddress">
+                                MINTED
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
+                                <span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-5">                         
+                            <div *ngIf="asset.toAddress">
+                                <strong>
+                                    <small style="font-size: 0.65em">
+                                        <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
+                                    </small>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- <div class="col-md-4" style="padding-left: 0px !important; padding-right: 0 !important">
+                <div *ngFor="let asset of outgoingAssets" style="margin-bottom: 10px">
+                    <strong *ngIf="asset.toAddress">
+                        <small style="font-size: 0.65em">
+                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
+                        </small>&nbsp;
+                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 0 4px 4px 4px; background: #5cb85c; color: white; display: inline-block;">
+                            <div><strong>RECEIVED</strong></div>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                        </div>
+                    </strong>
+                </div>
+            </div> -->
         </div>
+       
     </div>
     <div class="col-md-4 no-margin">
         <div class="panel panel-default" *ngIf="tx?.witnesses && tx?.witnesses.length">

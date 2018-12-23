@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
+import { CommonStateService } from '../../core/services';
 
 @Component({
     templateUrl: `./node-details.component.html`,
@@ -17,6 +18,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
         private _nodeService: NodeService,
+        private state: CommonStateService,
         private _blockService: BlockService) {
 
         this._blockService.bestBlockChanged.subscribe((x: number) => {
@@ -35,6 +37,10 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.state.changeRoute('node');
+
+        this._nodeService.startService();
+
         this.id = +this.route.snapshot.paramMap.get('id');
 
         this._nodeService.getNode(this.id)
@@ -69,9 +75,9 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     getSecondsSinceTrackingStarted(): number {
-        if (this.node.secondsOnline && this.node.firstRuntime) {
-            const currentDate = Date.now().valueOf();
-            const totalSeconds = Math.floor(currentDate / 1000) - this.node.firstRuntime;
+        if (this.node.secondsOnline && this.node.firstRuntime && this.node.latestRuntime) {
+            const currentDate = new Date(this.node.latestRuntime * 1000);
+            const totalSeconds = this.node.latestRuntime - this.node.firstRuntime;
             return totalSeconds;
         }
 

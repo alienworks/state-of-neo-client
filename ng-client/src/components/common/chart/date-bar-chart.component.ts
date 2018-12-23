@@ -63,43 +63,46 @@ export class DateBarChartComponent implements OnInit {
     }
 
     initChart() {
-        const ctx = document.getElementById(this.id);
-        this.chart = new Chart(ctx, {
-            type: this.chartType,
-            data: {
-                labels: this.getChartLabels(),
-                datasets: [{
-                    label: this.label,
-                    data: this.getChartData(),
-                    backgroundColor: CONST.MainThemeColor,
-                    // backgroundColor: CONST.ColorPalet,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    backgroundColor: '#FFFFFF',
-                    shadow: true
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+        if (this.chartData.length > 0) {
+            const ctx = document.getElementById(this.id);
+            this.chart = new Chart(ctx, {
+                type: this.chartType,
+                data: {
+                    labels: this.getChartLabels(),
+                    datasets: [{
+                        label: this.label,
+                        data: this.getChartData(),
+                        backgroundColor: CONST.MainThemeColor,
+                        // backgroundColor: CONST.ColorPalet,
+                        borderWidth: 1
                     }]
+                },
+                options: {
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'top',
+                        x: -40,
+                        y: 80,
+                        floating: true,
+                        borderWidth: 1,
+                        backgroundColor: '#FFFFFF',
+                        shadow: true
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
                 }
-            }
-        });
+            });
+
+            $(`#container-${this.id}`).show(1000);
+        }
 
         this.isLoading = false;
-        $(`#container-${this.id}`).show(1000);
     }
 
     onDropdownChange(event) {

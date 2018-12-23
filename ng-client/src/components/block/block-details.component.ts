@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlockService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { BlockDetailsModel } from '../../models/block.models';
 import { PageResultModel, BaseTxModel } from '../../models';
 import { TxService } from '../../core/services/data';
@@ -15,10 +16,13 @@ export class BlockDetailsComponent implements OnInit {
     transactions: PageResultModel<BaseTxModel>;
 
     constructor(private route: ActivatedRoute,
+        private state: CommonStateService,
         private blockService: BlockService,
         private txService: TxService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('block');
+
         this.isLoading = true;
         this.route.params.subscribe(params => {
             this.index = +params['index'];

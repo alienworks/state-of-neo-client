@@ -50,6 +50,8 @@ export class FooterStatsComponent implements OnInit {
     nep5AssetTxCount = -1;
     // Events
     assetsCountUpdate = new EventEmitter<number>();
+    neoGasTxCountUpdate = new EventEmitter<number>();
+    nep5TxCountUpdate = new EventEmitter<number>();
 
     constructor(private blockService: BlockService,
         private txService: TxService,
@@ -68,6 +70,7 @@ export class FooterStatsComponent implements OnInit {
 
         this.blocksCountUpdate.subscribe((x: number) => {
             this.serverBlockCount = x;
+            if (!this.latestBlock) this.latestBlock = this.serverBlockCount;
             this.avgTxCount = this.totalTx / this.serverBlockCount;
         });
         this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.avgTime = x / this.serverBlockCount);
@@ -89,7 +92,7 @@ export class FooterStatsComponent implements OnInit {
 
         // Addresses
         this.statsSrService.registerAdditionalEvent('address-count', this.addressCountUpdate);
-        this.addressCountUpdate.subscribe(x => this.addressCountUpdate = x);
+        this.addressCountUpdate.subscribe((x: number) => this.totalAddressCount = x);
 
         this.addrService.getActive()
             .subscribe(x => this.lastActiveAddresses = x.json() as number);
@@ -99,15 +102,17 @@ export class FooterStatsComponent implements OnInit {
             .subscribe(x => this.addrCreatedLastMonth = x.json() as number);
 
         // Assets
-        this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
-        this.assetsCountUpdate.subscribe(x => this.assetsCountUpdate = x);
-
-        this.assetService.getAssetTxCount([AssetTypeEnum.GAS, AssetTypeEnum.NEO])
-            .subscribe(x => this.neoAndGasTxCount = x.json() as number);
         this.assetService.getAssetCount([AssetTypeEnum.NEP5])
             .subscribe(x => this.nep5Assets = x.json() as number);
-        this.assetService.getAssetTxCount([AssetTypeEnum.NEP5])
-            .subscribe(x => this.nep5AssetTxCount = x.json() as number);
+
+        this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
+        this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x);
+        this.statsSrService.registerAdditionalEvent('gas-neo-tx-count', this.neoGasTxCountUpdate);
+        this.neoGasTxCountUpdate.subscribe((x: number) => this.neoAndGasTxCount = x);
+        this.statsSrService.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
+        this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x);
+
+        this.statsSrService.invokeOnServerEvent(`InitInfo`, 'arg');
     }
 
     private subscribeToEvents() {

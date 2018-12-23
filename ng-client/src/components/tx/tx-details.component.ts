@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TxService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { TxDetailsModel, TxTypeEnum, AssetTypeEnum } from '../../models';
 
 @Component({
@@ -13,10 +14,13 @@ export class TxDetailsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private state: CommonStateService,
         private txService: TxService
     ) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('transaction');
+
         this.isLoading = true;
         this.hash = this.route.snapshot.paramMap.get('hash');
 
@@ -24,6 +28,7 @@ export class TxDetailsComponent implements OnInit {
             .subscribe(x => {
                 this.tx = x.json() as TxDetailsModel;
                 this.isLoading = false;
+                console.log(this.tx);
             }, err => {
                 console.log(err);
             });
@@ -37,9 +42,13 @@ export class TxDetailsComponent implements OnInit {
         return this.tx.globalOutgoingAssets.sort(x => x.amount);
     }
 
+    get tokenAssets() {
+        return this.tx.assets.sort(x => x.amount);
+    }
+
     getTypeName(): string {
         if (this.tx === null) { return ''; }
-        return TxTypeEnum[this.tx.type];
+        return TxTypeEnum[this.tx.type].substr(0, TxTypeEnum[this.tx.type].indexOf('Transaction'));
     }
 
     getAssetName(value: number): string {

@@ -1,14 +1,9 @@
 <div class="col-md-12 padding-10 no-margin">
-    <h2 class="bold text-grey section-title">NODE</h2>
     <div class="col-md-8 row padding-10 no-margin panel-body" *ngIf="node">
         <div class="col-md-12 row no-margin">
-            <div class="col-md-3 text-center">
-                <img class="img img-responsive img-thumbnail" src="assets/icons/tsvg/flag-{{node.locale}}.svg" />
-            </div>
-            <div class="col-md-9 row no-margin padding-10 stat">
-                <div class="col-md-12">
-                    <h4 class="bold stat">Name : {{node.url}}</h4>
-                    <h5 class="bold">Endpoint we are checking : {{node.successUrl}}</h5>
+            <div class="col-md-3 stat">
+                <div class="col-md-12 text-center" style="margin-bottom: 25px; margin-top: 10px">
+                    <img class="img img-responsive img-thumbnail" src="{{node.flagUrl}}" />
                 </div>
                 <div class="col-md-12">
                     <span *ngIf="node.blockCount">
@@ -20,12 +15,11 @@
                 </div>
                 <div class="col-md-12">
                     <span *ngIf="node.blockCount" title="{{node.lastBlockStamp ? (node.lastBlockStamp | stampToDate) : ''}}">
-                        <i class="fas fa-cube"></i> Latest block : {{node.blockCount}}
+                        <i class="fas fa-cube"></i> Latest block: # {{node.blockCount | number}}
                         <span *ngIf="node.lastBlockStamp">({{node.lastBlockStamp | stampToDate | timeAgo}})</span>
                         <i class="fa fa-arrow-down text-warning" *ngIf="node.blockCount - bestBlock < 0"></i>
-                        <i class="fas fa-check text-success" *ngIf="node.blockCount - bestBlock >= 0"></i>
+                        <i class="fas fa-check text-success" *ngIf="node.blockCount - bestBlock >= 0" title="Same as network best block"></i>
                         <span *ngIf="node.blockCount - bestBlock < 0">({{node.blockCount - bestBlock}})</span>
-                        <span *ngIf="node.blockCount - bestBlock >= 0"> Same as network best block</span>
                     </span>
                 </div>
                 <div class="col-md-12">
@@ -37,18 +31,29 @@
                     <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet
                     {{node.isWalletOpen ? 'Open' : 'Closed'}}
                 </div>
-                <div class="col-md-12" *ngIf="node.firstRuntime" title="{{node.firstRuntime | stampToDate | timeAgo}}">
-                    <i class="fas fa-clock"></i> Tracked since {{node.firstRuntime}}
+                <div class="col-md-12" *ngIf="node.firstRuntimeDate" title="{{node.firstRuntime | stampToDate | date}}">
+                    <i class="fas fa-clock"></i> Tracked since: {{node.firstRuntime | stampToDate | date | timeAgo}}
                 </div>
-                <div class="col-md-12" *ngIf="node.latestRuntime" title="{{node.latestRuntime | stampToDate | timeAgo}}">
-                    <i class="fas fa-stamp"></i> Last checked {{node.latestRuntime}}
+                <div class="col-md-12" *ngIf="node.latestRuntimeDate" title="{{node.latestRuntime | stampToDate | date}}">
+                    <i class="fas fa-stamp"></i> Last checked: {{node.latestRuntime | stampToDate | timeAgo}}
                 </div>
                 <div class="col-md-12">
                     <span>
-                        <i class="fas fa-plug"></i> Peers : {{node.connected}}
+                        <i class="fas fa-plug"></i> Peers: {{node.connected}}
                     </span>
                 </div>
-                <div class="col-md-12 no-margin padding-5 row custom-vcenter" *ngIf="node.blockCount">
+            </div>
+            <div class="col-md-9 row no-margin padding-10 stat">
+                <div class="col-md-12">
+                    <h4 class="bold stat">Name : {{node.url}}</h4>
+                    <h5 class="bold">Endpoint we are checking : {{node.successUrl}}</h5>
+                </div>
+                <div *ngIf="node.type == 'RPC' && node.blockCount" class="col-md-12 padding-5 row custom-vcenter">
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
+                        {{node.latency}}
+                        <br>
+                        <i class="fas fa-signal"></i> ms
+                    </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
                         RPC
                         <br>
@@ -59,21 +64,37 @@
                         <br>
                         <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
-                    <div class="col-md-4 col-sm-4 col-xs-4 text-right {{getClassForNodeLatency(node)}}">
-                        {{node.latency}} <i class="fas fa-signal"></i>
+                </div>
+                <div *ngIf="node.type == 'REST'" class="col-md-12 padding-5 row custom-vcenter">
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
+                        {{node.latency}}
+                        <br>
+                        <i class="fas fa-signal"></i> ms
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.blockCount ? 'text-success' : 'text-danger')}}">
+                        REST
+                        <br>
+                        <i class="fas {{(node.blockCount ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
                 </div>
+
                 <div class="col-md-12 no-margin padding-5">
                     <div class="col-12 padding-5 no-margin" *ngIf="node.trackedSeconds">
-                        <app-percent-bar [title]="'Uptime %'" [total]="node.trackedSeconds" [current]="node.secondsOnline / 1000"></app-percent-bar>
+                        <app-percent-bar [title]="'Uptime %'" [total]="node.trackedSeconds" [current]="node.secondsOnline"></app-percent-bar>
                     </div>
                 </div>
                 <div class="col-md-12 no-margin padding-5 row">
-                    <div class="row no-margin padding-10 col-md-6 col-sm-6 col-xs-12">
+                    <div class="row no-margin padding-10 col-xs-12" [class]="node.type === 'REST' ? 'col-md-8 col-sm-8' : 'col-md-6 col-sm-6'">
                         <app-date-bar-chart [endpoint]="'node/latencychart/' + node.id" [label]="'Average Latency'"></app-date-bar-chart>
                     </div>
-                    <div class="row no-margin padding-10 col-md-6 col-sm-6 col-xs-12">
+                    <div class="row no-margin padding-10 col-md-6 col-sm-6 col-xs-12" *ngIf="node.type === 'RPC'">
                         <app-date-bar-chart [endpoint]="'node/peerschart/' + node.id" [label]="'Average Peers Count'"></app-date-bar-chart>
+                    </div>
+                    <div class="row no-margin padding-10 col-md-4 col-sm-4 col-xs-12 text-center bold custom-vcenter"
+                        style="min-height: 360px" *ngIf="node.type !== 'RPC'">
+                        <div>
+                            NO PEERS STATS FOR REST NODES
+                        </div>
                     </div>
                 </div>
             </div>

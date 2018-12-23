@@ -28,7 +28,7 @@ export class PieChartComponent implements OnInit {
         $(`#container-${this.id}`).hide();
         this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
-                this.data = x.json() as ChartDataItemModel[];
+                this.data = (x.json() as ChartDataItemModel[]).filter(x => x.value > 5);
                 console.log(this.data);
                 this.initChart();
             }, err => console.log(`could not load pie-chart from ${this.endpoint}`, err));
@@ -59,7 +59,7 @@ export class PieChartComponent implements OnInit {
     }
 
     private getChartLabels(): any {
-        const result = this.data.filter(x => x.value > 5).map(x => x.label);
+        const result = this.data.map(x => x.label.substr(0, x.label.indexOf('Transaction')));
         return result;
     }
 
