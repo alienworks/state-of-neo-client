@@ -17,6 +17,8 @@ export class NodeService {
     public updateNodes = new EventEmitter<any[]>();
     public updateMarkers = new EventEmitter<any[]>();
 
+    private isStopped = false;
+
     constructor(private http: Http,
         private _nodeSignalRService: NodesSignalRService,
         private _nodeRpcService: RpcService) {
@@ -29,6 +31,10 @@ export class NodeService {
             }, err => {
                 console.log(`error getting nodes`, err);
             });
+    }
+
+    public stopService() {
+        this.isStopped = true;
     }
 
     private subscribeToEvents() {
@@ -71,7 +77,10 @@ export class NodeService {
     }
 
     updateNodesData() {
+        if (this.isStopped) return;
+
         this.allNodes.forEach(x => {
+            if (this.isStopped) return;
             this.getConnectionsCount(x);
             this.getVersion(x);
             this.getBlockCount(x);
@@ -87,8 +96,11 @@ export class NodeService {
     }
 
     updateAllNodes(nodes: any): void {
+        if (this.isStopped) return;
+
         const that = this;
         nodes.forEach(x => {
+            if (this.isStopped) return;
             if (that.allNodes.find(z => that.getNodeDisplayText(z) === that.getNodeDisplayText(x))) {
                 return;
             }
@@ -101,6 +113,8 @@ export class NodeService {
     }
 
     updateAllMarkers(): void {
+        if (this.isStopped) return;
+
         const markers = [];
         this.allNodes.forEach(x => {
             markers.push({
@@ -115,6 +129,8 @@ export class NodeService {
     }
 
     public getPeers(x: any) {
+        if (this.isStopped) return;
+
         this._nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
                 const json = res.json();
@@ -137,6 +153,8 @@ export class NodeService {
     }
 
     public getConnectionsCount(x: any) {
+        if (this.isStopped) return;
+
         this._nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
@@ -156,6 +174,8 @@ export class NodeService {
     }
 
     public getVersion(x: any) {
+        if (this.isStopped) return;
+
         const requestStart = Date.now();
         this._nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
             .subscribe(res => {
@@ -173,6 +193,8 @@ export class NodeService {
     }
 
     public getBlockCount(x: any, getStamp: boolean = false) {
+        if (this.isStopped) return;
+
         this._nodeRpcService.callMethod(x.successUrl, 'getblockcount', 3)
             .subscribe(res => {
                 const now = Date.now();
@@ -197,6 +219,8 @@ export class NodeService {
     }
 
     public getRawMemPool(x: any) {
+        if (this.isStopped) return;
+
         this._nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
@@ -206,6 +230,8 @@ export class NodeService {
     }
 
     public getWalletState(x: any) {
+        if (this.isStopped) return;
+
         this._nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
             .subscribe(res => {
                 x.isWalletOpen = true;
@@ -215,6 +241,8 @@ export class NodeService {
     }
 
     private sort() {
+        if (this.isStopped) return;
+
         this.allNodes = this.allNodes.sort((x, y) => {
             if (!x.rpcEnabled && y.rpcEnabled) {
                 return 1;

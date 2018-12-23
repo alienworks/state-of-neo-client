@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     allNodes: any[] = [];
     interval: number;
 
-    constructor(private _nodeService: NodeService) {
+    constructor(private nodeService: NodeService) {
         this.subscribeToEvents();
     }
 
@@ -27,12 +27,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.allNodes = this._nodeService.getNodes();
+        this.allNodes = this.nodeService.getNodes();
 
         this.interval =
             window.setInterval(() => {
-                this._nodeService.updateNodesData();
-                this.allNodes = this._nodeService.getNodes();
+                this.nodeService.updateNodesData();
+                this.allNodes = this.nodeService.getNodes();
             }, 5000);
 
         // window height - header - body padding top and bottom
@@ -43,12 +43,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.interval) {
+            this.nodeService.stopService();
             clearInterval(this.interval);
         }
     }
 
     private subscribeToEvents(): void {
-        this._nodeService.updateNodes.subscribe((nodes: any) => {
+        this.nodeService.updateNodes.subscribe((nodes: any) => {
             this.allNodes = nodes;
         });
     }

@@ -14,26 +14,41 @@ export class NodeListComponent implements OnInit, OnDestroy {
     bestBlock: number;
     isLoading = true;
     interval: number;
+    page = 1;
+    nodes: any[] = [];
 
-    constructor(private _nodeService: NodeService, private _blockService: BlockService) { }
+    constructor(private nodeService: NodeService, private blockService: BlockService) { }
 
     ngOnInit(): void {
-        this.bestBlock = this._blockService.bestBlock;
+        this.nodes = this.nodeService.getNodes();
 
-        this._blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
+        this.interval =
+            window.setInterval(() => {
+                this.nodeService.updateNodesData();
+                this.nodes = this.nodeService.getNodes();
+            }, 5000);
+
+        this.nodeService.updateNodes.subscribe((nodes: any) => {
+            this.nodes = nodes;
+        });
+
+        this.bestBlock = this.blockService.bestBlock;
+
+        this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
         this.getPage(1);
     }
 
     ngOnDestroy(): void {
         if (this.interval) {
+            this.nodeService.stopService();
             clearInterval(this.interval);
         }
     }
 
     getPage(page: number): void {
         this.isLoading = true;
-        this._nodeService.getNodesApi(page)
+        this.nodeService.getNodesApi(page)
             .subscribe(pageResults => {
                 this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
                 this.isLoading = false;
@@ -47,9 +62,9 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     updateNodesList() {
         this.pageResults.items.forEach(x => {
-            this._nodeService.getBlockCount(x);
-            this._nodeService.getVersion(x);
-            this._nodeService.getConnectionsCount(x);
+            this.nodeService.getBlockCount(x);
+            this.nodeService.getVersion(x);
+            this.nodeService.getConnectionsCount(x);
         });
     }
 
