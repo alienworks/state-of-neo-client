@@ -28,6 +28,7 @@ export class TxDetailsComponent implements OnInit {
             .subscribe(x => {
                 this.tx = x.json() as TxDetailsModel;
                 this.isLoading = false;
+                console.log(this.tx);
             }, err => {
                 console.log(err);
             });
@@ -41,9 +42,13 @@ export class TxDetailsComponent implements OnInit {
         return this.tx.globalOutgoingAssets.sort(x => x.amount);
     }
 
+    get tokenAssets() {
+        return this.tx.assets.sort(x => x.amount);
+    }
+
     getTypeName(): string {
         if (this.tx === null) { return ''; }
-        return TxTypeEnum[this.tx.type];
+        return TxTypeEnum[this.tx.type].substr(0, TxTypeEnum[this.tx.type].indexOf('Transaction'));
     }
 
     getAssetName(value: number): string {

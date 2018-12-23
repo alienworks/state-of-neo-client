@@ -5,10 +5,16 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
-        <div class="row no-margin padding-10 col-md-12 panel-body">
-            <app-total-gas-claimed></app-total-gas-claimed>
-            <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
-            <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>
+        <div class="panel-body">
+            <div class="row no-margin padding-10 col-md-12">
+                <app-total-gas-claimed></app-total-gas-claimed>
+            </div>
+            <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
+                <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
+            </div>            
+            <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
+                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>                
+            </div>
         </div>
     </div>
 </div>
