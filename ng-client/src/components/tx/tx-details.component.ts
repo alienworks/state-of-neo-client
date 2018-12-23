@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TxService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { TxDetailsModel, TxTypeEnum, AssetTypeEnum } from '../../models';
 
 @Component({
@@ -13,10 +14,13 @@ export class TxDetailsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private state: CommonStateService,
         private txService: TxService
     ) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('transaction');
+
         this.isLoading = true;
         this.hash = this.route.snapshot.paramMap.get('hash');
 

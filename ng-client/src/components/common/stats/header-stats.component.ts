@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { NodeService } from 'src/core/services/data';
+import { CommonStateService } from 'src/core/services';
 import { HeaderInfoModel } from 'src/models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
 
@@ -23,6 +24,7 @@ export class HeaderStatsComponent {
 
     constructor(
         private statsSrService: StatsSignalRService,
+        private state: CommonStateService,
         private nodeService: NodeService) {
         this.subscribeToEvents();
 
@@ -43,9 +45,6 @@ export class HeaderStatsComponent {
             this.headerInfo = x;
             this.updateBestBlock();
         });
-
-        
-        this.nodeService.rpcEnabledNodes.subscribe(x => this.rpcNodes = x);
 
         this.nodeService.getConsensusNodes()
             .subscribe(x => {

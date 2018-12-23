@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { NodeService } from '../../core/services/data/node.service';
+import { CommonStateService } from '../../core/services';
 import { PageResultModel, BaseNodeModel } from '../../models';
 import { BlockService } from '../../core/services/data';
 
@@ -15,9 +16,14 @@ export class NodeListComponent implements OnInit, OnDestroy {
     isLoading = true;
     interval: number;
 
-    constructor(private _nodeService: NodeService, private _blockService: BlockService) { }
+    constructor(
+        private _nodeService: NodeService, 
+        private state: CommonStateService,
+        private _blockService: BlockService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('nodes');
+
         this.bestBlock = this._blockService.bestBlock;
 
         this._blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);

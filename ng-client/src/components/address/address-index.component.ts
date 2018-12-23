@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { AddressService } from '../../core/services/data';
+import { CommonStateService } from '../../core/services';
 import { AddressListModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
@@ -15,10 +16,14 @@ export class AddressIndexComponent implements OnInit {
     totalCount: number;
     totalCountUpdate = new EventEmitter<number>();
 
-    constructor(private addresses: AddressService, private statsService: StatsSignalRService) {
+    constructor(private addresses: AddressService, 
+        private state: CommonStateService,
+        private statsService: StatsSignalRService) {
     }
 
     ngOnInit(): void {
+        this.state.changeRoute('addresses');
+
         this.getPage(1);
         this.getTopAddresses();
         this.subscribeToEvents();

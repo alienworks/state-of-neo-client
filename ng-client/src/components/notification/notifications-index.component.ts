@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { NotificationsSignalRService } from 'src/core/services/signal-r';
+import { CommonStateService } from 'src/core/services';
 import { NotificationModel } from 'src/models';
 
 @Component({
@@ -10,7 +11,12 @@ export class NotificationsIndexComponent {
     contract: string;
     contractFilter = false;
 
-    constructor(private notificationsSignalR: NotificationsSignalRService) {
+    constructor(
+        private state: CommonStateService,
+        private notificationsSignalR: NotificationsSignalRService
+    ) {
+        this.state.changeRoute('notifications');
+        
         this.subscribeToEvents();
     }
 

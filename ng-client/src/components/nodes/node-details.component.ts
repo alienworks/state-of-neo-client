@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
+import { CommonStateService } from '../../core/services';
 
 @Component({
     templateUrl: `./node-details.component.html`
@@ -15,6 +16,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
         private _nodeService: NodeService,
+        private state: CommonStateService,
         private _blockService: BlockService) {
 
         this._blockService.bestBlockChanged.subscribe((x: number) => {
@@ -33,6 +35,8 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.state.changeRoute('nodes');
+
         this.id = +this.route.snapshot.paramMap.get('id');
 
         this._nodeService.getNode(this.id)

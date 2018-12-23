@@ -30,7 +30,7 @@ import {
 } from '../components/asset';
 
 // Services
-import { NetService } from '../core/services';
+import { NetService, CommonStateService } from '../core/services';
 import {
   RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
 } from '../core/services/data';
@@ -99,7 +99,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     // Custom
     TimestampFormatPipe,
     // Common services
-    NetService,
+    NetService, CommonStateService,
     // SignalR services
     SignalRService,
     NodesSignalRService, StatsSignalRService, NotificationsSignalRService,

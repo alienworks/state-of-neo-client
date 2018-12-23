@@ -12,8 +12,9 @@ import { BaseBlockModel } from 'src/models/block.models';
 export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
-    public nodeBlockInfo = new EventEmitter<number>();
+    public nodeBlockInfo = new BehaviorSubject<number>(0);
     public rpcEnabledNodes = new BehaviorSubject<number>(0);
+    public restEnabledNodes = new BehaviorSubject<number>(0);
     public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
@@ -77,15 +78,15 @@ export class NodeService {
             this.getBlockCount(x);
             // this.getPeers(x);
             this.sort();
-            console.log(x.url, x);
         });
 
         this.updateAllMarkers();
 
-        this.updateNodes.next(this.allNodes);
         this.updateMarkers.emit(this.markers);
+
+        this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
-        console.log(this.allNodes);
+        this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
 
         setTimeout(x => console.log(this.allNodes), 5000);
     }
@@ -193,7 +194,7 @@ export class NodeService {
                         }, err => console.log(err));
                 }
 
-                this.nodeBlockInfo.emit(response.result);
+                this.nodeBlockInfo.next(response.result);
             }, err => {
                 x.rpcEnabled = false;
                 x.latency = 0;
