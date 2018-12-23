@@ -3,8 +3,8 @@
         <div>
             <div id="last-block-stats" style="white-space: nowrap;">
                 <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
-                <div style="font-size: 14px; "><strong>LAST BLOCK</strong></div>
-                <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.4em"></i>
+                    <div style="font-size: 14px; "><strong>LAST BLOCK</strong></div>
+                    <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.4em"></i>
                     #{{headerInfo.height | number}}
                 </a>
             </div>
@@ -15,7 +15,7 @@
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
                 <div style="font-size: 14px; "><strong>TIMESTAMP</strong></div>
                 <i class="fa fa-hourglass-end spin"></i>
-                {{secondsSinceLastBlock | number}} s ago
+                {{secondsSinceLastBlock | number}} SEC AGO
             </a>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
                 <div style="font-size: 14px; "><strong>TX COUNT</strong></div>            
                 <i class="fas fa-handshake"></i>
-                {{headerInfo.transactionCount | number}}
+                {{headerInfo.transactionCount | number}} TX
             </a>
         </div>
     </div>
@@ -33,7 +33,7 @@
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
                 <div style="font-size: 14px; "><strong>SIZE</strong></div>            
                 <i class="fas fa-microchip"></i>
-                {{headerInfo.size | number}}
+                {{headerInfo.size | number}} BYTES
             </a>
         </div>
     </div>
@@ -42,7 +42,7 @@
             <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
                 <div style="font-size: 14px; "><strong class="text-success">RPC NODES</strong></div>            
                 <i class="fas fa-server"></i>
-                32
+                {{rpcNodes}} RPC
             </a>
         </div>
     </div>
@@ -51,7 +51,7 @@
             <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-success">
                 <div style="font-size: 14px; "><strong class="text-success">CONSENSUS NODES</strong></div>            
                 <i class="fas fa-desktop"></i>
-                7
+                {{consensusNodes}} CONSENSUS
             </a>
         </div>
     </div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { BlockService, NodeService } from 'src/core/services/data';
+import { NodeService } from 'src/core/services/data';
 import { HeaderInfoModel } from 'src/models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
 
@@ -16,10 +16,14 @@ declare var $;
 export class HeaderStatsComponent {
     secondsSinceLastBlock = 0;
     headerInfo: HeaderInfoModel;
+    rpcNodes: number = 0;
+    consensusNodes: number = 0;
 
     headerUpdate = new EventEmitter<HeaderInfoModel>();
 
-    constructor(private statsSrService: StatsSignalRService) {
+    constructor(
+        private statsSrService: StatsSignalRService,
+        private nodeService: NodeService) {
         this.subscribeToEvents();
 
         setInterval(() => {
@@ -39,6 +43,15 @@ export class HeaderStatsComponent {
             this.headerInfo = x;
             this.updateBestBlock();
         });
+
+        
+        this.nodeService.rpcEnabledNodes.subscribe(x => this.rpcNodes = x);
+
+        this.nodeService.getConsensusNodes()
+            .subscribe(x => {
+                var result = x.json() as Array<any>;
+                this.consensusNodes = result.filter(x => x.Active).length;
+            });
     }
 
     private updateBestBlock(): void {

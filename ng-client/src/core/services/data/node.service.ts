@@ -5,7 +5,7 @@ import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
 import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { BaseBlockModel } from 'src/models/block.models';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
     public nodeBlockInfo = new EventEmitter<number>();
-    public rpcEnabledNodes = new EventEmitter<number>();
-    public updateNodes = new EventEmitter<any[]>();
+    public rpcEnabledNodes = new BehaviorSubject<number>(0);
+    public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
     constructor(private http: Http,
@@ -79,11 +79,15 @@ export class NodeService {
             this.sort();
             console.log(x.url, x);
         });
+
         this.updateAllMarkers();
 
-        this.updateNodes.emit(this.allNodes);
+        this.updateNodes.next(this.allNodes);
         this.updateMarkers.emit(this.markers);
-        this.rpcEnabledNodes.emit(this.allNodes.filter(x => x.rpcEnabled).length);
+        this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
+        console.log(this.allNodes);
+
+        setTimeout(x => console.log(this.allNodes), 5000);
     }
 
     updateAllNodes(nodes: any): void {
