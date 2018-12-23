@@ -16,7 +16,7 @@ export class AddressIndexComponent implements OnInit {
     totalCount: number;
     totalCountUpdate = new EventEmitter<number>();
 
-    constructor(private addresses: AddressService, 
+    constructor(private addresses: AddressService,
         private state: CommonStateService,
         private statsService: StatsSignalRService) {
     }

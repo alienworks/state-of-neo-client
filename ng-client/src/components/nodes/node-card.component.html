@@ -1,8 +1,7 @@
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 padding-5 row no-margin" (mouseenter)="hoverNode(node)" (mouseleave)="hoverOffNode(node)">
     <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
         <div class="card border-box-shadow col-md-12 padding-5 row no-margin" 
-            [style.background-color]="node.type == 'RPC' && node.blockCount ? 'transparent' : '#EEE'"
-            [style.background-color]="node.type == 'REST' && node.blockCount ? 'transparent' : '#EEE'">
+            [style.background-color]="(node.type === 'RPC' && node.blockCount) || (node.type === 'REST' && node.blockCount) ? 'transparent' : '#EEE'">
             <div class="col-md-12 row no-margin no-padding">
                 <div class="col-md-12 no-margin no-padding text-center word-wraped">
                     <h5><strong>{{node.url}}</strong></h5>

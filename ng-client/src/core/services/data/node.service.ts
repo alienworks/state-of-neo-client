@@ -191,14 +191,14 @@ export class NodeService {
             .subscribe(res => {
                 const now = Date.now();
                 x.lastResponseTime = now;
-                x.latency = Math.round((now - requestStart));
+                if (x.type === 'RPC') x.latency = Math.round((now - requestStart));
 
                 const response = res.json();
                 x.version = response.result.useragent;
                 x.rpcEnabled = true;
             }, err => {
                 x.rpcEnabled = false;
-                x.latency = 0;
+                if (x.type === 'RPC') x.latency = 0;
             });
     }
 
@@ -216,8 +216,13 @@ export class NodeService {
 
                         node.latency = Math.round((now - requestStart));
                         node.blockCount = response.height;
+                        node.restEnabled = true;
                         this.nodeBlockInfo.next(node.blockCount);
-                    }, err => console.log(err));
+                    }, err => {
+                        console.log(err);
+                        node.restEnabled = false;
+                        node.blockCount = null;
+                    });
             } else if (node.service === 'neoNotification') {
                 const requestStart = Date.now();
 
@@ -229,9 +234,12 @@ export class NodeService {
                         node.latency = Math.round((now - requestStart));
                         node.version = response.version;
                         node.blockCount = response.current_height;
+                        node.restEnabled = true;
                         this.nodeBlockInfo.next(node.blockCount);
                     }, err => {
                         console.log(err);
+                        node.restEnabled = false;
+                        node.blockCount = null;
                     });
             }
         } else {
