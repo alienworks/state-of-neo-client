@@ -37,6 +37,10 @@ export class NodeService {
         this.isStopped = true;
     }
 
+    public startService() {
+        this.isStopped = false;
+    }
+
     private subscribeToEvents() {
         this._nodeSignalRService.messageReceived.subscribe((nodes: any[]) => {
             this.updateAllNodes(nodes);
@@ -168,6 +172,7 @@ export class NodeService {
                     this.sort();
                 } else {
                     console.log(res);
+                    x.connected = null;
                     x.p2pEnabled = false;
                 }
             });
@@ -192,30 +197,59 @@ export class NodeService {
             });
     }
 
-    public getBlockCount(x: any, getStamp: boolean = false) {
+    public getBlockCount(node: any, getStamp: boolean = false) {
         if (this.isStopped) return;
 
-        this._nodeRpcService.callMethod(x.successUrl, 'getblockcount', 3)
-            .subscribe(res => {
-                const now = Date.now();
-                x.lastResponseTime = now;
-                const response = res.json();
-                x.lastBlockCount = x.blockCount;
-                x.blockCount = response.result;
+        if (node.service) {
+            if (node.service === 'neoScan') {
+                const requestStart = Date.now();
 
-                if (getStamp && x.lastBlockCount !== x.blockCount) {
-                    this.getBlockStamp(+x.blockCount)
-                        .subscribe(y => {
-                            const block = y.json() as BaseBlockModel;
-                            x.lastBlockStamp = block.timestamp;
-                        }, err => console.log(err));
-                }
+                this.http.get(`${node.url}get_height`)
+                    .subscribe((x: any) => {
+                        const response = x.json();
+                        const now = Date.now();
 
-                this.nodeBlockInfo.emit(response.result);
-            }, err => {
-                x.rpcEnabled = false;
-                x.latency = 0;
-            });
+                        node.latency = Math.round((now - requestStart));
+                        node.blockCount = response.height;
+                    }, err => console.log(err));
+            } else if (node.service === 'neoNotification') {
+                const requestStart = Date.now();
+
+                this.http.get(`${node.url}version`)
+                    .subscribe((x: any) => {
+                        const response = x.json();
+                        const now = Date.now();
+
+                        node.latency = Math.round((now - requestStart));
+                        node.version = response.version;
+                        node.blockCount = response.current_height;
+                    }, err => {
+                        console.log(err);
+                    });
+            }
+        } else {
+            this._nodeRpcService.callMethod(node.successUrl, 'getblockcount', 3)
+                .subscribe(res => {
+                    const now = Date.now();
+                    node.lastResponseTime = now;
+                    const response = res.json();
+                    node.lastBlockCount = node.blockCount;
+                    node.blockCount = response.result;
+
+                    if (getStamp && node.lastBlockCount !== node.blockCount) {
+                        this.getBlockStamp(+node.blockCount)
+                            .subscribe(y => {
+                                const block = y.json() as BaseBlockModel;
+                                node.lastBlockStamp = block.timestamp;
+                            }, err => console.log(err));
+                    }
+
+                    this.nodeBlockInfo.emit(response.result);
+                }, err => {
+                    node.rpcEnabled = false;
+                    node.latency = 0;
+                });
+        }
     }
 
     public getRawMemPool(x: any) {
@@ -244,32 +278,12 @@ export class NodeService {
         if (this.isStopped) return;
 
         this.allNodes = this.allNodes.sort((x, y) => {
-            if (!x.rpcEnabled && y.rpcEnabled) {
-                return 1;
-            } else if (x.rpcEnabled && !y.rpcEnabled) {
-                return -1;
-            }
-
-            if (x.type !== 'RPC' && y.type === 'RPC') {
-                return 1;
-            } else if (x.type === 'RPC' && y.type !== 'RPC') {
-                return -1;
-            }
-
             if (!x.blockCount && y.blockCount) {
                 return 1;
             } else if (x.blockCount && !y.blockCount) {
                 return -1;
             } else if (x.blockCount !== y.blockCount) {
                 return y.blockCount - x.blockCount;
-            }
-
-            if (!x.connected && y.connected) {
-                return 1;
-            } else if (!y.connected && x.connected) {
-                return -1;
-            } else if (x.connected !== y.connected) {
-                return y.connected - x.connected;
             }
 
             return x.latency - y.latency;

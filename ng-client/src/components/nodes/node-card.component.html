@@ -1,6 +1,8 @@
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 padding-5 row no-margin" (mouseenter)="hoverNode(node)" (mouseleave)="hoverOffNode(node)">
     <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
-        <div class="card border-box-shadow col-md-12 padding-5 row no-margin" [style.background-color]="node.rpcEnabled ? 'transparent' : '#EEE'">
+        <div class="card border-box-shadow col-md-12 padding-5 row no-margin" 
+            [style.background-color]="node.type == 'RPC' && node.blockCount ? 'transparent' : '#EEE'"
+            [style.background-color]="node.type == 'REST' && node.blockCount ? 'transparent' : '#EEE'">
             <div class="col-md-12 row no-margin no-padding">
                 <div class="col-md-12 no-margin no-padding text-center word-wraped">
                     <h5><strong>{{node.url}}</strong></h5>
@@ -12,21 +14,31 @@
                     <div class="card-version">v. {{node.version}}</div>
                 </div>
                 <div class="col-md-5 col-sm-5 col-xs-5 padding-10 custom-vcenter img-container">
-                    <img class="img img-thumbnail img-responsive" width="35px" height="35px" src="assets/icons/tsvg/flag-{{node.locale}}.svg" /><br />
+                    <img class="img img-thumbnail img-responsive" width="35px" height="35px" src="{{node.flagUrl}}" /><br />
                 </div>
             </div>
             <div class="col-sm-12 padding-5 row no-margin">
-                <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
+                <div *ngIf="node.type == 'RPC'" class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
                     RPC
                     <br>
                     <i class="fas {{(node.rpcEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}">
+                <div *ngIf="node.type == 'RPC'" class="col-md-4 col-sm-4 col-xs-4 text-center {{(node.connected ? 'text-success' : 'text-danger')}}">
                     P2P
                     <br>
-                    <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
+                    <i class="fas {{(node.connected ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
+                <div *ngIf="node.type == 'REST'" class="col-md-6 col-sm-6 col-xs-6 text-center {{(node.blockCount ? 'text-success' : 'text-danger')}}">
+                    REST
+                    <br>
+                    <i class="fas {{(node.blockCount ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
+                </div>
+                <div *ngIf="node.type == 'RPC'" class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
+                    {{node.latency}}
+                    <br>
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div *ngIf="node.type == 'REST'" class="col-md-6 col-sm-6 col-xs-6 text-center {{getClassForNodeLatency(node)}}">
                     {{node.latency}}
                     <br>
                     <i class="fas fa-signal"></i>

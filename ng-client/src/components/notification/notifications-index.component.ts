@@ -22,6 +22,8 @@ export class NotificationsIndexComponent {
         this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
             if (this.contractFilter) this.notifications = x;
         });
+
+        // this.notificationsSignalR.invokeOnServerEvent('InitInfo', 'caller');
     }
 
     subscribeToContract(hash: string) {

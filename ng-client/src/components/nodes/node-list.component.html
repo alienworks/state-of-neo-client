@@ -13,7 +13,10 @@
                         <th class="col-md-4">
                             Url
                         </th>
-                        <th class="col-md-4">
+                        <th class="col-md-1">
+                            Type
+                        </th>
+                        <th class="col-md-3">
                             Height
                             (synced/behind)
                         </th>
@@ -29,7 +32,7 @@
                     <tr class="text-grey" *ngFor="let node of nodes | paginate: { itemsPerPage: 10, currentPage: page }">
                         <td>
                             <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
-                                <img class="img img-responsive img-thumbnail" width="40" height="40" src="assets/icons/tsvg/flag-{{node.locale}}.svg" />
+                                <img class="img img-responsive img-thumbnail" width="40" height="40" src="{{node.flagUrl}}" />
                             </a>
                         </td>
                         <td>
@@ -38,10 +41,16 @@
                             </a>
                         </td>
                         <td>
+                            <strong>{{node.type}}</strong>
+                        </td>
+                        <td>
                             <div *ngIf="node.blockCount">
                                 {{node.blockCount}}
                                 <i class="fas fa-check-circle text-success" *ngIf="bestBlock - node.blockCount == 0"></i>
                                 {{bestBlock - node.blockCount == 0 ? '' : '(-' + (bestBlock - node.blockCount) + ')'}}
+                            </div>
+                            <div *ngIf="!node.blockCount" class="bold text-danger">
+                                <i class="fas fa-ban"></i> Offline
                             </div>
                         </td>
                         <td>

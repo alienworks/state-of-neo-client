@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.nodeService.startService();
         this.allNodes = this.nodeService.getNodes();
 
         this.interval =

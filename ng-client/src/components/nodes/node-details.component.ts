@@ -33,6 +33,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this._nodeService.startService();
         this.id = +this.route.snapshot.paramMap.get('id');
 
         this._nodeService.getNode(this.id)

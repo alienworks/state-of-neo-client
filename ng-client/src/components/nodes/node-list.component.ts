@@ -20,6 +20,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     constructor(private nodeService: NodeService, private blockService: BlockService) { }
 
     ngOnInit(): void {
+        this.nodeService.startService();
         this.nodes = this.nodeService.getNodes();
 
         this.interval =
