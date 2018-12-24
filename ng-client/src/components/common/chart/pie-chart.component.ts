@@ -28,7 +28,7 @@ export class PieChartComponent implements OnInit {
         $(`#container-${this.id}`).hide();
         this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
-                this.data = (x.json() as ChartDataItemModel[]).filter(x => x.value > 5);
+                this.data = (x.json() as ChartDataItemModel[]);
                 console.log(this.data);
                 this.initChart();
             }, err => console.log(`could not load pie-chart from ${this.endpoint}`, err));
