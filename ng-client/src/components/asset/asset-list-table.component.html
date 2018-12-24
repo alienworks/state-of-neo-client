@@ -21,7 +21,7 @@
                 <tr *ngFor="let asset of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
                     <td><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active"><strong>{{asset.name}}</strong></a></td>
                     <td><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active">{{asset.hash}}</a></td>
-                    <td class="text-success">{{asset.totalSupply | number}}</td>
+                    <td class="text-success">{{(getPositiveNumber(asset.totalSupply)) | number}}</td>
                 </tr>
             </tbody>
         </table>

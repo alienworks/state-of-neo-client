@@ -13,15 +13,15 @@ export class AssetListTableComponent implements OnChanges {
     isLoading: boolean;
 
     get paginateConfig() {
-        return  { 
-            id: 'server-' + this.name, 
-            itemsPerPage: this.model ? this.model.metaData.PageSize : 16, 
-            currentPage: this.model ? this.model.metaData.PageNumber : 1, 
+        return {
+            id: 'server-' + this.name,
+            itemsPerPage: this.model ? this.model.metaData.PageSize : 16,
+            currentPage: this.model ? this.model.metaData.PageNumber : 1,
             totalItems: this.model ? this.model.metaData.TotalItemCount : 1
-        }
-    };
+        };
+    }
 
-    constructor() { 
+    constructor() {
         this.isLoading = true;
     }
 
@@ -34,5 +34,9 @@ export class AssetListTableComponent implements OnChanges {
     getPage(page: number) {
         this.isLoading = true;
         this.emitModelUpdate.emit(page);
+    }
+
+    getPositiveNumber(number: number): number {
+        return Math.abs(number);
     }
 }
