@@ -9,7 +9,7 @@ export class ChartFilterModel {
     startDate: Date;
     endDate: Date;
     endPeriod: number;
-    unitOfTime = UnitOfTime.Day;
+    unitOfTime = UnitOfTime.Hour;
 }
 
 export enum UnitOfTime {
