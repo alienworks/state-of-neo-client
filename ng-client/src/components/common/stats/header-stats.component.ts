@@ -17,8 +17,8 @@ declare var $;
 export class HeaderStatsComponent {
     secondsSinceLastBlock = 0;
     headerInfo: HeaderInfoModel;
-    rpcNodes: number = 0;
-    consensusNodes: number = 0;
+    rpcNodes = 0;
+    consensusNodes = 0;
 
     headerUpdate = new EventEmitter<HeaderInfoModel>();
 
@@ -48,8 +48,8 @@ export class HeaderStatsComponent {
 
         this.nodeService.getConsensusNodes()
             .subscribe(x => {
-                var result = x.json() as Array<any>;
-                this.consensusNodes = result.filter(x => x.Active).length;
+                const result = x.json() as Array<any>;
+                this.consensusNodes = result.filter((y: any) => y.Active).length;
             });
     }
 

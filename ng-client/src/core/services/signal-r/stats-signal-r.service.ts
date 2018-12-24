@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SignalRService } from './signal-r.service';
 
 import * as CONST from 'src/core/common/constants';

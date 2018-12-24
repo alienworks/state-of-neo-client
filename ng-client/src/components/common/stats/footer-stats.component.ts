@@ -103,7 +103,7 @@ export class FooterStatsComponent implements OnInit {
 
         // Assets
         this.assetService.getAssetCount([AssetTypeEnum.NEP5])
-        .subscribe(x => this.nep5Assets = x.json() as number);
+            .subscribe(x => this.nep5Assets = x.json() as number);
 
         this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
         this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x);
@@ -111,6 +111,8 @@ export class FooterStatsComponent implements OnInit {
         this.neoGasTxCountUpdate.subscribe((x: number) => this.neoAndGasTxCount = x);
         this.statsSrService.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
         this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x);
+
+        this.statsSrService.invokeOnServerEvent(`InitInfo`, 'arg');
     }
 
     private subscribeToEvents() {

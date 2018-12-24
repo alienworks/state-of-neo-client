@@ -10,8 +10,11 @@
                         <th class="col-md-4">
                             Url
                         </th>
-                        <th class="col-md-4">
-                            Height 
+                        <th class="col-md-1">
+                            Type
+                        </th>
+                        <th class="col-md-3">
+                            Height
                             (synced/behind)
                         </th>
                         <th class="col-md-1">
@@ -23,10 +26,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-grey" *ngFor="let node of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
+                    <tr class="text-grey" *ngFor="let node of nodes | paginate: { itemsPerPage: 16, currentPage: page }">
                         <td>
                             <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
-                                <img class="img img-responsive img-thumbnail" width="40" height="40" src="assets/icons/tsvg/flag-{{node.locale}}.svg" />
+                                <img class="img img-responsive img-thumbnail" width="40" height="40" src="{{node.flagUrl}}" />
                             </a>
                         </td>
                         <td>
@@ -35,10 +38,16 @@
                             </a>
                         </td>
                         <td>
+                            <strong>{{node.type}}</strong>
+                        </td>
+                        <td>
                             <div *ngIf="node.blockCount">
-                                {{node.blockCount}}
+                                {{node.blockCount | number}}
                                 <i class="fas fa-check-circle text-success" *ngIf="bestBlock - node.blockCount == 0"></i>
-                                {{bestBlock - node.blockCount == 0 ? '' : '(-' + (bestBlock - node.blockCount) + ')'}}
+                                {{bestBlock - node.blockCount == 0 ? '' : '(-' + (bestBlock - node.blockCount) + ')' | number}}
+                            </div>
+                            <div *ngIf="!node.blockCount" class="bold text-danger">
+                                <i class="fas fa-ban"></i> Offline
                             </div>
                         </td>
                         <td>
@@ -58,62 +67,8 @@
             </table>
             <div class="col-md-12 padding-10 text-center">
                 <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
             </div>
-            <!-- <div class="col-md-12 row no-margin panel-body padding-10" *ngIf="pageResults && !isLoading">
-                <div class="col-md-12 col-sm-12 col-xs-12 row no-margin padding-5 node-list-tile" *ngFor="let node of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
-                    <div class="col-lg-12 row no-margin padding-5 border-box-shadow">
-                        <div class="col-md-1 col-sm-4 col-xs-5 custom-vcenter padding-10">
-                            <img class="img img-responsive" src="assets/icons/tsvg/flag-{{node.locale}}.svg" />
-                        </div>
-                        <div class="col-md-11 col-sm-8 col-xs-7 row no-margin padding-5">
-                            <a href="" routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
-                                <div class="col-md-12">
-                                    <h4 class="bold">{{node.url}}</h4>
-                                </div>
-                                <div class="col-md-12 no-margin padding-5 row" *ngIf="node.blockCount">
-                                    <div class="col-md-4 col-sm-6 col-xs-6">
-                                        <span class="stat">
-                                            <i class="fas fa-code-branch"></i> {{node.version}}
-                                        </span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-6">
-                                        <span class="stat">
-                                            <i class="fas fa-cube"></i> #{{node.blockCount}}
-                                            <span *ngIf="bestBlock - node.blockCount == 0" class="text-success">
-                                                <i class="fas fa-check-circle"></i>
-                                            </span>
-                                            <span *ngIf="bestBlock - node.blockCount > 0" class="text-warning">
-                                                <i class="fas fa-arrow-alt-circle-down"></i> {{bestBlock -
-                                                node.blockCount}}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2 col-sm-6 col-xs-6">
-                                        <span class="stat">
-                                            <i class="fas fa-plug"></i> {{node.connected}}
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2 col-sm-6 col-xs-6 text-right">
-                                        <span class="stat {{getClassForNodeLatency(node)}}">
-                                            <i class="fas fa-signal"></i> {{node.latency}} ms
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 no-margin padding-5 row" *ngIf="!node.blockCount">
-                                    <span class="stat text-danger">
-                                        <i class="fas fa-times-circle"></i> No connection can be made
-                                    </span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 padding-10 text-center">
-                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                    <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
-                </div>
-            </div> -->
             <app-loader *ngIf="isLoading"></app-loader>
         </div>
     </div>

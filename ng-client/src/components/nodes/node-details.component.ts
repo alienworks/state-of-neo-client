@@ -35,7 +35,9 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.state.changeRoute('nodes');
+        this.state.changeRoute('node');
+
+        this._nodeService.startService();
 
         this.id = +this.route.snapshot.paramMap.get('id');
 
@@ -71,9 +73,9 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     getSecondsSinceTrackingStarted(): number {
-        if (this.node.secondsOnline && this.node.firstRuntime) {
-            const currentDate = Date.now().valueOf();
-            const totalSeconds = Math.floor(currentDate / 1000) - this.node.firstRuntime;
+        if (this.node.secondsOnline && this.node.firstRuntime && this.node.latestRuntime) {
+            const currentDate = new Date(this.node.latestRuntime * 1000);
+            const totalSeconds = this.node.latestRuntime - this.node.firstRuntime;
             return totalSeconds;
         }
 

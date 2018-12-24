@@ -3,9 +3,7 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class RpcService {
-    constructor(private http: Http) {
-
-    }
+    constructor(private http: Http) { }
 
     callMethod(address: string, method: string, version: number, params: any[] = []) {
         const request = {
