@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Http } from '@angular/http';
 
 import { NodeService } from '../core/services/data/node.service';
+import { CommonStateService } from '../core/services';
 
 declare var $;
 
@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     allNodes: any[] = [];
     interval: number;
 
-    constructor(private _nodeService: NodeService) {
+    constructor(private _nodeService: NodeService,
+        private state: CommonStateService
+    ) {
         this.subscribeToEvents();
     }
 
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.state.changeRoute('home');
         this.allNodes = this._nodeService.getNodes();
 
         this.interval =

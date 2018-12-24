@@ -5,7 +5,7 @@
             <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
         </div>
         <div class="row no-margin padding-10">
-            <div class="col-md-4">
+            <div class="col-md-4 no-padding">
                 <div class="margin-bot-10">
                     <a routerLink="/block/{{tx?.blockHeight}}">
                         <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
@@ -27,7 +27,7 @@
                     <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 no-padding">
                 <h4 class="text-center">GLOBAL ASSETS</h4>
                 <div *ngFor="let asset of incomingAssets" style="margin-top: 8px">
                     <strong *ngIf="asset.fromAddress">
@@ -50,10 +50,10 @@
                         </div>
                     </strong>
                 </div>
-                <h4 class="text-center " style="margin-top: 40px">NEP-5 TOKENS</h4>
+                <h4 *ngIf="tokenAssets.length" class="text-center " style="margin-top: 40px">NEP-5 TOKENS</h4>
                 <div class="text-right" *ngFor="let asset of tokenAssets" style="margin-top: 8px">
                     <div class="row">
-                        <div class="col-md-5 text-left">                            
+                        <div class="col-md-5 text-left">
                             <div *ngIf="asset.fromAddress">
                                 <strong>
                                     <small style="font-size: 0.65em">
@@ -82,20 +82,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4" style="padding-left: 0px !important; padding-right: 0 !important">
-                <div *ngFor="let asset of outgoingAssets" style="margin-bottom: 10px">
-                    <strong *ngIf="asset.toAddress">
-                        <small style="font-size: 0.65em">
-                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
-                        </small>&nbsp;
-                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 0 4px 4px 4px; background: #5cb85c; color: white; display: inline-block;">
-                            <div><strong>RECEIVED</strong></div>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
-                        </div>
-                    </strong>
-                </div>
-            </div> -->
-        </div>
-       
+        </div>       
     </div>
     <div class="col-md-4 no-margin">
         <div class="panel panel-default" *ngIf="tx?.witnesses && tx?.witnesses.length">

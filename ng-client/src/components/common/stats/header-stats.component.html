@@ -29,18 +29,18 @@
             </a>
         </div>
     </div>
-    <div class="col-sm-1 col-xs-6 text-left" style="padding-left: 25px">
+    <div class="col-sm-2 col-xs-6 text-right" style="padding-left: 25px">
         <div>
             <div id="last-block-stats" style="white-space: nowrap;">
                 <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
                     <div style="font-size: 14px; "><strong>LAST BLOCK</strong></div>
                     <i id="last-block-icon" class="fas fa-cube" style="font-size: 1.4em"></i>
-                    #{{headerInfo.height | number}}
+                    {{headerInfo.height | number}}
                 </a>
             </div>
         </div>
     </div>    
-    <div class="col-sm-2 col-xs-6 text-center">
+    <div class="col-sm-2 col-xs-6 text-right">
         <div>
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="{{headerInfo.timestamp | stampToDate | date}}">
                 <div style="font-size: 14px; "><strong>TIMESTAMP</strong></div>
@@ -49,7 +49,7 @@
             </a>
         </div>
     </div>
-    <div class=" col-sm-1 col-xs-6 text-center">
+    <div class=" col-sm-1 col-xs-6 text-right">
         <div>
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Transactions">
                 <div style="font-size: 14px; "><strong>TX COUNT</strong></div>            
@@ -58,7 +58,7 @@
             </a>
         </div>
     </div>
-    <div class="col-sm-1 col-xs-6 text-center">
+    <div class="col-sm-1 col-xs-6 text-right">
         <div>
             <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Bytes">
                 <div style="font-size: 14px; "><strong>SIZE</strong></div>            
