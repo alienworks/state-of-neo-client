@@ -45,8 +45,8 @@
             </div>
             <div class="col-md-8 row no-margin padding-10 ">
                 <div class="col-md-12 stat">
-                    <h4 class="bold">Name : {{node.url}}</h4>
-                    <h5 class="bold no-padding">Endpoint we are checking : {{node.successUrl}}</h5>
+                    <h3 class="bold">{{node.url}}</h3>
+                    <!-- <h5 class="bold no-padding">Endpoint we are checking : {{node.successUrl}}</h5> -->
                 </div>
                 <div *ngIf="node.type == 'RPC' && node.blockCount" class="col-md-12 padding-5 row custom-vcenter stat">
                     <div class="col-md-4 col-sm-4 col-xs-4 text-center {{getClassForNodeLatency(node)}}">
