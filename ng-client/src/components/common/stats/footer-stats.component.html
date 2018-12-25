@@ -8,7 +8,7 @@
             <app-footer-stats-tr *ngIf="avgTxCount" [title]="'tx per block'" [value]="avgTxCount">
             </app-footer-stats-tr>
             <app-loader *ngIf="!avgTxCount" [iconScale]="1"></app-loader>
-            <app-footer-stats-tr *ngIf="avgTime" [title]="'block time (seconds)'" [value]="avgTime">
+            <app-footer-stats-tr *ngIf="avgTime" [title]="'block time (second)'" [value]="avgTime">
             </app-footer-stats-tr>
             <app-loader *ngIf="!avgTime" [iconScale]="1"></app-loader>
             <app-footer-stats-tr *ngIf="avgSize" [title]="'block size (bytes)'" [value]="avgSize">

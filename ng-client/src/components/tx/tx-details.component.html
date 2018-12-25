@@ -21,32 +21,32 @@
                     <i class="fas fa-code-branch"></i> Version {{tx.version}}     
                 </div>
                 <div class="margin-bot-10">
-                    <i class="fas fa-book"></i> {{tx.systemFee | number}} GAS System Fee
+                    <i class="fas fa-book"></i> {{tx.systemFee | number: '1.0-8'}} GAS System Fee
                 </div>
                 <div class="margin-bot-10">
-                    <i class="fas fa-briefcase"></i> {{tx.networkFee | number}} GAS Network Fee
+                    <i class="fas fa-briefcase"></i> {{tx.networkFee | number: '1.0-8'}} GAS Network Fee
                 </div>
             </div>
             <div class="col-md-8 no-padding">
-                <h4 class="text-center">GLOBAL ASSETS</h4>
+                <h4 class="text-center" *ngIf="outgoingAssets.length">GLOBAL ASSETS</h4>
                 <div *ngFor="let asset of incomingAssets" style="margin-top: 8px">
                     <strong *ngIf="asset.fromAddress">
                         <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #d9534f; color: white; display: inline-block;">
-                            <strong>SENT</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                            <strong>SENT</strong>&nbsp;<span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
                         </div>&nbsp;
                         <small style="font-size: 0.65em">
                             <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
                         </small>
                     </strong>
                 </div>
-                <br>
+                <br *ngIf="outgoingAssets.length">
                 <div class="text-right" *ngFor="let asset of outgoingAssets" style="margin-top: 8px">
                     <strong *ngIf="asset.toAddress">
                         <small style="font-size: 0.65em">
                             <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
                         </small>&nbsp;
                         <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
-                            <strong>RECEIVED</strong>&nbsp;<span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                            <strong>RECEIVED</strong>&nbsp;<span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
                         </div>
                     </strong>
                 </div>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-md-2 text-center">
                             <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
-                                <span class="badge">{{asset.amount | number}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
+                                <span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{asset.name}}</strong>
                             </div>
                         </div>
                         <div class="col-md-5">                         
