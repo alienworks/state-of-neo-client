@@ -8,7 +8,7 @@
             <app-footer-stats-tr *ngIf="avgTxCount" [title]="'tx per block'" [value]="avgTxCount">
             </app-footer-stats-tr>
             <app-loader *ngIf="!avgTxCount" [iconScale]="1"></app-loader>
-            <app-footer-stats-tr *ngIf="avgTime" [title]="'block time (seconds)'" [value]="avgTime">
+            <app-footer-stats-tr *ngIf="avgTime" [title]="'block time (second)'" [value]="avgTime">
             </app-footer-stats-tr>
             <app-loader *ngIf="!avgTime" [iconScale]="1"></app-loader>
             <app-footer-stats-tr *ngIf="avgSize" [title]="'block size (bytes)'" [value]="avgSize">
@@ -59,10 +59,10 @@
             <app-footer-stats-tr *ngIf="nep5Assets >= 0" [title]="'nep5 tokens'" [value]="nep5Assets">
             </app-footer-stats-tr>
             <app-loader *ngIf="nep5Assets < 0" [iconScale]="1"></app-loader>
-            <app-footer-stats-tr *ngIf="neoAndGasTxCount" [title]="'neo/gas transactions'" [value]="neoAndGasTxCount">
+            <app-footer-stats-tr *ngIf="neoAndGasTxCount" [title]="'neo/gas tx'" [value]="neoAndGasTxCount">
             </app-footer-stats-tr>
             <app-loader *ngIf="!neoAndGasTxCount" [iconScale]="1"></app-loader>
-            <app-footer-stats-tr *ngIf="nep5AssetTxCount >= 0" [title]="'nep5 transactions'" [value]="nep5AssetTxCount">
+            <app-footer-stats-tr *ngIf="nep5AssetTxCount >= 0" [title]="'nep5 tx'" [value]="nep5AssetTxCount">
             </app-footer-stats-tr>
             <app-loader *ngIf="nep5AssetTxCount < 0" [iconScale]="1"></app-loader>
         </div>

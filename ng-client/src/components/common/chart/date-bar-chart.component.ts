@@ -58,6 +58,12 @@ export class DateBarChartComponent implements OnInit {
         this.chartService.getChart(this.endpoint, this.filter)
             .subscribe(x => {
                 this.chartData = (x.json() as ChartDataItemModel[]).reverse();
+                // this.chartData = (x.json() as ChartDataItemModel[]);
+
+                // if (!this.endpoint.includes('node/peerschart/') && !this.endpoint.includes('node/latencychart/')) {
+                //     this.chartData = this.chartData.reverse();
+                // }
+
                 this.initChart();
             }, err => console.log(err));
     }
