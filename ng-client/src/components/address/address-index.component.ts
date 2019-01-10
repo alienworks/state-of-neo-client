@@ -31,7 +31,9 @@ export class AddressIndexComponent implements OnInit {
 
     private subscribeToEvents(): void {
         this.statsService.registerAdditionalEvent('address-count', this.totalCountUpdate);
-        this.totalCountUpdate.subscribe((x: number) => this.totalCount);
+        this.totalCountUpdate.subscribe((x: number) => this.totalCount = x);
+
+        this.statsService.invokeOnServerEvent(`InitInfo`, 'caller');
     }
 
     getPage(page: number): void {
