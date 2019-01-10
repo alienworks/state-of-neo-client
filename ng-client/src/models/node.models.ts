@@ -33,3 +33,15 @@ export class ConsensusNodeInfoModel {
     SocialAccount: string;
     Summary: string;
 }
+
+export class GetPeersModel {
+    bad: Set<Peer>;
+    connected: Set<Peer>;
+    unconnected: Set<Peer>;
+    all: Set<Peer>;
+}
+
+export class Peer {
+    address: string;
+    port: number;
+}
