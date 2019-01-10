@@ -7,13 +7,20 @@
     <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
         <div class="panel-body">
             <div class="row no-margin padding-10 col-md-12">
-                <app-total-gas-claimed></app-total-gas-claimed>
+                <div class="row no-margin padding-10 col-md-12 text-center" *ngIf="claimedGas">
+                    <h3 class="no-margin warm-cyan">
+                        <strong>
+                            TOTAL GAS CLAIMED {{claimedGas | number: '1.0-8'}}
+                        </strong>
+                    </h3>
+                </div>
+                <app-loader *ngIf="!claimedGas"></app-loader>
             </div>
             <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
                 <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
-            </div>            
+            </div>
             <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
-                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>                
+                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>
             </div>
         </div>
     </div>
