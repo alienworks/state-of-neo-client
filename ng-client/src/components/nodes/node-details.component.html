@@ -31,10 +31,10 @@
                     <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet
                     {{node.isWalletOpen ? 'Open' : 'Closed'}}
                 </div>
-                <div class="col-md-12" *ngIf="node.firstRuntimeDate" title="{{node.firstRuntime | stampToDate | date}}">
+                <div class="col-md-12" *ngIf="node.firstRuntime" title="{{node.firstRuntime | stampToDate | date}}">
                     <i class="fas fa-clock"></i> Tracked since : {{node.firstRuntime | stampToDate | date | timeAgo}}
                 </div>
-                <div class="col-md-12" *ngIf="node.latestRuntimeDate" title="{{node.latestRuntime | stampToDate | date}}">
+                <div class="col-md-12" *ngIf="node.latestRuntime" title="{{node.latestRuntime | stampToDate | date}}">
                     <i class="fas fa-stamp"></i> Last checked : {{node.latestRuntime | stampToDate | timeAgo}}
                 </div>
                 <div class="col-md-12">
@@ -80,7 +80,7 @@
 
                 <div class="col-md-12 no-margin padding-5 stat">
                     <div class="col-12 padding-5 no-margin" *ngIf="node.trackedSeconds">
-                        <app-percent-bar [title]="'Uptime %'" [total]="node.trackedSeconds" [current]="node.secondsOnline"></app-percent-bar>
+                        <app-percent-bar [title]="'Uptime %. Time up ' + ((node.trackedSeconds / 60 / 60) | number: '1.0-2') + ' hours'" [total]="node.trackedSeconds" [current]="node.secondsOnline"></app-percent-bar>
                     </div>
                 </div>
                 <div class="col-md-12 no-margin padding-5 row">
