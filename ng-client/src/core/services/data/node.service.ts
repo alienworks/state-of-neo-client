@@ -34,7 +34,7 @@ export class NodeService {
         this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
                 this.updateAllNodes(res.json());
-                this.sort();
+                this.updateNodesData();
 
                 this.getServerCachedPeers()
                     .subscribe(x => {
@@ -125,7 +125,6 @@ export class NodeService {
             this.getPeers(x);
             this.sort();
         });
-
 
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
@@ -258,6 +257,8 @@ export class NodeService {
     }
 
     public getBlockCount(node: any, getStamp: boolean = false) {
+        if (!this.updateAll) return;
+
         if (node.service) {
             if (node.service === 'neoScan') {
                 const requestStart = Date.now();
@@ -319,6 +320,7 @@ export class NodeService {
                     const response = res.json();
                     node.lastBlockCount = node.blockCount;
                     node.blockCount = response.result;
+                    node.rpcEnabled = true;
 
                     this.updateBestBlockCount(+response.result);
 
