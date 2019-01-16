@@ -29,9 +29,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.interval) {
-            clearInterval(this.interval);
-        }
+        this._nodeService.stopUpdatingAll();
     }
 
     ngOnInit(): void {
