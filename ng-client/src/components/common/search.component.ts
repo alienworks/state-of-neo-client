@@ -16,6 +16,12 @@ export class SearchComponent {
         private router: Router,
         private toast: ToastrService) { }
 
+    onKey(event: any) {
+        if (event.key === 'Enter') {
+            this.search();
+        }
+    }
+
     search() {
         this.searchService.find(this.input)
             .subscribe(res => {
