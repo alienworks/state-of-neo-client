@@ -10,13 +10,14 @@ export class NotificationsIndexComponent {
     notifications: NotificationModel[];
     contract: string;
     contractFilter = false;
+    isConsoleView = false;
 
     constructor(
         private state: CommonStateService,
         private notificationsSignalR: NotificationsSignalRService
     ) {
         this.state.changeRoute('notifications');
-        
+
         this.subscribeToEvents();
     }
 
@@ -42,5 +43,9 @@ export class NotificationsIndexComponent {
         this.notificationsSignalR.invokeOnServerEvent('Unsubscribe', this.contract);
         this.contractFilter = false;
         this.contract = null;
+    }
+
+    changeView() {
+        this.isConsoleView = !this.isConsoleView;
     }
 }
