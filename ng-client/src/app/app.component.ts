@@ -6,11 +6,23 @@ import { NodeService } from 'src/core/services/data';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
+  intervalSeconds = 5000;
+  iterations = 0;
+
   constructor(private nodeService: NodeService) {
     this.nodeService.stopUpdatingAll();
+    this.nodeService.updateNodesData();
 
     window.setInterval(() => {
-      this.nodeService.updateNodesData();
-    }, 5000);
+      this.iterations++;
+
+      if (this.nodeService.updateAll) {
+        this.nodeService.updateNodesData();
+      } else if (this.iterations % 5 === 0) {
+        this.nodeService.updateNodesData();
+        this.iterations = 0;
+      }
+      // this.nodeService.updateNodesData();
+    }, this.intervalSeconds);
   }
 }

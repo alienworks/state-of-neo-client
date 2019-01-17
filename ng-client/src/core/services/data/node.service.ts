@@ -26,7 +26,7 @@ export class NodeService {
     public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
-    private updateAll = false;
+    public updateAll = false;
 
     constructor(private http: Http,
         private nodeRpcService: RpcService) {
@@ -90,8 +90,6 @@ export class NodeService {
     }
 
     public sendPeersToServerCache(): Observable<Response> {
-        if (this.peers.size === 0) return;
-
         const now = new Date();
         if (!this.firstTimeGettingPeers && (now.getTime() - this.updatedServerPeersOn.getTime()) < CONST.HourInMs) {
             throw Observable.throw(`Not time for rpc peers send`);
@@ -123,19 +121,21 @@ export class NodeService {
             this.getVersion(x);
             this.getBlockCount(x);
             this.getPeers(x);
-            this.sort();
         });
+
+        this.sort();
 
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
         this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
 
-        this.sendPeersToServerCache().subscribe(
-            x => {
-                this.updatedServerPeersOn = new Date();
-                this.firstTimeGettingPeers = false;
-            }, err => console.log(err));
-        this.updateAllMarkers();
+        if (this.peers.size > 0) {
+            this.sendPeersToServerCache().subscribe(
+                x => {
+                    this.updatedServerPeersOn = new Date();
+                    this.firstTimeGettingPeers = false;
+                }, err => console.log(err));
+        }
 
         this.updateMarkers.emit(this.markers);
     }
@@ -257,7 +257,7 @@ export class NodeService {
     }
 
     public getBlockCount(node: any, getStamp: boolean = false) {
-        if (!this.updateAll) return;
+        // if (!this.updateAll) return;
 
         if (node.service) {
             if (node.service === 'neoScan') {

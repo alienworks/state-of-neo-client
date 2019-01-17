@@ -32,7 +32,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.nodeService.startUpdatingAll();
         this.allNodes = this.nodeService.getNodes();
-        this.nodeService.updateNodes.subscribe((x: any[]) => this.allNodes = x);
+        this.nodeService.updateNodes.subscribe((x: any[]) => {
+            this.allNodes = x;
+            this.nodeService.updateAllMarkers();
+        });
 
         // window height - header - body padding top and bottom
         const height = $(window).height() - 50 - 70 - 20 - 20;
