@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrModule } from 'ngx-toastr';
 
 // Components
 import { AppComponent } from './app.component';
@@ -17,7 +19,7 @@ import {
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -32,7 +34,7 @@ import {
 // Services
 import { NetService, CommonStateService } from '../core/services';
 import {
-  RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService
+  RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
@@ -50,7 +52,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     // Common
     MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
-    HorizontalBarChartComponent,
+    HorizontalBarChartComponent, SearchComponent,
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
@@ -72,9 +74,11 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     FormsModule,
     NgxPaginationModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'nodes', component: NodeListComponent },
@@ -105,7 +109,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     StatsSignalRService, NotificationsSignalRService,
     // Data services
     RpcService,
-    NodeService, BlockService, TxService, ChartService, AddressService, AssetService,
+    NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService
   ],
   bootstrap: [AppComponent]
 })
