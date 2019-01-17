@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssetService, TxService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
-import { BaseTxModel, AssetDetailsModel } from '../../models';
+import { BaseTxModel, AssetDetailsModel, UnitOfTime } from '../../models';
 import { PageResultModel } from '../../models';
 
 @Component({
@@ -13,6 +13,10 @@ export class AssetDetailsComponent implements OnInit {
     hash: string;
     model: AssetDetailsModel = new AssetDetailsModel();
     transactions: PageResultModel<BaseTxModel>;
+
+    totalAddressCount: number;
+    activeAddressesLastMonth: number;
+    newAddressesLastMonth: number;
 
     constructor(private route: ActivatedRoute,
         private assets: AssetService,
@@ -32,6 +36,19 @@ export class AssetDetailsComponent implements OnInit {
                 .subscribe(x => {
                     this.isLoading = false;
                     this.model = x.json() as AssetDetailsModel;
+
+                    this.assets.getAssetAddressCount(this.hash).subscribe(count => {
+                        this.totalAddressCount = count.json() as number;
+                    }, err => console.log(err));
+
+                    this.assets.getAssetAddressCount(this.hash, UnitOfTime.Month, true).subscribe(count => {
+                        this.activeAddressesLastMonth = count.json() as number;
+                        console.log('activeAddressesLastMonth = ' + this.activeAddressesLastMonth);
+                    }, err => console.log(err));
+
+                    this.assets.getAssetAddressCount(this.hash, UnitOfTime.Month).subscribe(count => {
+                        this.newAddressesLastMonth = count.json() as number;
+                    }, err => console.log(err));
 
                     console.log(this.model);
                 });

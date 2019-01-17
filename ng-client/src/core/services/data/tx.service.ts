@@ -37,9 +37,5 @@ export class TxService {
     total(): any {
         return this.http.get(`${CONST.BASE_URL}/api/transactions/total`);
     }
-
-    averagePer(unit: UnitOfTime): any {
-        return this.http.get(`${CONST.BASE_URL}/api/transactions/averageper?unit=${unit}`);
-    }
 }
 

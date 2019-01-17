@@ -1,53 +1,61 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
-import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
 import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BaseBlockModel } from 'src/models/block.models';
+import { GetPeersModel, Peer } from 'src/models';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class NodeService {
     public allNodes: any[] = [];
     public markers: any[] = [];
+
+    public peers = new Map<string, Peer>();
+    private updatedServerPeersOn = new Date();
+    private firstTimeGettingPeers = true;
+    private bestBlock: number;
+
     public nodeBlockInfo = new BehaviorSubject<number>(0);
     public rpcEnabledNodes = new BehaviorSubject<number>(0);
     public restEnabledNodes = new BehaviorSubject<number>(0);
     public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
-    private isStopped = false;
+    public updateAll = false;
 
     constructor(private http: Http,
-        private _nodeSignalRService: NodesSignalRService,
-        private _nodeRpcService: RpcService) {
+        private nodeRpcService: RpcService) {
 
         this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
                 this.updateAllNodes(res.json());
-                this.sort();
                 this.updateNodesData();
+
+                this.getServerCachedPeers()
+                    .subscribe(x => {
+                        const serverpeers = x.json() as Peer[];
+                        serverpeers.forEach(p => this.checkOrAddTo(p, this.peers));
+
+                        this.updateNodesData();
+                    }, err => {
+                        console.log(err);
+                    });
             }, err => {
                 console.log(`error getting nodes`, err);
             });
     }
 
-    public stopService() {
-        this.isStopped = true;
+    public stopUpdatingAll() {
+        this.updateAll = false;
     }
 
-    public startService() {
-        this.isStopped = false;
-    }
-
-    private subscribeToEvents() {
-        this._nodeSignalRService.messageReceived.subscribe((nodes: any[]) => {
-            this.updateAllNodes(nodes);
-            this.sort();
-            this.updateNodesData();
-        });
+    public startUpdatingAll() {
+        this.updateAll = true;
     }
 
     public getBlockStamp(input: string | number) {
@@ -56,12 +64,38 @@ export class NodeService {
         return this.http.get(`${CONST.BASE_URL}/api/block/stampby${type}/${input}`);
     }
 
+    public getWsState(node: any) {
+        if (!this.updateAll) return;
+
+        this.http.get(`${CONST.BASE_URL}/api/node/wsstatus/${node.id}`)
+            .subscribe(res => {
+                const wsstatus = res.json() as boolean;
+                node.wsStatus = wsstatus;
+            }, err => {
+                node.wsStatus = false;
+                console.log(err);
+            });
+    }
+
     public getNodes(): any[] {
         return this.allNodes;
     }
 
     public getNode(id: number): Observable<Response> {
         return this.http.get(`${CONST.BASE_URL}/api/node/get/${id}`);
+    }
+
+    public getServerCachedPeers(): Observable<Response> {
+        return this.http.get(`${CONST.BASE_URL}/api/node/GetRPCNodes`);
+    }
+
+    public sendPeersToServerCache(): Observable<Response> {
+        const now = new Date();
+        if (!this.firstTimeGettingPeers && (now.getTime() - this.updatedServerPeersOn.getTime()) < CONST.HourInMs) {
+            throw Observable.throw(`Not time for rpc peers send`);
+        }
+
+        return this.http.post(`${CONST.BASE_URL}/api/node/addrpcnodes`, Array.from(this.peers.values()));
     }
 
     protected getJsonHeaders(): RequestOptions {
@@ -82,34 +116,33 @@ export class NodeService {
     }
 
     updateNodesData() {
-        if (this.isStopped) return;
-
         this.allNodes.forEach(x => {
-            if (this.isStopped) return;
             this.getConnectionsCount(x);
             this.getVersion(x);
             this.getBlockCount(x);
-            // this.getPeers(x);
-            this.sort();
+            this.getPeers(x);
         });
 
-        this.updateAllMarkers();
-
-        this.updateMarkers.emit(this.markers);
+        this.sort();
 
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
         this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
 
-        setTimeout(x => console.log(this.allNodes), 5000);
+        if (this.peers.size > 0) {
+            this.sendPeersToServerCache().subscribe(
+                x => {
+                    this.updatedServerPeersOn = new Date();
+                    this.firstTimeGettingPeers = false;
+                }, err => console.log(err));
+        }
+
+        this.updateMarkers.emit(this.markers);
     }
 
     updateAllNodes(nodes: any): void {
-        if (this.isStopped) return;
-
         const that = this;
         nodes.forEach(x => {
-            if (this.isStopped) return;
             if (that.allNodes.find(z => that.getNodeDisplayText(z) === that.getNodeDisplayText(x))) {
                 return;
             }
@@ -122,7 +155,7 @@ export class NodeService {
     }
 
     updateAllMarkers(): void {
-        if (this.isStopped) return;
+        if (!this.updateAll) return;
 
         const markers = [];
         this.allNodes.forEach(x => {
@@ -137,16 +170,19 @@ export class NodeService {
         this.markers = markers;
     }
 
-    public getPeers(x: any) {
-        if (this.isStopped) return;
+    public getPeers(x: any): void {
+        if (!this.updateAll) return;
 
-        this._nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
+        this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
                 const json = res.json();
 
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.peers = parseInt(json.result.connected.length);
+
+                    const model = res.json().result as GetPeersModel;
+                    this.handlePeers(model);
                 } else {
                     x.peers = 0;
                 }
@@ -161,10 +197,28 @@ export class NodeService {
             });
     }
 
-    public getConnectionsCount(x: any) {
-        if (this.isStopped) return;
+    private handlePeers(received: GetPeersModel): void {
+        received.bad.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+        received.connected.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+        received.unconnected.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+    }
 
-        this._nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
+    private checkOrAddTo(x: Peer, collection: Map<String, Peer>): void {
+        if (collection.has(x.address)) return;
+
+        collection.set(x.address, x);
+    }
+
+    public getConnectionsCount(x: any) {
+        if (!this.updateAll) return;
+
+        this.nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
 
@@ -184,10 +238,10 @@ export class NodeService {
     }
 
     public getVersion(x: any) {
-        if (this.isStopped) return;
+        if (!this.updateAll) return;
 
         const requestStart = Date.now();
-        this._nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
+        this.nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
             .subscribe(res => {
                 const now = Date.now();
                 x.lastResponseTime = now;
@@ -203,7 +257,7 @@ export class NodeService {
     }
 
     public getBlockCount(node: any, getStamp: boolean = false) {
-        if (this.isStopped) return;
+        // if (!this.updateAll) return;
 
         if (node.service) {
             if (node.service === 'neoScan') {
@@ -217,11 +271,19 @@ export class NodeService {
                         node.latency = Math.round((now - requestStart));
                         node.blockCount = response.height;
                         node.restEnabled = true;
-                        this.nodeBlockInfo.next(node.blockCount);
+                        this.updateBestBlockCount(node.blockCount);
+                        if (getStamp && this.bestBlock > node.blockCount) {
+                            this.getBlockStamp(+node.blockCount)
+                                .subscribe(y => {
+                                    const block = y.json() as BaseBlockModel;
+                                    node.lastBlockStamp = block.timestamp;
+                                }, err => console.log(err));
+                        }
                     }, err => {
                         console.log(err);
                         node.restEnabled = false;
                         node.blockCount = null;
+                        node.latency = null;
                     });
             } else if (node.service === 'neoNotification') {
                 const requestStart = Date.now();
@@ -235,31 +297,40 @@ export class NodeService {
                         node.version = response.version;
                         node.blockCount = response.current_height;
                         node.restEnabled = true;
-                        this.nodeBlockInfo.next(node.blockCount);
+                        this.updateBestBlockCount(+node.blockCount);
+                        if (getStamp && this.bestBlock > node.blockCount) {
+                            this.getBlockStamp(+node.blockCount)
+                                .subscribe(y => {
+                                    const block = y.json() as BaseBlockModel;
+                                    node.lastBlockStamp = block.timestamp;
+                                }, err => console.log(err));
+                        }
                     }, err => {
                         console.log(err);
                         node.restEnabled = false;
                         node.blockCount = null;
+                        node.latency = null;
                     });
             }
         } else {
-            this._nodeRpcService.callMethod(node.successUrl, 'getblockcount', 3)
+            this.nodeRpcService.callMethod(node.successUrl, 'getblockcount', 3)
                 .subscribe(res => {
                     const now = Date.now();
                     node.lastResponseTime = now;
                     const response = res.json();
                     node.lastBlockCount = node.blockCount;
                     node.blockCount = response.result;
+                    node.rpcEnabled = true;
 
-                    if (getStamp && node.lastBlockCount !== node.blockCount) {
+                    this.updateBestBlockCount(+response.result);
+
+                    if (getStamp && this.bestBlock > node.blockCount) {
                         this.getBlockStamp(+node.blockCount)
                             .subscribe(y => {
                                 const block = y.json() as BaseBlockModel;
                                 node.lastBlockStamp = block.timestamp;
                             }, err => console.log(err));
                     }
-
-                    this.nodeBlockInfo.next(response.result);
                 }, err => {
                     node.rpcEnabled = false;
                     node.latency = 0;
@@ -268,9 +339,9 @@ export class NodeService {
     }
 
     public getRawMemPool(x: any) {
-        if (this.isStopped) return;
+        if (!this.updateAll) return;
 
-        this._nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
+        this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
                 const response = res.json();
@@ -279,9 +350,9 @@ export class NodeService {
     }
 
     public getWalletState(x: any) {
-        if (this.isStopped) return;
+        if (!this.updateAll) return;
 
-        this._nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
+        this.nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
             .subscribe(res => {
                 x.isWalletOpen = true;
             }, err => {
@@ -289,8 +360,15 @@ export class NodeService {
             });
     }
 
+    private updateBestBlockCount(x: number) {
+        if (!this.bestBlock || this.bestBlock < x) {
+            this.bestBlock = x;
+            this.nodeBlockInfo.next(this.bestBlock);
+        }
+    }
+
     private sort() {
-        if (this.isStopped) return;
+        if (!this.updateAll) return;
 
         this.allNodes = this.allNodes.sort((x, y) => {
             if (!x.blockCount && y.blockCount) {

@@ -31,15 +31,13 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.interval) {
-            clearInterval(this.interval);
-        }
+        this._nodeService.stopUpdatingAll();
     }
 
     ngOnInit(): void {
         this.state.changeRoute('node');
 
-        this._nodeService.startService();
+        this._nodeService.startUpdatingAll();
 
         this.id = +this.route.snapshot.paramMap.get('id');
 
@@ -71,6 +69,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
             this._nodeService.getVersion(this.node);
             this._nodeService.getConnectionsCount(this.node);
             this._nodeService.getWalletState(this.node);
+            this._nodeService.getWsState(this.node);
         }
     }
 

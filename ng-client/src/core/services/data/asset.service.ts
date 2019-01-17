@@ -4,7 +4,7 @@ import { NodeService } from './node.service';
 import { Http } from '@angular/http';
 
 import * as CONST from '../../common/constants';
-import { AssetTypeEnum } from '../../../models';
+import { AssetTypeEnum, UnitOfTime } from '../../../models';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +30,10 @@ export class AssetService {
 
     public getAssetsPage(page: number = 1, pageSize: number = 10, global: boolean = true) {
         return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
+    }
+
+    public getAssetAddressCount(hash: string, unitOfTime: UnitOfTime = UnitOfTime.None, active: boolean = false) {
+        return this.http.get(`${CONST.BASE_URL}/api/assets/addressescount?hash=${hash}&unitOfTime=${unitOfTime}&active=${active}`);
     }
 
     public getAsset(hash: string) {

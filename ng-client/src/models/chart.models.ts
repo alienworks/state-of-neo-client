@@ -16,5 +16,6 @@ export enum UnitOfTime {
     Second,
     Hour,
     Day,
-    Month
+    Month,
+    None = 99
 }

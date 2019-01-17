@@ -7,8 +7,8 @@
             {{address.transactions | number}} <i class="fas fa-handshake"></i>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 text-grey" style="padding-top: 5px; ">
-            <span title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}"><small><i class="fas fa-clock"></i> {{address.lastTransactionTime | timeAgo}}</small></span>
-            <small class="pull-right text-grey">NEO: {{getBalance(address.balances, 'NEO') | number}}&nbsp;&nbsp;|&nbsp;&nbsp;GAS: {{getBalance(address.balances, 'GAS') | number}}</small>
+            <span title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}"> <small><i class="fas fa-clock"></i> {{address.lastTransactionTime | timeAgo}}</small></span>
+            <small class="pull-right text-grey">NEO: {{getBalance(address.balances, 'NEO') | number}}&nbsp;&nbsp;|&nbsp;&nbsp;GAS: {{getBalance(address.balances, 'GAS') | number:'1.0-8'}}</small>
         </div>
     </div>
 </a>
