@@ -6,7 +6,7 @@ import { NodeService } from 'src/core/services/data';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  intervalSeconds = 5000;
+  intervalSeconds = 10000;
   iterations = 0;
 
   constructor(private nodeService: NodeService) {
@@ -18,7 +18,7 @@ export class AppComponent {
 
       if (this.nodeService.updateAll) {
         this.nodeService.updateNodesData();
-      } else if (this.iterations % 5 === 0) {
+      } else if (this.iterations % 3 === 0) {
         this.nodeService.updateNodesData();
         this.iterations = 0;
       }

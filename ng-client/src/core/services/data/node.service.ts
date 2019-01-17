@@ -124,10 +124,13 @@ export class NodeService {
         });
 
         this.sort();
+        this.updateAllMarkers();
 
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
         this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
+
+        this.updateMarkers.emit(this.markers);
 
         if (this.peers.size > 0) {
             this.sendPeersToServerCache().subscribe(
@@ -136,8 +139,6 @@ export class NodeService {
                     this.firstTimeGettingPeers = false;
                 }, err => console.log(err));
         }
-
-        this.updateMarkers.emit(this.markers);
     }
 
     updateAllNodes(nodes: any): void {
@@ -168,6 +169,7 @@ export class NodeService {
             });
         });
         this.markers = markers;
+        this.updateMarkers.emit(this.markers);
     }
 
     public getPeers(x: any): void {
@@ -216,7 +218,7 @@ export class NodeService {
     }
 
     public getConnectionsCount(x: any) {
-        if (!this.updateAll) return;
+        if (!this.updateAll || x.unavailable) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
@@ -238,7 +240,7 @@ export class NodeService {
     }
 
     public getVersion(x: any) {
-        if (!this.updateAll) return;
+        if (!this.updateAll || x.unavailable) return;
 
         const requestStart = Date.now();
         this.nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
@@ -258,6 +260,13 @@ export class NodeService {
 
     public getBlockCount(node: any, getStamp: boolean = false) {
         // if (!this.updateAll) return;
+        if (node.unavailable && node.checks < 10) {
+            node.checks++;
+            return;
+        } else {
+            node.checks = 0;
+            node.unavailable = false;
+        }
 
         if (node.service) {
             if (node.service === 'neoScan') {
@@ -271,7 +280,9 @@ export class NodeService {
                         node.latency = Math.round((now - requestStart));
                         node.blockCount = response.height;
                         node.restEnabled = true;
+
                         this.updateBestBlockCount(node.blockCount);
+
                         if (getStamp && this.bestBlock > node.blockCount) {
                             this.getBlockStamp(+node.blockCount)
                                 .subscribe(y => {
@@ -281,6 +292,8 @@ export class NodeService {
                         }
                     }, err => {
                         console.log(err);
+                        node.unavailable = true;
+                        node.checks = 0;
                         node.restEnabled = false;
                         node.blockCount = null;
                         node.latency = null;
@@ -307,6 +320,8 @@ export class NodeService {
                         }
                     }, err => {
                         console.log(err);
+                        node.unavailable = true;
+                        node.checks = 0;
                         node.restEnabled = false;
                         node.blockCount = null;
                         node.latency = null;
@@ -332,6 +347,8 @@ export class NodeService {
                             }, err => console.log(err));
                     }
                 }, err => {
+                    node.unavailable = true;
+                    node.checks = 0;
                     node.rpcEnabled = false;
                     node.latency = 0;
                 });
@@ -339,7 +356,7 @@ export class NodeService {
     }
 
     public getRawMemPool(x: any) {
-        if (!this.updateAll) return;
+        if (!this.updateAll || x.unavailable) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
@@ -350,7 +367,7 @@ export class NodeService {
     }
 
     public getWalletState(x: any) {
-        if (!this.updateAll) return;
+        if (!this.updateAll || x.unavailable) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
             .subscribe(res => {
