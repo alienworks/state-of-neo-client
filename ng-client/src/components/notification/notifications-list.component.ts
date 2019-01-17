@@ -9,9 +9,14 @@ import { NotificationModel } from 'src/models';
 export class NotificationsListComponent {
     @Input() notifications: NotificationModel[];
     @Input() title = 'ALL';
+    @Input() isConsoleView = false;
     @Output() contractFilter = new EventEmitter<string>();
 
     filter(hash: string): void {
         this.contractFilter.emit(hash);
+    }
+
+    changeView() {
+        this.isConsoleView = !this.isConsoleView;
     }
 }
