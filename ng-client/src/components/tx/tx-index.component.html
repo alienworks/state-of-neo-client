@@ -1,22 +1,45 @@
 <div class="row col-md-12 no-margin no-padding">
     <div class="col-md-8 col-sm-6 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 panel-body">
-            <select [(ngModel)]="type" (change)="getPage(page)">
-                <option *ngFor="let t of txTypes" [ngValue]="t.value">{{t.label}}</option>
-            </select>
-            <app-tx-list-table [model]="transactions" (emitGetPage)="getPage($event)"></app-tx-list-table>
+            <div>
+                <div class="pull-right">
+                    Type: 
+                    <select [(ngModel)]="type" (change)="getPage(page)">
+                        <option *ngFor="let t of txTypes" [ngValue]="t.value">{{t.label}}</option>
+                    </select>
+
+                    Page size:
+                    <select [(ngModel)]="pageSize" (change)="getPage(page)">
+                        <option [ngValue]="8">8</option>
+                        <option [ngValue]="16">16</option>
+                        <option [ngValue]="32">32</option>
+                        <option [ngValue]="64">64</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div style="margin-top: 20px">
+                <app-tx-list-table [model]="transactions" (emitGetPage)="getPage($event)"></app-tx-list-table>
+            </div>
         </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12 no-margin padding-10">
         <div class="panel-body">
             <div class="row no-margin padding-10 col-md-12">
-                <app-total-gas-claimed></app-total-gas-claimed>
+                <div class="row no-margin padding-10 col-md-12 text-center" *ngIf="claimedGas">
+                    <h3 class="no-margin warm-cyan">
+                        <strong>
+                            TOTAL GAS CLAIMED {{claimedGas | number: '1.0-8'}}
+                        </strong>
+                    </h3>
+                </div>
+                <app-loader *ngIf="!claimedGas"></app-loader>
             </div>
             <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
                 <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Transactions'"></app-date-bar-chart>
-            </div>            
+            </div>
             <div class="row no-margin padding-10 col-md-12" style="margin-top: 40px">
-                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>                
+                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>
             </div>
         </div>
     </div>

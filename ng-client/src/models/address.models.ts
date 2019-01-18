@@ -7,7 +7,7 @@ export class AddressDetailsModel {
     address: string;
     created: string;
     lastTransactionTime: string;
-    balances: AddressAssetModel[]
+    balances: AddressAssetModel[];
 }
 
 export class AddressListModel {

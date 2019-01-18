@@ -1,17 +1,20 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
-import { NodesSignalRService } from '../signal-r/nodes-signal-r.service';
 import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BaseBlockModel } from 'src/models/block.models';
+import { GetPeersModel, Peer } from 'src/models';
 
 @Injectable()
 export class NodeService {
+    private updatedServerPeersOn = new Date();
+    private firstTimeGettingPeers = true;
     public allNodes: any[] = [];
     public markers: any[] = [];
+    public peers = new Map<string, Peer>();
     public nodeBlockInfo = new BehaviorSubject<number>(0);
     public rpcEnabledNodes = new BehaviorSubject<number>(0);
     public restEnabledNodes = new BehaviorSubject<number>(0);
@@ -21,14 +24,23 @@ export class NodeService {
     private isStopped = false;
 
     constructor(private http: Http,
-        private _nodeSignalRService: NodesSignalRService,
         private _nodeRpcService: RpcService) {
 
         this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
+
                 this.updateAllNodes(res.json());
                 this.sort();
-                this.updateNodesData();
+
+                this.getServerCachedPeers()
+                    .subscribe(x => {
+                        const serverpeers = x.json() as Peer[];
+                        serverpeers.forEach(p => this.checkOrAddTo(p, this.peers));
+
+                        this.updateNodesData();
+                    }, err => {
+                        console.log(err);
+                    });
             }, err => {
                 console.log(`error getting nodes`, err);
             });
@@ -40,14 +52,6 @@ export class NodeService {
 
     public startService() {
         this.isStopped = false;
-    }
-
-    private subscribeToEvents() {
-        this._nodeSignalRService.messageReceived.subscribe((nodes: any[]) => {
-            this.updateAllNodes(nodes);
-            this.sort();
-            this.updateNodesData();
-        });
     }
 
     public getBlockStamp(input: string | number) {
@@ -62,6 +66,21 @@ export class NodeService {
 
     public getNode(id: number): Observable<Response> {
         return this.http.get(`${CONST.BASE_URL}/api/node/get/${id}`);
+    }
+
+    public getServerCachedPeers(): Observable<Response> {
+        return this.http.get(`${CONST.BASE_URL}/api/node/GetRPCNodes`);
+    }
+
+    public sendPeersToServerCache(): Observable<Response> {
+        if (this.peers.size === 0) return;
+
+        const now = new Date();
+        if (!this.firstTimeGettingPeers && (now.getTime() - this.updatedServerPeersOn.getTime()) < CONST.HourInMs) {
+            throw Observable.throw(`Not time for rpc peers send`);
+        }
+
+        return this.http.post(`${CONST.BASE_URL}/api/node/addrpcnodes`, Array.from(this.peers.values()));
     }
 
     protected getJsonHeaders(): RequestOptions {
@@ -82,6 +101,7 @@ export class NodeService {
     }
 
     updateNodesData() {
+
         if (this.isStopped) return;
 
         this.allNodes.forEach(x => {
@@ -89,10 +109,15 @@ export class NodeService {
             this.getConnectionsCount(x);
             this.getVersion(x);
             this.getBlockCount(x);
-            // this.getPeers(x);
+            this.getPeers(x);
             this.sort();
         });
 
+        this.sendPeersToServerCache().subscribe(
+            x => {
+                this.updatedServerPeersOn = new Date();
+                this.firstTimeGettingPeers = false;
+            }, err => console.log(err));
         this.updateAllMarkers();
 
         this.updateMarkers.emit(this.markers);
@@ -137,7 +162,7 @@ export class NodeService {
         this.markers = markers;
     }
 
-    public getPeers(x: any) {
+    public getPeers(x: any): void {
         if (this.isStopped) return;
 
         this._nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
@@ -147,6 +172,9 @@ export class NodeService {
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.peers = parseInt(json.result.connected.length);
+
+                    const model = res.json().result as GetPeersModel;
+                    this.handlePeers(model);
                 } else {
                     x.peers = 0;
                 }
@@ -159,6 +187,24 @@ export class NodeService {
             }, err => {
                 x.p2pEnabled = false;
             });
+    }
+
+    private handlePeers(received: GetPeersModel): void {
+        received.bad.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+        received.connected.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+        received.unconnected.forEach((y: Peer) => {
+            this.checkOrAddTo(y, this.peers);
+        });
+    }
+
+    private checkOrAddTo(x: Peer, collection: Map<String, Peer>): void {
+        if (collection.has(x.address)) return;
+
+        collection.set(x.address, x);
     }
 
     public getConnectionsCount(x: any) {
@@ -222,6 +268,7 @@ export class NodeService {
                         console.log(err);
                         node.restEnabled = false;
                         node.blockCount = null;
+                        node.latency = null;
                     });
             } else if (node.service === 'neoNotification') {
                 const requestStart = Date.now();
@@ -240,6 +287,7 @@ export class NodeService {
                         console.log(err);
                         node.restEnabled = false;
                         node.blockCount = null;
+                        node.latency = null;
                     });
             }
         } else {

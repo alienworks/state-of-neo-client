@@ -41,7 +41,7 @@ export class SignalRService {
         });
     }
 
-    public invokeOnServerEvent(serverMethod: string, value: string): void {
+    public invokeOnServerEvent(serverMethod: string, value: any): void {
         this._hubConnection.send(serverMethod, value);
     }
 

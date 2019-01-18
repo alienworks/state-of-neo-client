@@ -23,10 +23,10 @@ export class TxService {
             url += `&asset=${asset}`; 
         }
 
-        if (type) {
+        if (type || type === '0') {
             url += `&type=${type}`;
         }
-        
+
         return this.http.get(url);
     }
 
@@ -48,10 +48,6 @@ export class TxService {
 
     total(): any {
         return this.http.get(`${CONST.BASE_URL}/api/transactions/total`);
-    }
-
-    averagePer(unit: UnitOfTime): any {
-        return this.http.get(`${CONST.BASE_URL}/api/transactions/averageper?unit=${unit}`);
     }
 }
 

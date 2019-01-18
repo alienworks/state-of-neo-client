@@ -36,7 +36,7 @@ import {
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
-  NodesSignalRService, StatsSignalRService, NotificationsSignalRService
+  StatsSignalRService, NotificationsSignalRService
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -102,7 +102,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     NetService, CommonStateService,
     // SignalR services
     SignalRService,
-    NodesSignalRService, StatsSignalRService, NotificationsSignalRService,
+    StatsSignalRService, NotificationsSignalRService,
     // Data services
     RpcService,
     NodeService, BlockService, TxService, ChartService, AddressService, AssetService,
