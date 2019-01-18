@@ -36,7 +36,7 @@ export class ConsensusNodeInfoModel {
 
 export class GetPeersModel {
     bad: Set<Peer>;
-    connected: Set<Peer>;
+    connected: Peer[];
     unconnected: Set<Peer>;
     all: Set<Peer>;
 }

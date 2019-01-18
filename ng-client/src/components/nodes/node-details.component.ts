@@ -99,7 +99,8 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.node.connectedPeers.length; i++) {
             const peer = this.node.connectedPeers[i];
             const address = peer.address.startsWith('::ffff:') ? peer.address.substring(7) : peer.address;
-            this.nodes.push({ id: i + 2, value: 1, label: address });
+            const peerName = this._nodeService.getNodeNameByIp(address);
+            this.nodes.push({ id: i + 2, value: 1, label: peerName });
         }
 
         // create connections between people

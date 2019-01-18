@@ -16,9 +16,6 @@ export class NodeService {
     public markers: any[] = [];
 
     public peers = new Map<string, Peer>();
-    private updatedServerPeersOn = new Date();
-    private firstTimeGettingPeers = true;
-    private bestBlock: number;
 
     public nodeBlockInfo = new BehaviorSubject<number>(0);
     public rpcEnabledNodes = new BehaviorSubject<number>(0);
@@ -27,6 +24,10 @@ export class NodeService {
     public updateMarkers = new EventEmitter<any[]>();
 
     public updateAll = false;
+
+    private updatedServerPeersOn = new Date();
+    private firstTimeGettingPeers = true;
+    private bestBlock: number;
 
     constructor(private http: Http,
         private nodeRpcService: RpcService) {
@@ -172,6 +173,16 @@ export class NodeService {
         this.updateMarkers.emit(this.markers);
     }
 
+    public getNodeNameByIp(ip: string): string {
+        for (const node of this.allNodes) {
+            if (node.ips.includes(ip)) {
+                return node.url;
+            }
+        }
+
+        return ip;
+    }
+
     public getPeers(x: any, addCollections: boolean = false): void {
         if (!this.updateAll) return;
 
@@ -185,13 +196,11 @@ export class NodeService {
 
                     const model = res.json().result as GetPeersModel;
 
-                    if (addCollections) {
-                        x.bad = model.bad;
-                        x.connectedPeers = model.connected;
-                        x.unconnected = model.unconnected;
-                    }
-
                     this.handlePeers(model);
+
+                    if (addCollections) {
+                        x.connectedPeers = model.connected;
+                    }
                 } else {
                     x.peers = 0;
                 }
