@@ -1,6 +1,9 @@
 <div class="row col-md-12 no-margin no-padding">
     <div class="col-md-8 col-sm-6 col-xs-12 row no-margin padding-10">
         <div class="col-md-12 panel-body">
+            <select [(ngModel)]="type" (change)="getPage(page)">
+                <option *ngFor="let t of txTypes" [ngValue]="t.value">{{t.label}}</option>
+            </select>
             <app-tx-list-table [model]="transactions" (emitGetPage)="getPage($event)"></app-tx-list-table>
         </div>
     </div>
