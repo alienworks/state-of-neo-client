@@ -33,6 +33,8 @@ export class SearchComponent {
                 } else {
                     this.toast.warning('Your input had no match');
                 }
-            }, err => this.toast.error('Incorect input'));
+            }, err => {
+                this.toast.error('Incorect input');
+            });
     }
 }
