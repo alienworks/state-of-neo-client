@@ -16,12 +16,11 @@ export class BlockListComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('blocks');
         this.getPage(1);
     }
 
     getPage(page: number): void {
-        this.state.changeRoute('blocks');
-
         this.isLoading = true;
         this._blockService.getBlocksPage(page, 32)
             .subscribe(x => {

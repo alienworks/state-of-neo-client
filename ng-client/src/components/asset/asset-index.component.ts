@@ -13,8 +13,7 @@ export class AssetIndexComponent implements OnInit {
 
     constructor(private assetsService: AssetService,
         private state: CommonStateService
-    ) {
-    }
+    ) { }
 
     ngOnInit(): void {
         this.state.changeRoute('assets');

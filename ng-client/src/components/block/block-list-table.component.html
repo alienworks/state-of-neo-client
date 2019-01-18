@@ -1,0 +1,73 @@
+<div class="row">
+    <div *ngIf="isLoading" class="text-center" style="padding-top: 30px">
+        <i class="fa-4x fas fa-spinner fa-spin"></i>
+    </div>
+    <div class="col-md-12" *ngIf="model && !isLoading">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-md-1">
+                        Height
+                    </th>
+                    <th class="col-md-1">
+                        Time
+                    </th>
+                    <th class="col-md-3">
+                        Hash
+                    </th>
+                    <th class="col-md-3">
+                        Validator
+                    </th>
+                    <th class="col-md-2">
+                        Collected Fees
+                    </th>
+                    <th class="col-md-1">
+                        Tx
+                    </th>
+                    <th class="col-md-1">
+                        Size
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let block of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
+                    <td>
+                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">                        
+                            {{block.height | number}}
+                        </a>
+                    </td>
+                    <td>
+                        {{block.finalizedAt | timeAgo }}                    
+                    </td>
+                    <td>                        
+                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">                        
+                            {{ (block.hash.length>6)? (block.hash | slice:0:32)+'..':(block.hash) }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ (block.validator.length>6)? (block.validator | slice:0:32)+'..':(block.validator) }}
+                    </td>
+                    <td title="GAS">
+                        {{block.collectedFees | number: '1.0-8'}}
+                    </td>
+                    <td>
+                        {{block.transactionsCount}}
+                    </td>
+                    <td title="bytes">
+                        {{block.size | number}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="col-md-12 text-center">
+            <div style="padding-top: 25px">
+                <div class="spinner" [ngClass]="{ 'hidden': !isLoading }"></div>
+                <pagination-controls (pageChange)="update($event)" id="server"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!model || model.items.length == 0) && !isLoading">
+        No blocks found
+    </div>
+</div>

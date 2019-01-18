@@ -19,7 +19,7 @@ import {
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
   LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent
 } from '../components/common';
-import { BlockDetailsComponent, BlockListComponent } from '../components/block';
+import { BlockDetailsComponent, BlockListComponent, BlockListTableComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 import {
   AddressIndexComponent, AddressDetailsComponent, AddressListComponent,
@@ -42,6 +42,7 @@ import {
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { TimestampFormatPipe } from '../core/pipes';
 import { NotificationsIndexComponent, NotificationsListComponent } from 'src/components/notification';
+import { BlockIndexComponent } from '../components/block/block-index.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
-    BlockListComponent, BlockDetailsComponent,
+    BlockListComponent, BlockDetailsComponent, BlockIndexComponent, BlockListTableComponent,
     // Address
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent,
     AddressTopComponent, AddressListTableComponent, AddressTopTableComponent,
@@ -83,7 +84,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
       { path: 'address/:address', component: AddressDetailsComponent },
       { path: 'asset', component: AssetIndexComponent },
       { path: 'asset/:hash', component: AssetDetailsComponent },
-      { path: 'blocks', component: BlockListComponent },
+      { path: 'blocks', component: BlockIndexComponent },
       { path: 'block/:index', component: BlockDetailsComponent },
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
