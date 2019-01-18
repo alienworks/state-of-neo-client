@@ -85,7 +85,8 @@
 
                 <div class="col-md-12 no-margin padding-5 stat">
                     <div class="col-12 padding-5 no-margin" *ngIf="node.trackedSeconds">
-                        <app-percent-bar [title]="'Uptime %. Time up ' + ((node.trackedSeconds / 60 / 60) | number: '1.0-2') + ' hours'" [total]="node.trackedSeconds" [current]="node.secondsOnline"></app-percent-bar>
+                        <app-percent-bar [title]="'Uptime %. Time up ' + ((node.trackedSeconds / 60 / 60) | number: '1.0-2') + ' hours'"
+                            [total]="node.trackedSeconds" [current]="node.secondsOnline"></app-percent-bar>
                     </div>
                 </div>
                 <div class="col-md-12 no-margin padding-5 row">
@@ -107,8 +108,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4" *ngIf="node">
-        <div class="panel panel-default">
+    <div class="col-md-4">
+        <div class="panel panel-default" *ngIf="node">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis uppercase">
                     <i class="fas fa-handshake" style="margin-left: 15px; margin-right: 20px"></i> Transactions Mem
@@ -124,6 +125,16 @@
                 <div class="col-md-12 padding-10 no-margin text-center">
                     <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis uppercase">
+                    Peers
+                </h2>
+            </header>
+            <div class="panel-body padding-5">
+                <div id="mynetwork" style="height: 450px;"></div>
             </div>
         </div>
     </div>

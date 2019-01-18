@@ -172,7 +172,7 @@ export class NodeService {
         this.updateMarkers.emit(this.markers);
     }
 
-    public getPeers(x: any): void {
+    public getPeers(x: any, addCollections: boolean = false): void {
         if (!this.updateAll) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
@@ -184,6 +184,13 @@ export class NodeService {
                     x.peers = parseInt(json.result.connected.length);
 
                     const model = res.json().result as GetPeersModel;
+
+                    if (addCollections) {
+                        x.bad = model.bad;
+                        x.connectedPeers = model.connected;
+                        x.unconnected = model.unconnected;
+                    }
+
                     this.handlePeers(model);
                 } else {
                     x.peers = 0;
