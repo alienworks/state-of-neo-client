@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NodeService } from '../../core/services/data/node.service';
 import { Router } from '@angular/router';
 
@@ -9,9 +9,10 @@ declare var $;
     templateUrl: `./map.component.html`,
     styleUrls: [`./map.component.css`]
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
     mapSelector = '#world-map';
     isLoading = true;
+    subscribtion: any;
 
     constructor(private _nodeService: NodeService, private router: Router) { }
 
@@ -19,8 +20,12 @@ export class MapComponent implements OnInit {
         this.subscribeToEvents();
     }
 
+    ngOnDestroy(): void {
+        this.subscribtion.unsubscribe();
+    }
+
     private subscribeToEvents() {
-        this._nodeService.updateMarkers.subscribe((markers: any[]) => {
+        this.subscribtion = this._nodeService.updateMarkers.subscribe((markers: any[]) => {
             this.initMap(markers);
         });
     }
@@ -32,8 +37,9 @@ export class MapComponent implements OnInit {
             map: 'world_mill_en',
             backgroundColor: 'transparent',
             markers: markers,
-
             hoverOpacity: 0.7,
+            zoomOnScroll: false,
+            zoomButtons: false,
             hoverColor: false,
             markersSelectable: true,
             onMarkerSelected: (e: any, code: string, isSelected: boolean, selectedMarkers: any[]) => {

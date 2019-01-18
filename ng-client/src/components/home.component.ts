@@ -12,12 +12,10 @@ declare var $;
 })
 export class HomeComponent implements OnInit, OnDestroy {
     allNodes: any[] = [];
-    interval: number;
 
     constructor(
-		private nodeService: NodeService,
-        private state: CommonStateService
-    ) {
+        private nodeService: NodeService,
+        private state: CommonStateService) {
         this.subscribeToEvents();
     }
 
@@ -32,14 +30,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.state.changeRoute('home');
 
-        this.nodeService.startService();
+        this.nodeService.startUpdatingAll();
         this.allNodes = this.nodeService.getNodes();
-
-        this.interval =
-            window.setInterval(() => {
-                this.nodeService.updateNodesData();
-                this.allNodes = this.nodeService.getNodes();
-            }, 5000);
+        this.nodeService.updateNodes.subscribe((x: any[]) => {
+            this.allNodes = x;
+            this.nodeService.updateAllMarkers();
+        });
 
         // window height - header - body padding top and bottom
         const height = $(window).height() - 50 - 70 - 20 - 20;
@@ -48,10 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.interval) {
-            this.nodeService.stopService();
-            clearInterval(this.interval);
-        }
+        this.nodeService.stopUpdatingAll();
     }
 
     private subscribeToEvents(): void {

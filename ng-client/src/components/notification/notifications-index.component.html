@@ -1,29 +1,67 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel-body" *ngIf="notifications">
-            <div class="col-md-12" style="padding: 5px 0" *ngIf="!contractFilter">
-                <div class="col-md-3 col-sm-4 col-xs-10 no-padding">
-                    <input type="text" class="form-control" placeholder="Filter by Contract Hash" [(ngModel)]="contract"></div>
-                <div class="col-md-9 col-sm-8 col-xs-2">
-                    <a class="btn btn-info" (click)="subscribeToContract(contract)">
+            <div class="well well-sm">
+                Notifications are events raised by smart contract executions. They can be used by developers or outside
+                apps to receive information directly from the Smart Contract that is being invoked on the network.
+                <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#info">
+                    <i class="fas fa-info-circle"></i> More
+                </button>
+            </div>
+            <div class="col-md-12" style="padding: 5px 0">
+                <div class="col-md-4 col-sm-6 col-xs-10 no-padding" *ngIf="!contractFilter">
+                    <input type="text" class="form-control" placeholder="Filter by Contract Hash" [(ngModel)]="contract">
+
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-10 no-padding" *ngIf="contractFilter">
+                    <strong style="margin-bottom: 20px; font-size: 1.15em">
+                        {{contract}}
+                    </strong>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-1" style="padding-left: 10px;">
+                    <a class="btn btn-info" (click)="subscribeToContract(contract)" *ngIf="!contractFilter">
                         <i class="fas fa-search no-padding"></i>
                     </a>
+                    <a class="btn btn-warning text-center" (click)="unsubscribeToContract(contract)" *ngIf="contractFilter">
+                        <i class="fas fa-times no-padding"></i>
+                    </a>
+                </div>
+                <div class="col-md-7 col-sm-5 col-xs-1 no-padding text-right">
+                    <button (click)="changeView()" class="btn btn-default text-center">
+                        <i class="no-padding fas {{!isConsoleView ? 'fa-terminal': 'fa-th-large'}}"></i>
+                    </button>
                 </div>
             </div>
 
-            <div class="col-md-12" style="padding: 5px 0" *ngIf="contractFilter">
-                <strong style="margin-bottom: 20px; font-size: 1.15em">
-                    {{contract}}
-                    <a class="btn btn-warning text-center" (click)="unsubscribeToContract(contract)">
-                        <i class="fas fa-times no-padding"></i>
-                    </a>
-                </strong>
-            </div>
             <small class="italic">( browse through the 1000 most recent )</small>
 
             <div class="col-md-12 no-padding no-margin">
-                <app-not-list (contractFilter)="subscribeToContract($event)" [notifications]="notifications" [title]="contract"></app-not-list>
+                <app-not-list (contractFilter)="subscribeToContract($event)" [isConsoleView]="isConsoleView"
+                    [notifications]="notifications" [title]="contract"></app-not-list>
             </div>
         </div>
     </div>
 </div>
+
+<div id="info" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Notifications info</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    For example when a NEP-5 token is transferred, a "transfer" notification is being raised by its
+                    smart contract. This notification carry information about what amount was transferred and who were
+                    the sender and the recipient of the transaction. This can be handy if you are building an exchange
+                    for example and you want to detect when tokens were deposited to a user's account. Or if simply you
+                    are participating in an ICO and would like to know if your tokens were transferred to your name.
+                    Using this section you will be able to know this immediately.
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

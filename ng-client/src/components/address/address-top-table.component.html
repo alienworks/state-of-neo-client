@@ -22,7 +22,7 @@
                         <small><strong>NEO:</strong> {{getBalance(address.balances, 'NEO') | number}}</small>
                     </td>
                     <td class="text-success">
-                        <small><strong>GAS:</strong> {{getBalance(address.balances, 'GAS') | number}}</small>
+                        <small><strong>GAS:</strong> {{getBalance(address.balances, 'GAS') | number:'1.0-8'}}</small>
                     </td>
                 </tr>
             </tbody>

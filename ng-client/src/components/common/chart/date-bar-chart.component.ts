@@ -17,6 +17,7 @@ export class DateBarChartComponent implements OnInit {
     @Input() endpoint: string;
     @Input() label: string;
     @Input() chartType = 'line';
+    @Input() showLoader = true;
 
     chart: Chart;
     chartData: ChartDataItemModel[];
@@ -34,7 +35,7 @@ export class DateBarChartComponent implements OnInit {
         this.id = this.endpoint.toLowerCase().replace(/[\/\?\=]/g, '-');
         this.timeTypes = Object.keys(UnitOfTime)
             .filter(x => isNaN(Number(x)))
-            .slice(1)
+            .slice(1, 4)
             .map(x => {
                 const selected = this.filter.unitOfTime === UnitOfTime[x];
                 return { key: x, selected };

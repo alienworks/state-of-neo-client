@@ -25,33 +25,19 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.state.changeRoute('nodes');
-        this.nodeService.startService();
+
         this.nodes = this.nodeService.getNodes();
+        this.nodeService.startUpdatingAll();
+        this.nodeService.updateNodes.subscribe((x: any[]) => this.nodes = x);
 
         this.bestBlock = this.blockService.bestBlock;
-
-        this.interval =
-            window.setInterval(() => {
-                this.nodeService.updateNodesData();
-                this.nodes = this.nodeService.getNodes();
-            }, 5000);
-
-        this.nodeService.updateNodes.subscribe((nodes: any) => {
-            this.nodes = nodes;
-        });
-
-        this.bestBlock = this.blockService.bestBlock;
-
         this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
         this.getPage(1);
     }
 
     ngOnDestroy(): void {
-        if (this.interval) {
-            this.nodeService.stopService();
-            clearInterval(this.interval);
-        }
+        this.nodeService.stopUpdatingAll();
     }
 
     getPage(page: number): void {
