@@ -10,7 +10,7 @@
                         Height
                     </th>
                     <th class="col-md-1">
-                        Time
+                        Age
                     </th>
                     <th class="col-md-3">
                         Hash
@@ -18,8 +18,11 @@
                     <th class="col-md-3">
                         Validator
                     </th>
-                    <th class="col-md-2">
-                        Collected Fees
+                    <th class="col-md-1">
+                        Time
+                    </th>
+                    <th class="col-md-1">
+                        Fees
                     </th>
                     <th class="col-md-1">
                         Tx
@@ -46,6 +49,9 @@
                     </td>
                     <td>
                         {{ (block.validator.length>6)? (block.validator | slice:0:32)+'..':(block.validator) }}
+                    </td>
+                    <td>
+                        {{ block.timeInSeconds }} s.
                     </td>
                     <td title="GAS">
                         {{block.collectedFees | number: '1.0-8'}}

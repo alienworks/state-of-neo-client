@@ -107,7 +107,7 @@ export class NodeService {
         return this.http.get(`${CONST.BASE_URL}/api/node/consensus`, this.getJsonHeaders());
     }
 
-    public getNodesApi(page: number = 1, pageSize: number = 10): any {
+    public getNodesApi(page: number = 1, pageSize: number = 99999): any {
         return this.http.get(`${CONST.BASE_URL}/api/node/page?page=${page}&pageSize=${pageSize}`, this.getJsonHeaders());
     }
 

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 // Components
 import { AppComponent } from './app.component';
@@ -79,6 +80,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     HttpModule,
     FormsModule,
     NgxPaginationModule,
+    SelectDropDownModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
