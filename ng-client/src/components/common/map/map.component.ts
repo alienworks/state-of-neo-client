@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NodeService } from '../../core/services/data/node.service';
+import { NodeService } from '../../../core/services/data/node.service';
 import { Router } from '@angular/router';
 
 declare var $;

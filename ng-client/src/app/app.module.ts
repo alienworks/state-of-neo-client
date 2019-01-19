@@ -17,7 +17,7 @@ import {
   TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent
 } from '../components/tx';
 import {
-  MapComponent, NavigationComponent, HeaderStatsComponent,
+  MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
   LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent
 } from '../components/common';
@@ -50,7 +50,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     AppComponent,
     HomeComponent,
     // Common
-    MapComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
+    MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
     HorizontalBarChartComponent, SearchComponent,
     // Nodes

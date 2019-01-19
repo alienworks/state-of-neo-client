@@ -3,7 +3,7 @@
         <div class="col-md-12 panel-body">
             <div>
                 <div class="pull-right">
-                    Type: 
+                    Type:
                     <select [(ngModel)]="type" (change)="getPage(page)">
                         <option *ngFor="let t of txTypes" [ngValue]="t.value">{{t.label}}</option>
                     </select>
