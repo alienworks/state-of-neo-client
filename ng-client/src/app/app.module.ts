@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 // Components
 import { AppComponent } from './app.component';
@@ -15,7 +15,7 @@ import { HomeComponent } from 'src/components/home.component';
 
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
-  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent
+  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent,
 } from '../components/tx';
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,

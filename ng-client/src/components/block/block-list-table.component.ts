@@ -1,10 +1,19 @@
 import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { BlockListModel } from '../../models/block.models';
 import { PageResultModel } from '../../models';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-block-list-table',
-    templateUrl: `./block-list-table.component.html`
+    templateUrl: `./block-list-table.component.html`,
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: '0' }),
+                animate('.5s ease-in', style({ opacity: '1' }))
+            ])
+        ])
+    ]
 })
 export class BlockListTableComponent implements OnChanges {
     @Input() model: PageResultModel<BlockListModel>;
@@ -14,6 +23,7 @@ export class BlockListTableComponent implements OnChanges {
 
     get paginateConfig() {
         return {
+
             itemsPerPage: this.model ? this.model.metaData.PageSize : 32,
             currentPage: this.model ? this.model.metaData.PageNumber : 1,
             totalItems: this.model ? this.model.metaData.TotalItemCount : 1

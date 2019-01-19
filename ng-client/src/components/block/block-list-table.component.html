@@ -17,19 +17,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let block of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
+                <tr *ngFor="let block of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }"
+                    @fadeIn>
                     <td>
-                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">                        
+                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">
                             {{block.height | number}}
                         </a>
                     </td>
-                    <td>{{block.finalizedAt | timeAgo }}</td>
-                    <td>                        
-                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">                        
-                            {{ (block.hash.length>16)? (block.hash | slice:0:16)+'..':(block.hash) }}
+                    <td>{{block.timestamp | stampToDate | timeAgo }}</td>
+                    <td>
+                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">
+                            {{ (block.hash.length > 16) ? (block.hash | slice:0:16) + '..': (block.hash) }}
                         </a>
                     </td>
-                    <td>{{ (block.validatorAddress.length>16)? (block.validatorAddress | slice:0:16)+'..':(block.validatorAddress) }}</td>
+                    <td>{{ (block.validatorAddress.length > 16) ? (block.validatorAddress | slice:0:16) + '..': (block.validatorAddress) }}</td>
                     <td>{{ block.timeInSeconds }} s.</td>
                     <td title="GAS">{{block.collectedFees | number: '1.0-8'}}</td>
                     <td>{{block.transactionsCount}}</td>

@@ -8,6 +8,9 @@ export class BaseBlockModel {
 export class BlockListModel extends BaseBlockModel {
     transactionsCount: number;
     finalizedAt: Date;
+    validatorAddress: string;
+    timeInSeconds: number;
+    collectedFees: number;
 }
 
 export class BlockDetailsModel extends BaseBlockModel {
