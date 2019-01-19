@@ -21,7 +21,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     countryFilter: any;
     countriesFilterConfig: any = {
         displayKey: 'location',
-        search: true        
+        search: true,
+        placeholder: 'Location'
     };
     filteredNodes: any = [];
     countries: any = [];
