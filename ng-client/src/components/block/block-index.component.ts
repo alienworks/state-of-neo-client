@@ -24,7 +24,7 @@ export class BlockIndexComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this.blockService.getBlocksPage(page, 16)
+        this.blockService.getBlocksPage(page, 32)
             .subscribe(x => {
                 this.blocks = x.json() as PageResultModel<BlockListModel>;
             }, err => {

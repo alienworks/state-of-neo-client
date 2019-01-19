@@ -1,3 +1,7 @@
 .header-stat {
     min-height: 80px;
 }
+
+.section-title {
+    font-size: 20px !important;
+}
