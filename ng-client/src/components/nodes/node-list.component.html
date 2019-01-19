@@ -1,13 +1,15 @@
 <div class="row no-margin">
     <div class="col-md-8 row no-margin padding-10">
         <div class="col-md-12 row no-margin padding-5 panel-body">
-            <div>
+            <div style="margin-bottom: 20px">
+                Name/IP:
                 <input [(ngModel)]="nodeNameFilter" 
                     style="width: 200px !important; display: inline-block" 
                     placeholder="Filter by name / IP"  
                     (keyup)="filter()"
                     class="form-control"/>
 
+                Location: 
                 <ngx-select-dropdown 
                     (change)="filter()" 
                     (close)="filter()"
@@ -18,6 +20,19 @@
                     style="width: 200px !important; display: inline-block;"
                     >
                 </ngx-select-dropdown>
+                Type: 
+                <select [(ngModel)]="typeFilter" (change)="filter()">
+                    <option value="">All</option>
+                    <option value="RPC">RPC</option>
+                    <option value="REST">REST</option>
+                </select>
+
+                Status:
+                <select [(ngModel)]="statusFilter" (change)="filter()">
+                    <option value="">All</option>
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                </select>
 
                 <!-- <ng-select [items]="countries"
                     bindLabel="location"

@@ -26,6 +26,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     };
     filteredNodes: any = [];
     countries: any = [];
+    typeFilter: string = '';
+    statusFilter: string = '';
 
     constructor(
         private nodeService: NodeService,
@@ -43,6 +45,13 @@ export class NodeListComponent implements OnInit, OnDestroy {
             this.filteredNodes = this.filteredNodes.filter(x => this.countryFilter.find(c => c.location == x.location) != null);
         }
 
+        if (this.typeFilter) {
+            this.filteredNodes = this.filteredNodes.filter(x => x.type == this.typeFilter);
+        }
+
+        if (this.statusFilter) {
+            this.filteredNodes = this.filteredNodes.filter(x => this.statusFilter == 'Online' ? x.blockCount : !x.blockCount);
+        }
     }
 
     ngOnInit(): void {
