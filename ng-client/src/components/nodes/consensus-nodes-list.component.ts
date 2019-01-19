@@ -15,6 +15,13 @@ export class ConsensusNodesListComponent implements OnInit {
         this._nodeService.getConsensusNodes()
             .subscribe(data => {
                 this.nodes = data.json() as ConsensusNodeModel[];
+                this.nodes.sort((x, y) => {
+                    if (x.Info.Organization == 'NEO Foundation') {
+                        return 1;
+                    }
+
+                    return x.Info.Organization > y.Info.Organization ? 1 : -1;
+                });
             }, err => {
                 console.error(`get consensus error`, err);
             });
