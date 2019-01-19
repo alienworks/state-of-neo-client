@@ -124,19 +124,19 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             chart.geodata = am4geodata_worldLow;
 
             // Set projection
-            chart.projection = new am4maps.projections.Miller();
-            // chart.projection = new am4maps.projections.Orthographic();
+            // chart.projection = new am4maps.projections.Miller();
+            chart.projection = new am4maps.projections.Orthographic();
 
-            // const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
-            // slider.start = 0.5;
-            // slider.margin(20, 0, 20, 0);
-            // slider.valign = 'bottom';
-            // slider.align = 'center';
-            // slider.width = 500;
-            // slider.events.on('rangechanged', function (ev) {
-            //     const deltaLongitude = 360 * ev.target.start - 180;
-            //     chart.deltaLongitude = deltaLongitude;
-            // });
+            const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
+            slider.start = 0.5;
+            slider.margin(20, 0, 20, 0);
+            slider.valign = 'bottom';
+            slider.align = 'center';
+            slider.width = 500;
+            slider.events.on('rangechanged', function (ev) {
+                const deltaLongitude = 360 * ev.target.start - 180;
+                chart.deltaLongitude = deltaLongitude;
+            });
 
             // Add zoom control
             chart.zoomControl = new am4maps.ZoomControl();

@@ -197,10 +197,7 @@ export class NodeService {
                     const model = res.json().result as GetPeersModel;
 
                     this.handlePeers(model);
-
-                    if (addCollections) {
-                        x.connectedPeers = model.connected;
-                    }
+                    x.connectedPeers = model.connected;
                 } else {
                     x.peers = 0;
                 }
