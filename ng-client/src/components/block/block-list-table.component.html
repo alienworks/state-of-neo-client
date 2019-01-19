@@ -3,7 +3,7 @@
         <i class="fa-4x fas fa-spinner fa-spin"></i>
     </div>
     <div class="col-md-12" *ngIf="model && !isLoading">
-        <table class="table table-responsive">
+        <table class="table table-responsive table-hover">
             <thead>
                 <tr>
                     <th class="col-md-1">
@@ -40,15 +40,15 @@
                         </a>
                     </td>
                     <td>
-                        {{block.finalizedAt | timeAgo }}                    
+                        {{block.finalizedAt | timeAgo }}
                     </td>
                     <td>                        
                         <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">                        
-                            {{ (block.hash.length>6)? (block.hash | slice:0:32)+'..':(block.hash) }}
+                            {{ (block.hash.length>18)? (block.hash | slice:0:18)+'..':(block.hash) }}
                         </a>
                     </td>
                     <td>
-                        {{ (block.validator.length>6)? (block.validator | slice:0:32)+'..':(block.validator) }}
+                        {{ (block.validatorAddress.length>18)? (block.validatorAddress | slice:0:18)+'..':(block.validatorAddress) }}
                     </td>
                     <td>
                         {{ block.timeInSeconds }} s.

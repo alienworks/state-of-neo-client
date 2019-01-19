@@ -15,7 +15,7 @@ export class AssetListTableComponent implements OnChanges {
     get paginateConfig() {
         return {
             id: 'server-' + this.name,
-            itemsPerPage: this.model ? this.model.metaData.PageSize : 16,
+            itemsPerPage: this.model ? this.model.metaData.PageSize : 32,
             currentPage: this.model ? this.model.metaData.PageNumber : 1,
             totalItems: this.model ? this.model.metaData.TotalItemCount : 1
         };

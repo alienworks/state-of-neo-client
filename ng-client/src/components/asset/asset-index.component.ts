@@ -23,7 +23,7 @@ export class AssetIndexComponent implements OnInit {
     }
 
     getGlobalPage(page: number): void {
-        this.assetsService.getAssetsPage(page, 16)
+        this.assetsService.getAssetsPage(page, 32)
             .subscribe(x => {
                 this.global = x.json() as PageResultModel<AssetListModel>;
                 console.log(this.global);
@@ -33,7 +33,7 @@ export class AssetIndexComponent implements OnInit {
     }
 
     getNepPage(page: number): void {
-        this.assetsService.getAssetsPage(page, 16, false)
+        this.assetsService.getAssetsPage(page, 32, false)
             .subscribe(x => {
                 this.nep = x.json() as PageResultModel<AssetListModel>;
                 console.log(this.global);
