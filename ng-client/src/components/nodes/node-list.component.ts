@@ -5,6 +5,8 @@ import { CommonStateService } from '../../core/services';
 import { PageResultModel, BaseNodeModel } from '../../models';
 import { BlockService } from '../../core/services/data';
 
+declare var $;
+
 @Component({
     selector: `app-node-list`,
     templateUrl: './node-list.component.html',
@@ -68,6 +70,10 @@ export class NodeListComponent implements OnInit, OnDestroy {
         this.bestBlock = this.blockService.bestBlock;
         this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
+
+        $('.ngx-dropdown-container > .ngx-dropdown-button').css('border', '2px solid #E5E7E9');
+        $('.ngx-dropdown-container > .ngx-dropdown-button').css('height', '40px');
+        
         // this.getPage(1);
     }
 

@@ -3,3 +3,13 @@ td {
     padding-top: 5px; 
     padding-bottom: 5px
 }
+
+.ngx-dropdown-container > .ngx-dropdown-button {
+    height: 40px !important;
+    border: 2px solid #E5E7E9 !important;
+}
+
+.select-filter {
+    padding: 8px;
+    height: 40px;
+}
