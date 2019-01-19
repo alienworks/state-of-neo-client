@@ -2,90 +2,88 @@
     <div class="col-md-8" *ngIf="!isLoading">
         <div class="panel">
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td class="col-md-3">Hash</td>
-                                    <td class="col-md-9" style="word-break: break-all">{{tx.hash}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Type</td>
-                                    <td>{{getTypeName()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Block</td>
-                                    <td><a routerLink="/block/{{tx?.blockHeight}}">{{tx.blockHeight | number}}</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Time</td>
-                                    <td>{{tx.finalizedAt | timeAgo}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Confirmed</td>
-                                    <td>Success</td>
-                                </tr>
-                                <tr>
-                                    <td>Size</td>
-                                    <td>{{tx.size | number}} Bytes</td>
-                                </tr>
-                                <tr>
-                                    <td>Version</td>
-                                    <td>{{tx.version}}</td>
-                                </tr>
-                                <tr>
-                                    <td>System Fee</td>
-                                    <td>{{tx.systemFee | number: '1.0-8'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Network Fee</td>
-                                    <td>{{tx.networkFee | number: '1.0-8'}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="col-md-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">Hash</td>
+                                <td class="col-md-9" style="word-break: break-all">{{tx.hash}}</td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>{{getTypeName()}}</td>
+                            </tr>
+                            <tr>
+                                <td>Block</td>
+                                <td><a routerLink="/block/{{tx?.blockHeight}}">{{tx.blockHeight | number}}</a></td>
+                            </tr>
+                            <tr>
+                                <td>Time</td>
+                                <td>{{tx.finalizedAt | timeAgo}}</td>
+                            </tr>
+                            <tr>
+                                <td>Confirmed</td>
+                                <td>Success</td>
+                            </tr>
+                            <tr>
+                                <td>Size</td>
+                                <td>{{tx.size | number}} Bytes</td>
+                            </tr>
+                            <tr>
+                                <td>Version</td>
+                                <td>{{tx.version}}</td>
+                            </tr>
+                            <tr>
+                                <td>System Fee</td>
+                                <td>{{tx.systemFee | number: '1.0-8'}}</td>
+                            </tr>
+                            <tr>
+                                <td>Network Fee</td>
+                                <td>{{tx.networkFee | number: '1.0-8'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <div class="pricing-table" *ngIf="incomingAssets.length">
+                        <div class="plan-title">Incoming assets</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of incomingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.fromAddress}}">
+                                    <span *ngIf="asset.fromAddress" class="text-left">{{asset.fromAddress}}</span>
+                                </a>&nbsp;
+                                <strong>sent {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-6">
-                        <div class="pricing-table" *ngIf="incomingAssets.length">
-                            <div class="plan-title">Incoming assets</div>
-                            <ul class="plan-features">
-                                <li *ngFor="let asset of incomingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
-                                    <a routerLink="/address/{{asset.fromAddress}}">
-                                        <span *ngIf="asset.fromAddress" class="text-left">{{asset.fromAddress}}</span>
-                                    </a>&nbsp;
-                                    <strong>sent {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="pricing-table" *ngIf="outgoingAssets.length">
-                            <div class="plan-title">Outgoing assets</div>
-                            <ul class="plan-features">
-                                <li *ngFor="let asset of outgoingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
-                                    <a routerLink="/address/{{asset.toAddress}}">
-                                        <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
-                                    </a>&nbsp;
-                                    <strong>received {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="pricing-table" *ngIf="tokenAssets.length">
-                            <div class="plan-title">NEP-5 TOKENS</div>
-                            <ul class="plan-features">
-                                <li *ngFor="let asset of tokenAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
-                                    <a routerLink="/address/{{asset.fromAddress}}" *ngIf="asset.fromAddress">
-                                        <span *ngIf="asset.toAddress" class="text-left">{{asset.fromAddress}}</span>
-                                    </a>
-                                    <div>
-                                        <strong>
-                                            <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to                                    
-                                        </strong>
-                                    </div>
-                                    <a routerLink="/address/{{asset.toAddress}}">
-                                        <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="pricing-table" *ngIf="outgoingAssets.length">
+                        <div class="plan-title">Outgoing assets</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of outgoingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.toAddress}}">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
+                                </a>&nbsp;
+                                <strong>received {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-table" *ngIf="tokenAssets.length">
+                        <div class="plan-title">NEP-5 TOKENS</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of tokenAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.fromAddress}}" *ngIf="asset.fromAddress">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.fromAddress}}</span>
+                                </a>
+                                <div>
+                                    <strong>
+                                        <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to                                    
+                                    </strong>
+                                </div>
+                                <a routerLink="/address/{{asset.toAddress}}">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

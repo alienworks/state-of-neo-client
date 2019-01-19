@@ -15,7 +15,7 @@ import { HomeComponent } from 'src/components/home.component';
 
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
-  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent
+  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent
 } from '../components/tx';
 import {
   MapComponent, NavigationComponent, HeaderStatsComponent,
@@ -66,7 +66,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
-    TxListTableComponent, TxUnconfirmedComponent,
+    TxListTableComponent, SmallTxListTableComponent, TxUnconfirmedComponent, TxSmallListComponent,
     // Notifications
     NotificationsIndexComponent, NotificationsListComponent,
     // Libs

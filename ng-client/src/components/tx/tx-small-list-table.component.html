@@ -2,27 +2,27 @@
 <table class="table table-responsive table-hover" *ngIf="!isLoading">
     <thead>
         <tr>
-            <th class="col-md-1">
+            <th class="col-md-2">
                 Type
             </th>
-            <th class="col-md-9">
+            <th class="col-md-7">
                 Hash
             </th>
-            <th class="col-md-2">
+            <th class="col-md-3">
                 Time
             </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let tx of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
-            <td style="padding-top: 5px; padding-bottom: 5px" title="{{getTypeName(tx.type)}}">
+            <td style="padding-top: 5px; padding-bottom: 5px">
                 <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="font-size: 1.6em">
                     <app-tx-icon [type]="tx.type"></app-tx-icon>
                 </a>
             </td>
             <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px">
                 <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active">
-                    {{tx.hash}}
+                    {{ (tx.hash.length>16)? (tx.hash | slice:0:16)+'..':(tx.hash) }}
                 </a>
             </td>
             <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">

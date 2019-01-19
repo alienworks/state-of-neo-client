@@ -70,11 +70,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
         this.bestBlock = this.blockService.bestBlock;
         this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
-
         $('.ngx-dropdown-container > .ngx-dropdown-button').css('border', '2px solid #E5E7E9');
         $('.ngx-dropdown-container > .ngx-dropdown-button').css('height', '40px');
-        
-        // this.getPage(1);
     }
 
     ngOnDestroy(): void {
@@ -92,24 +89,24 @@ export class NodeListComponent implements OnInit, OnDestroy {
         this.countries = [...this.countries];
     }
 
-    getPage(page: number): void {
-        this.isLoading = true;
-        this.nodeService.getNodesApi(page)
-            .subscribe(pageResults => {
-                this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
-                this.nodes = this.pageResults.items;
-                this.filteredNodes = this.nodes;
+    // getPage(page: number): void {
+    //     this.isLoading = true;
+    //     this.nodeService.getNodesApi(page)
+    //         .subscribe(pageResults => {
+    //             this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
+    //             this.nodes = this.pageResults.items;
+    //             this.filteredNodes = this.nodes;
 
-                this.isLoading = false;
-                this.updateNodesList();
+    //             this.isLoading = false;
+    //             this.updateNodesList();
 
-                this.setNodeCountries();
+    //             this.setNodeCountries();
 
-                this.interval = window.setInterval(() => {
-                    this.updateNodesList();
-                }, 5000);
-            });
-    }
+    //             this.interval = window.setInterval(() => {
+    //                 this.updateNodesList();
+    //             }, 5000);
+    //         });
+    // }
 
     updateNodesList() {
         this.pageResults.items.forEach(x => {
