@@ -37,7 +37,7 @@ export class AddressIndexComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this.addresses.getAddressesPage(page, 16)
+        this.addresses.getAddressesPage(page, 32)
             .subscribe(x => {
                 this.activeAddresses = x.json() as PageResultModel<AddressListModel>;
                 console.log(this.activeAddresses);

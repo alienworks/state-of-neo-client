@@ -1,20 +1,19 @@
 import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
-import { AssetListModel } from '../../models';
+import { BlockListModel } from '../../models/block.models';
 import { PageResultModel } from '../../models';
 
 @Component({
-    selector: 'app-asset-list-table',
-    templateUrl: `./asset-list-table.component.html`
+    selector: 'app-block-list-table',
+    templateUrl: `./block-list-table.component.html`
 })
-export class AssetListTableComponent implements OnChanges {
-    @Input() model: PageResultModel<AssetListModel>;
-    @Input() name: string;
-    @Output() emitModelUpdate: EventEmitter<any> = new EventEmitter();
+export class BlockListTableComponent implements OnChanges {
+    @Input() model: PageResultModel<BlockListModel>;
+    @Output() emitGetPage: EventEmitter<any> = new EventEmitter();
+
     isLoading: boolean;
 
     get paginateConfig() {
         return {
-            id: 'server-' + this.name,
             itemsPerPage: this.model ? this.model.metaData.PageSize : 32,
             currentPage: this.model ? this.model.metaData.PageNumber : 1,
             totalItems: this.model ? this.model.metaData.TotalItemCount : 1
@@ -31,8 +30,8 @@ export class AssetListTableComponent implements OnChanges {
         }
     }
 
-    getPage(page: number) {
+    update(page: number) {
         this.isLoading = true;
-        this.emitModelUpdate.emit(page);
+        this.emitGetPage.emit(page);
     }
 }

@@ -2,10 +2,10 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { PageResultModel, BaseTxModel, TxTypeEnum } from '../../models';
 
 @Component({
-    selector: 'app-tx-list-table',
-    templateUrl: `./tx-list-table.component.html`
+    selector: 'app-tx-small-list',
+    templateUrl: `./tx-small-list.component.html`
 })
-export class TxListTableComponent implements OnChanges {
+export class TxSmallListComponent implements OnChanges {
     @Input() model: PageResultModel<BaseTxModel>;
     @Output() emitGetPage: EventEmitter<any> = new EventEmitter();
     isLoading: boolean;
@@ -14,18 +14,18 @@ export class TxListTableComponent implements OnChanges {
         this.isLoading = true;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.model.currentValue) {
-            this.isLoading = false;
-        }
-    }
-
-    update(page: number) {
+    getPage(page: number) {
         this.isLoading = true;
         this.emitGetPage.emit(page);
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.model) {
+            this.isLoading = false;
+        }
+    }
+
     getTypeName(index: number): string {
         return TxTypeEnum[index];
-    }
+    }    
 }

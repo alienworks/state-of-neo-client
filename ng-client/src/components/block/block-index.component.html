@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="panel-body">            
+            <div style="margin-top: 20px">
+                <app-block-list-table [model]="blocks" (emitGetPage)="getPage($event)"></app-block-list-table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left: 10px">
+        <div class="panel-body">
+            <div>
+                <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Average Time'" [title]="'Average time per block'"></app-date-bar-chart>
+            </div>
+            <div style="margin-top: 50px">
+                <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Average Size'" [title]="'Average size for block'"></app-date-bar-chart>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,25 +7,32 @@ import { ConsensusNodeModel } from '../../models';
     templateUrl: './consensus-nodes-list.component.html'
 })
 export class ConsensusNodesListComponent implements OnInit {
-    nodes: ConsensusNodeModel[];
+    consensusNodes: ConsensusNodeModel[];
+    candidateNodes: ConsensusNodeModel[];
 
     constructor(private _nodeService: NodeService) { }
 
     ngOnInit(): void {
         this._nodeService.getConsensusNodes()
             .subscribe(data => {
-                this.nodes = data.json() as ConsensusNodeModel[];
+                var nodes = data.json() as ConsensusNodeModel[];
+                this.consensusNodes = nodes.filter(x => x.Active);
+                this.candidateNodes = nodes.filter(x => !x.Active);
+
+                this.consensusNodes.sort((x, y) => {
+                    if (x.Info.Organization == 'NEO Foundation') {
+                        return 1;
+                    }
+
+                    return x.Info.Organization > y.Info.Organization ? 1 : -1;
+                });
             }, err => {
                 console.error(`get consensus error`, err);
             });
     }
 
-    getConsensusOnly() {
-        return this.nodes.filter(x => x.Active);
-    }
-
     showNodeInfo(pk: string): void {
-        const node = this.nodes.find(x => x.PublicKey === pk);
+        const node = this.consensusNodes.find(x => x.PublicKey === pk);
         node.ShowInfo = !node.ShowInfo;
     }
 
@@ -52,15 +59,16 @@ export class ConsensusNodesListComponent implements OnInit {
         if (type === 'twitter') {
             result = `https://twitter.com/${value}`;
         }
-        if (type === 'facebook') {
+        else if (type === 'facebook') {
             result = `https://www.facebook.com/${value}`;
         }
-        if (type === 'weibo') {
+        else if (type === 'weibo') {
             result = `https://weibo.com/${value}`;
         }
-        if (type === 'github') {
+        else if (type === 'github') {
             result = `https://github.com/${value}`;
         }
+
         return result;
     }
 }

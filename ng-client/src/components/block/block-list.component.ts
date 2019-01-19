@@ -28,6 +28,7 @@ export class BlockListComponent implements OnInit {
         private statsSrService: StatsSignalRService) { }
 
     ngOnInit(): void {
+        this.state.changeRoute('blocks');
         this.getPage(1);
 
         this.statsSrService.registerAdditionalEvent('header', this.headerUpdate);
@@ -46,8 +47,6 @@ export class BlockListComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this.state.changeRoute('blocks');
-
         this.isLoading = true;
         this.blockService.getBlocksPage(page, 32)
             .subscribe(x => {

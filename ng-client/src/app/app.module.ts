@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 // Components
 import { AppComponent } from './app.component';
@@ -14,14 +15,14 @@ import { HomeComponent } from 'src/components/home.component';
 
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
-  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent
+  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent
 } from '../components/tx';
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
   LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent
 } from '../components/common';
-import { BlockDetailsComponent, BlockListComponent } from '../components/block';
+import { BlockDetailsComponent, BlockListComponent, BlockListTableComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
 import {
   AddressIndexComponent, AddressDetailsComponent, AddressListComponent,
@@ -44,6 +45,7 @@ import {
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { TimestampFormatPipe } from '../core/pipes';
 import { NotificationsIndexComponent, NotificationsListComponent } from 'src/components/notification';
+import { BlockIndexComponent } from '../components/block/block-index.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
-    BlockListComponent, BlockDetailsComponent,
+    BlockListComponent, BlockDetailsComponent, BlockIndexComponent, BlockListTableComponent,
     // Address
     AddressListComponent, AddressDetailsComponent, AddressIndexComponent, AddressListItemComponent,
     AddressTopComponent, AddressListTableComponent, AddressTopTableComponent,
@@ -64,7 +66,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
-    TxListTableComponent, TxUnconfirmedComponent,
+    TxListTableComponent, SmallTxListTableComponent, TxUnconfirmedComponent, TxSmallListComponent,
     // Notifications
     NotificationsIndexComponent, NotificationsListComponent,
     // Libs
@@ -78,6 +80,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
     HttpModule,
     FormsModule,
     NgxPaginationModule,
+    SelectDropDownModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
@@ -87,7 +90,7 @@ import { NotificationsIndexComponent, NotificationsListComponent } from 'src/com
       { path: 'address/:address', component: AddressDetailsComponent },
       { path: 'asset', component: AssetIndexComponent },
       { path: 'asset/:hash', component: AssetDetailsComponent },
-      { path: 'blocks', component: BlockListComponent },
+      { path: 'blocks', component: BlockIndexComponent },
       { path: 'block/:index', component: BlockDetailsComponent },
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },

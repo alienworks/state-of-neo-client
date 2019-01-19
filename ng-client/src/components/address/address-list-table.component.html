@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <th class="col-md-4">Address</th>
-                    <th class="col-md-2">Last Transaction</th>
+                    <th class="col-md-2">Last</th>
                     <th class="col-md-2">Transactions</th>
                     <th class="col-md-2">Balances</th>
                     <th class="col-md-2"></th>
@@ -14,7 +14,7 @@
             <tbody>
                 <tr *ngFor="let address of pageResults.items | paginate: { id: 'server', itemsPerPage: pageResults.metaData.pageSize, currentPage: pageResults.metaData.pageNumber, totalItems: pageResults.metaData.totalItemCount }">
                     <td>
-                        <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active"><strong>{{address.address}}</strong></a>
+                        <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">{{address.address}}</a>
                     </td>
                     <td title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}"><i class="fas fa-clock"></i>&nbsp;{{address.lastTransactionTime | timeAgo}}</td>
                     <td><i class="fas fa-handshake"></i>&nbsp;{{address.transactions | number}}</td>

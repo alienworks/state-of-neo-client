@@ -1,55 +1,34 @@
-<div class="row no-margin padding-10">
-    <div class="row no-margin padding-5 panel-body word-wraped">
-        <div class="col-md-12 no-margin no-padding text-center">
-            <h3 class="bold">
-                CONSENSUS NODES 
-                <span *ngIf="nodes && nodes.length > 0">
-                    {{getConsensusOnly().length}} / {{nodes.length}}
-                </span>
+
+    <div class="panel-body">
+        <div class="col-md-12 text-center">
+            <h3 class="bold text-grey">
+                CONSENSUS
             </h3>
         </div>
-        <div class="row no-margin no-padding" *ngIf="nodes && nodes.length > 0">
-            <div class="col-md-12 margin-2 padding-2 border-box-shadow match" *ngFor="let node of nodes">
-                <div class="col-md-12 no-padding">
-                    <span *ngIf="node.Active" class="text-success bold">Consensus node</span>
-                    <span *ngIf="!node.Active" class="text-primary bold">Candidate node</span>
-                    <br>
-                    <strong>{{node.PublicKey}}</strong>
-                    <br>
-                    <span>
-                        <a (click)="showNodeInfo(node.PublicKey)" *ngIf="node.Info">
-                            <i class="fas fa-arrow-alt-circle-down" *ngIf="!node.ShowInfo"></i>
-                            <i class="fas fa-arrow-alt-circle-up" *ngIf="node.ShowInfo"></i>
-                        </a>
-                    </span>
+        <div *ngIf="consensusNodes && consensusNodes.length > 0">
+            <div *ngFor="let node of consensusNodes">
+                <div class="col-md-6 no-padding">
+                    <figure class="margin-bottom-10">
+                        <img class="img-responsive" src="{{getLogo(node.Info.Logo)}}" alt="{{node.Info.Organization}}">
+                    </figure>
+                    <h6 class="progress-head" style="margin-bottom: 10px;">Votes: <span>{{node.Votes}}</span></h6>
+                    <p *ngIf="node.Info?.SocialAccount">
+                        <span class="padding-2" *ngFor="let socialLink of getSocialLinks(node.Info.SocialAccount)">
+                            <a href="{{socialLink.value}}" target="blank">
+                                <i class="fab fa-{{socialLink.type}}" style="font-size: 1.5em; margin-right: 5px;"></i>
+                            </a>
+                        </span>
+                    </p>
                 </div>
-                <div class="col-md-12 row no-margin padding-2" *ngIf="node.Info && node.ShowInfo">
-                    <div class="col-md-4 custom-vcenter">
-                        <img src="{{getLogo(node.Info.Logo)}}" class="img img-responsive" alt="">
-                    </div>
-                    <div class="col-md-8 text-left">
-                        <h4>
-                            <strong>
-                                <a href="{{node.Info.Website}}">
-                                    {{node.Info.Organization}}
-                                </a>
-                            </strong>
-                        </h4>
-                        <p><strong>Votes: </strong>{{node.Votes}}</p>
-                        <p>
-                            {{node.Info.Summary}}
-                        </p>
-                        <p *ngIf="node.Info.SocialAccount">
-                            <span class="padding-2" *ngFor="let socialLink of getSocialLinks(node.Info.SocialAccount)">
-                                <a href="{{socialLink.value}}" target="blank">
-                                    <i class="fab fa-{{socialLink.type}}" style="font-size: 2em; margin-right: 5px;"></i>
-                                </a>
-                            </span>
-                        </p>
-                    </div>
+                <div class="col-md-6" style="padding-right: 0 !important">
+                    <h3 class="text-black" style="margin-bottom: 15px !important">{{node.Info.Organization}}</h3>
+                    <p class="size-12" style=" text-align: justify; text-justify: inter-word; margin-bottom: 15px">{{node.Info.Summary}}</p>
+                </div>
+                <div class="col-md-12 no-padding" style="word-break: break-all">
+                    <strong>{{node.PublicKey}}</strong>
+                    <hr class="half-margins" style="margin-top: 10px; margin-bottom: 10px">
                 </div>
             </div>
         </div>
-        <app-loader *ngIf="!(nodes && nodes.length > 0)"></app-loader>
+        <app-loader *ngIf="!(consensusNodes && consensusNodes.length > 0)"></app-loader>
     </div>
-</div>

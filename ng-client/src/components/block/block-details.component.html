@@ -1,73 +1,75 @@
-<div class="row no-margin no-padding">
-    <div class="col-md-8 row no-margin panel-body" *ngIf="!isLoading">
-        <div class="col-md-12 col-sm-12 col-xs-12 row no-margin word-wraped" *ngIf="block">
-            <div class="col-md-12 row no-margin padding-10 custom-vcenter text-center">
-                <div class="col-md-1 col-sm-1 col-xs-1 stat">
-                    <a routerLink="/block/{{block.height + 1}}" style="margin-right: 10px;">
-                        <i class="fas fa-angle-double-left"></i>
-                    </a>
-                </div>
-                <div class="col-md-10 col-sm-10 col-xs-10">
-                    <h3 class="no-margin text-grey"><strong>{{block.hash}}</strong></h3>
-                </div>
-                <div class="col-md-1 col-sm-1 col-xs-1 stat">
-                    <a routerLink="/block/{{block.height - 1}}">
-                        <i class="fas fa-angle-double-right"></i>
-                    </a>
-                </div>
+<div class="row">
+    <div class="col-md-8" *ngIf="!isLoading">
+        <div class="panel-body" *ngIf="block">
+            <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3"></th>
+                            <th class="col-md-9"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Height</td>
+                            <td>{{block.height | number}}</td>    
+                        </tr>
+                        <tr>
+                            <td>Hash</td>
+                            <td style="word-break: break-all">{{block.hash}}</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td>{{block.finalizedAt | timeAgo}} ({{block.finalizedAt | date:'dd-MMM-yyyy hh:mm:ss'}} UTC)</td>
+                        </tr>
+                        <tr>
+                            <td>Time</td>
+                            <td><i class="fa fa-hourglass-end spin"></i> {{block.secondsFromPreviousBlock}} s</td>
+                        </tr>
+                        <tr>
+                            <td>Size</td>
+                            <td><i class="fas fa-microchip"></i> {{block.size | number}} Bytes</td>
+                        </tr>
+                        <tr>
+                            <td>Transactions</td>
+                            <td><i class="fas fa-handshake"></i> {{block.transactionsCount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Validator</td>
+                            <td>{{block.validator}}</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Block</td>
+                            <td style="word-break: break-all"><a routerLink="/block/{{block.height + 1}}">{{block.previousBlockHash}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Next Validator</td>
+                            <td>{{block.nextConsensusNodeAddress}}</td>
+                        </tr>
+                        <tr>
+                            <td>Collected Fees</td>
+                            <td>{{block.collectedFees | number: '1.0-8'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-12 row no-margin padding-10 stat">
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <i class="fas fa-cube"></i> #{{block.height | number}}
+            <div class="col-xl-4 col-md-12 col-sm-12 col-xs-12">
+                <h5 class="text-grey margin-bottom-10">
+                    <strong>Bytecode Invocation Script</strong>
+                </h5>
+                <div style="word-break: break-all">
+                    {{block.invocationScript}}
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <i class="fa fa-hourglass-end spin"></i> {{block.secondsFromPreviousBlock}} s
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <i class="fas fa-microchip"></i> {{block.size | number}} Bytes
-                </div>
+                <h5 class="text-grey margin-top-20 margin-bottom-10">
+                    <strong>Bytecode Verification Script</strong>
+                </h5>
+                <div style="word-break: break-all">
+                    {{block.verificationScript}}
+                </div>    
             </div>
-            <div class="col-md-12 row no-margin padding-10 stat">
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <i class="far fa-check-circle"></i> Validator
-                    <br>
-                    <a routerLink="/address/{{block.validatorAddress}}" >{{block.validator}}</a>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <i class="fab fa-connectdevelop"></i> Consensus Data
-                    <br>
-                    {{block.consensusData}}
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-4" title="{{block.finalizedAt | timeAgo}}">
-                    <i class="fas fa-stamp"></i> Timestamp
-                    <br>
-                    {{block.timestamp}}
-                </div>
-            </div>
-            <div class="col-md-12 row no-margi padding-5">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <h3 class="text-grey">
-                        <strong>Bytecode Invocation Script</strong>
-                    </h3>
-                    <div class="border-box-shadow padding-5">
-                        {{block.invocationScript}}
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <h3 class="text-grey">
-                        <strong>Bytecode Verification Script</strong>
-                    </h3>
-                    <div class="border-box-shadow padding-5">
-                        {{block.verificationScript}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 padding-10 row no-margin text-center" *ngIf="!block">
-            No such block found
         </div>
     </div>
-    <div class="col-md-4 col-sm-12 col-xs-12 row no-margin">
+    <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="panel panel-default" *ngIf="transactions">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
@@ -76,7 +78,7 @@
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-small-list>
             </div>
         </div>
         <app-loader *ngIf="!transactions"></app-loader>

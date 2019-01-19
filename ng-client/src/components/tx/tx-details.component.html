@@ -1,90 +1,95 @@
-<div class="row col-md-12 no-margin padding-10">
-    <div class="row col-md-8 no-margin padding-10 panel-body stat" *ngIf="!isLoading">
-        <div class="col-md-12 padding-10" style="margin-bottom: 20px; font-size: 1.15em">
-            <strong>{{tx.hash}}</strong>
-            <span class="pull-right"><app-tx-icon [type]="tx?.type"></app-tx-icon> {{getTypeName()}}</span>
-        </div>
-        <div class="row no-margin padding-10">
-            <div class="col-md-4 no-padding">
-                <div class="margin-bot-10">
-                    <a routerLink="/block/{{tx?.blockHeight}}">
-                        <i class="fas fa-cube"></i> #{{tx.blockHeight | number}}
-                    </a>
+<div class="row">
+    <div class="col-md-8" *ngIf="!isLoading">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">Hash</td>
+                                <td class="col-md-9" style="word-break: break-all">{{tx.hash}}</td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>{{getTypeName()}}</td>
+                            </tr>
+                            <tr>
+                                <td>Block</td>
+                                <td><a routerLink="/block/{{tx?.blockHeight}}">{{tx.blockHeight | number}}</a></td>
+                            </tr>
+                            <tr>
+                                <td>Time</td>
+                                <td>{{tx.finalizedAt | timeAgo}}</td>
+                            </tr>
+                            <tr>
+                                <td>Confirmed</td>
+                                <td>Success</td>
+                            </tr>
+                            <tr>
+                                <td>Size</td>
+                                <td>{{tx.size | number}} Bytes</td>
+                            </tr>
+                            <tr>
+                                <td>Version</td>
+                                <td>{{tx.version}}</td>
+                            </tr>
+                            <tr>
+                                <td>System Fee</td>
+                                <td>{{tx.systemFee | number: '1.0-8'}}</td>
+                            </tr>
+                            <tr>
+                                <td>Network Fee</td>
+                                <td>{{tx.networkFee | number: '1.0-8'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="margin-bot-10">
-                    <i class="fas fa-microchip"></i> {{tx.size | number}} Bytes
-                </div>
-                <div class="margin-bot-10" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                    <i class="fas fa-clock"></i> {{tx.finalizedAt | timeAgo}}
-                </div>
-                <div class="margin-bot-10">
-                    <i class="fas fa-code-branch"></i> Version {{tx.version}}     
-                </div>
-                <div class="margin-bot-10">
-                    <i class="fas fa-book"></i> {{tx.systemFee | number: '1.0-8'}} GAS System Fee
-                </div>
-                <div class="margin-bot-10">
-                    <i class="fas fa-briefcase"></i> {{tx.networkFee | number: '1.0-8'}} GAS Network Fee
-                </div>
-            </div>
-            <div class="col-md-8 no-padding">
-                <h4 class="text-center" *ngIf="outgoingAssets.length">GLOBAL ASSETS</h4>
-                <div *ngFor="let asset of incomingAssets" style="margin-top: 8px">
-                    <strong *ngIf="asset.fromAddress">
-                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #d9534f; color: white; display: inline-block;">
-                            <strong>SENT</strong>&nbsp;<span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
-                        </div>&nbsp;
-                        <small style="font-size: 0.65em">
-                            <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
-                        </small>
-                    </strong>
-                </div>
-                <br *ngIf="outgoingAssets.length">
-                <div class="text-right" *ngFor="let asset of outgoingAssets" style="margin-top: 8px">
-                    <strong *ngIf="asset.toAddress">
-                        <small style="font-size: 0.65em">
-                            <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
-                        </small>&nbsp;
-                        <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
-                            <strong>RECEIVED</strong>&nbsp;<span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{getAssetName(asset.assetType)}}</strong>
-                        </div>
-                    </strong>
-                </div>
-                <h4 *ngIf="tokenAssets.length" class="text-center " style="margin-top: 40px">NEP-5 TOKENS</h4>
-                <div class="text-right" *ngFor="let asset of tokenAssets" style="margin-top: 8px">
-                    <div class="row">
-                        <div class="col-md-5 text-left">
-                            <div *ngIf="asset.fromAddress">
-                                <strong>
-                                    <small style="font-size: 0.65em">
-                                        <a routerLink="/address/{{asset.fromAddress}}">{{asset.fromAddress}}</a>
-                                    </small>
-                                </strong>
-                            </div>
-                            <div *ngIf="!asset.fromAddress">
-                                MINTED
-                            </div>
-                        </div>
-                        <div class="col-md-2 text-center">
-                            <div class="text-center" style="font-size: 0.5em; border-radius: 2px; padding: 4px 6px; background: #5cb85c; color: white; display: inline-block;">
-                                <span class="badge">{{asset.amount | number: '1.0-8'}}</span>&nbsp;<strong>{{asset.name}}</strong>
-                            </div>
-                        </div>
-                        <div class="col-md-5">                         
-                            <div *ngIf="asset.toAddress">
-                                <strong>
-                                    <small style="font-size: 0.65em">
-                                        <a routerLink="/address/{{asset.toAddress}}">{{asset.toAddress}}</a>
-                                    </small>
-                                </strong>
-                            </div>
-                        </div>
+                <div class="col-md-6">
+                    <div class="pricing-table" *ngIf="incomingAssets.length">
+                        <div class="plan-title">Incoming assets</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of incomingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.fromAddress}}">
+                                    <span *ngIf="asset.fromAddress" class="text-left">{{asset.fromAddress}}</span>
+                                </a>&nbsp;
+                                <strong>sent {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-table" *ngIf="outgoingAssets.length">
+                        <div class="plan-title">Outgoing assets</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of outgoingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.toAddress}}">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
+                                </a>&nbsp;
+                                <strong>received {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pricing-table" *ngIf="tokenAssets.length">
+                        <div class="plan-title">NEP-5 TOKENS</div>
+                        <ul class="plan-features">
+                            <li *ngFor="let asset of tokenAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                                <a routerLink="/address/{{asset.fromAddress}}" *ngIf="asset.fromAddress">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.fromAddress}}</span>
+                                </a>
+                                <div>
+                                    <strong>
+                                        <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to                                    
+                                    </strong>
+                                </div>
+                                <a routerLink="/address/{{asset.toAddress}}">
+                                    <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
-    <div class="col-md-4 no-margin">
+    <div class="col-md-4">
         <div class="panel panel-default" *ngIf="tx?.witnesses && tx?.witnesses.length">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
