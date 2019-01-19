@@ -39,8 +39,7 @@ export class AddressIndexComponent implements OnInit {
     getPage(page: number): void {
         this.addresses.getAddressesPage(page, 32)
             .subscribe(x => {
-                this.activeAddresses = x.json() as PageResultModel<AddressListModel>;
-                console.log(this.activeAddresses);
+                this.activeAddresses = x;
             }, err => {
                 console.log(err);
             });
@@ -49,16 +48,14 @@ export class AddressIndexComponent implements OnInit {
     getTopAddresses() {
         this.addresses.getTopNeo()
             .subscribe(x => {
-                this.topNeo = x.json() as AddressListModel[];
-                console.log(this.topNeo);
+                this.topNeo = x;
             }, err => {
                 console.log(err);
             });
 
         this.addresses.getTopGas()
             .subscribe(x => {
-                this.topGas = x.json() as AddressListModel[];
-                console.log(this.topGas);
+                this.topGas = x;
             }, err => {
                 console.log(err);
             });

@@ -26,7 +26,7 @@ export class TxDetailsComponent implements OnInit {
 
         this.txService.get(this.hash)
             .subscribe(x => {
-                this.tx = x.json() as TxDetailsModel;
+                this.tx = x;
                 this.isLoading = false;
                 console.log(this.tx);
             }, err => {
@@ -47,7 +47,10 @@ export class TxDetailsComponent implements OnInit {
     }
 
     getTypeName(): string {
-        if (this.tx === null) { return ''; }
+        if (this.tx === null) {
+             return ''; 
+        }
+
         return TxTypeEnum[this.tx.type].substr(0, TxTypeEnum[this.tx.type].indexOf('Transaction'));
     }
 

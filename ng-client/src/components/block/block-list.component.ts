@@ -50,7 +50,7 @@ export class BlockListComponent implements OnInit {
         this.isLoading = true;
         this.blockService.getBlocksPage(page, 32)
             .subscribe(x => {
-                this.pageResults = x.json() as PageResultModel<BlockListModel>;
+                this.pageResults = x;
                 this.isLoading = false;
             }, err => {
                 console.log(err);

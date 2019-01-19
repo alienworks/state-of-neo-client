@@ -46,7 +46,7 @@ export class BlockIndexComponent implements OnInit {
     getPage(page: number): void {
         this.blockService.getBlocksPage(page, 32)
             .subscribe(x => {
-                this.blocks = x.json() as PageResultModel<BlockListModel>;
+                this.blocks = x;
             }, err => {
                 console.log(err);
             });

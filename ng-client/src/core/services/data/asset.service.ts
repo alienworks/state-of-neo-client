@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
 import { NodeService } from './node.service';
-import { Http } from '@angular/http';
+// import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import * as CONST from '../../common/constants';
-import { AssetTypeEnum, UnitOfTime } from '../../../models';
+import { AssetTypeEnum, UnitOfTime, PageResultModel, AssetListModel, AssetDetailsModel } from '../../../models';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class AssetService {
     public bestBlockChanged = new EventEmitter<number>();
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private _nodeService: NodeService) {
         this.subscribeToEvents();
     }
@@ -29,15 +30,15 @@ export class AssetService {
     }
 
     public getAssetsPage(page: number = 1, pageSize: number = 10, global: boolean = true) {
-        return this.http.get(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
+        return this.http.get<PageResultModel<AssetListModel>>(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
     }
 
     public getAssetAddressCount(hash: string, unitOfTime: UnitOfTime = UnitOfTime.None, active: boolean = false) {
-        return this.http.get(`${CONST.BASE_URL}/api/assets/addressescount?hash=${hash}&unitOfTime=${unitOfTime}&active=${active}`);
+        return this.http.get<number>(`${CONST.BASE_URL}/api/assets/addressescount?hash=${hash}&unitOfTime=${unitOfTime}&active=${active}`);
     }
 
     public getAsset(hash: string) {
-        return this.http.get(`${CONST.BASE_URL}/api/assets/get/${hash}`);
+        return this.http.get<AssetDetailsModel>(`${CONST.BASE_URL}/api/assets/get/${hash}`);
     }
 
     public getChartData() {
@@ -47,10 +48,10 @@ export class AssetService {
     }
 
     public getAssetCount(type: AssetTypeEnum[]) {
-        return this.http.post(`${CONST.BASE_URL}/api/assets/count`, type);
+        return this.http.post<number>(`${CONST.BASE_URL}/api/assets/count`, type);
     }
 
     public getAssetTxCount(type: AssetTypeEnum[]) {
-        return this.http.post(`${CONST.BASE_URL}/api/assets/txcount`, type);
+        return this.http.post<number>(`${CONST.BASE_URL}/api/assets/txcount`, type);
     }
 }

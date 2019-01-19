@@ -95,15 +95,15 @@ export class FooterStatsComponent implements OnInit {
         this.addressCountUpdate.subscribe((x: number) => this.totalAddressCount = x);
 
         this.addrService.getActive()
-            .subscribe(x => this.lastActiveAddresses = x.json() as number);
+            .subscribe(x => this.lastActiveAddresses = x);
         this.addrService.getCreatedLast(UnitOfTime.Day)
-            .subscribe(x => this.addrCreatedLastDay = x.json() as number);
+            .subscribe(x => this.addrCreatedLastDay = x);
         this.addrService.getCreatedLast(UnitOfTime.Month)
-            .subscribe(x => this.addrCreatedLastMonth = x.json() as number);
+            .subscribe(x => this.addrCreatedLastMonth = x);
 
         // Assets
         this.assetService.getAssetCount([AssetTypeEnum.NEP5])
-            .subscribe(x => this.nep5Assets = x.json() as number);
+            .subscribe(x => this.nep5Assets = x);
 
         this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
         this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x);

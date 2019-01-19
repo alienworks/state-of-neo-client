@@ -18,7 +18,7 @@ export class AddressTopComponent implements OnInit {
         this.isLoadingNeo = true;
         this.addressService.getTopNeo()
             .subscribe(x => {
-                this.topNeo = x.json() as AddressListModel[];
+                this.topNeo = x;
                 this.isLoadingNeo = false;
                 console.log(this.topNeo);
             }, err => {
@@ -29,7 +29,7 @@ export class AddressTopComponent implements OnInit {
         this.isLoadingGas = true;
         this.addressService.getTopGas()
             .subscribe(x => {
-                this.topGas = x.json() as AddressListModel[];
+                this.topGas = x;
                 this.isLoadingGas = false;
                 console.log(this.topGas);
             }, err => {

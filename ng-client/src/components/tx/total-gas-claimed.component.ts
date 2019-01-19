@@ -17,7 +17,7 @@ export class TotalGasClaimedComponent implements OnInit {
 
         this.txService.getTotalGasClaimed()
             .subscribe(x => {
-                this.total = x.json() as number;
+                this.total = x;
                 this.isLoading = false;
             }, err => console.log(err));
 

@@ -26,10 +26,13 @@ export class BlockDetailsComponent implements OnInit {
         this.isLoading = true;
         this.route.params.subscribe(params => {
             this.index = +params['index'];
-            if (params['index'].startsWith('0x')) { this.index = params['index']; }
+            if (params['index'].startsWith('0x')) { 
+                this.index = params['index']; 
+            }
+
             this.blockService.getBlock(this.index)
                 .subscribe(x => {
-                    this.block = x.json() as BlockDetailsModel;
+                    this.block = x;
                     this.getTransactionsPage(1);
                     this.isLoading = false;
                 });
@@ -39,7 +42,7 @@ export class BlockDetailsComponent implements OnInit {
     getTransactionsPage(page: number): void {
         this.txService.getPage(page, 16, this.block.hash)
             .subscribe(x => {
-                this.transactions = x.json() as PageResultModel<BaseTxModel>;
+                this.transactions = x;
             }, err => {
                 console.log(err);
             });

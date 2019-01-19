@@ -24,7 +24,7 @@ export class AssetListComponent implements OnInit {
         this.isLoading = true;
         this.assets.getAssetsPage(page, 32)
             .subscribe(x => {
-                this.pageResults = x.json() as PageResultModel<AssetListModel>;
+                this.pageResults = x;
                 this.isLoading = false;
                 console.log(this.pageResults);
             }, err => {

@@ -1,11 +1,14 @@
+
+import {throwError as observableThrowError,  Observable, BehaviorSubject } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Response, RequestOptions, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { RpcService } from './node-rpc.service';
 
 import * as CONST from '../../common/constants';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { BaseBlockModel } from 'src/models/block.models';
+import { ConsensusNodeModel } from '../../../models';
 import { GetPeersModel, Peer } from 'src/models';
 
 @Injectable({
@@ -29,17 +32,18 @@ export class NodeService {
     private firstTimeGettingPeers = true;
     private bestBlock: number;
 
-    constructor(private http: Http,
+    constructor(
+        private http: HttpClient,
         private nodeRpcService: RpcService) {
 
         this.http.get(`${CONST.BASE_URL}/api/node/get`)
             .subscribe(res => {
-                this.updateAllNodes(res.json());
+                this.updateAllNodes(res);
                 this.updateNodesData();
 
                 this.getServerCachedPeers()
                     .subscribe(x => {
-                        const serverpeers = x.json() as Peer[];
+                        const serverpeers = x;
                         serverpeers.forEach(p => this.checkOrAddTo(p, this.peers));
 
                         this.updateNodesData();
@@ -61,8 +65,11 @@ export class NodeService {
 
     public getBlockStamp(input: string | number) {
         let type = 'hash';
-        if (typeof input === 'number') { type = 'height'; }
-        return this.http.get(`${CONST.BASE_URL}/api/block/stampby${type}/${input}`);
+        if (typeof input === 'number') {
+             type = 'height'; 
+        }
+
+        return this.http.get<BaseBlockModel>(`${CONST.BASE_URL}/api/block/stampby${type}/${input}`);
     }
 
     public getWsState(node: any) {
@@ -70,7 +77,7 @@ export class NodeService {
 
         this.http.get(`${CONST.BASE_URL}/api/node/wsstatus/${node.id}`)
             .subscribe(res => {
-                const wsstatus = res.json() as boolean;
+                const wsstatus = res as boolean;
                 node.wsStatus = wsstatus;
             }, err => {
                 node.wsStatus = false;
@@ -82,30 +89,30 @@ export class NodeService {
         return this.allNodes;
     }
 
-    public getNode(id: number): Observable<Response> {
+    public getNode(id: number): Observable<Object> {
         return this.http.get(`${CONST.BASE_URL}/api/node/get/${id}`);
     }
 
-    public getServerCachedPeers(): Observable<Response> {
-        return this.http.get(`${CONST.BASE_URL}/api/node/GetRPCNodes`);
+    public getServerCachedPeers(): Observable<Peer[]> {
+        return this.http.get<Peer[]>(`${CONST.BASE_URL}/api/node/GetRPCNodes`);
     }
 
-    public sendPeersToServerCache(): Observable<Response> {
+    public sendPeersToServerCache(): Observable<Object> {
         const now = new Date();
         if (!this.firstTimeGettingPeers && (now.getTime() - this.updatedServerPeersOn.getTime()) < CONST.HourInMs) {
-            throw Observable.throw(`Not time for rpc peers send`);
+            throw observableThrowError(`Not time for rpc peers send`);
         }
 
         return this.http.post(`${CONST.BASE_URL}/api/node/addrpcnodes`, Array.from(this.peers.values()));
     }
 
-    protected getJsonHeaders(): RequestOptions {
+    protected getJsonHeaders(): any {
         const headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        return new RequestOptions({ headers: headers });
+        return { headers: headers };
     }
 
-    public getConsensusNodes(): Observable<Response> {
-        return this.http.get(`${CONST.BASE_URL}/api/node/consensus`, this.getJsonHeaders());
+    public getConsensusNodes(): Observable<any> {
+        return this.http.get<ConsensusNodeModel[]>(`${CONST.BASE_URL}/api/node/consensus`, this.getJsonHeaders());
     }
 
     public getNodesApi(page: number = 1, pageSize: number = 99999): any {
@@ -188,13 +195,13 @@ export class NodeService {
 
         this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
-                const json = res.json();
+                const json = res;
 
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.peers = parseInt(json.result.connected.length);
 
-                    const model = res.json().result as GetPeersModel;
+                    const model = res.result as GetPeersModel;
 
                     this.handlePeers(model);
                     x.connectedPeers = model.connected;
@@ -237,7 +244,7 @@ export class NodeService {
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
 
-                const json = res.json();
+                const json = res;
                 if (json.result) {
                     // tslint:disable-next-line:radix
                     x.connected = parseInt(json.result);
@@ -262,7 +269,7 @@ export class NodeService {
                 x.lastResponseTime = now;
                 if (x.type === 'RPC') x.latency = Math.round((now - requestStart));
 
-                const response = res.json();
+                const response = res;
                 x.version = response.result.useragent;
                 x.rpcEnabled = true;
             }, err => {
@@ -287,7 +294,7 @@ export class NodeService {
 
                 this.http.get(`${node.url}get_height`)
                     .subscribe((x: any) => {
-                        const response = x.json();
+                        const response = x;
                         const now = Date.now();
 
                         node.latency = Math.round((now - requestStart));
@@ -299,7 +306,7 @@ export class NodeService {
                         if (getStamp && this.bestBlock > node.blockCount) {
                             this.getBlockStamp(+node.blockCount)
                                 .subscribe(y => {
-                                    const block = y.json() as BaseBlockModel;
+                                    const block = y;
                                     node.lastBlockStamp = block.timestamp;
                                 }, err => console.log(err));
                         }
@@ -316,7 +323,7 @@ export class NodeService {
 
                 this.http.get(`${node.url}version`)
                     .subscribe((x: any) => {
-                        const response = x.json();
+                        const response = x;
                         const now = Date.now();
 
                         node.latency = Math.round((now - requestStart));
@@ -327,7 +334,7 @@ export class NodeService {
                         if (getStamp && this.bestBlock > node.blockCount) {
                             this.getBlockStamp(+node.blockCount)
                                 .subscribe(y => {
-                                    const block = y.json() as BaseBlockModel;
+                                    const block = y;
                                     node.lastBlockStamp = block.timestamp;
                                 }, err => console.log(err));
                         }
@@ -345,7 +352,7 @@ export class NodeService {
                 .subscribe(res => {
                     const now = Date.now();
                     node.lastResponseTime = now;
-                    const response = res.json();
+                    const response = res;
                     node.lastBlockCount = node.blockCount;
                     node.blockCount = response.result;
                     node.rpcEnabled = true;
@@ -355,7 +362,7 @@ export class NodeService {
                     if (getStamp && this.bestBlock > node.blockCount) {
                         this.getBlockStamp(+node.blockCount)
                             .subscribe(y => {
-                                const block = y.json() as BaseBlockModel;
+                                const block = y;
                                 node.lastBlockStamp = block.timestamp;
                             }, err => console.log(err));
                     }
@@ -374,7 +381,7 @@ export class NodeService {
         this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
                 x.lastResponseTime = Date.now();
-                const response = res.json();
+                const response = res;
                 x.pendingTransactions = response.result;
             });
     }

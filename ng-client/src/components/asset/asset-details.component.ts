@@ -35,19 +35,19 @@ export class AssetDetailsComponent implements OnInit {
             this.assets.getAsset(this.hash)
                 .subscribe(x => {
                     this.isLoading = false;
-                    this.model = x.json() as AssetDetailsModel;
+                    this.model = x;
 
                     this.assets.getAssetAddressCount(this.hash).subscribe(count => {
-                        this.totalAddressCount = count.json() as number;
+                        this.totalAddressCount = count;
                     }, err => console.log(err));
 
                     this.assets.getAssetAddressCount(this.hash, UnitOfTime.Month, true).subscribe(count => {
-                        this.activeAddressesLastMonth = count.json() as number;
+                        this.activeAddressesLastMonth = count;
                         console.log('activeAddressesLastMonth = ' + this.activeAddressesLastMonth);
                     }, err => console.log(err));
 
                     this.assets.getAssetAddressCount(this.hash, UnitOfTime.Month).subscribe(count => {
-                        this.newAddressesLastMonth = count.json() as number;
+                        this.newAddressesLastMonth = count;
                     }, err => console.log(err));
 
                     console.log(this.model);
@@ -58,7 +58,7 @@ export class AssetDetailsComponent implements OnInit {
     getTransactionsPage(page: number) {
         this.txService.getPage(page, 10, null, null, this.hash)
             .subscribe(x => {
-                this.transactions = x.json() as PageResultModel<BaseTxModel>;
+                this.transactions = x;
             }, err => {
                 console.log(err);
             });

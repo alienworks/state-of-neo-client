@@ -1,10 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
 import { NodeService } from './node.service';
-import { Http } from '@angular/http';
+// import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import * as CONST from '../../common/constants';
 import { UnitOfTime } from '../../../models';
+import { AddressListModel } from '../../../models';
+import { PageResultModel } from '../../../models';
+import { AddressDetailsModel } from '../../../models';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +18,7 @@ export class AddressService {
     public bestBlockChanged = new EventEmitter<number>();
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private _nodeService: NodeService) {
         this.subscribeToEvents();
     }
@@ -29,19 +33,19 @@ export class AddressService {
     }
 
     public getAddressesPage(page: number = 1, pageSize: number = 10) {
-        return this.http.get(`${CONST.BASE_URL}/api/address/list?page=${page}&pageSize=${pageSize}`);
+        return this.http.get<PageResultModel<AddressListModel>>(`${CONST.BASE_URL}/api/address/list?page=${page}&pageSize=${pageSize}`);
     }
 
     public getAddress(address: string) {
-        return this.http.get(`${CONST.BASE_URL}/api/address/get/${address}`);
+        return this.http.get<AddressDetailsModel>(`${CONST.BASE_URL}/api/address/get/${address}`);
     }
 
     public getTopNeo() {
-        return this.http.get(`${CONST.BASE_URL}/api/address/topneo`);
+        return this.http.get<AddressListModel[]>(`${CONST.BASE_URL}/api/address/topneo`);
     }
 
     public getTopGas() {
-        return this.http.get(`${CONST.BASE_URL}/api/address/topgas`);
+        return this.http.get<AddressListModel[]>(`${CONST.BASE_URL}/api/address/topgas`);
     }
 
     public getChartData() {
@@ -51,7 +55,7 @@ export class AddressService {
     }
 
     public getActive() {
-        return this.http.get(`${CONST.BASE_URL}/api/address/active`);
+        return this.http.get<number>(`${CONST.BASE_URL}/api/address/active`);
     }
 
     public getCreated() {
@@ -59,6 +63,6 @@ export class AddressService {
     }
 
     public getCreatedLast(unit: UnitOfTime) {
-        return this.http.get(`${CONST.BASE_URL}/api/address/createdlast?unit=${unit}`);
+        return this.http.get<number>(`${CONST.BASE_URL}/api/address/createdlast?unit=${unit}`);
     }
 }

@@ -33,7 +33,7 @@ export class HorizontalBarChartComponent implements OnInit {
         this.isLoading = true;
         this.chartService.getChart(this.endpoint, null)
             .subscribe(x => {
-                this.chartData = (x.json() as ChartDataItemModel[]).reverse();
+                this.chartData = x.reverse();
                 this.initChart();
             }, err => console.log(err));
     }

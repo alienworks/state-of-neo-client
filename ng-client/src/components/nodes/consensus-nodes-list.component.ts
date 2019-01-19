@@ -15,7 +15,8 @@ export class ConsensusNodesListComponent implements OnInit {
     ngOnInit(): void {
         this._nodeService.getConsensusNodes()
             .subscribe(data => {
-                var nodes = data.json() as ConsensusNodeModel[];
+                console.log(data)
+                var nodes = data;
                 this.consensusNodes = nodes.filter(x => x.Active);
                 this.candidateNodes = nodes.filter(x => !x.Active);
 

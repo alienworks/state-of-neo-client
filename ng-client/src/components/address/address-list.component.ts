@@ -22,7 +22,7 @@ export class AddressListComponent implements OnInit {
         this.isLoading = true;
         this.addressService.getAddressesPage(page, this.pageSize)
             .subscribe(x => {
-                this.pageResults = x.json() as PageResultModel<AddressListModel>;
+                this.pageResults = x;
                 this.isLoading = false;
                 console.log(this.pageResults);
             }, err => {

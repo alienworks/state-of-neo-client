@@ -48,7 +48,7 @@ export class HeaderStatsComponent {
 
         this.nodeService.getConsensusNodes()
             .subscribe(x => {
-                const result = x.json() as Array<any>;
+                const result = x as Array<any>;
                 this.consensusNodes = result.filter((y: any) => y.Active).length;
             });
     }

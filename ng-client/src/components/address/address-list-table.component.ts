@@ -7,9 +7,9 @@ import { PageResultModel } from '../../models';
     templateUrl: `./address-list-table.component.html`
 })
 export class AddressListTableComponent implements OnChanges  {
-    isLoading: boolean;
     @Input() pageResults: PageResultModel<AddressListModel>;
     @Output() emitGetPage: EventEmitter<any> = new EventEmitter();
+    isLoading: boolean;
 
     constructor() {
         this.isLoading = true;

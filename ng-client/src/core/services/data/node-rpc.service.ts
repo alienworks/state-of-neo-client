@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class RpcService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
-    callMethod(address: string, method: string, version: number, params: any[] = []) {
+    callMethod(address: string, method: string, version: number, params: any[] = []): any {
         const request = {
             'jsonrpc': '2.0',
             'method': method,

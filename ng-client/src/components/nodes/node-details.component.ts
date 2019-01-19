@@ -49,7 +49,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
 
         this._nodeService.getNode(this.id)
             .subscribe((node: any) => {
-                this.node = node.json();
+                this.node = node;
                 this.updateNodeInfo();
 
                 if (this.node.firstRuntime) {

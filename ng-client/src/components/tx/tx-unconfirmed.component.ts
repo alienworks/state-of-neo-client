@@ -32,8 +32,8 @@ export class TxUnconfirmedComponent implements OnInit {
                     this.findTx(node.successUrl);
                 } else {
                     this.nodeService.getNode(nodeid)
-                        .subscribe(x => {
-                            this.findTx(x.json().successUrl);
+                        .subscribe((x: any) => {
+                            this.findTx(x.successUrl);
                         });
                 }
             } else {
@@ -46,8 +46,8 @@ export class TxUnconfirmedComponent implements OnInit {
         this.url = url;
         this.txService.getUnconfirmed(this.url, this.hash)
             .subscribe(y => {
-                this.raw = y.json();
-                this.tx = y.json().result as TxUnconfirmedDetailsViewModel;
+                this.raw = y;
+                this.tx = y.result as TxUnconfirmedDetailsViewModel;
                 this.prevTxAssets();
                 console.log('unconfirmed', this.tx);
             }, err => console.log(err));
@@ -59,7 +59,7 @@ export class TxUnconfirmedComponent implements OnInit {
             for (const input of this.tx.vin) {
                 this.txService.getAssets(input.txid)
                     .subscribe(x => {
-                        const assets = x.json() as TxAssetsModel;
+                        const assets = x;
                         const outasset = this.tx.vout.find(y => y.n === input.vout);
                         this.prevtx.push(assets.globalOutgoingAssets.find(y => y.toAddress === outasset.address));
                     }, err => console.log(`err`, err));

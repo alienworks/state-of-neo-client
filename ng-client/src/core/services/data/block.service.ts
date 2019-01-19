@@ -2,6 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 
 import { NodeService } from './node.service';
 import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { BlockDetailsModel, BlockListModel } from '../../../models/block.models';
+import { PageResultModel } from '../../../models/';
 
 import * as CONST from '../../common/constants';
 
@@ -13,7 +16,7 @@ export class BlockService {
     public bestBlockChanged = new EventEmitter<number>();
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private _nodeService: NodeService) {
         this.subscribeToEvents();
     }
@@ -28,13 +31,16 @@ export class BlockService {
     }
 
     public getBlocksPage(page: number = 1, pageSize: number = 10) {
-        return this.http.get(`${CONST.BASE_URL}/api/block/list?page=${page}&pageSize=${pageSize}`);
+        return this.http.get<PageResultModel<BlockListModel>>(`${CONST.BASE_URL}/api/block/list?page=${page}&pageSize=${pageSize}`);
     }
 
     public getBlock(input: string | number) {
         let type = 'byhash';
-        if (typeof input === 'number') { type = 'byheight'; }
-        return this.http.get(`${CONST.BASE_URL}/api/block/${type}/${input}`);
+        if (typeof input === 'number') { 
+            type = 'byheight'; 
+        }
+
+        return this.http.get<BlockDetailsModel>(`${CONST.BASE_URL}/api/block/${type}/${input}`);
     }
 
     public getAverageTxCount() {

@@ -7,7 +7,7 @@
                     <!-- <app-map></app-map> -->
                 </div>
                 <app-footer-stats></app-footer-stats>
-            </div>
+            </div> 
         </div>
     </div>
     <div class="col-sm-6" style="padding-left: 5px; padding-right: 0">
@@ -15,6 +15,7 @@
             <div class="panel-body" *ngIf="allNodes">
                 <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card>
             </div>
+            <div></div>
             <app-loader *ngIf="!allNodes" [title]="'Nodes'"></app-loader>
         </div>
     </div>

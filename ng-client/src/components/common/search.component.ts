@@ -25,7 +25,7 @@ export class SearchComponent {
     search() {
         this.searchService.find(this.input)
             .subscribe(res => {
-                const response = res.json() as any;
+                const response = res;
 
                 if (response.route && response.value) {
                     this.router.navigate([`${response.route}/${response.value}`]);

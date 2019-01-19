@@ -32,7 +32,7 @@ export class AddressDetailsComponent implements OnInit {
             this.addressService.getAddress(this.address)
                 .subscribe(x => {
                     this.isLoading = false;
-                    this.addressDetails = x.json() as AddressDetailsModel;
+                    this.addressDetails = x;
 
                     console.log(this.addressDetails);
                 });
@@ -72,7 +72,7 @@ export class AddressDetailsComponent implements OnInit {
     getTransactionsPage(page: number): void {
         this.txService.getPage(page, 10, null, this.address)
             .subscribe(x => {
-                this.transactions = x.json() as PageResultModel<BaseTxModel>;
+                this.transactions = x;
             }, err => {
                 console.log(err);
             });
