@@ -4,7 +4,7 @@
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
-                    <th class="col-md-4">Public Address</th>
+                    <th class="col-md-4">Address</th>
                     <th class="col-md-2">Last</th>
                     <th class="col-md-2">Transactions</th>
                     <th class="col-md-2">Balances</th>
@@ -13,9 +13,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let address of model">
-                    <td>
-                        <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">{{address.address}}</a>
-                    </td>
+                    <td><a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">{{address.address}}</a></td>
                     <td title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{address.lastTransactionTime | timeAgo}}</td>
                     <td>{{address.transactions | number}}</td>
                     <td class="text-success">{{getBalance(address.balances, 'NEO') | number}}</td>

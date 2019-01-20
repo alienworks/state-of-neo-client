@@ -25,13 +25,11 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="panel-body">
+        <div class="panel-body" style="padding-top: 30px">
             <div class="text-center" *ngIf="claimedGas">
-                <h3 class="no-margin warm-cyan">
-                    <strong>
-                        TOTAL GAS CLAIMED {{claimedGas | number: '1.0-8'}}
-                    </strong>
-                </h3>
+                <h4 class="no-margin warm-cyan">
+                    <strong>TOTAL GAS CLAIMED {{claimedGas | number: '1.0-8'}}</strong>
+                </h4>
             </div>
             <app-loader *ngIf="!claimedGas"></app-loader>
             <div style="margin-top: 40px">
