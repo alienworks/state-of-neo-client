@@ -7,7 +7,8 @@ import { PageResultModel, BaseTxModel } from '../../models';
 import { TxService } from '../../core/services/data';
 
 @Component({
-    templateUrl: `./block-details.component.html`
+    templateUrl: `./block-details.component.html`,
+    styleUrls: ['./block-details.component.css']
 })
 export class BlockDetailsComponent implements OnInit {
     index: string | number;

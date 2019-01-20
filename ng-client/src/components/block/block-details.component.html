@@ -3,16 +3,10 @@
         <div class="panel-body" *ngIf="block">
             <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12">
                 <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="col-md-3"></th>
-                            <th class="col-md-9"></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr>
-                            <td>Height</td>
-                            <td>{{block.height | number}}</td>    
+                            <td class="col-md-3">Height</td>
+                            <td class="col-md-9">{{block.height | number}}</td>    
                         </tr>
                         <tr>
                             <td>Hash</td>
@@ -24,23 +18,23 @@
                         </tr>
                         <tr>
                             <td>Time</td>
-                            <td><i class="fa fa-hourglass-end spin"></i> {{block.secondsFromPreviousBlock}} s</td>
+                            <td>{{block.secondsFromPreviousBlock}} s</td>
                         </tr>
                         <tr>
                             <td>Size</td>
-                            <td><i class="fas fa-microchip"></i> {{block.size | number}} Bytes</td>
+                            <td>{{block.size | number}} bytes</td>
                         </tr>
                         <tr>
                             <td>Transactions</td>
-                            <td><i class="fas fa-handshake"></i> {{block.transactionsCount}}</td>
+                            <td>{{block.transactionsCount}}</td>
                         </tr>
                         <tr>
                             <td>Validator</td>
                             <td>{{block.validator}}</td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="block.height > 0">
                             <td>Parent Block</td>
-                            <td style="word-break: break-all"><a routerLink="/block/{{block.height + 1}}">{{block.previousBlockHash}}</a></td>
+                            <td style="word-break: break-all"><a routerLink="/block/{{block.height - 1}}">{{block.previousBlockHash}}</a></td>
                         </tr>
                         <tr>
                             <td>Next Validator</td>
