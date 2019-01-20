@@ -12,6 +12,8 @@ export class TxAssetsModel extends BaseTxModel {
     assets: TransactedAssetModel[];
     globalIncomingAssets: TransactedAssetModel[];
     globalOutgoingAssets: TransactedAssetModel[];
+    sentAssets: TransactedAssetModel[];
+    receivedAssets: TransactedAssetModel[];
 }
 
 export class TxDetailsModel extends TxAssetsModel {

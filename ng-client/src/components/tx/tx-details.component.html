@@ -2,7 +2,7 @@
     <div class="col-md-8" *ngIf="!isLoading">
         <div class="panel">
             <div class="panel-body">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <table class="table">
                         <tbody>
                             <tr>
@@ -44,30 +44,30 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
-                    <div class="pricing-table" *ngIf="incomingAssets.length">
+                <div class="col-md-12">
+                    <div class="pricing-table" *ngIf="tx.sentAssets && tx.sentAssets.length">
                         <div class="plan-title">Incoming assets</div>
                         <ul class="plan-features">
-                            <li *ngFor="let asset of incomingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                            <li *ngFor="let asset of tx.sentAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
                                 <a routerLink="/address/{{asset.fromAddress}}">
                                     <span *ngIf="asset.fromAddress" class="text-left">{{asset.fromAddress}}</span>
                                 </a>&nbsp;
-                                <strong>sent {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                                sent {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}
                             </li>
                         </ul>
                     </div>
-                    <div class="pricing-table" *ngIf="outgoingAssets.length">
+                    <div class="pricing-table" *ngIf="tx.receivedAssets && tx.receivedAssets.length">
                         <div class="plan-title">Outgoing assets</div>
                         <ul class="plan-features">
-                            <li *ngFor="let asset of outgoingAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
+                            <li *ngFor="let asset of tx.receivedAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
                                 <a routerLink="/address/{{asset.toAddress}}">
                                     <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
                                 </a>&nbsp;
-                                <strong>received {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}</strong>
+                                received {{asset.amount | number: '1.0-8'}} {{getAssetName(asset.assetType)}}
                             </li>
                         </ul>
                     </div>
-                    <div class="pricing-table" *ngIf="tokenAssets.length">
+                    <div class="pricing-table" *ngIf="tokenAssets && tokenAssets.length">
                         <div class="plan-title">NEP-5 TOKENS</div>
                         <ul class="plan-features">
                             <li *ngFor="let asset of tokenAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
@@ -75,9 +75,9 @@
                                     <span *ngIf="asset.toAddress" class="text-left">{{asset.fromAddress}}</span>
                                 </a>
                                 <div>
-                                    <strong>
+                                    
                                         <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to                                    
-                                    </strong>
+                                    
                                 </div>
                                 <a routerLink="/address/{{asset.toAddress}}">
                                     <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
