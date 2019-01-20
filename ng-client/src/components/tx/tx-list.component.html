@@ -9,9 +9,7 @@
             <app-tx-icon [type]="tx.type" title="{{getTypeName(tx.type)}}"></app-tx-icon>
         </div>
         <div class="col-md-8 col-sm-8 col-xs-8">
-            <a routerLink="/transaction/{{tx?.hash}}">
-                {{tx.hash}}
-            </a>
+            <a routerLink="/transaction/{{tx?.hash}}">{{tx.hash}}</a>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3 italic">
             <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{tx.finalizedAt | timeAgo}}</div>

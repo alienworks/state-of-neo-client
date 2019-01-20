@@ -2,6 +2,7 @@
     <div class="col-md-8" *ngIf="!isLoading">
         <div class="panel-body" *ngIf="block">
             <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12">
+                <h5 class="text-grey margin-bottom-10 bold">General Information</h5>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -48,15 +49,11 @@
                 </table>
             </div>
             <div class="col-xl-4 col-md-12 col-sm-12 col-xs-12">
-                <h5 class="text-grey margin-bottom-10">
-                    <strong>Bytecode Invocation Script</strong>
-                </h5>
+                <h5 class="text-grey margin-bottom-10 bold">Bytecode Invocation Script</h5>
                 <div style="word-break: break-all">
                     {{block.invocationScript}}
                 </div>
-                <h5 class="text-grey margin-top-20 margin-bottom-10">
-                    <strong>Bytecode Verification Script</strong>
-                </h5>
+                <h5 class="text-grey margin-top-20 margin-bottom-10 bold">Bytecode Verification Script</h5>
                 <div style="word-break: break-all">
                     {{block.verificationScript}}
                 </div>    

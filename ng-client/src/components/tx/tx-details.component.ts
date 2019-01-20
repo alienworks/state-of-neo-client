@@ -5,7 +5,8 @@ import { CommonStateService } from '../../core/services';
 import { TxDetailsModel, TxTypeEnum, AssetTypeEnum } from '../../models';
 
 @Component({
-    templateUrl: `./tx-details.component.html`
+    templateUrl: `./tx-details.component.html`,
+    styleUrls: ['./tx-details.component.css']
 })
 export class TxDetailsComponent implements OnInit {
     hash: string;

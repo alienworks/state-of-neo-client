@@ -3,6 +3,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="col-md-12">
+                    <h5 class="text-grey margin-bottom-10 bold">General Information</h5>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -45,8 +46,9 @@
                     </table>
                 </div>
                 <div class="col-md-12">
+                    <h5 class="text-grey margin-bottom-10 bold">Transacted Assets</h5>
                     <div class="pricing-table" *ngIf="tx.sentAssets && tx.sentAssets.length">
-                        <div class="plan-title">Incoming assets</div>
+                        <div class="plan-title">Incoming</div>
                         <ul class="plan-features">
                             <li *ngFor="let asset of tx.sentAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
                                 <a routerLink="/address/{{asset.fromAddress}}">
@@ -57,7 +59,7 @@
                         </ul>
                     </div>
                     <div class="pricing-table" *ngIf="tx.receivedAssets && tx.receivedAssets.length">
-                        <div class="plan-title">Outgoing assets</div>
+                        <div class="plan-title">Outgoing</div>
                         <ul class="plan-features">
                             <li *ngFor="let asset of tx.receivedAssets" style="text-align: left; padding-left: 10px; padding-right: 10px">
                                 <a routerLink="/address/{{asset.toAddress}}">

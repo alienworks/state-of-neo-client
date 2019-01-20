@@ -1,69 +1,58 @@
-<div class="row col-md-12 no-margin no-padding">
-    <div class="col-sm-8" style="padding-left: 0">
+<div class="row">
+    <div class="col-sm-8">
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey">
                 <div class="col-md-8">              
-                    <h3 class="text-grey" style="margin-top: 0; font-weight: bold; ">{{addressDetails.address}}</h3>
-                    <div class="row">
-                        <div class="col-md-offset-1 col-md-4">
-                            <div class="box success">
-                                <div class="box-title noborder">
-                                    <h4>NEO {{getBalance('NEO') | number}}</h4>
-                                    <small class="block"></small>
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-offset-2 col-md-4">
-                            <div class="box success">
-                                <div class="box-title noborder">
-                                    <h4>GAS {{getBalance('GAS') | number:'1.0-8'}}</h4>
-                                    <small class="block"></small>
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h4 class="text-grey" style="margin-top: 0; ">{{addressDetails.address}}</h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">NEO</td>
+                                <td class="col-md-8">{{getBalance('NEO') | number}}</td>
+                            </tr>
+                            <tr>
+                                <td>GAS</td>
+                                <td>{{getBalance('GAS') | number:'1.0-8'}}</td>
+                            </tr>
+                            <tr>
+                                <td>Transactions</td>
+                                <td>{{transactions.metaData.totalItemCount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <div class="row" style="margin-top: 30px" *ngIf="tokens && tokens.length">
-                        <div class="col-md-offset-1 col-md-10">
-                            <h4 class="text-grey " style="margin-bottom: 5px"><strong>NEP-5 Tokens</strong></h4>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-8">Name</th>
-                                        <th class="col-md-4">Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let token of tokens">
-                                        <td>
-                                            <strong>{{token.name}}</strong>
-                                        </td>
-                                        <td>
-                                            {{token.balance | number: '1.0-8'}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div *ngIf="tokens && tokens.length">
+                        <h5>Tokens</h5>
+                        <table class="table" *ngIf="tokens && tokens.length">
+                            <tbody>
+                                <tr *ngFor="let token of tokens">
+                                    <td class="col-md-4">{{token.name}}</td>
+                                    <td class="col-md-8">{{token.balance | number: '1.0-8'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <app-pie-chart *ngIf="address" [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount"></app-pie-chart>
+                    <app-pie-chart *ngIf="address" 
+                        [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" 
+                        [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount">
+                    </app-pie-chart>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-4" style="padding-left: 5px; padding-right: 0">
+    <div class="col-sm-4">
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
-                <h2 class="panel-title elipsis">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Transactions
+                <h2 class="panel-title elipsis text-grey">
+                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> 
+                    TRANSACTIONS 
+                    <span class="bold" style="color: #676a6c !important" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-small-list>
             </div>
         </div>
     </div>

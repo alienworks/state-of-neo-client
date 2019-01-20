@@ -149,3 +149,11 @@ i.fas {
 .ngx-pagination {
     padding-left: 0 !important;
 }
+
+select, input {
+    height: 34px !important;
+}
+
+select {
+    padding: 5px !important;
+}

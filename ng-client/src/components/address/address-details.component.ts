@@ -15,7 +15,8 @@ export class AddressDetailsComponent implements OnInit {
     addressDetails: AddressDetailsModel = new AddressDetailsModel();
     transactions: PageResultModel<BaseTxModel>;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private addressService: AddressService,
         private state: CommonStateService,
         private txService: TxService) { }

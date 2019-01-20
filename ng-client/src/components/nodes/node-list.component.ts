@@ -71,7 +71,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
         this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
 
         $('.ngx-dropdown-container > .ngx-dropdown-button').css('border', '2px solid #E5E7E9');
-        $('.ngx-dropdown-container > .ngx-dropdown-button').css('height', '40px');
+        $('.ngx-dropdown-container > .ngx-dropdown-button').css('height', '34px');
     }
 
     ngOnDestroy(): void {
