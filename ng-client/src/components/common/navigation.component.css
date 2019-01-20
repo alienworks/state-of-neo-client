@@ -26,3 +26,7 @@
 .navbar-nav a {
     font-weight: bolder;
 }
+
+.navbar-default .navbar-nav>li>a {
+    color: white !important;
+}
