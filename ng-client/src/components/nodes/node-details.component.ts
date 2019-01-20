@@ -21,7 +21,8 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     edges: any;
     network: any;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private _nodeService: NodeService,
         private state: CommonStateService,
         private _blockService: BlockService) {
@@ -66,6 +67,10 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
         } else {
             return 'text-danger';
         }
+    }
+
+    getPercentBarTitle() {
+
     }
 
     updateNodeInfo() {

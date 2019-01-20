@@ -21,5 +21,5 @@ export class PercentBarComponent implements OnInit {
     updatePercent(): void {
         const calculatedPercent = (100 * this.current) / this.total;
         this.percent = parseFloat((Math.round(calculatedPercent * 100) / 100).toFixed(1));
-    }
+    }  
 }
