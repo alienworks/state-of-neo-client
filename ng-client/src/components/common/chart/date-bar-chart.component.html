@@ -3,7 +3,7 @@
         <h3 class="bold uppercase no-margin text-grey text-center" style="white-space: nowrap">{{label}}</h3>
     </div>
     <div class="col-md-12 row padding-10 no-margin custom-vcenter">
-        <div class="col-md-8 col-sm-9 col-xs-12 padding-5 stat" *ngIf="timeTypes">
+        <div class="col-md-8 col-sm-9 col-xs-12 padding-5" style="font-size: 18px" *ngIf="timeTypes">
             <span *ngFor="let type of timeTypes">
                 <a (click)="changeTimeType(type.key)">
                     <i class="far fa-square" *ngIf="!type.selected"></i>
@@ -13,10 +13,7 @@
             </span>
         </div>
         <div class="col-md-4 col-sm-3 col-xs-12 padding-5 text-right" *ngIf="periodOptions">
-            <span class="stat">
-                Last
-            </span>
-            <select class="padding-5" (change)="onDropdownChange($event)">
+            <select class="padding-5" (change)="onDropdownChange($event)" [(ngModel)]="filter.endPeriod">
                 <option value="{{period.key}}" *ngFor="let period of periodOptions">{{period.key}}</option>
             </select>
         </div>
