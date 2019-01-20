@@ -3,7 +3,8 @@ import { PageResultModel, BaseTxModel, TxTypeEnum } from '../../models';
 
 @Component({
     selector: 'app-tx-small-list',
-    templateUrl: `./tx-small-list.component.html`
+    templateUrl: `./tx-small-list.component.html`,
+    styleUrls: ['./tx-small-list.component.css']
 })
 export class TxSmallListComponent implements OnChanges {
     @Input() model: PageResultModel<BaseTxModel>;

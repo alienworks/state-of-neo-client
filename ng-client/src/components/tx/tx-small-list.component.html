@@ -1,23 +1,23 @@
 <div *ngIf="!isLoading" class="row col-md-12 no-margin padding-10 panel-body word-wraped">
     <table class="table">
-        <thead>
+        <!-- <thead>
             <tr>
                 <th class="col-md-2">Type</th>
                 <th class="col-md-7">Hash</th>
                 <th class="col-md-3">Age</th>
             </tr>
-        </thead>
+        </thead> -->
         <tbody>
             <tr *ngFor="let tx of model?.items | paginate: { id: 'server', itemsPerPage: model?.metaData.pageSize, currentPage: model?.metaData.pageNumber, totalItems: model?.metaData.totalItemCount }">
-                <td  title="{{getTypeName(tx.type)}}">
+                <td class="col-md-2" title="{{getTypeName(tx.type)}}">
                     <app-tx-icon [type]="tx.type"></app-tx-icon>
                 </td>
-                <td>
+                <td class="col-md-7">
                     <a routerLink="/transaction/{{tx?.hash}}">
                         {{ (tx.hash.length>22)? (tx.hash | slice:0:20)+'..':(tx.hash) }}
                     </a>
                 </td>
-                <td title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                <td class="col-md-3" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
                     {{tx.finalizedAt | timeAgo}}
                 </td>
             </tr>

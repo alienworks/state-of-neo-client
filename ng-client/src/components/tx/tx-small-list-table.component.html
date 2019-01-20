@@ -1,31 +1,18 @@
 <app-loader *ngIf="isLoading"></app-loader>
 <table class="table table-responsive table-hover" *ngIf="!isLoading">
-    <thead>
-        <tr>
-            <th class="col-md-2">
-                Type
-            </th>
-            <th class="col-md-7">
-                Hash
-            </th>
-            <th class="col-md-3">
-                Time
-            </th>
-        </tr>
-    </thead>
     <tbody>
         <tr *ngFor="let tx of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
-            <td style="padding-top: 5px; padding-bottom: 5px">
+            <td class="col-md-2" style="padding-top: 5px; padding-bottom: 5px">
                 <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="font-size: 1.6em">
                     <app-tx-icon [type]="tx.type"></app-tx-icon>
                 </a>
             </td>
-            <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px">
+            <td  class="col-md-7" style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px">
                 <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active">
                     {{ (tx.hash.length>16)? (tx.hash | slice:0:16)+'..':(tx.hash) }}
                 </a>
             </td>
-            <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
+            <td class="col-md-3" style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
                 <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{tx.finalizedAt | timeAgo}}</div>
             </td>
         </tr>
