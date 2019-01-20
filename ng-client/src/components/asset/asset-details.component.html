@@ -1,116 +1,120 @@
-<div class="row col-md-12 no-margin no-padding">
-    <div class="col-sm-8" style="padding-left: 0">
+<div class="row">
+    <div class="col-sm-8">
         <div class="panel panel-default" style="margin-bottom: 0">
-            <div class="panel-body text-grey">
-                <h3 class="text-grey" style="margin-top: 0; font-weight: bold; " [style.margin-bottom]="model.symbol ? 0 : '32px'">
-                    {{model.name}} <span *ngIf="model.symbol" class="text-grey" style="margin-top: 0; ">({{model.symbol}})</span>
-                </h3>
-                <h3 class="text-grey" [style.margin-bottom]="model.symbol ? 0 : '32px'">{{model.hash}}</h3>
-
-                <div class="col-md-12 no-margin stat padding-10" *ngIf="!isLoading">
-                    <div class="col-md-6 col-sm-6 col-xs-12 no-padding">
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-coins"></i> Total supply
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                <span style="float: right">
-                                    {{model.totalSupply | number}}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-address-book"></i> Total addresses
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                <span *ngIf="totalAddressCount">
-                                    {{totalAddressCount | number}}
-                                </span>
-                                <app-loader *ngIf="!totalAddressCount" [iconScale]="1"></app-loader>
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-exchange-alt"></i> Active addresses last month
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                <span *ngIf="activeAddressesLastMonth || activeAddressesLastMonth >= 0">
-                                    {{activeAddressesLastMonth.toString()}}
-                                </span>
-                                <app-loader *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0" [iconScale]="1"></app-loader>
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-folder-plus"></i> New addresses last month
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                <span *ngIf="newAddressesLastMonth">
-                                    {{newAddressesLastMonth | number}}
-                                </span>
-                                <app-loader *ngIf="!newAddressesLastMonth" [iconScale]="1"></app-loader>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 no-padding">
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-cog"></i> Decimals
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                {{model.decimals | number}}
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-handshake"></i> Total transactions
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                {{model.transactionsCount | number}}
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-align-center"></i> Average transacted value
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                {{model.averageTransactedValue | number}}
-                            </div>
-                        </div>
-                        <div class="col-md-12 no-padding no-margin">
-                            <div class="col-md-8 col-sm-8 col-xs-6">
-                                <i class="fas fa-divide"></i> Median transacted value
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-6 text-right">
-                                {{model.medianTransactedValue | number}}
-                            </div>
-                        </div>
-                    </div>
+            <div class="panel-body text-grey" style="padding-top: 20px">
+                <div class="col-md-12">
+                    <h4 class="text-grey" style="margin-top: 0; font-weight: bold; " [style.margin-bottom]="model.symbol ? 0 : '32px'">
+                        {{model.name}}
+                        <span *ngIf="model.symbol" class="text-grey" style="margin-top: 0; ">({{model.symbol}})</span>
+                    </h4>
+                    <h5 class="text-grey" style="margin-bottom: 32px">{{model.hash}}</h5>
                 </div>
-                <div class="col-md-12 margin-top-10 stat no-padding" *ngIf="isLoading">
+                <div class="col-md-6" *ngIf="!isLoading">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Total supply
+                                </td>
+                                <td>
+                                    {{model.totalSupply | number}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total addresses
+                                </td>
+                                <td>
+                                    <span *ngIf="totalAddressCount">
+                                        {{totalAddressCount | number}}
+                                    </span>
+                                    <app-loader *ngIf="!totalAddressCount" [iconScale]="1"></app-loader>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Active addresses last month
+                                </td>
+                                <td>
+                                    <span *ngIf="activeAddressesLastMonth || activeAddressesLastMonth >= 0">
+                                        {{activeAddressesLastMonth.toString()}}
+                                    </span>
+                                    <app-loader *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0" [iconScale]="1"></app-loader>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    New addresses last month
+                                </td>
+                                <td>
+                                    <span *ngIf="newAddressesLastMonth">
+                                        {{newAddressesLastMonth | number}}
+                                    </span>
+                                    <app-loader *ngIf="!newAddressesLastMonth" [iconScale]="1"></app-loader>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6" *ngIf="!isLoading">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Decimals</td>
+                                <td>{{model.decimals | number}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total transactions</td>
+                                <td>{{model.transactionsCount | number}}</td>
+                            </tr>
+                            <tr>
+                                <td>Average transacted value</td>
+                                <td>{{model.averageTransactedValue | number}}</td>
+                            </tr>
+                            <tr>
+                                <td>Median transacted value</td>
+                                <td>{{model.medianTransactedValue | number}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" *ngIf="isLoading">
                     <app-loader></app-loader>
                 </div>
-                <div class="col-md-6">
-                    <app-date-bar-chart *ngIf="hash" [endpoint]="'address/assetchart?assetHash=' + hash" [label]="'Addresses'"
-                        [showLoader]="false"></app-date-bar-chart>
+                <div class="col-md-6 text-center" style="margin-top: 40px; margin-bottom: 10px">
+                    <div style="max-width: 350px; display: inline-block">
+                        <app-date-bar-chart *ngIf="hash" 
+                            [endpoint]="'address/assetchart?assetHash=' + hash" 
+                            [label]="'Addresses'"
+                            [showLoader]="false">
+                        </app-date-bar-chart>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <app-date-bar-chart *ngIf="hash" [endpoint]="'transactions/assetchart?assetHash=' + hash" [label]="'Transactions'"
-                        [showLoader]="false"></app-date-bar-chart>
+                <div class="col-md-6 text-center" style="margin-top: 40px; margin-bottom: 10px">
+                    <div style="max-width: 350px; display: inline-block">
+                        <app-date-bar-chart *ngIf="hash" 
+                            [endpoint]="'transactions/assetchart?assetHash=' + hash" 
+                            [label]="'Transactions'"
+                            [showLoader]="false">
+                        </app-date-bar-chart>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-4" style="padding-left: 5px; padding-right: 0">
+    <div class="col-sm-4">
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> Transactions
+                    Transactions
+                    <span class="bold" style="color: #676a6c !important" 
+                        *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">
+                        ({{transactions.metaData.totalItemCount | number}})
+                    </span>
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-list>
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-small-list>
             </div>
         </div>
     </div>

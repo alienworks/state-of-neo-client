@@ -6,7 +6,8 @@ import { BaseTxModel, AssetDetailsModel, UnitOfTime } from '../../models';
 import { PageResultModel } from '../../models';
 
 @Component({
-    templateUrl: `./asset-details.component.html`
+    templateUrl: `./asset-details.component.html`,
+    styleUrls: ['./asset-details.component.css']
 })
 export class AssetDetailsComponent implements OnInit {
     isLoading: boolean;
