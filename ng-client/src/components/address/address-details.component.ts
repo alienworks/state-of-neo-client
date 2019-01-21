@@ -34,8 +34,6 @@ export class AddressDetailsComponent implements OnInit {
                 .subscribe(x => {
                     this.isLoading = false;
                     this.addressDetails = x;
-
-                    console.log(this.addressDetails);
                 });
         });
     }
@@ -47,27 +45,13 @@ export class AddressDetailsComponent implements OnInit {
     get globalBalances() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS' && x.name !== 'GAS');
-    }
-
-    get nepFiveTokens() {
-        return this.addressDetails.balances == null
-            ? []
-            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS' && x.name !== 'GAS');
-    }
-
-    getBalance(name: string) {
-        return this.addressDetails.balances == null
-            ? 0
-            : this.addressDetails.balances.find(x => x.name === name) == null
-                ? 0
-                : this.addressDetails.balances.find(x => x.name === name).balance;
+            : this.addressDetails.balances.filter(x => x.assetType != 'NEP5');
     }
 
     get tokens() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.name !== 'NEO' && x.name !== 'GAS');
+            : this.addressDetails.balances.filter(x => x.assetType == 'NEP5');
     }
 
     getTransactionsPage(page: number): void {

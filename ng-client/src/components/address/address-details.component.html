@@ -8,13 +8,9 @@
                         <h5 class="bold text-grey" style="margin-bottom: 5px">Global Assets</h5>
                         <table class="table no-top-border-first-row">
                             <tbody>
-                                <tr>
-                                    <td class="col-md-4">NEO</td>
-                                    <td class="col-md-8">{{getBalance('NEO') | number}}</td>
-                                </tr>
-                                <tr>
-                                    <td>GAS</td>
-                                    <td>{{getBalance('GAS') | number:'1.0-8'}}</td>
+                                <tr *ngFor="let asset of globalBalances">
+                                    <td class="col-md-4">{{asset.name}}</td>
+                                    <td class="col-md-8">{{asset.balance | number: '1.0-8'}}</td>
                                 </tr>
                             </tbody>
                         </table>
