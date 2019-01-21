@@ -19,7 +19,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let sc of filteredModel | paginate: { itemsPerPage: 32, currentPage: page }">
-                    <td>{{sc.name}}</td>
+                    <td>
+                        <a routerLink="/contract/{{sc.hash}}" routerLinkActive="router-link-active">
+                            {{sc.name}}
+                        </a>
+                    </td>
                     <td>{{sc.author}}</td>
                     <td>{{sc.hash.length > 16 ? (sc.hash | slice:0:16) + '..': sc.hash }}</td>
                     <td>{{sc.version}}</td>

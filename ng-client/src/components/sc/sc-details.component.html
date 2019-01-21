@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-body">
+                <!-- <h4 class="text-grey" style="margin-top: 0; ">{{model.name}}</h4> -->
+                <h5 class="text-grey margin-bottom-10 bold">General Information</h5>
+                <table class="table no-top-border-first-row">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-2">Name</td>
+                            <td class="col-md-10">{{model.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Created</td>
+                            <td>{{model.timestamp | stampToDate | timeAgo}}</td>
+                        </tr>
+                        <tr>
+                            <td>Hash</td>
+                            <td>{{model.hash}}</td>
+                        </tr>
+                        <tr>
+                            <td>Version</td>
+                            <td>{{model.version}}</td>
+                        </tr>
+                        <tr>
+                            <td>Author</td>
+                            <td>{{model.author}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{model.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{model.description}}</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>{{model.hasStorage}}</td>
+                        </tr>
+                        <tr>
+                            <td>Dynamic invoke</td>
+                            <td>{{model.hasDynamicInvoke}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payable</td>
+                            <td>{{model.payable}}</td>
+                        </tr>
+                        <tr>
+                            <td>Parameters</td>
+                            <td>{{model.inputParameters}}</td>
+                        </tr>
+                        <tr>
+                            <td>Return type</td>
+                            <td>{{model.returnType}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis text-grey">NOTIFICATIONS</h2>
+            </header>
+            <div class="panel-body">
+
+            </div>
+        </div>
+
+    </div>
+</div>

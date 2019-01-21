@@ -16,7 +16,8 @@ export class BlockDetailsComponent implements OnInit {
     isLoading = true;
     transactions: PageResultModel<BaseTxModel>;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private state: CommonStateService,
         private blockService: BlockService,
         private txService: TxService) { }
