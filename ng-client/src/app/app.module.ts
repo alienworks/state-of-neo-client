@@ -13,6 +13,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
+import { HomeBlockComponent } from 'src/components/home-block.component';
+import { HomeTxComponent } from 'src/components/home-tx.component';
 
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
@@ -52,7 +54,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    HomeComponent, HomeBlockComponent, HomeTxComponent, 
     // Common
     MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,

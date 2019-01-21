@@ -6,69 +6,64 @@
             {{state.currentRoute | async}}
         </h3>        
     </div>
-    <div class="col-sm-2 col-xs-6 text-right" style="padding-right: 50px; ">
-        <div>
-            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
-                <div style="font-size: 14px; "><strong class="text-primary">CONSENSUS</strong>&nbsp;
-                    <span class="badge" style="background-color: #5cb85c">{{consensusNodes}}</span>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-1 col-xs-6 text-right" >
-        <div>
-            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
-                <div style="font-size: 14px; "><strong class="text-primary">RPC</strong>&nbsp;
-                    <span class="badge" style="background-color: #5cb85c">{{nodeService.rpcEnabledNodes | async}}</span>                    
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-1 col-xs-6 text-right" >
-        <div style="padding-right: 10px">
-            <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
-                <div style="font-size: 14px; "><strong class="text-primary">REST</strong>&nbsp;
-                    <span class="badge" style="background-color: #5cb85c">{{nodeService.restEnabledNodes | async}}</span>                    
-                </div> 
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-2 col-xs-6 text-right" style="padding-left: 25px; ">
-        <div>
-            <div id="last-block-stats" style="white-space: nowrap;">
+    <div class="col-md-10">
+        <div style="display: flex" class="pull-right">
+            <div>
+                <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
+                    <div style="font-size: 14px; ">
+                        <strong class="text-primary">CONSENSUS</strong>&nbsp;
+                        <span class="badge" style="background-color: #5cb85c">{{consensusNodes}}</span>
+                    </div>
+                </a>
+            </div>
+            <div style="margin-left: 20px">
+                <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
+                    <div style="font-size: 14px; ">
+                        <strong class="text-primary">RPC</strong>&nbsp;
+                        <span class="badge" style="background-color: #5cb85c">{{nodeService.rpcEnabledNodes | async}}</span>                    
+                    </div>
+                </a>
+            </div>
+            <div  style="margin-left: 20px">
+                <a routerLink="/nodes" routerLinkActive="router-link-active" class="text-primary">
+                    <div style="font-size: 14px; ">
+                        <strong class="text-primary">REST</strong>&nbsp;
+                        <span class="badge" style="background-color: #5cb85c">{{nodeService.restEnabledNodes | async}}</span>                    
+                    </div> 
+                </a>
+            </div>
+            <div style="margin-left: 35px">
                 <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary">
-                    <div style="font-size: 14px; "><strong>HEIGHT</strong>&nbsp;
+                    <div style="font-size: 14px; ">
+                        <strong>HEIGHT</strong>&nbsp;
                         <span class="badge" style="background-color: #5bc0de">{{headerInfo.height | number}}</span>                    
                     </div>
                 </a>
             </div>
+            <div style="margin-left: 20px">
+                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="{{headerInfo.timestamp | stampToDate | date}}">
+                    <div style="font-size: 14px; ">
+                        <strong>AGE</strong>&nbsp;
+                        <span class="badge" style="background-color: #5bc0de">{{secondsSinceLastBlock | number}} s</span>                     
+                    </div>
+                </a>
+            </div>
+            <div style="margin-left: 20px">
+                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Transactions">
+                    <div style="font-size: 14px; ">
+                        <strong>TX</strong>&nbsp;
+                        <span class="badge" style="background-color: #5bc0de">{{headerInfo.transactionCount | number}}</span> 
+                    </div>  
+                </a>
+            </div>
+            <div style="margin-left: 20px">
+                <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Bytes">
+                    <div style="font-size: 14px; ">
+                        <strong>SIZE</strong>&nbsp;
+                        <span class="badge" style="background-color: #5bc0de">{{headerInfo.size | number}}</span>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>    
-    <div class="col-sm-2 col-xs-6 text-right" >
-        <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="{{headerInfo.timestamp | stampToDate | date}}">
-                <div style="font-size: 14px; "><strong>AGE</strong>&nbsp;
-                    <span class="badge" style="background-color: #5bc0de">{{secondsSinceLastBlock | number}} s</span>                     
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class=" col-sm-1 col-xs-6 text-right" >
-        <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Transactions">
-                <div style="font-size: 14px; "><strong>TX</strong>&nbsp;
-                    <span class="badge" style="background-color: #5bc0de">{{headerInfo.transactionCount | number}}</span> 
-                </div>  
-            </a>
-        </div>
-    </div>
-    <div class="col-sm-1 col-xs-6 text-right" >
-        <div>
-            <a routerLink="/block/{{headerInfo.height}}" routerLinkActive="router-link-active" class="text-primary" title="Bytes">
-                <div style="font-size: 14px; "><strong>SIZE</strong>&nbsp;
-                    <span class="badge" style="background-color: #5bc0de">{{headerInfo.size | number}}</span>
-                </div>
-            </a>
-        </div>
-    </div>
+    </div>   
 </div>
