@@ -2,3 +2,13 @@ table td {
     padding-left: 0;
     padding-right: 0;
 }
+
+.map-container {
+    height: 500px;
+}
+
+@media only screen and (max-width: 1248px) {
+    .map-container {
+        height: 380px;
+    }
+}
