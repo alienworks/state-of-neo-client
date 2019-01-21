@@ -6,3 +6,4 @@ export * from './page.models';
 export * from './tx.models';
 export * from './chart.models';
 export * from './notification.models';
+export * from './sc.models';

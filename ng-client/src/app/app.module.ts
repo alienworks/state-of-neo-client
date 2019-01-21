@@ -32,11 +32,12 @@ import {
 import {
   AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent
 } from '../components/asset';
+import { SmartContractIndexComponent, SmartContractTableListComponent } from '../components/sc';
 
 // Services
 import { NetService, CommonStateService } from '../core/services';
 import {
-  RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService
+  RpcService, NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService, SmartContractService
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
@@ -65,6 +66,8 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     AddressTopComponent, AddressListTableComponent, AddressTopTableComponent,
     // Assets
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
+    // SmartContracts
+    SmartContractIndexComponent, SmartContractTableListComponent,
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TxListTableComponent, SmallTxListTableComponent, TxUnconfirmedComponent, TxSmallListComponent,
@@ -98,6 +101,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
       { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: 'transaction/:hash/:nodeid', component: TxUnconfirmedComponent },
       { path: 'notifications', component: NotificationsIndexComponent },
+      { path: 'contracts', component: SmartContractIndexComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
     ])
@@ -114,7 +118,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     StatsSignalRService, NotificationsSignalRService,
     // Data services
     RpcService,
-    NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService
+    NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService, SmartContractService
   ],
   bootstrap: [AppComponent]
 })
