@@ -78,7 +78,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
             this._nodeService.getRawMemPool(this.node);
             this._nodeService.getBlockCount(this.node, true);
             this._nodeService.getVersion(this.node);
-            this._nodeService.getConnectionsCount(this.node);
+            // this._nodeService.getConnectionsCount(this.node);
             this._nodeService.getPeers(this.node, true);
             this._nodeService.getWalletState(this.node);
             this._nodeService.getWsState(this.node);

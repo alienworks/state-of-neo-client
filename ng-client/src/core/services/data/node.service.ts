@@ -44,7 +44,7 @@ export class NodeService {
                 this.getServerCachedPeers()
                     .subscribe(x => {
                         const serverpeers = x;
-                        serverpeers.forEach(p => this.checkOrAddTo(p, this.peers));
+                        serverpeers.forEach(p => this.checkOrAddToPeers(p, this.peers));
 
                         this.updateNodesData();
                     }, err => {
@@ -125,20 +125,20 @@ export class NodeService {
 
     updateNodesData() {
         this.allNodes.forEach(x => {
-            this.getConnectionsCount(x);
-            this.getVersion(x);
+            // this.getConnectionsCount(x);
             this.getBlockCount(x);
+            this.getVersion(x);
             this.getPeers(x);
         });
 
         this.sort();
-        this.updateAllMarkers();
+        // this.updateAllMarkers();
 
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
         this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
 
-        this.updateMarkers.emit(this.markers);
+        // this.updateMarkers.emit(this.markers);
 
         if (this.peers.size > 0) {
             this.sendPeersToServerCache().subscribe(
@@ -163,22 +163,22 @@ export class NodeService {
         });
     }
 
-    updateAllMarkers(): void {
-        if (!this.updateAll) return;
+    // updateAllMarkers(): void {
+    //     if (!this.updateAll) return;
 
-        const markers = [];
-        this.allNodes.forEach(x => {
-            markers.push({
-                id: x.id,
-                latLng: [x.latitude, x.longitude],
-                name: this.getNodeDisplayText(x),
-                version: x.version,
-                blockCount: x.blockCount
-            });
-        });
-        this.markers = markers;
-        this.updateMarkers.emit(this.markers);
-    }
+    //     const markers = [];
+    //     this.allNodes.forEach(x => {
+    //         markers.push({
+    //             id: x.id,
+    //             latLng: [x.latitude, x.longitude],
+    //             name: this.getNodeDisplayText(x),
+    //             version: x.version,
+    //             blockCount: x.blockCount
+    //         });
+    //     });
+    //     this.markers = markers;
+    //     this.updateMarkers.emit(this.markers);
+    // }
 
     public getNodeNameByIp(ip: string): string {
         for (const node of this.allNodes) {
@@ -191,7 +191,7 @@ export class NodeService {
     }
 
     public getPeers(x: any, addCollections: boolean = false): void {
-        if (!this.updateAll) return;
+        if (!this.updateAll || !x.available) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
             .subscribe(res => {
@@ -221,24 +221,24 @@ export class NodeService {
 
     private handlePeers(received: GetPeersModel): void {
         received.bad.forEach((y: Peer) => {
-            this.checkOrAddTo(y, this.peers);
+            this.checkOrAddToPeers(y, this.peers);
         });
         received.connected.forEach((y: Peer) => {
-            this.checkOrAddTo(y, this.peers);
+            this.checkOrAddToPeers(y, this.peers);
         });
         received.unconnected.forEach((y: Peer) => {
-            this.checkOrAddTo(y, this.peers);
+            this.checkOrAddToPeers(y, this.peers);
         });
     }
 
-    private checkOrAddTo(x: Peer, collection: Map<String, Peer>): void {
+    private checkOrAddToPeers(x: Peer, collection: Map<String, Peer>): void {
         if (collection.has(x.address)) return;
 
         collection.set(x.address, x);
     }
 
     public getConnectionsCount(x: any) {
-        if (!this.updateAll || x.unavailable) return;
+        if (!this.updateAll || !x.available) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
             .subscribe(res => {
@@ -260,7 +260,7 @@ export class NodeService {
     }
 
     public getVersion(x: any) {
-        if (!this.updateAll || x.unavailable) return;
+        if (!this.updateAll || !x.available) return;
 
         const requestStart = Date.now();
         this.nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
@@ -280,12 +280,12 @@ export class NodeService {
 
     public getBlockCount(node: any, getStamp: boolean = false) {
         // if (!this.updateAll) return;
-        if (node.unavailable && node.checks < 10) {
+        if (!node.available && node.checks && node.checks < 10) {
             node.checks++;
             return;
         } else {
             node.checks = 0;
-            node.unavailable = false;
+            node.available = true;
         }
 
         if (node.service) {
@@ -312,7 +312,7 @@ export class NodeService {
                         }
                     }, err => {
                         console.log(err);
-                        node.unavailable = true;
+                        node.available = false;
                         node.checks = 0;
                         node.restEnabled = false;
                         node.blockCount = null;
@@ -340,7 +340,7 @@ export class NodeService {
                         }
                     }, err => {
                         console.log(err);
-                        node.unavailable = true;
+                        node.available = false;
                         node.checks = 0;
                         node.restEnabled = false;
                         node.blockCount = null;
@@ -367,7 +367,7 @@ export class NodeService {
                             }, err => console.log(err));
                     }
                 }, err => {
-                    node.unavailable = true;
+                    node.available = false;
                     node.checks = 0;
                     node.rpcEnabled = false;
                     node.latency = 0;
@@ -376,7 +376,7 @@ export class NodeService {
     }
 
     public getRawMemPool(x: any) {
-        if (!this.updateAll || x.unavailable) return;
+        if (!this.updateAll || !x.available) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
@@ -387,7 +387,7 @@ export class NodeService {
     }
 
     public getWalletState(x: any) {
-        if (!this.updateAll || x.unavailable) return;
+        if (!this.updateAll || !x.available) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
             .subscribe(res => {

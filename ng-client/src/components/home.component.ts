@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.allNodes = this.nodeService.getNodes();
         this.nodeService.updateNodes.subscribe((x: any[]) => {
             this.allNodes = x;
-            this.nodeService.updateAllMarkers();
+            // this.nodeService.updateAllMarkers();
         });
 
         // window height - header - body padding top and bottom
