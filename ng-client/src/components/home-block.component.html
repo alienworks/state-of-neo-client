@@ -1,0 +1,23 @@
+<div routerLink="/block/{{model.height}}" routerLinkActive="router-link-active" style="cursor: pointer">    
+    <div class="col-md-5 no-padding" style="margin-bottom: 5px">
+        <div class="custom-vcenter" style="color:white; height: 35px; background-color: #CCC">
+            <small>Block {{model.height | number}}</small>
+        </div>
+        <div class="custom-vcenter" style="margin-top: -10px; color:white; height: 35px; background-color: #CCC">
+            <small>{{created | timeAgo}} seconds ago</small>
+        </div>
+    </div>
+    <div class="col-md-7 no-padding" style="margin-bottom: 5px">
+        <div style="padding: 0 10px">
+            <div>
+                <small>Created by <strong>{{model.validator}}..</strong></small>
+            </div>
+            <div>
+                <small>{{model.transactions}} tx in {{model.time}} seconds</small>
+            </div>
+            <div>
+                <small><strong>{{model.fees}}</strong> GAS collected fees</small>
+            </div>
+        </div>
+    </div>    
+</div>

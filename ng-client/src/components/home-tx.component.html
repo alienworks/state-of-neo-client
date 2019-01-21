@@ -1,0 +1,12 @@
+<div routerLink="/transaction/{{model.hash}}" routerLinkActive="router-link-active" style="cursor: pointer">    
+    <div class="col-md-1 no-padding" style="margin-bottom: 5px" title="{{getTypeName(model.type)}}">
+        <app-tx-icon [type]="model.type"></app-tx-icon>
+    </div>
+    <div class="col-md-11 no-padding" style="margin-bottom: 5px">
+        <div style="padding: 0 10px">
+            <div>
+                <small>{{ (model.hash.length>36)? (model.hash | slice:0:36)+'..':(model.hash) }}</small>
+            </div>
+        </div>
+    </div>    
+</div>

@@ -1,16 +1,59 @@
-<div class="row no-margin">
-    <div class="col-sm-6" style="padding-left: 0">
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
         <div id="main-panel" class="panel panel-default">
             <div class="panel-body">
                 <div>
                     <app-map-graph></app-map-graph>
                     <!-- <app-map></app-map> -->
                 </div>
-                <app-footer-stats></app-footer-stats>
+                <!-- <app-footer-stats></app-footer-stats> -->
+                <div class="col-md-6 no-padding">
+                    <div class="panel panel-default" >
+                        <header class="panel-heading" style="padding: 10px">
+                            <h2 class="panel-title elipsis text-grey">
+                                LATEST BLOCKS 
+                                <a class="btn btn-xs btn-info pull-right" 
+                                    style="color: white; text-transform: lowercase"
+                                    [routerLink]="['/blocks']" 
+                                    routerLinkActive="router-link-active">
+                                    more
+                                </a>
+                                <!-- <button class="btn btn-xs btn-success pull-right">more</button> -->
+                            </h2>
+                        </header>
+                        <div class="panel-body noradius padding-10" style="overflow-y: always">
+                            <app-home-block></app-home-block>
+                            <app-home-block></app-home-block>
+                            <app-home-block></app-home-block>
+                            <app-home-block></app-home-block>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default" >
+                        <header class="panel-heading" style="padding: 10px">
+                            <h2 class="panel-title elipsis text-grey">
+                                LATEST TRANSACTIONS 
+                                <a class="btn btn-xs btn-info pull-right" 
+                                    style="color: white; text-transform: lowercase"
+                                    [routerLink]="['/transactions']" 
+                                    routerLinkActive="router-link-active">
+                                    more
+                                </a>
+                            </h2>
+                        </header>
+                        <div class="panel-body noradius padding-10">
+                            <app-home-tx></app-home-tx>
+                            <app-home-tx></app-home-tx>
+                            <app-home-tx></app-home-tx>
+                            <app-home-tx></app-home-tx>
+                        </div>
+                    </div>
+                </div>
             </div> 
         </div>
     </div>
-    <div class="col-sm-6" style="padding-left: 5px; padding-right: 0">
+    <div class="col-sm-6">
         <div id="nodes-panel" class="panel panel-default" style="overflow-y: scroll; margin-bottom: 0">
             <div class="panel-body" *ngIf="allNodes">
                 <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card>
