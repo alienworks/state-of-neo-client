@@ -4,26 +4,25 @@
             <div class="panel-body text-grey">
                 <div class="col-md-8">              
                     <h4 class="text-grey" style="margin-top: 0; ">{{addressDetails.address}}</h4>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">NEO</td>
-                                <td class="col-md-8">{{getBalance('NEO') | number}}</td>
-                            </tr>
-                            <tr>
-                                <td>GAS</td>
-                                <td>{{getBalance('GAS') | number:'1.0-8'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Transactions</td>
-                                <td>{{transactions.metaData.totalItemCount}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        <h5 class="bold text-grey" style="margin-bottom: 5px">Global Assets</h5>
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-4">NEO</td>
+                                    <td class="col-md-8">{{getBalance('NEO') | number}}</td>
+                                </tr>
+                                <tr>
+                                    <td>GAS</td>
+                                    <td>{{getBalance('GAS') | number:'1.0-8'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div *ngIf="tokens && tokens.length">
-                        <h5>Tokens</h5>
-                        <table class="table" *ngIf="tokens && tokens.length">
+                        <h5 class="bold text-grey" style="margin-bottom: 5px">Tokens</h5>
+                        <table class="table no-top-border-first-row" *ngIf="tokens && tokens.length">
                             <tbody>
                                 <tr *ngFor="let token of tokens">
                                     <td class="col-md-4">{{token.name}}</td>
@@ -48,7 +47,7 @@
                 <h2 class="panel-title elipsis text-grey">
                     <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> 
                     TRANSACTIONS 
-                    <span class="bold" style="color: #676a6c !important" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
+                    <span style="color: #676a6c !important" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
                 </h2>
             </header>
             <div class="panel-body">
