@@ -100,11 +100,17 @@ li.active a h3, li.active a h4 {
 }
 
 body {
-    padding-top: 50px !important;
+    padding-top: 50px;
 }
 
 .text-warm {
     color: #079098;
+}
+
+@media only screen and (max-width: 1248px) {
+    body {
+        padding-top: 100px !important;
+    }
 }
 
 .fas {
