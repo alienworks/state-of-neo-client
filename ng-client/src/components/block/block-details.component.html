@@ -37,6 +37,10 @@
                             <td>Parent Block</td>
                             <td style="word-break: break-all"><a routerLink="/block/{{block.height - 1}}">{{block.previousBlockHash}}</a></td>
                         </tr>
+                        <tr *ngIf="block.nextBlockHash">
+                            <td>Child Block</td>
+                            <td style="word-break: break-all"><a routerLink="/block/{{block.height + 1}}">{{block.nextBlockHash}}</a></td>
+                        </tr>
                         <tr>
                             <td>Next Validator</td>
                             <td>{{block.nextConsensusNodeAddress}}</td>

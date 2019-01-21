@@ -3,7 +3,8 @@
     <div class="col-md-12" *ngIf="model">
         <div class="col-md-12" style="padding: 8px;">
             <label for="sc-filter">Filter</label>
-            <input id="sc-filter" [(ngModel)]="input" style="margin-left: 10px; width: 200px !important; display: inline-block"
+            <input id="sc-filter" [(ngModel)]="input" 
+                style="margin-left: 10px; width: 200px !important; display: inline-block"
                 placeholder=" by name / author / hash" (keyup)="filter()" class="form-control" />
         </div>
         <table class="table table-responsive table-hover">
