@@ -6,9 +6,10 @@ import * as am4maps from '@amcharts/amcharts4/maps';
 
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-import { toUnicode } from 'punycode';
 
 am4core.useTheme(am4themes_animated);
+
+declare var $;
 
 @Component({
     selector: 'app-map-graph',
@@ -46,6 +47,8 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.initGraphMap();
         this.updateMapInfo();
+
+        $('title:contains("Chart created using amCharts library")').parent().hide();
 
         this.nodeService.updateNodes.subscribe(x => {
             this.allNodes = x;

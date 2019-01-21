@@ -6,3 +6,4 @@ export * from './node.service';
 export * from './tx.service';
 export * from './chart.service';
 export * from './search.service';
+export * from './sc.service';

@@ -19,7 +19,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
     interval: number;
     page = 1;
     nodes: any[] = [];
-    nodeNameFilter: string = '';
+    nodeNameFilter = '';
     countryFilter: any;
     countriesFilterConfig: any = {
         displayKey: 'location',
@@ -28,8 +28,8 @@ export class NodeListComponent implements OnInit, OnDestroy {
     };
     filteredNodes: any = [];
     countries: any = [];
-    typeFilter: string = '';
-    statusFilter: string = '';
+    typeFilter = '';
+    statusFilter = '';
 
     constructor(
         private nodeService: NodeService,
@@ -44,15 +44,15 @@ export class NodeListComponent implements OnInit, OnDestroy {
         }
 
         if (this.countryFilter && this.countryFilter.length) {
-            this.filteredNodes = this.filteredNodes.filter(x => this.countryFilter.find(c => c.location == x.location) != null);
+            this.filteredNodes = this.filteredNodes.filter(x => this.countryFilter.find(c => c.location === x.location) != null);
         }
 
         if (this.typeFilter) {
-            this.filteredNodes = this.filteredNodes.filter(x => x.type == this.typeFilter);
+            this.filteredNodes = this.filteredNodes.filter(x => x.type === this.typeFilter);
         }
 
         if (this.statusFilter) {
-            this.filteredNodes = this.filteredNodes.filter(x => this.statusFilter == 'Online' ? x.blockCount : !x.blockCount);
+            this.filteredNodes = this.filteredNodes.filter(x => this.statusFilter === 'Online' ? x.blockCount : !x.blockCount);
         }
     }
 
@@ -79,10 +79,10 @@ export class NodeListComponent implements OnInit, OnDestroy {
     }
 
     setNodeCountries() {
-        var uniques = new Set(this.nodes.map(item => item.location));
+        const uniques = new Set(this.nodes.map(item => item.location));
         uniques.forEach(x => {
-            let item = this.nodes.find(z => z.location == x);
-            this.countries.push({location: item.location, flagUrl: item.flagUrl});
+            const item = this.nodes.find(z => z.location === x);
+            this.countries.push({ location: item.location, flagUrl: item.flagUrl });
         });
 
         this.countries.sort((x, y) => x.location - y.location);
