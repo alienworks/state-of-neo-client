@@ -1,9 +1,9 @@
-<div routerLink="/block/{{model.height}}" routerLinkActive="router-link-active" style="cursor: pointer">    
+<div class="home-block-container" routerLink="/block/{{model.height}}" routerLinkActive="router-link-active" style="cursor: pointer">    
     <div class="col-md-5 no-padding" style="margin-bottom: 5px">
-        <div class="custom-vcenter" style="color:white; height: 35px; background-color: #CCC">
-            <small>Block {{model.height | number}}</small>
+        <div class="custom-vcenter home-block" style="margin-bottom: -5px">
+            <small class="bold">Block {{model.height | number}}</small>
         </div>
-        <div class="custom-vcenter" style="margin-top: -10px; color:white; height: 35px; background-color: #CCC">
+        <div class="custom-vcenter home-block" style="margin-top: -15px">
             <small>{{created | timeAgo}} seconds ago</small>
         </div>
     </div>
