@@ -1,8 +1,10 @@
 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="padding: 0 8px 0 8px">
     <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
-        <div class="card node-card" style="padding: 10px 15px" 
+        <div class="card node-card" style="padding: 5px 10px" 
             [style.background-color]="(node.type === 'RPC' && node.blockCount) || (node.type === 'REST' && node.blockCount) ? 'transparent' : '#EEE'">            
-            <h5 class="text-center text-grey word-wraped bold" style="margin-bottom: 10px">{{node.url}}</h5>
+            <div style="min-height: 42px">
+                <h5 class="text-center text-grey word-wraped bold" style="margin-bottom: 5px">{{node.url}}</h5>
+            </div>
             <div class="col-md-4 col-sm-4 col-xs-4 img-container no-padding">
                 <img class="img img-thumbnail img-responsive" width="45px" height="45px" src="{{node.flagUrl}}" /><br />
             </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
 
 @Component({
@@ -6,11 +7,14 @@ import { StatsSignalRService } from '../../core/services/signal-r';
 })
 export class StatsIndexComponent implements OnInit {
     
-    constructor() {
-
+    constructor(
+        private state: CommonStateService,
+        private statsSignalR: StatsSignalRService
+    ) {
     }
     
     ngOnInit() {
+        this.state.changeRoute('stats');
 
     }
 
