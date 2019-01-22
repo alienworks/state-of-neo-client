@@ -1,5 +1,5 @@
 
-import {throwError as observableThrowError,  Observable, BehaviorSubject } from 'rxjs';
+import { throwError as observableThrowError, Observable, BehaviorSubject } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Response, RequestOptions, Headers } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
@@ -66,7 +66,7 @@ export class NodeService {
     public getBlockStamp(input: string | number) {
         let type = 'hash';
         if (typeof input === 'number') {
-             type = 'height'; 
+            type = 'height';
         }
 
         return this.http.get<BaseBlockModel>(`${CONST.BASE_URL}/api/block/stampby${type}/${input}`);
@@ -204,6 +204,11 @@ export class NodeService {
                     const model = res.result as GetPeersModel;
 
                     this.handlePeers(model);
+
+                    if (model.connected && model.connected.length > 0) {
+                        x.connected = true;
+                    }
+
                     x.connectedPeers = model.connected;
                 } else {
                     x.peers = 0;
