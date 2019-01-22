@@ -9,7 +9,7 @@ import { NotificationsSignalRService } from 'src/core/services/signal-r';
     templateUrl: './sc-details.component.html'
 })
 export class SmartContractDetailsComponent implements OnInit, OnDestroy {
-    model: SmartContractDetailsModel;
+    model = new SmartContractDetailsModel();
     isLoading: boolean;
     hash: string;
     currentNotifications: NotificationModel[];

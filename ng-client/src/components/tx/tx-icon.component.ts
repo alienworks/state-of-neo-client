@@ -20,7 +20,7 @@ export class TxIconComponent implements OnInit {
             this.iconClass = 'fa fa-cubes';
         }
         else if (this.type === TxTypeEnum.ContractTransaction) {
-            this.iconClass = 'fa fa-cube';
+            this.iconClass = 'fas fa-handshake';
         }
     }
 }

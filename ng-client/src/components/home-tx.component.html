@@ -1,12 +1,27 @@
-<div routerLink="/transaction/{{model.hash}}" routerLinkActive="router-link-active" style="cursor: pointer">    
-    <div class="col-md-1 no-padding" style="margin-bottom: 5px" title="{{getTypeName(model.type)}}">
-        <app-tx-icon [type]="model.type"></app-tx-icon>
-    </div>
-    <div class="col-md-11 no-padding" style="margin-bottom: 5px">
-        <div style="padding: 0 10px">
-            <div>
-                <small>{{ (model.hash.length>36)? (model.hash | slice:0:36)+'..':(model.hash) }}</small>
+<div class="tx-container" routerLink="/transaction/{{model.hash}}" routerLinkActive="router-link-active" style="cursor: pointer">    
+    <div class="home-tx-container">
+        <div class="col-md-1 no-padding" style="margin-bottom: 5px; padding-top: 5px !important" title="{{getTypeName(model.type)}}">
+            <!-- <app-tx-icon [type]="model.type"></app-tx-icon> -->
+            <i class="{{iconClass}}" style="font-size: 18px"></i>
+            <div style="font-size: 10px">
+                {{model.timestamp | stampToDate | timeAgo}}
             </div>
         </div>
-    </div>    
+        <div class="col-md-11 no-padding" style="margin-bottom: 5px">
+            <div style="padding: 0 10px; font-size: 9px">
+                <div style="font-size: 12px; margin-bottom: 5px">
+                    <strong>{{ (model.hash.length>34)? (model.hash | slice:0:32)+'..':(model.hash) }}</strong>
+                </div>
+                <div *ngIf="model.from" style="margin-bottom: 5px">
+                    From {{model.from}}
+                </div>
+                <div *ngIf="model.to" style="margin-bottom: 5px">
+                    To {{ model.to }}
+                </div>
+                <div *ngIf="mainAsset">
+                    Amount {{mainAsset.amount}} {{mainAsset.type}}
+                </div>
+            </div>
+        </div>    
+    </div>
 </div>
