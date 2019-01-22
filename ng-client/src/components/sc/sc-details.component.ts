@@ -8,7 +8,7 @@ import { SmartContractDetailsModel } from 'src/models';
     templateUrl: './sc-details.component.html'
 })
 export class SmartContractDetailsComponent implements OnInit {
-    model: SmartContractDetailsModel;
+    model: SmartContractDetailsModel = new SmartContractDetailsModel();
     isLoading: boolean;
     hash: string;
 
