@@ -36,8 +36,8 @@ export class BlockService {
 
     public getBlock(input: string | number) {
         let type = 'byhash';
-        if (typeof input === 'number') { 
-            type = 'byheight'; 
+        if (typeof input === 'number') {
+            type = 'byheight';
         }
 
         return this.http.get<BlockDetailsModel>(`${CONST.BASE_URL}/api/block/${type}/${input}`);

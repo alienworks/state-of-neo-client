@@ -8,36 +8,27 @@
                 </div>
                 <!-- <app-footer-stats></app-footer-stats> -->
                 <div class="col-md-6 no-padding">
-                    <div class="panel panel-default" >
+                    <div class="panel panel-default">
                         <header class="panel-heading" style="padding: 10px">
                             <h2 class="panel-title elipsis text-grey">
-                                LATEST BLOCKS 
-                                <a class="btn btn-xs btn-info pull-right" 
-                                    style="color: white; text-transform: lowercase"
-                                    [routerLink]="['/blocks']" 
-                                    routerLinkActive="router-link-active">
+                                LATEST BLOCKS
+                                <a class="btn btn-xs btn-info pull-right" style="color: white; text-transform: lowercase"
+                                    [routerLink]="['/blocks']" routerLinkActive="router-link-active">
                                     more
                                 </a>
                                 <!-- <button class="btn btn-xs btn-success pull-right">more</button> -->
                             </h2>
                         </header>
-                        <div class="panel-body noradius padding-10" style="overflow-y: always">
-                            <app-home-block></app-home-block>
-                            <app-home-block></app-home-block>
-                            <app-home-block></app-home-block>
-                            <app-home-block></app-home-block>
-                        </div>
+                        <app-home-block></app-home-block>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="panel panel-default" >
+                    <div class="panel panel-default">
                         <header class="panel-heading" style="padding: 10px">
                             <h2 class="panel-title elipsis text-grey">
-                                LATEST TRANSACTIONS 
-                                <a class="btn btn-xs btn-info pull-right" 
-                                    style="color: white; text-transform: lowercase"
-                                    [routerLink]="['/transactions']" 
-                                    routerLinkActive="router-link-active">
+                                LATEST TRANSACTIONS
+                                <a class="btn btn-xs btn-info pull-right" style="color: white; text-transform: lowercase"
+                                    [routerLink]="['/transactions']" routerLinkActive="router-link-active">
                                     more
                                 </a>
                             </h2>
@@ -50,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
     <div class="col-sm-6">
