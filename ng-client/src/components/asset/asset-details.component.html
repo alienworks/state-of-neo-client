@@ -13,17 +13,11 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td>
-                                    Total supply
-                                </td>
-                                <td>
-                                    {{model.totalSupply | number}}
-                                </td>
+                                <td>Total supply</td>
+                                <td>{{model.totalSupply | number}}</td>
                             </tr>
                             <tr>
-                                <td>
-                                    Total addresses
-                                </td>
+                                <td>Total addresses</td>
                                 <td>
                                     <span *ngIf="totalAddressCount">
                                         {{totalAddressCount | number}}
@@ -32,24 +26,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    Active addresses last month
-                                </td>
+                                <td>Active addresses last month</td>
                                 <td>
                                     <span *ngIf="activeAddressesLastMonth || activeAddressesLastMonth >= 0">
-                                        {{activeAddressesLastMonth.toString()}}
+                                        {{activeAddressesLastMonth | number}}
                                     </span>
                                     <app-loader *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0" [iconScale]="1"></app-loader>
                                 </td>
                             </tr>
                             <tr>
+                                <td>New addresses last month</td>
                                 <td>
-                                    New addresses last month
-                                </td>
-                                <td>
-                                    <span *ngIf="newAddressesLastMonth">
-                                        {{newAddressesLastMonth | number}}
-                                    </span>
+                                    <span *ngIf="newAddressesLastMonth">{{newAddressesLastMonth | number}}</span>
                                     <app-loader *ngIf="!newAddressesLastMonth" [iconScale]="1"></app-loader>
                                 </td>
                             </tr>

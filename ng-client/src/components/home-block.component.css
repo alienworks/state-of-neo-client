@@ -1,0 +1,9 @@
+.home-block {
+    color:white; 
+    height: 35px; 
+    background-color: #BBB;
+}
+
+.home-block-container:hover .home-block {
+    background-color: #888;
+}

@@ -10,6 +10,9 @@ declare var $;
 @Component({
     selector: `app-home-block`,
     templateUrl: `./home-block.component.html`,
+    styleUrls: [
+        './home-block.component.css'
+    ],
     animations: [
         trigger('fadeIn', [
             transition(':enter', [
@@ -31,14 +34,6 @@ export class HomeBlockComponent implements OnInit, AfterViewInit {
         this.blocksService.getBlocksPage(1, 10)
             .subscribe(x => {
                 this.blocks = x.items;
-                // setTimeout(() => {
-
-                //     const elementInfoHeight = $($(`.home-block-container .block-info-card`)[0]).height();
-                //     const elementDetailsHeight = $($(`.home-block-container .block-details-card`)[0]).height();
-
-                //     const totalContainerHeight = 5 * (elementInfoHeight > elementDetailsHeight ? elementInfoHeight : elementDetailsHeight);
-                //     $('.blocks-container').height(10 + totalContainerHeight).css('overflow-y', 'scroll');
-                // }, 1000);
             }, err => console.log(err));
 
         this.stats.registerAdditionalEvent('header', this.headerUpdate);

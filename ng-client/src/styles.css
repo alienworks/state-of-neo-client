@@ -45,6 +45,14 @@
     height: 100%;
 }
 
+.node-card {    
+    border: 1px solid #CCC;
+}
+
+.node-card:hover {
+    box-shadow: 3px 3px 5px #B1B1B1;
+}
+
 .box-shadowed {
     box-shadow: 3px 3px 5px #B1B1B1;
 }
@@ -107,7 +115,7 @@ body {
     color: #079098;
 }
 
-@media only screen and (max-width: 1345px) {
+@media only screen and (max-width: 1278px) {
     body {
         padding-top: 100px !important;
     }
@@ -182,4 +190,8 @@ select {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
+}
+
+.table.no-top-border-first-row tbody tr:first-child td {
+    border-top: 0 !important;
 }

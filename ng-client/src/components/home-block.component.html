@@ -1,27 +1,27 @@
 <div class="panel-body noradius padding-10 blocks-container">
-    <div routerLink="/block/{{block.height}}" class="{{itemClass}}" routerLinkActive="router-link-active" style="cursor: pointer"
+    <div class="home-block-container" routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" style="cursor: pointer"
         *ngFor="let block of blocks" @fadeIn>
         <div class="col-md-5 no-padding block-info-card" style="margin-bottom: 5px">
-            <div class="custom-vcenter" style="color:white; height: 35px; background-color: #CCC">
-                <small>Block {{block.height | number}}</small>
+            <div class="custom-vcenter home-block" style="margin-bottom: -5px">
+                <small class="bold">Block {{block.height | number}}</small>
             </div>
-            <div class="custom-vcenter" style="margin-top: -10px; color:white; height: 35px; background-color: #CCC">
+            <div class="custom-vcenter home-block" style="margin-top: -15px">
                 <small>{{block.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
         <div class="col-md-7 no-padding block-details-card" style="margin-bottom: 5px">
             <div style="padding: 0 10px">
                 <div>
-                    <small>Created by <strong>{{(block.validator > 8) ? (block.validator | slice:0:8) + '..':
-                            (block.validator)}}</strong></small>
+                    <small>Created by <strong>{{(block.validatorAddress.length > 8) ? (block.validatorAddress |
+                            slice:0:8) + '..':
+                            (block.validatorAddress)}}</strong></small>
                 </div>
                 <div>
-                    <small>{{block.transactionsCount}} tx in {{block.timestamp | stampToDate | timeAgo}}</small>
+                    <small>{{block.transactionsCount}} tx in {{block.timeInSeconds}} s</small>
                 </div>
                 <div>
-                    <small><strong>{{block.collectedFees}}</strong> GAS collected fees</small>
+                    <small><strong>{{block.collectedFees | number:'1.0-8'}}</strong> GAS fees</small>
                 </div>
             </div>
         </div>
     </div>
-</div>

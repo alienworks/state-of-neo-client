@@ -7,12 +7,12 @@
     border: 1px solid #999; 
     margin-bottom: 15px; 
     cursor: pointer; 
-    min-height: 200px;
+    min-height: 170px;
 }
 
 @media only screen and (max-width: 1720px) {
     .card {
-        height: 200px;
+        height: 170px;
     }
 }
 

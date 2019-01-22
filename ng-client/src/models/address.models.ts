@@ -1,6 +1,7 @@
 export class AddressAssetModel {
     name: string;
     balance: number;
+    assetType: string;
 }
 
 export class AddressDetailsModel {

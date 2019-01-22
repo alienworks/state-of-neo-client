@@ -19,7 +19,7 @@
                                 <td><a routerLink="/block/{{tx?.blockHeight}}">{{tx.blockHeight | number}}</a></td>
                             </tr>
                             <tr>
-                                <td>Time</td>
+                                <td>Age</td>
                                 <td>{{tx.finalizedAt | timeAgo}}</td>
                             </tr>
                             <tr>
@@ -46,7 +46,10 @@
                     </table>
                 </div>
                 <div class="col-md-12">
-                    <h5 class="text-grey margin-bottom-10 bold">Transacted Assets</h5>
+                    <h5 class="text-grey margin-bottom-10 bold" 
+                        *ngIf="(tx.sentAssets && tx.sentAssets.length) || (tx.receivedAssets && tx.receivedAssets.length)">
+                        Transacted Assets
+                    </h5>
                     <div class="pricing-table" *ngIf="tx.sentAssets && tx.sentAssets.length">
                         <div class="plan-title">Incoming</div>
                         <ul class="plan-features">
@@ -94,19 +97,17 @@
     <div class="col-md-4">
         <div class="panel panel-default" *ngIf="tx?.witnesses && tx?.witnesses.length">
             <header class="panel-heading">
-                <h2 class="panel-title elipsis">
-                    <i class="fas fa-users" style="margin-left: 15px; margin-right: 20px"></i> Witnesses
-                </h2>
+                <h2 class="panel-title elipsis">Witnesses ({{tx?.witnesses ? tx?.witnesses.length : 0}})</h2>
             </header>
-            <div class="panel-body">
-                <div *ngFor="let witness of tx?.witnesses">
-                    <strong>{{witness.address}}</strong>
-                    <div class="padding-10 word-wraped">
-                        <div><strong>Invocation script</strong></div>
+            <div class="panel-body" style="padding-bottom: -15px">
+                <div *ngFor="let witness of tx?.witnesses" style="margin-bottom: 15px">
+                    <h5 class="bold text-grey" style="margin-bottom: 5px">{{witness.address}}</h5>
+                    <div class="word-wraped">
+                        <div class="bold">Invocation script</div>
                         {{witness.invocationScriptAsHexString}}
                     </div>
-                    <div class="padding-10 word-wraped">
-                        <div><strong>Verification script</strong></div>
+                    <div class="word-wraped">
+                        <div class="bold">Verification script</div>
                         {{witness.verificationScriptAsHexString}}
                     </div>
                 </div>
@@ -115,7 +116,7 @@
         <div class="panel panel-default" *ngIf="tx?.attributes && tx?.attributes.length">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
-                    <i class="fas fa-database" style="margin-left: 15px; margin-right: 20px"></i> Attributes
+                    <i class="fas fa-database" style="margin-left: 15px; margin-right: 20px"></i> Attributes ({{tx?.attributes ? tx?.attributes.length : 0}})
                 </h2>
             </header>
             <div class="panel-body">

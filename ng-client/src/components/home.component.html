@@ -46,7 +46,7 @@
     </div>
     <div class="col-sm-6">
         <div id="nodes-panel" class="panel panel-default" style="overflow-y: scroll; margin-bottom: 0">
-            <div class="panel-body" *ngIf="allNodes">
+            <div class="panel-body padding-10" *ngIf="allNodes" style="padding-top: 15px !important">
                 <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card>
             </div>
             <div></div>

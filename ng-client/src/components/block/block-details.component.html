@@ -37,6 +37,10 @@
                             <td>Parent Block</td>
                             <td style="word-break: break-all"><a routerLink="/block/{{block.height - 1}}">{{block.previousBlockHash}}</a></td>
                         </tr>
+                        <tr *ngIf="block.nextBlockHash">
+                            <td>Child Block</td>
+                            <td style="word-break: break-all"><a routerLink="/block/{{block.height + 1}}">{{block.nextBlockHash}}</a></td>
+                        </tr>
                         <tr>
                             <td>Next Validator</td>
                             <td>{{block.nextConsensusNodeAddress}}</td>
@@ -65,7 +69,7 @@
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">
                     <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> 
-                    TRANSACTIONS <span class="bold" style="color: #676a6c !important" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
+                    TRANSACTIONS <span style="color: #676a6c !important" *ngIf="transactions.metaData && transactions.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
                 </h2>
             </header>
             <div class="panel-body">

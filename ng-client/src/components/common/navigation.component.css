@@ -7,7 +7,7 @@
 .header-title {
     letter-spacing: 3px; 
     color: #FFF; 
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .header-content {
@@ -19,7 +19,6 @@
 }
 
 .header-net {
-    color: white;
     cursor: pointer;
 }
 
