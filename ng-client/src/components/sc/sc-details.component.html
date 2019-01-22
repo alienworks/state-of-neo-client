@@ -7,16 +7,20 @@
                 <table class="table no-top-border-first-row">
                     <tbody>
                         <tr>
+                            <td>Hash</td>
+                            <td>{{model.hash}}</td>
+                        </tr>
+                        <tr>
                             <td class="col-md-2">Name</td>
                             <td class="col-md-10">{{model.name}}</td>
                         </tr>
                         <tr>
-                            <td>Created</td>
-                            <td>{{model.timestamp | stampToDate | timeAgo}}</td>
+                            <td>Description</td>
+                            <td>{{model.description}}</td>
                         </tr>
                         <tr>
-                            <td>Hash</td>
-                            <td>{{model.hash}}</td>
+                            <td>Created</td>
+                            <td>{{model.timestamp | stampToDate | timeAgo}}</td>
                         </tr>
                         <tr>
                             <td>Version</td>
@@ -29,10 +33,6 @@
                         <tr>
                             <td>Email</td>
                             <td>{{model.email}}</td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td>{{model.description}}</td>
                         </tr>
                         <tr>
                             <td>Storage</td>

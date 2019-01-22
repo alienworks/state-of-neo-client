@@ -25,22 +25,22 @@
             <div class="col-md-8">
                 <h3 class="bold stat text-center text-grey">{{node.url}}</h3>
                 <div *ngIf="node.type == 'RPC' && node.blockCount" class="custom-vcenter stat">
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{getClassForNodeLatency(node)}}">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{getClassForNodeLatency(node)}}" title="Latency">
                         {{node.latency}}
                         <br>
                         <i class="fas fa-signal"></i> ms
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}" title="RPC server status">
                         RPC
                         <br>
                         <i class="fas {{(node.rpcEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}" title="TCP socket status">
                         P2P
                         <br>
                         <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.wsStatus ? 'text-success' : 'text-danger')}}">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.wsStatus ? 'text-success' : 'text-danger')}}" title="Web socket status">
                         WS
                         <br>
                         <i class="fas {{(node.wsStatus ? 'fa-check-circle' : 'fa-times-circle')}}"></i>

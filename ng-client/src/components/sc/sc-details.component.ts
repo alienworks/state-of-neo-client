@@ -19,7 +19,7 @@ export class SmartContractDetailsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.state.changeRoute('Smart Contracts');
+        this.state.changeRoute('Smart Contract');
 
         this.isLoading = true;
         this.hash = this.route.snapshot.paramMap.get('hash');
