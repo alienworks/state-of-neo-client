@@ -1,45 +1,56 @@
 <div class="row">
     <app-loader *ngIf="!model"></app-loader>
     <div class="col-md-12" *ngIf="model">
-        <div class="col-md-12" style="padding: 8px;">
-            <label for="sc-filter">Filter</label>
+        <div class="pull-left">
+            <div><label for="sc-filter">Filter</label></div>            
             <input id="sc-filter" [(ngModel)]="input" 
-                style="margin-left: 10px; width: 200px !important; display: inline-block"
-                placeholder=" by name / author / hash" (keyup)="filter()" class="form-control" />
+                style="width: 200px !important; display: inline-block"
+                placeholder="Name / Author / Hash" (keyup)="filter()" class="form-control" />
         </div>
-        <table class="table table-responsive table-hover">
-            <thead>
-                <tr>
-                    <th class="col-md-3">Name</th>
-                    <th class="col-md-2">Author</th>
-                    <th class="col-md-4">Hash</th>
-                    <th class="col-md-1">Version</th>
-                    <th class="col-md-2">Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let sc of filteredModel | paginate: { itemsPerPage: 32, currentPage: page }">
-                    <td>
-                        <a routerLink="/contract/{{sc.hash}}" routerLinkActive="router-link-active">
-                            {{sc.name}}
-                        </a>
-                    </td>
-                    <td>{{sc.author}}</td>
-                    <td>{{sc.hash.length > 16 ? (sc.hash | slice:0:16) + '..': sc.hash }}</td>
-                    <td>{{sc.version}}</td>
-                    <td>{{sc.timestamp | stampToDate | timeAgo}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="col-md-12 text-center">
+        <div class="pull-right" style="display: inline-block">
+            <div>Page size</div>
+            <select [(ngModel)]="pageSize" class="pull-right">
+                <option [ngValue]="8">8</option>
+                <option [ngValue]="16">16</option>
+                <option [ngValue]="32">32</option>
+                <option [ngValue]="64">64</option>
+            </select>
+        </div>
+        <div class="clearfix"></div> 
+        <div style="margin-top: 20px">
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Name</th>
+                        <th class="col-md-2">Author</th>
+                        <th class="col-md-4">Hash</th>
+                        <th class="col-md-1">Version</th>
+                        <th class="col-md-2">Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sc of filteredModel | paginate: { itemsPerPage: pageSize, currentPage: page }">
+                        <td>
+                            <a routerLink="/contract/{{sc.hash}}" routerLinkActive="router-link-active">
+                                {{sc.name}}
+                            </a>
+                        </td>
+                        <td>{{sc.author}}</td>
+                        <td>{{sc.hash.length > 16 ? (sc.hash | slice:0:16) + '..': sc.hash }}</td>
+                        <td>{{sc.version}}</td>
+                        <td>{{sc.timestamp | stampToDate | timeAgo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
             <div style="padding-top: 25px">
                 <div class="spinner" [ngClass]="{ 'hidden': contracts !== null }"></div>
                 <pagination-controls (pageChange)="page = $event"></pagination-controls>
             </div>
         </div>
     </div>
-    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="!model || model.length == 0">
+    <div class="text-center" *ngIf="!model || model.length == 0">
         No smart contracts found
     </div>
 </div>

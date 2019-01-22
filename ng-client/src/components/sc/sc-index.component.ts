@@ -8,6 +8,7 @@ import { SmartContractListModel } from 'src/models';
 })
 export class SmartContractIndexComponent implements OnInit {
     contracts: SmartContractListModel[];
+    pageSize: number = 32;
 
     constructor(private state: CommonStateService, private scService: SmartContractService) { }
 
