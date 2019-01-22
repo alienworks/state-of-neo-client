@@ -21,7 +21,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     graphMarkers: any[];
     graphConnections: any[];
 
-    updateLinesIterator = 1;
+    updateLinesIterator = 0;
     initedMap = false;
 
     // tslint:disable-next-line:max-line-length
@@ -47,7 +47,9 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         this.allNodes = this.nodeService.allNodes;
 
         this.initGraphMap();
-        this.updateMapInfo();
+        if (this.allNodes && this.allNodes.length > 0) {
+            this.updateMapInfo();
+        }
 
         $('title:contains("Chart created using amCharts library")').parent().hide();
 
@@ -60,23 +62,11 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateMapInfo(): void {
-        this.setChartData();
-        if (this.initedMap) {
+        if (this.allNodes.length > 0) {
+            this.setChartData();
             this.setChartConnectionsData();
-        } else {
-            this.setChartConnectionsDataFirstTime();
+            // this.setChartConnectionsDataFirstTime();
         }
-    }
-
-    setGraphMarkers(): void {
-        this.graphMarkers = this.allNodes.map(x => ({
-            'id': x.id,
-            'svgPath': this.targetSVG,
-            'title': x.url,
-            'latitude': x.latitude,
-            'longitude': x.longitude,
-            'scale': 1
-        }));
     }
 
     createConnections(): void {
@@ -139,7 +129,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
             slider.start = 0.5;
             slider.margin(20, 0, 20, 0);
-            slider.valign = 'bottom';
+            slider.valign = 'middle';
             slider.align = 'center';
             slider.width = 500;
             slider.events.on('rangechanged', function (ev) {
@@ -154,10 +144,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // Set initial zoom
             chart.homeZoomLevel = 0;
-            chart.homeGeoPoint = {
-                latitude: 51,
-                longitude: -23
-            };
 
             // Create map polygon series
             const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
@@ -196,20 +182,30 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setChartData() {
-        this.setGraphMarkers();
         const imageSeries = this.chart.series.values[1] as am4maps.MapImageSeries;
 
-        imageSeries.data = this.graphMarkers;
-    }
-
-    setChartConnectionsDataFirstTime() {
-        if (!this.initedMap && this.allNodes.length > 0) {
-            this.createConnections();
-            const lineSeries = this.chart.series.values[2] as am4maps.MapLineSeries;
-
-            lineSeries.data = this.graphConnections;
+        for (const node of this.allNodes) {
+            if (imageSeries.data.findIndex(x => x.id === node.id) === -1) {
+                imageSeries.data.push({
+                    'id': node.id,
+                    'svgPath': this.targetSVG,
+                    'title': node.url,
+                    'latitude': node.latitude,
+                    'longitude': node.longitude,
+                    'scale': 1
+                });
+            }
         }
     }
+
+    // setChartConnectionsDataFirstTime() {
+    //     if (!this.initedMap && this.allNodes.length > 0) {
+    //         this.createConnections();
+    //         const lineSeries = this.chart.series.values[2] as am4maps.MapLineSeries;
+
+    //         lineSeries.data = this.graphConnections;
+    //     }
+    // }
 
     setChartConnectionsData() {
         if (this.updateLinesIterator % 6 === 0 && this.allNodes.length > 0) {
@@ -219,7 +215,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             lineSeries.data = this.graphConnections;
             this.updateLinesIterator = 1;
         } else {
-            this.updateLinesIterator++;
+            if (this.updateLinesIterator !== 0) this.updateLinesIterator++;
         }
     }
 }
