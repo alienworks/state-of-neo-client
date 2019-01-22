@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from 'src/components/home.component';
 import { HomeBlockComponent } from 'src/components/home-block.component';
 import { HomeTxComponent } from 'src/components/home-tx.component';
-
+import { StatsIndexComponent } from 'src/components/stats/';
 import {
   TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
   TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent,
@@ -74,6 +74,8 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent,
     // SmartContracts
     SmartContractIndexComponent, SmartContractTableListComponent, SmartContractDetailsComponent,
+    // Stats
+    StatsIndexComponent,
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TxListTableComponent, SmallTxListTableComponent, TxUnconfirmedComponent, TxSmallListComponent,
@@ -103,6 +105,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
       { path: 'asset/:hash', component: AssetDetailsComponent },
       { path: 'blocks', component: BlockIndexComponent },
       { path: 'block/:index', component: BlockDetailsComponent },
+      { path: 'stats', component: StatsIndexComponent },
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
       { path: 'transaction/:hash/:nodeid', component: TxUnconfirmedComponent },

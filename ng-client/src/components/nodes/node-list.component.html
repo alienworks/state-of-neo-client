@@ -22,7 +22,7 @@
                             style="width: 200px !important; display: inline-block; height: 34px !important">
                     </ngx-select-dropdown>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 text-right">
                     <div>Type</div>
                     <select [(ngModel)]="typeFilter" (change)="filter()" class="select-filter">
                         <option value="">All</option>
@@ -30,7 +30,7 @@
                         <option value="REST">REST</option>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 text-right">
                     <div>Status</div>
                     <select [(ngModel)]="statusFilter" (change)="filter()" class="select-filter">
                         <option value="">All</option>
