@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let block of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }"
+                <tr *ngFor="let block of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }"
                     @fadeIn>
                     <td>
                         <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">

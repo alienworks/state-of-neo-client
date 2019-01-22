@@ -10,7 +10,8 @@ import { PageResultModel, HeaderInfoModel } from '../../models';
 })
 export class BlockIndexComponent implements OnInit {
     blocks: PageResultModel<BlockListModel>;
-    page = 1;
+    page: number = 1;
+    pageSize: number = 32;
     headerUpdate = new EventEmitter<HeaderInfoModel>();
 
     constructor(
@@ -44,7 +45,8 @@ export class BlockIndexComponent implements OnInit {
     }
 
     getPage(page: number): void {
-        this.blockService.getBlocksPage(page, 32)
+        this.page = page;
+        this.blockService.getBlocksPage(page, this.pageSize)
             .subscribe(x => {
                 this.blocks = x;
             }, err => {

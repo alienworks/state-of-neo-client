@@ -1,6 +1,16 @@
 <div class="row">
     <div class="col-md-8 col-sm-8 col-xs-12">
-        <div class="panel-body">            
+        <div class="panel-body">
+            <div class="pull-right">
+                <div>Page size</div>
+                <select [(ngModel)]="pageSize" (change)="getPage(page)" class="pull-right">
+                    <option [ngValue]="8">8</option>
+                    <option [ngValue]="16">16</option>
+                    <option [ngValue]="32">32</option>
+                    <option [ngValue]="64">64</option>
+                </select>
+            </div>
+            <div class="clearfix"></div>  
             <div style="margin-top: 20px">
                 <app-block-list-table [model]="blocks" (emitGetPage)="getPage($event)"></app-block-list-table>
             </div>
