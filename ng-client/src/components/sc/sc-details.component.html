@@ -4,7 +4,7 @@
             <div class="panel-body">
                 <!-- <h4 class="text-grey" style="margin-top: 0; ">{{model.name}}</h4> -->
                 <h5 class="text-grey margin-bottom-10 bold">General Information</h5>
-                <table class="table no-top-border-first-row">
+                <table class="table no-top-border-first-row" *ngIf="model">
                     <tbody>
                         <tr>
                             <td>Hash</td>
@@ -63,9 +63,36 @@
         <div class="panel panel-default">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">NOTIFICATIONS</h2>
+                <span>
+                    <button (click)="togglePause()" class="btn {{!pausedNotifications ? 'btn-default': 'btn-success'}} text-center">
+                        <i class="fas {{!pausedNotifications ? 'fa-pause': 'fa-play'}} no-padding"></i>
+                    </button>
+                </span>
             </header>
             <div class="panel-body">
-
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6 col-sm-4 col-xs-4">Time</th>
+                            <th class="col-md-6 col-sm-4 col-xs-4">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr title="notification.values.join(' | ')'" *ngFor="let notification of currentNotifications">
+                            <td title="{{notification.timestamp | stampToDate}}">
+                                {{notification.timestamp | stampToDate | timeAgo}}
+                            </td>
+                            <td>
+                                {{notification.type}}
+                            </td>
+                            <!-- <td style="width: 100%; overflow: hidden;">
+                                <span *ngFor="let value of notification.values; let i = index" title="{{i === 0 ? notification.type : 'This is hex string representation'}}">
+                                    {{value}} {{i === notification.values.length - 1 ? '' : '|'}}
+                                </span>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 

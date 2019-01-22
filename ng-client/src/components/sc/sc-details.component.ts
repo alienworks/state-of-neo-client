@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonStateService } from 'src/core/services';
 import { SmartContractService } from 'src/core/services/data';
-import { SmartContractDetailsModel } from 'src/models';
+import { SmartContractDetailsModel, NotificationModel } from 'src/models';
+import { NotificationsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     templateUrl: './sc-details.component.html'
 })
-export class SmartContractDetailsComponent implements OnInit {
+export class SmartContractDetailsComponent implements OnInit, OnDestroy {
     model: SmartContractDetailsModel;
     isLoading: boolean;
     hash: string;
+    currentNotifications: NotificationModel[];
+    allNotifications: NotificationModel[];
+    pausedNotifications = false;
 
     constructor(
         private route: ActivatedRoute,
-        private state: CommonStateService, 
-        private scService: SmartContractService
+        private state: CommonStateService,
+        private scService: SmartContractService,
+        private notificationsSignalR: NotificationsSignalRService
     ) { }
 
     ngOnInit(): void {
@@ -34,5 +39,29 @@ export class SmartContractDetailsComponent implements OnInit {
                     console.log(x);
                 }, err => console.log(err));
         });
+
+        this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
+            this.allNotifications = x;
+
+            if (!this.pausedNotifications) {
+                this.currentNotifications = this.allNotifications;
+            }
+        });
+
+        this.notificationsSignalR.connectionEstablished.subscribe((x: Boolean) => {
+            if (x) {
+                this.notificationsSignalR.invokeOnServerEvent('TrackContract', this.hash);
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.notificationsSignalR.invokeOnServerEvent('Unsubscribe', this.hash);
+    }
+
+    togglePause() {
+        this.pausedNotifications = !this.pausedNotifications;
+
+        if (!this.pausedNotifications) this.currentNotifications = this.allNotifications;
     }
 }
