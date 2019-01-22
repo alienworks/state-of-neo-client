@@ -4,7 +4,7 @@ import { NodeService } from '../../core/services/data/node.service';
 import { BlockService } from '../../core/services/data/block.service';
 import { CommonStateService } from '../../core/services';
 
-import * as vis from 'vis';
+import { Network } from 'vis';
 
 @Component({
     templateUrl: `./node-details.component.html`
@@ -17,9 +17,8 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     interval: number;
 
     // VIS
-    nodes: any;
-    edges: any;
-    network: any;
+    network: Network;
+    oldPeers = new Set<string>();
 
     constructor(
         private route: ActivatedRoute,
@@ -78,7 +77,6 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
             this._nodeService.getRawMemPool(this.node);
             this._nodeService.getBlockCount(this.node, true);
             this._nodeService.getVersion(this.node);
-            // this._nodeService.getConnectionsCount(this.node);
             this._nodeService.getPeers(this.node, true);
             this._nodeService.getWalletState(this.node);
             this._nodeService.getWsState(this.node);
@@ -98,36 +96,59 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     drawGraph() {
         if (!this.node.connectedPeers && this.node.connectedPeers.length === 0) return;
 
+        if (this.oldPeers.size > 0) {
+            let foundDiscrepancy = false;
+
+            for (const peer of this.node.connectedPeers) {
+                const address = peer.address.startsWith('::ffff:') ? peer.address.substring(7) : peer.address;
+
+                if (!this.oldPeers.has(address)) {
+                    foundDiscrepancy = true;
+                    break;
+                }
+            }
+
+            if (!foundDiscrepancy) return;
+        }
+
         // create people.
         // value corresponds with the age of the person
-        this.nodes = [{ id: 1, value: 1, label: this.node.url }];
+        this.oldPeers = new Set<string>();
+        const nodes = [{ id: 1, value: 1, label: this.node.url }];
         for (let i = 0; i < this.node.connectedPeers.length; i++) {
             const peer = this.node.connectedPeers[i];
             const address = peer.address.startsWith('::ffff:') ? peer.address.substring(7) : peer.address;
             const peerName = this._nodeService.getNodeNameByIp(address);
-            this.nodes.push({ id: i + 2, value: 1, label: peerName });
+            nodes.push({ id: i + 2, value: 1, label: peerName });
+            this.oldPeers.add(address);
         }
 
         // create connections between people
         // value corresponds with the amount of contact between two people
-        this.edges = [];
-        for (const peer of this.nodes) {
+        const edges = [];
+        for (const peer of nodes) {
             if (peer.id === 1) continue;
 
-            this.edges.push({ from: peer.id, to: 1 });
+            edges.push({ from: peer.id, to: 1 });
         }
 
-        // Instantiate our network object.
-        const container = document.getElementById('mynetwork');
         const data = {
-            nodes: this.nodes,
-            edges: this.edges
+            nodes: nodes,
+            edges: edges
         };
-        const options = {
-            nodes: {
-                shape: 'dot',
-            }
-        };
-        this.network = new vis.Network(container, data, options);
+
+        if (!this.network) {
+            const container = document.getElementById('mynetwork');
+
+            const options = {
+                nodes: {
+                    shape: 'dot',
+                }
+            };
+
+            this.network = new Network(container, data, options);
+        } else {
+            this.network.setData(data);
+        }
     }
 }
