@@ -6,7 +6,8 @@ import { SmartContractDetailsModel, NotificationModel } from 'src/models';
 import { NotificationsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
-    templateUrl: './sc-details.component.html'
+    templateUrl: './sc-details.component.html',
+    styleUrls: ['./sc-details.component.css']
 })
 export class SmartContractDetailsComponent implements OnInit, OnDestroy {
     model = new SmartContractDetailsModel();
