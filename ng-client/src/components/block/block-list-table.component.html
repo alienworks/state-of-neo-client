@@ -7,13 +7,13 @@
             <thead>
                 <tr>
                     <th class="col-md-1">Height</th>
-                    <th class="col-md-1">Age</th>
-                    <th class="col-md-3">Hash</th>
-                    <th class="col-md-3">Validator</th>
+                    <th class="col-md-2">Age</th>
                     <th class="col-md-1">Time</th>
                     <th class="col-md-1">Fees</th>
                     <th class="col-md-1">Tx</th>
                     <th class="col-md-1">Size</th>
+                    <th class="col-md-2">Hash</th>
+                    <th class="col-md-3">Validator</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,16 +25,20 @@
                         </a>
                     </td>
                     <td>{{block.timestamp | stampToDate | timeAgo }}</td>
-                    <td>
-                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">
-                            {{ (block.hash.length > 16) ? (block.hash | slice:0:16) + '..': (block.hash) }}
-                        </a>
-                    </td>
-                    <td>{{ (block.validatorAddress.length > 16) ? (block.validatorAddress | slice:0:16) + '..': (block.validatorAddress) }}</td>
                     <td>{{ block.timeInSeconds }} s.</td>
                     <td title="GAS">{{block.collectedFees | number: '1.0-8'}}</td>
                     <td>{{block.transactionsCount}}</td>
                     <td title="bytes">{{block.size | number}}</td>
+                    <td>
+                        <a routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" title="{{block.height}}">
+                            {{ (block.hash.length > 12) ? (block.hash | slice:0:14) + '..': (block.hash) }}
+                        </a>
+                    </td>
+                    <td>                        
+                        <a routerLink="/address/{{block.validator}}" routerLinkActive="router-link-active" title="{{block.validator}}">
+                            {{ (block.validator.length > 16) ? (block.validator | slice:0:16) + '..': (block.validator) }}
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -13,13 +13,15 @@
                 </a>
             </td>
             <td class="col-md-3" style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
-                <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{tx.finalizedAt | timeAgo}}</div>
+                <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                    <small>{{tx.finalizedAt | timeAgo}}</small>
+                </div>
             </td>
         </tr>
     </tbody>
 </table>
 
-<div class="col-md-12 text-center">
+<div class="text-center">
     <div style="padding-top: 25px">
         <div class="spinner" [ngClass]="{ 'hidden': !isLoading }"></div>
         <pagination-controls (pageChange)="update($event)" id="server"></pagination-controls>

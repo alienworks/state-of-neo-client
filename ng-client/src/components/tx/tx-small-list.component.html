@@ -18,17 +18,15 @@
                     </a>
                 </td>
                 <td class="col-md-3" title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                    {{tx.finalizedAt | timeAgo}}
+                    <small>{{tx.finalizedAt | timeAgo}}</small>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div class="col-md-12 text-center">
-        <div style="padding-top: 25px">
-            <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-            <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
-        </div>
+    <div class="text-center" style="padding-top: 25px">
+        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+        <pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>
     </div>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>

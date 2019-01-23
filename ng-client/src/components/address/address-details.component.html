@@ -31,7 +31,7 @@
                 <div class="col-md-4 text-right">
                     <app-pie-chart *ngIf="address" 
                         [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" 
-                        [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount">
+                        [label]="'Transactions'">
                     </app-pie-chart>
                 </div>
             </div>
