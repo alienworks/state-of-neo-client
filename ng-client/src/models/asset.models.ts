@@ -10,6 +10,7 @@ export class TransactedAssetModel {
     assetType: AssetTypeEnum;
     fromAddress: string;
     toAddress: string;
+    name: string;
 }
 
 export enum AssetTypeEnum {

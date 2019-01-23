@@ -8,7 +8,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let tx of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
+        <tr *ngFor="let tx of model.items | paginate: { id: 'server', itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }"
+            @fadeIn>
             <td style="padding-top: 5px; padding-bottom: 5px" title="{{getTypeName(tx.type)}}">
                 <a routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="font-size: 1.6em">
                     <app-tx-icon [type]="tx.type"></app-tx-icon>

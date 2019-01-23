@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { PageResultModel, BaseTxModel } from '../../models';
 import { TxService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
-import { StatsSignalRService } from 'src/core/services/signal-r';
+import { StatsSignalRService, TransactionSignalRService } from 'src/core/services/signal-r';
 
 @Component({
     templateUrl: './tx-index.component.html'
@@ -12,7 +12,7 @@ export class TxIndexComponent implements OnInit {
     count: number;
     claimedGas: number;
     totalClaimedUpdate = new EventEmitter<number>();
-    type: string = '';
+    type = '';
     txTypes: any = [
         { label: 'All', value: '' },
         { label: 'Miner', value: '0' },
@@ -23,16 +23,17 @@ export class TxIndexComponent implements OnInit {
         { label: 'Contract', value: '128' },
         { label: 'State', value: '144' },
         { label: 'Publish', value: '208' },
-        { label: 'Invocation', value: '209' },
-        
+        { label: 'Invocation', value: '209' }
     ];
-    page: number = 1;
-    pageSize: number = 16;
+    page = 1;
+    pageSize = 16;
+    newTransactionsEvent = new EventEmitter<BaseTxModel[]>();
 
     constructor(
         private txService: TxService,
         private state: CommonStateService,
-        private statsSrService: StatsSignalRService) { }
+        private statsSrService: StatsSignalRService,
+        private txSignalRService: TransactionSignalRService) { }
 
     ngOnInit() {
         this.state.changeRoute('transactions');
@@ -44,7 +45,31 @@ export class TxIndexComponent implements OnInit {
             return this.claimedGas = x;
         });
 
-        this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
+        this.statsSrService.connectionEstablished.subscribe((x: boolean) => {
+            if (x) {
+                this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
+            }
+        });
+
+        this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
+        this.newTransactionsEvent.subscribe((x: BaseTxModel[]) => {
+            if (x.length < this.pageSize) {
+                for (const iterator of x) {
+                    this.transactions.items.pop();
+                }
+                for (const tx of x) {
+                    this.transactions.items.unshift(tx);
+                }
+            } else {
+                this.transactions.items = x;
+            }
+        });
+
+        this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
+            if (x) {
+                this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+            }
+        });
     }
 
     getPage(page: number): void {

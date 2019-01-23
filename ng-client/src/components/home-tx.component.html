@@ -1,28 +1,32 @@
-<div class="tx-container" routerLink="/transaction/{{model.hash}}" routerLinkActive="router-link-active" style="cursor: pointer">    
+<div class="tx-container" routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="cursor: pointer"
+    *ngFor="let tx of transactions" @fadeIn>
     <div class="row home-tx-container no-padding">
-        <div class="col-md-2 no-padding text-center" 
-            style="margin-bottom: 5px; padding-top: 5px !important" 
-            title="{{getTypeName(model.type)}}">
-            <i class="{{iconClass}}" style="font-size: 18px"></i>
+        <div class="col-md-2 no-padding text-center" style="margin-bottom: 5px; padding-top: 5px !important" title="{{getTypeName(tx.type)}}">
+            <i class="{{iconClass(tx.type)}}" style="font-size: 18px"></i>
             <div style="font-size: 10px">
-                <small>{{model.timestamp | stampToDate | timeAgo}}</small>
+                <small>{{tx.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
         <div class="col-md-10 no-padding" style="margin-bottom: 5px">
             <div style="padding: 0 10px; font-size: 9px">
                 <div style="font-size: 12px; margin-bottom: 5px">
-                    <strong>{{ (model.hash.length>34)? (model.hash | slice:0:32)+'..':(model.hash) }}</strong>
+                    <strong>{{ (tx.hash.length > 34)? (tx.hash | slice:0:32)+'..':(tx.hash) }}</strong>
                 </div>
-                <div *ngIf="model.from" style="margin-bottom: 5px">
-                    from <strong>{{(model.from.length>28)? (model.from | slice:0:26)+'..':(model.from)}}</strong>
+                <div>
+                    To
+                    <a routerLink="/address/{{address}}" routerLinkActive="router-link-active" *ngFor="let address of getReceivedAssetsAddresses(tx)">
+                        <strong>
+                            {{ address.length > 8 ? (address | slice:0:8) + '..' : address }}
+                        </strong>
+                    </a>
                 </div>
-                <!-- <div *ngIf="model.to" style="margin-bottom: 5px">
-                    To {{ model.to }}
-                </div> -->
-                <div *ngIf="mainAsset">
-                    amount <strong>{{mainAsset.amount}} {{mainAsset.type}}</strong>
+                <div>
+                    amount
+                    <strong *ngFor="let asset of getReceivedAssetsMap(tx) | keyvalue">
+                        {{asset.key | number: '1.0-8'}} {{asset.value}}
+                    </strong>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 </div>

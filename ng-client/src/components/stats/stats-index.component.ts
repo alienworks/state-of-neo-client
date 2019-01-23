@@ -6,13 +6,13 @@ import { StatsSignalRService } from '../../core/services/signal-r';
     templateUrl: './stats-index.component.html'
 })
 export class StatsIndexComponent implements OnInit {
-    
+
     constructor(
         private state: CommonStateService,
         private statsSignalR: StatsSignalRService
     ) {
     }
-    
+
     ngOnInit() {
         this.state.changeRoute('stats');
 

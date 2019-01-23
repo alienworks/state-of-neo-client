@@ -1,9 +1,18 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { PageResultModel, BaseTxModel, TxTypeEnum } from '../../models';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-tx-list-table',
-    templateUrl: `./tx-list-table.component.html`
+    templateUrl: `./tx-list-table.component.html`,
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: '0' }),
+                animate('.5s ease-in', style({ opacity: '1' }))
+            ])
+        ])
+    ]
 })
 export class TxListTableComponent implements OnChanges {
     @Input() model: PageResultModel<BaseTxModel>;

@@ -34,9 +34,8 @@ import {
 import {
   AssetDetailsComponent, AssetIndexComponent, AssetListComponent, AssetListTableComponent
 } from '../components/asset';
-import { 
-  SmartContractIndexComponent, SmartContractTableListComponent, 
-  SmartContractDetailsComponent 
+import {
+  SmartContractIndexComponent, SmartContractTableListComponent, SmartContractDetailsComponent
 } from '../components/sc';
 
 // Services
@@ -47,7 +46,7 @@ import {
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
-  StatsSignalRService, NotificationsSignalRService
+  StatsSignalRService, NotificationsSignalRService, TransactionSignalRService
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -58,7 +57,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent, HomeBlockComponent, HomeTxComponent, 
+    HomeComponent, HomeBlockComponent, HomeTxComponent,
     // Common
     MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
@@ -125,7 +124,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     NetService, CommonStateService,
     // SignalR services
     SignalRService,
-    StatsSignalRService, NotificationsSignalRService,
+    StatsSignalRService, NotificationsSignalRService, TransactionSignalRService,
     // Data services
     RpcService,
     NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService, SmartContractService
