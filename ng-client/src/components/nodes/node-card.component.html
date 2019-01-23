@@ -8,7 +8,7 @@
             <div class="col-md-4 col-sm-4 col-xs-4 img-container no-padding">
                 <img class="img img-thumbnail img-responsive" width="45px" height="45px" src="{{node.flagUrl}}" /><br />
             </div>
-            <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+            <div class="col-md-8 col-sm-8 col-xs-8 no-padding" style="padding-left: 5px !important">
                 <div *ngIf="node.blockCount">
                     <i class="fas fa-cube"></i>&nbsp;{{node.blockCount | number}}
                 </div>

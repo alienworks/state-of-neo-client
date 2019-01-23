@@ -115,7 +115,7 @@ body {
     color: #079098;
 }
 
-@media only screen and (max-width: 1278px) {
+@media only screen and (max-width: 1265px) {
     body {
         padding-top: 100px !important;
     }

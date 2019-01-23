@@ -7,7 +7,7 @@ table td {
     height: 500px;
 }
 
-@media only screen and (max-width: 1248px) {
+@media only screen and (max-width: 1265px) {
     .map-container {
         height: 380px;
     }

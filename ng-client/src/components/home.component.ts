@@ -38,9 +38,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
 
         // window height - header - body padding top and bottom
-        const height = $(window).height() - 50 - 70 - 20 - 20;
+        let height = $(window).height() - 50 - 60;
+        if ($(window).width() <= 1265) {
+            height -= 50;
+        }        
+
         $('#nodes-panel').css('height', height + 'px');
         $('#main-panel').css('height', height + 'px');
+
+        
     }
 
     ngOnDestroy(): void {
