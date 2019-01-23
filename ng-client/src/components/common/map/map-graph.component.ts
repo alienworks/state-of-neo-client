@@ -22,6 +22,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     graphConnections: any[];
 
     updateLinesIterator = 0;
+    iterationsDefaultCount = 3;
     initedMap = false;
 
     // tslint:disable-next-line:max-line-length
@@ -127,7 +128,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             chart.projection = new am4maps.projections.Orthographic();
 
             const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
-            slider.start = 0.5;
+            slider.start = 0.33;
             slider.margin(20, 0, 20, 0);
             slider.valign = 'middle';
             slider.align = 'center';
@@ -139,8 +140,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // Add zoom control
             chart.zoomControl = new am4maps.ZoomControl();
-
-            chart.fill = am4core.color('red');
 
             // Set initial zoom
             chart.homeZoomLevel = 0;
@@ -208,12 +207,13 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
 
     setChartConnectionsData() {
-        if (this.updateLinesIterator % 6 === 0 && this.allNodes.length > 0) {
+        if (this.updateLinesIterator % this.iterationsDefaultCount === 0 && this.allNodes.length > 0) {
             this.createConnections();
             const lineSeries = this.chart.series.values[2] as am4maps.MapLineSeries;
 
             lineSeries.data = this.graphConnections;
             this.updateLinesIterator = 1;
+            this.iterationsDefaultCount = 6;
         } else {
             if (this.updateLinesIterator !== 0) this.updateLinesIterator++;
         }
