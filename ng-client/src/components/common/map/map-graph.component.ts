@@ -24,7 +24,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
     updateLinesIterator = 1;
     defaultIterationsToWait = 2;
-    wasInitialized: boolean = false;
+    wasInitialized = false;
 
     // tslint:disable-next-line:max-line-length
     private targetSVG = `M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,
@@ -57,7 +57,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateMapInfo(): void {
-        if (this.allNodes.length == 0) {
+        if (this.allNodes.length === 0) {
             return;
         }
 
@@ -114,7 +114,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     initGraphMap(): void {
         this.zone.runOutsideAngular(() => {
             // Create map instance
-            const chart = am4core.create("chartdiv", am4maps.MapChart);
+            const chart = am4core.create('chartdiv', am4maps.MapChart);
             chart.seriesContainer.draggable = false;
             chart.seriesContainer.resizable = false;
 
@@ -140,7 +140,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // Add zoom control
             // chart.zoomControl = new am4maps.ZoomControl();
-            
+
             // Set initial zoom
             chart.homeZoomLevel = 0;
             chart.maxZoomLevel = 1;
@@ -178,6 +178,8 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             this.chart = chart;
 
             this.wasInitialized = true;
+
+            $('title:contains("Chart created using amCharts library")').parent().hide();
         });
     }
 
