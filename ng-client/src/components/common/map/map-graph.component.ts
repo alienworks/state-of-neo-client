@@ -23,6 +23,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
     updateLinesIterator = 1;
     defaultIterationsToWait = 3;
+    wasInitialized: boolean = false;
 
     // tslint:disable-next-line:max-line-length
     private targetSVG = `M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,
@@ -44,8 +45,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.allNodes = this.nodeService.allNodes;
-
-        this.initGraphMap();
         this.updateMapInfo();
 
         $('title:contains("Chart created using amCharts library")').parent().hide();
@@ -57,6 +56,14 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     updateMapInfo(): void {
+        if (this.allNodes.length == 0) {
+            return;
+        }
+
+        if (!this.wasInitialized) {
+            this.initGraphMap();
+        }
+
         this.setChartData();
         this.setChartConnectionsData();
     }
@@ -97,7 +104,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
                         connections++;
                     }
-
                 }
             }
         }
@@ -166,6 +172,8 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             lineTemplate.stroke = chart.colors.getIndex(1).brighten(-0.5);
 
             this.chart = chart;
+
+            this.wasInitialized = true;
         });
     }
 

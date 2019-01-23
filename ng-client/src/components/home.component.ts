@@ -45,8 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         $('#nodes-panel').css('height', height + 'px');
         $('#main-panel').css('height', height + 'px');
-
-        
     }
 
     ngOnDestroy(): void {
