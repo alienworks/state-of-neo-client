@@ -315,6 +315,9 @@ export class NodeService {
                                     node.lastBlockStamp = block.timestamp;
                                 }, err => console.log(err));
                         }
+
+                        this.restEnabledNodes.next(this.allNodes.filter(z => z.restEnabled).length);
+
                     }, err => {
                         console.log(err);
                         node.available = false;
@@ -322,6 +325,7 @@ export class NodeService {
                         node.restEnabled = false;
                         node.blockCount = null;
                         node.latency = null;
+                        this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
                     });
             } else if (node.service === 'neoNotification') {
                 const requestStart = Date.now();
@@ -343,6 +347,7 @@ export class NodeService {
                                     node.lastBlockStamp = block.timestamp;
                                 }, err => console.log(err));
                         }
+                        this.restEnabledNodes.next(this.allNodes.filter(z => z.restEnabled).length);
                     }, err => {
                         console.log(err);
                         node.available = false;
@@ -350,6 +355,7 @@ export class NodeService {
                         node.restEnabled = false;
                         node.blockCount = null;
                         node.latency = null;
+                        this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
                     });
             }
         } else {
@@ -371,11 +377,15 @@ export class NodeService {
                                 node.lastBlockStamp = block.timestamp;
                             }, err => console.log(err));
                     }
+
+                    this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
                 }, err => {
                     node.available = false;
                     node.checks = 0;
                     node.rpcEnabled = false;
                     node.latency = 0;
+
+                    this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
                 });
         }
     }

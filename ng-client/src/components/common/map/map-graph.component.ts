@@ -81,9 +81,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             const firstNodeConnected = firstNode.connectedPeers
                 .map(p => p.address.startsWith('::ffff:') ? p.address.substring(7) : p.address);
 
-            let connections = 0;
             for (let j = i + 1; j < this.allNodes.length; j++) {
-                if (connections > 3) break;
 
                 const secondNode = this.allNodes[j];
 
@@ -103,8 +101,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
                                 ]
                             ]
                         });
-
-                        connections++;
                     }
                 }
             }

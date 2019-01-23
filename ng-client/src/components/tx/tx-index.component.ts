@@ -51,6 +51,10 @@ export class TxIndexComponent implements OnInit {
             }
         });
 
+        if (this.statsSrService.connectionIsEstablished) {
+            this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
+        }
+
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
         this.newTransactionsEvent.subscribe((x: BaseTxModel[]) => {
             if (x.length < this.pageSize) {
@@ -70,6 +74,10 @@ export class TxIndexComponent implements OnInit {
                 this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
             }
         });
+
+        if (this.txSignalRService.connectionIsEstablished) {
+            this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+        }
     }
 
     getPage(page: number): void {

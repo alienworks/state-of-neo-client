@@ -60,14 +60,11 @@ export class ConsensusNodesListComponent implements OnInit {
         let result = ``;
         if (type === 'twitter') {
             result = `https://twitter.com/${value}`;
-        }
-        else if (type === 'facebook') {
+        } else if (type === 'facebook') {
             result = `https://www.facebook.com/${value}`;
-        }
-        else if (type === 'weibo') {
+        } else if (type === 'weibo') {
             result = `https://weibo.com/${value}`;
-        }
-        else if (type === 'github') {
+        } else if (type === 'github') {
             result = `https://github.com/${value}`;
         }
 

@@ -44,12 +44,12 @@ export class TxDetailsComponent implements OnInit {
     }
 
     get tokenAssets() {
-        return this.tx.assets.sort(x => x.amount);
+        return this.tx.assets.filter(x => x.assetType === 2).sort(x => x.amount);
     }
 
     getTypeName(): string {
         if (this.tx === null) {
-             return ''; 
+            return '';
         }
 
         return TxTypeEnum[this.tx.type].substr(0, TxTypeEnum[this.tx.type].indexOf('Transaction'));

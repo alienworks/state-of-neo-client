@@ -54,6 +54,10 @@ export class SmartContractDetailsComponent implements OnInit, OnDestroy {
                 this.notificationsSignalR.invokeOnServerEvent('TrackContract', this.hash);
             }
         });
+
+        if (this.notificationsSignalR.connectionIsEstablished) {
+            this.notificationsSignalR.invokeOnServerEvent('TrackContract', this.hash);
+        }
     }
 
     ngOnDestroy(): void {
