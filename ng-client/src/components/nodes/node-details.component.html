@@ -3,7 +3,7 @@
         <div class="panel-body" style="padding-top: 30px">
             <div class="col-md-4 stat">
                 <div class="text-center" style="margin-bottom: 25px; margin-top: 10px; font-size: 14px !important">
-                    <img class="img img-responsive img-thumbnail" src="{{node.flagUrl}}" style="max-width: 220px" />                    
+                    <img class="img img-responsive img-thumbnail" src="{{node.flagUrl}}" style="max-width: 220px" />
                     <div style="margin-top: 10px; font-size: 16px !important">
                         <span style="font-style: italic;">v. {{node.version}}</span>
                     </div>
@@ -30,17 +30,20 @@
                         <br>
                         <i class="fas fa-signal"></i> ms
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}" title="RPC server status">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.rpcEnabled ? 'text-success' : 'text-danger')}}"
+                        title="RPC server status">
                         RPC
                         <br>
                         <i class="fas {{(node.rpcEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}" title="TCP socket status">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.p2pEnabled ? 'text-success' : 'text-danger')}}"
+                        title="TCP socket status">
                         P2P
                         <br>
                         <i class="fas {{(node.p2pEnabled ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.wsStatus ? 'text-success' : 'text-danger')}}" title="Web socket status">
+                    <div class="col-md-3 col-sm-3 col-xs-3 text-center {{(node.wsStatus ? 'text-success' : 'text-danger')}}"
+                        title="Web socket status">
                         WS
                         <br>
                         <i class="fas {{(node.wsStatus ? 'fa-check-circle' : 'fa-times-circle')}}"></i>
@@ -61,10 +64,8 @@
 
                 <div class="col-md-12 stat">
                     <div *ngIf="node.trackedSeconds" style="padding-top: 40px">
-                        <app-percent-bar 
-                            [title]="'added ' + (node.firstRuntime | stampToDate | date) + ' | uptime ' + ((node.trackedSeconds / 60 / 60) | number: '1.0-2') + ' hours | updated ' + (node.latestRuntime | stampToDate | timeAgo)"
-                            [total]="node.trackedSeconds" 
-                            [current]="node.secondsOnline">
+                        <app-percent-bar [title]="'added ' + (node.firstRuntime | stampToDate | date) + ' | uptime ' + ((node.trackedSeconds / 60 / 60) | number: '1.0-2') + ' hours | updated ' + (node.latestRuntime | stampToDate | timeAgo)"
+                            [total]="node.trackedSeconds" [current]="node.secondsOnline">
                         </app-percent-bar>
                     </div>
                 </div>
@@ -75,34 +76,18 @@
                         <app-date-bar-chart [endpoint]="'node/latencychart/' + node.id" [label]="'Average Latency'"></app-date-bar-chart>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12 text-center" >
+                <div class="col-md-6 col-xs-12 text-center">
                     <div style="max-width: 350px; display: inline-block">
-                        <app-date-bar-chart *ngIf="node.type === 'RPC'" [endpoint]="'node/peerschart/' + node.id" [label]="'Average Peers'"></app-date-bar-chart>
-                        <div class="text-center bold custom-vcenter" style="min-height: 360px" *ngIf="node.type === 'REST'">NO PEERS STATS FOR REST NODES</div>
+                        <app-date-bar-chart *ngIf="node.type === 'RPC'" [endpoint]="'node/peerschart/' + node.id"
+                            [label]="'Average Peers'"></app-date-bar-chart>
+                        <div class="text-center bold custom-vcenter" style="min-height: 360px" *ngIf="node.type === 'REST'">NO
+                            PEERS STATS FOR REST NODES</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default" *ngIf="node">
-            <header class="panel-heading">
-                <h2 class="panel-title elipsis uppercase">
-                    Mempool ({{node?.pendingTransactions ? node.pendingTransactions.length : 0}})
-                </h2>
-            </header>
-            <div class="panel-body word-wraped" *ngIf="node?.pendingTransactions">
-                <div style="margin-bottom: 10px;" *ngFor="let tx of node.pendingTransactions | paginate: {itemsPerPage: 8, currentPage: p}">
-                    <a routerLink="/transaction/{{tx}}/{{node.id}}" 
-                        routerLinkActive="router-link-active">                        
-                        {{ (tx.length > 48) ? (tx | slice:0:46) + '..': (tx) }}
-                    </a>
-                </div>
-                <div class="col-md-12 padding-10 no-margin text-center">
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                </div>
-            </div>
-        </div>
         <div class="panel panel-default">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis uppercase">
@@ -111,6 +96,23 @@
             </header>
             <div class="panel-body" *ngIf="node?.connected">
                 <div id="mynetwork" style="height: 450px;"></div>
+            </div>
+        </div>
+        <div class="panel panel-default" *ngIf="node">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis uppercase">
+                    Mempool ({{node?.pendingTransactions ? node.pendingTransactions.length : 0}})
+                </h2>
+            </header>
+            <div class="panel-body word-wraped" *ngIf="node?.pendingTransactions">
+                <div style="margin-bottom: 10px;" *ngFor="let tx of node.pendingTransactions | paginate: {itemsPerPage: 8, currentPage: p}">
+                    <a routerLink="/transaction/{{tx}}/{{node.id}}" routerLinkActive="router-link-active">
+                        {{ (tx.length > 48) ? (tx | slice:0:46) + '..': (tx) }}
+                    </a>
+                </div>
+                <div class="col-md-12 padding-10 no-margin text-center">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@ export class HomeBlockComponent implements OnInit, AfterViewInit {
                 newBlock.timeInSeconds = x.timeInSeconds;
                 newBlock.collectedFees = x.collectedFees;
                 newBlock.size = x.size;
-                newBlock.validatorAddress = x.validatorAddress;
+                newBlock.validator = x.validator;
 
                 this.blocks.pop();
                 this.blocks.unshift(newBlock);

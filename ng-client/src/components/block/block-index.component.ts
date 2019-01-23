@@ -10,8 +10,8 @@ import { PageResultModel, HeaderInfoModel } from '../../models';
 })
 export class BlockIndexComponent implements OnInit {
     blocks: PageResultModel<BlockListModel>;
-    page: number = 1;
-    pageSize: number = 32;
+    page = 1;
+    pageSize = 32;
     headerUpdate = new EventEmitter<HeaderInfoModel>();
 
     constructor(
@@ -36,7 +36,7 @@ export class BlockIndexComponent implements OnInit {
                 newBlock.timeInSeconds = x.timeInSeconds;
                 newBlock.collectedFees = x.collectedFees;
                 newBlock.size = x.size;
-                newBlock.validatorAddress = x.validatorAddress;
+                newBlock.validator = x.validator;
 
                 this.blocks.items.pop();
                 this.blocks.items.unshift(newBlock);

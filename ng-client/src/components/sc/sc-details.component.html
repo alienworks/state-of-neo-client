@@ -65,13 +65,13 @@
                 <h2 class="panel-title elipsis text-grey">
                     NOTIFICATIONS
                     <span style="margin-left: 10px;">
-                        <button (click)="togglePause()" class="btn btn-sm {{!pausedNotifications ? 'btn-default': 'btn-success'}} text-center">
+                        <button title="{{!pausedNotifications ? 'Start': 'Stop'}}" (click)="togglePause()" class="btn btn-xs {{!pausedNotifications ? 'btn-default': 'btn-success'}} text-center">
                             <i class="fas {{!pausedNotifications ? 'fa-pause': 'fa-play'}} no-padding"></i>
                         </button>
                     </span>
                     <span class="pull-right text-grey">
-                        <i class="fas fa-circle fa-pulse pulse text-success" style="font-size:14px"></i>&nbsp;
-                        <span style="text-transform: lowercase">live</span>
+                        <i class="fas fa-circle {{!pausedNotifications ? 'fa-pulse pulse text-success': 'text-error'}}" style="font-size:14px"></i>&nbsp;
+                        <span style="text-transform: lowercase">{{!pausedNotifications ? 'live': 'stopped'}}</span>
                     </span>
                 </h2>
             </header>

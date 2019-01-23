@@ -8,7 +8,7 @@ export class BaseBlockModel {
 export class BlockListModel extends BaseBlockModel {
     transactionsCount: number;
     finalizedAt: Date;
-    validatorAddress: string;
+    validator: string;
     timeInSeconds: number;
     collectedFees: number;
 }
