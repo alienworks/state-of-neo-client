@@ -17,12 +17,13 @@ declare var $;
 })
 export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     private chart: am4maps.MapChart;
+    private chartSlider: am4core.Slider;
     allNodes: any[];
     graphMarkers: any[];
     graphConnections: any[];
 
     updateLinesIterator = 1;
-    defaultIterationsToWait = 3;
+    defaultIterationsToWait = 2;
     wasInitialized: boolean = false;
 
     // tslint:disable-next-line:max-line-length
@@ -62,6 +63,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (!this.wasInitialized) {
             this.initGraphMap();
+            this.chartSlider.start = 0.30;
         }
 
         this.setChartData();
@@ -110,12 +112,11 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     initGraphMap(): void {
-
         this.zone.runOutsideAngular(() => {
-            // Define marker path
-
             // Create map instance
-            const chart = am4core.create('chartdiv', am4maps.MapChart);
+            const chart = am4core.create("chartdiv", am4maps.MapChart);
+            chart.seriesContainer.draggable = false;
+            chart.seriesContainer.resizable = false;
 
             // Set map definition
             chart.geodata = am4geodata_worldLow;
@@ -125,7 +126,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             chart.projection = new am4maps.projections.Orthographic();
 
             const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
-            slider.start = 0.33;
+            slider.start = 0.31;
             slider.margin(20, 0, 20, 0);
             slider.valign = 'bottom';
             slider.align = 'center';
@@ -135,11 +136,14 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
                 chart.deltaLongitude = deltaLongitude;
             });
 
-            // Add zoom control
-            chart.zoomControl = new am4maps.ZoomControl();
+            this.chartSlider = slider;
 
+            // Add zoom control
+            // chart.zoomControl = new am4maps.ZoomControl();
+            
             // Set initial zoom
             chart.homeZoomLevel = 0;
+            chart.maxZoomLevel = 1;
 
             // Create map polygon series
             const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
@@ -201,7 +205,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
             lineSeries.data = this.graphConnections;
             this.updateLinesIterator = 1;
-            this.defaultIterationsToWait = 6;
+            this.defaultIterationsToWait = 10;
         } else {
             this.updateLinesIterator++;
         }

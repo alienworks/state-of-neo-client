@@ -5,6 +5,7 @@ table td {
 
 .map-container {
     height: 500px;
+    margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 1265px) {
