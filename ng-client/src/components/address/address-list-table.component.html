@@ -16,14 +16,12 @@
                     <td>
                         <a routerLink="/address/{{address.address}}" routerLinkActive="router-link-active">{{address.address}}</a>
                     </td>
-                    <td title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}">{{address.lastTransactionTime | timeAgo}}</td>
+                    <td title="{{address.lastTransactionTime | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                        <small>{{address.lastTransactionTime | timeAgo}}</small>
+                    </td>
                     <td>{{address.transactions | number}}</td>
-                    <td class="text-success">
-                        <small>{{getBalance(address.balances, 'NEO') | number}}</small>
-                    </td>
-                    <td class="text-success">
-                        <small>{{getBalance(address.balances, 'GAS') | number:'1.0-8'}}</small>
-                    </td>
+                    <td><small>{{getBalance(address.balances, 'NEO') | number}}</small></td>
+                    <td><small>{{getBalance(address.balances, 'GAS') | number:'1.0-8'}}</small></td>
                 </tr>
             </tbody>
         </table>              
@@ -34,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="row col-md-12 no-margin text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">
+    <div class="text-center padding-10" *ngIf="(!pageResults || pageResults.items.length == 0) && !isLoading">
         No addresses found
     </div>
 </div>

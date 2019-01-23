@@ -17,7 +17,7 @@
                         </span>
                     </div>
                     <div style="font-size: 16px !important; margin-top: 5px">
-                        <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> Wallet
+                        <i class="fas fa-wallet {{(node.isWalletOpen ? 'text-success' : 'text-danger')}}"></i> wallet
                         {{node.isWalletOpen ? '' : 'not'}} open
                     </div>
                 </div>
@@ -106,7 +106,7 @@
         <div class="panel panel-default">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis uppercase">
-                    Peers ({{node?.connected ? node?.connected : 0}})
+                    Peers ({{node?.connectedPeers?.length ? node.connectedPeers.length : 0}})
                 </h2>
             </header>
             <div class="panel-body" *ngIf="node?.connected">

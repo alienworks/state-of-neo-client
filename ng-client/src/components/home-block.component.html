@@ -1,20 +1,21 @@
 <div class="panel-body noradius padding-10 blocks-container">
     <div class="home-block-container" routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" style="cursor: pointer"
         *ngFor="let block of blocks" @fadeIn>
-        <div class="col-md-5 no-padding block-info-card" style="margin-bottom: 5px">
+        <div class="col-md-4 no-padding block-info-card" style="margin-bottom: 5px">
             <div class="custom-vcenter home-block" style="margin-bottom: -5px">
-                <small class="bold">Block {{block.height | number}}</small>
+                <small class="bold">{{block.height | number}}</small>
             </div>
-            <div class="custom-vcenter home-block" style="margin-top: -15px">
+            <div class="custom-vcenter home-block" style="margin-top: -15px; height: 40px">
                 <small>{{block.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
-        <div class="col-md-7 no-padding block-details-card" style="margin-bottom: 5px">
+        <div class="col-md-8 no-padding block-details-card" style="margin-bottom: 5px">
             <div style="padding: 0 10px">
                 <div>
-                    <small>Created by <strong>{{(block.validatorAddress.length > 8) ? (block.validatorAddress |
-                            slice:0:8) + '..':
-                            (block.validatorAddress)}}</strong></small>
+                    <small>Validator <strong>{{(block.validator.length > 14) 
+                        ? (block.validator | slice:0:12) + '..'
+                        : (block.validator)}}</strong>
+                    </small>
                 </div>
                 <div>
                     <small>{{block.transactionsCount}} tx in {{block.timeInSeconds}} s</small>

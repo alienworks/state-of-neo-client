@@ -63,11 +63,15 @@
         <div class="panel panel-default">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">
-                    NOTIFICATIONS 
+                    NOTIFICATIONS
                     <span style="margin-left: 10px;">
                         <button (click)="togglePause()" class="btn btn-sm {{!pausedNotifications ? 'btn-default': 'btn-success'}} text-center">
                             <i class="fas {{!pausedNotifications ? 'fa-pause': 'fa-play'}} no-padding"></i>
                         </button>
+                    </span>
+                    <span class="pull-right text-grey">
+                        <i class="fas fa-circle fa-pulse pulse text-success" style="font-size:14px"></i>&nbsp;
+                        <span style="text-transform: lowercase">live</span>
                     </span>
                 </h2>
             </header>

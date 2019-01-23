@@ -4,7 +4,7 @@
             <div class="panel-body text-grey">
                 <div class="col-md-8">              
                     <h4 class="text-grey" style="margin-top: 0; ">{{addressDetails.address}}</h4>
-                    <div>
+                    <div *ngIf="globalBalances && globalBalances.length">
                         <h5 class="bold text-grey" style="margin-bottom: 5px">Global Assets</h5>
                         <table class="table no-top-border-first-row">
                             <tbody>
@@ -31,7 +31,7 @@
                 <div class="col-md-4 text-right">
                     <app-pie-chart *ngIf="address" 
                         [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" 
-                        [label]="'Total Transactions - ' + transactions?.metaData.totalItemCount">
+                        [label]="'Transactions'">
                     </app-pie-chart>
                 </div>
             </div>
@@ -41,7 +41,7 @@
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">
-                    <i class="fas fa-handshake" style="margin-left: 25px; margin-right: 20px"></i> 
+                    <i class="fas fa-handshake" style="margin-left: 15px; margin-right: 20px"></i> 
                     TRANSACTIONS 
                     <span style="color: #676a6c !important" *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
                 </h2>
