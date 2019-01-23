@@ -60,6 +60,10 @@ export class HomeTxComponent implements OnInit {
                 this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
             }
         });
+
+        if (this.txSignalRService.connectionIsEstablished) {
+            this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+        }
     }
 
     iconClass(type: number): string {

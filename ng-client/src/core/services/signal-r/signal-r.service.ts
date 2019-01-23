@@ -6,7 +6,7 @@ export class SignalRService {
     messageReceived = new EventEmitter<any>();
     connectionEstablished = new EventEmitter<Boolean>();
 
-    private connectionIsEstablished = false;
+    public connectionIsEstablished = false;
     private _hubConnection: HubConnection;
 
     public init(hubUrl: string): void {
