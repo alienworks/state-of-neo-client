@@ -21,9 +21,8 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     graphMarkers: any[];
     graphConnections: any[];
 
-    updateLinesIterator = 0;
-    iterationsDefaultCount = 3;
-    initedMap = false;
+    updateLinesIterator = 1;
+    defaultIterationsToWait = 3;
 
     // tslint:disable-next-line:max-line-length
     private targetSVG = `M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,
@@ -33,7 +32,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private nodeService: NodeService, private zone: NgZone) { }
 
     ngOnInit(): void {
-        this.initedMap = false;
     }
 
     ngOnDestroy() {
@@ -48,26 +46,19 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         this.allNodes = this.nodeService.allNodes;
 
         this.initGraphMap();
-        if (this.allNodes && this.allNodes.length > 0) {
-            this.updateMapInfo();
-        }
+        this.updateMapInfo();
 
         $('title:contains("Chart created using amCharts library")').parent().hide();
 
         this.nodeService.updateNodes.subscribe(x => {
             this.allNodes = x;
-
             this.updateMapInfo();
-            this.initedMap = true;
         });
     }
 
     updateMapInfo(): void {
-        if (this.allNodes.length > 0) {
-            this.setChartData();
-            this.setChartConnectionsData();
-            // this.setChartConnectionsDataFirstTime();
-        }
+        this.setChartData();
+        this.setChartConnectionsData();
     }
 
     createConnections(): void {
@@ -130,7 +121,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             const slider = chart.chartAndLegendContainer.createChild(am4core.Slider);
             slider.start = 0.33;
             slider.margin(20, 0, 20, 0);
-            slider.valign = 'middle';
+            slider.valign = 'bottom';
             slider.align = 'center';
             slider.width = 500;
             slider.events.on('rangechanged', function (ev) {
@@ -175,8 +166,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             lineTemplate.stroke = chart.colors.getIndex(1).brighten(-0.5);
 
             this.chart = chart;
-
-            this.initedMap = true;
         });
     }
 
@@ -197,25 +186,16 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    // setChartConnectionsDataFirstTime() {
-    //     if (!this.initedMap && this.allNodes.length > 0) {
-    //         this.createConnections();
-    //         const lineSeries = this.chart.series.values[2] as am4maps.MapLineSeries;
-
-    //         lineSeries.data = this.graphConnections;
-    //     }
-    // }
-
     setChartConnectionsData() {
-        if (this.updateLinesIterator % this.iterationsDefaultCount === 0 && this.allNodes.length > 0) {
+        if (this.updateLinesIterator % this.defaultIterationsToWait === 0) {
             this.createConnections();
             const lineSeries = this.chart.series.values[2] as am4maps.MapLineSeries;
 
             lineSeries.data = this.graphConnections;
             this.updateLinesIterator = 1;
-            this.iterationsDefaultCount = 6;
+            this.defaultIterationsToWait = 6;
         } else {
-            if (this.updateLinesIterator !== 0) this.updateLinesIterator++;
+            this.updateLinesIterator++;
         }
     }
 }
