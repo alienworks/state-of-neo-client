@@ -195,3 +195,37 @@ select {
 .table.no-top-border-first-row tbody tr:first-child td {
     border-top: 0 !important;
 }
+
+.fa-pulse {
+	display: inline-block;
+	-moz-animation: pulse 3s infinite linear;
+	-o-animation: pulse 3s infinite linear;
+	-webkit-animation: pulse 3s infinite linear;
+	animation: pulse 3s infinite linear;
+}
+
+@-webkit-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-moz-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-o-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-ms-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
