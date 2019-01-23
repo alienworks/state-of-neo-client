@@ -15,7 +15,7 @@
                 <tr *ngFor="let asset of model.items | paginate: { id: 'server-' + name, itemsPerPage: model.metaData.pageSize, currentPage: model.metaData.pageNumber, totalItems: model.metaData.totalItemCount }">
                     <td><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active">{{asset.name}}</a></td>
                     <td style="word-break: break-all"><a routerLink="/asset/{{asset.hash}}" routerLinkActive="router-link-active">{{asset.hash}}</a></td>
-                    <td class="text-success">{{asset.totalSupply | number}}</td>
+                    <td>{{asset.totalSupply | number}}</td>
                 </tr>
             </tbody>
         </table>

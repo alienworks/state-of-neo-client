@@ -24,7 +24,7 @@
                             {{block.height | number}}
                         </a>
                     </td>
-                    <td>{{block.timestamp | stampToDate | timeAgo }}</td>
+                    <td><small>{{block.timestamp | stampToDate | timeAgo }}</small></td>
                     <td>{{ block.timeInSeconds }} s.</td>
                     <td title="GAS">{{block.collectedFees | number: '1.0-8'}}</td>
                     <td>{{block.transactionsCount}}</td>
