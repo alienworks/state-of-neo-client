@@ -187,7 +187,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             for (let j = 0; j < peers.length; j++) {
                 const peer = this.peers[j];
 
-                if (firstNodeConnected.includes(peer.ip)) {
+                if (firstNodeConnected.includes(peer.ip) && peer.latitude && peer.longitude) {
                     const index = this.graphConnections.findIndex(x =>
                         x.connectionBetween.includes(`node-${firstNode.id}`) &&
                         x.connectionBetween.includes(`peer-${peer.id}`));
