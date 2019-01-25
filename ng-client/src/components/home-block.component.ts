@@ -34,25 +34,25 @@ export class HomeBlockComponent implements OnInit, AfterViewInit {
         this.blocksService.getBlocksPage(1, 10)
             .subscribe(x => {
                 this.blocks = x.items;
+
+                this.stats.registerAdditionalEvent('header', this.headerUpdate);
+                this.headerUpdate.subscribe((header: HeaderInfoModel) => {
+                    if (this.blocks.findIndex(b => b.height === header.height) === -1) {
+                        const newBlock = new BlockListModel();
+                        newBlock.hash = header.hash;
+                        newBlock.height = header.height;
+                        newBlock.transactionsCount = header.transactionCount;
+                        newBlock.timestamp = header.timestamp;
+                        newBlock.timeInSeconds = header.timeInSeconds;
+                        newBlock.collectedFees = header.collectedFees;
+                        newBlock.size = header.size;
+                        newBlock.validator = header.validator;
+
+                        this.blocks.pop();
+                        this.blocks.unshift(newBlock);
+                    }
+                });
             }, err => console.log(err));
-
-        this.stats.registerAdditionalEvent('header', this.headerUpdate);
-        this.headerUpdate.subscribe((x: HeaderInfoModel) => {
-            if (this.blocks.findIndex(b => b.height === x.height) === -1) {
-                const newBlock = new BlockListModel();
-                newBlock.hash = x.hash;
-                newBlock.height = x.height;
-                newBlock.transactionsCount = x.transactionCount;
-                newBlock.timestamp = x.timestamp;
-                newBlock.timeInSeconds = x.timeInSeconds;
-                newBlock.collectedFees = x.collectedFees;
-                newBlock.size = x.size;
-                newBlock.validator = x.validator;
-
-                this.blocks.pop();
-                this.blocks.unshift(newBlock);
-            }
-        });
     }
 
     ngAfterViewInit() {

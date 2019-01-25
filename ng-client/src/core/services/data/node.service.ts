@@ -237,9 +237,9 @@ export class NodeService {
     }
 
     private checkOrAddToPeers(x: Peer, collection: Map<String, Peer>): void {
-        if (collection.has(x.address)) return;
+        if (collection.has(x.address.startsWith('::ffff:') ? x.address.substring(7) : x.address)) return;
 
-        collection.set(x.address, x);
+        collection.set(x.address.startsWith('::ffff:') ? x.address.substring(7) : x.address, x);
     }
 
     public getConnectionsCount(x: any) {

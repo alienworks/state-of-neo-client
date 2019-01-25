@@ -46,7 +46,7 @@ import {
 } from '../core/services/data';
 import { SignalRService } from '../core/services/signal-r/signal-r.service';
 import {
-  StatsSignalRService, NotificationsSignalRService, TransactionSignalRService
+  StatsSignalRService, NotificationsSignalRService, TransactionSignalRService, PeersSignalRService
 } from '../core/services/signal-r';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -124,7 +124,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     NetService, CommonStateService,
     // SignalR services
     SignalRService,
-    StatsSignalRService, NotificationsSignalRService, TransactionSignalRService,
+    StatsSignalRService, NotificationsSignalRService, TransactionSignalRService, PeersSignalRService,
     // Data services
     RpcService,
     NodeService, BlockService, TxService, ChartService, AddressService, AssetService, SearchService, SmartContractService

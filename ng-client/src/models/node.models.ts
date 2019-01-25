@@ -45,3 +45,12 @@ export class Peer {
     address: string;
     port: number;
 }
+
+export class ApiPeerModel extends Peer {
+    id: number;
+    ip: string;
+    longitude: number;
+    latitude: number;
+    flagUrl: string;
+    nodeId: number;
+}
