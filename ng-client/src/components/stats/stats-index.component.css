@@ -1,0 +1,22 @@
+.table>tbody>tr>td {
+    line-height: 60px !important;    
+}
+
+/* .table>tbody>tr:last-of-type>td {
+    border-bottom: 1px solid #ddd !important;
+} */
+
+.chart-container {
+    max-width: 400px !important; 
+    margin: auto !important;
+}
+
+.stats-divider {
+    margin-top: 60px; 
+    margin-bottom: 60px; 
+    width: 90%
+}
+
+.table>tbody>tr>td:first-of-type {
+    font-weight: bold !important;
+}
