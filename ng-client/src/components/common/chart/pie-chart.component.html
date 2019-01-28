@@ -1,7 +1,7 @@
-<div id="container-{{id}}" class="padding-10 row col-md-12 no-margin text-center">
-    <div class="col-md-12" *ngIf="label">
-        <h4 class="bold uppercase no-margin text-grey" style="white-space: nowrap">{{label}}</h4>
+<div id="container-{{id}}" class="no-padding row col-md-12 no-margin text-center">
+    <h4 *ngIf="label" class="bold uppercase no-margin text-grey" style="white-space: nowrap">{{label}}</h4>
+    <div class="padding-10">
+        <canvas height="250px" id="{{id}}"></canvas>
     </div>
-    <canvas height="250px" id="{{id}}"></canvas>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>
