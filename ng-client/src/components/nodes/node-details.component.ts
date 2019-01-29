@@ -94,7 +94,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
     }
 
     drawGraph() {
-        if (!this.node.connectedPeers && this.node.connectedPeers.length === 0) return;
+        if (!this.node.connectedPeers || this.node.connectedPeers.length === 0) return;
 
         if (this.oldPeers.size > 0) {
             let foundDiscrepancy = false;

@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Rewards'"></app-date-bar-chart>
+                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Node Rewards'"></app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -49,7 +49,7 @@
                                     <td class="col-md-6">{{ serverBlockCount | number }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Average transactions</td>
+                                    <td>Average tx</td>
                                     <td>{{ averageTransactionsPerBlock | number }}</td>
                                 </tr>
                                 <tr>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <app-date-bar-chart [endpoint]="'address/chart'" [label]="'New Addresses'"></app-date-bar-chart>
+                        <app-date-bar-chart [endpoint]="'address/chart'" [label]="'Created'"></app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-4">  
@@ -178,12 +178,8 @@
                                     <td>{{ nep5Assets | number }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Created last month</td>
-                                    <td>{{ addressesCreatedLastMonth | number }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Active last 3 months</td>
-                                    <td>{{ lastActiveAddresses | number }}</td>
+                                    <td>TBD</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -191,16 +187,58 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">                    
-                        <div class="width: 400px">
-                            TBD
-                        </div>
+                        <app-pie-chart [endpoint]="'assets/assetTypesChart'" [label]="'Types'"></app-pie-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-horizontal-bar-chart 
+                            [title]="'TOP-10 NEP-5 by transactions'"
+                            [endpoint]="'assets/tokenchart?count=10'" 
+                            [height]="'100px'"
+                            [label]="'Tokens'">
+                        </app-horizontal-bar-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr class="stats-divider">
+            <div style="margin-bottom: 50px">
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">CONTRACTS</h4>                       
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Created total</td>
+                                    <td class="col-md-6">92</td>
+                                </tr>
+                                <tr>
+                                    <td>TBD</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Created last month</td>
+                                    <td>2</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">                    
-                        <div class="width: 400px">
-                            TBD
-                        </div>
+                        <app-horizontal-bar-chart 
+                            [title]="'TOP-10 Contracts by invocations'"
+                            [endpoint]="'assets/tokenchart?count=10'" 
+                            [height]="'100px'"
+                            [label]="'Contracts'">
+                        </app-horizontal-bar-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
+                        TBD
                     </div>
                 </div>
             </div>

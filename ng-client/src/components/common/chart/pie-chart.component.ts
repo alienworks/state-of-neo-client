@@ -27,7 +27,6 @@ export class PieChartComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.endpoint.toLowerCase().split('/').join('-').split('?').join('-').split('=').join('-');
 
-
         $(`#container-${this.id}`).hide();
 
         this.chartService.getChartGet(this.endpoint)
