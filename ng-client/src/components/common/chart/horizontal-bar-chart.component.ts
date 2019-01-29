@@ -16,6 +16,8 @@ export class HorizontalBarChartComponent implements OnInit {
     @Input() endpoint: string;
     @Input() label: string;
     @Input() chartType = 'line';
+    @Input() title: string;
+    @Input() height: string;
 
     chartData: ChartDataItemModel[];
     isLoading: boolean;
@@ -25,13 +27,14 @@ export class HorizontalBarChartComponent implements OnInit {
     constructor(private chartService: ChartService) { }
 
     ngOnInit(): void {
+        this.id = this.label;
         this.getChart();
     }
 
     getChart() {
         $(`#container-${this.id}`).hide();
         this.isLoading = true;
-        this.chartService.getChart(this.endpoint, null)
+        this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
                 this.chartData = x.reverse();
                 this.initChart();
@@ -48,7 +51,7 @@ export class HorizontalBarChartComponent implements OnInit {
             }]
         };
 
-        const ctx = document.getElementById(`horizontal`);
+        const ctx = document.getElementById(this.label);
         this.chart = new Chart(ctx, {
             type: 'horizontalBar',
             data: horizontalBarChartData,
@@ -73,7 +76,7 @@ export class HorizontalBarChartComponent implements OnInit {
                 },
                 title: {
                     display: true,
-                    text: 'TOP-20 NEP-5 By transactions count'
+                    text: this.title
                 }
             }
         });
