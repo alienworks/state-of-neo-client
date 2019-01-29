@@ -21,8 +21,8 @@ export class NodeService {
     public peers = new Map<string, Peer>();
 
     public nodeBlockInfo = new BehaviorSubject<number>(0);
-    public rpcEnabledNodes = new BehaviorSubject<number>(0);
-    public restEnabledNodes = new BehaviorSubject<number>(0);
+    public rpcEnabledNodes = new BehaviorSubject<any>(null);
+    public restEnabledNodes = new BehaviorSubject<any>(null);
     public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 

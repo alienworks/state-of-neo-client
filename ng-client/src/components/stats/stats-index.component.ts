@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
-import { BlockService, AddressService, AssetService } from '../../core/services/data';
-import { UnitOfTime, AssetTypeEnum, HeaderInfoModel } from '../../models';
+import { BlockService, AddressService, AssetService, NodeService } from '../../core/services/data';
+import { UnitOfTime, AssetTypeEnum, HeaderInfoModel } from 'src/models';
 import * as CONST from '../../core/common/constants';
 
 @Component({
@@ -13,6 +13,7 @@ import * as CONST from '../../core/common/constants';
 })
 export class StatsIndexComponent implements OnInit {
     headerUpdate = new EventEmitter<HeaderInfoModel>();
+    consensusNodes: number = 0;
 
     // Block
     serverBlockCount: number;
@@ -49,6 +50,7 @@ export class StatsIndexComponent implements OnInit {
     nep5TxCountUpdate = new EventEmitter<number>();
 
     constructor(
+        private nodeService: NodeService,
         private state: CommonStateService,
         private statsSignalR: StatsSignalRService,
         private blocks: BlockService,        
@@ -116,6 +118,9 @@ export class StatsIndexComponent implements OnInit {
 
     private subscribeToEvents() {
         this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x);
+
+        this.nodeService.getConsensusNodes()
+            .subscribe((x: Array<any>) => this.consensusNodes = x.filter((y: any) => y.Active).length);
     }
 
     private daysSinceFirstBlock(): number {

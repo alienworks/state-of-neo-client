@@ -8,33 +8,29 @@
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-6">Consensus</td>
-                                    <td class="col-md-6">7</td>
+                                    <td class="col-md-6">Consensus online</td>
+                                    <td class="col-md-6">{{consensusNodes}}</td>
                                 </tr>
                                 <tr>
-                                    <td>RPC</td>
-                                    <td>44</td>
+                                    <td>RPC online</td>
+                                    <td>{{nodeService.rpcEnabledNodes | async}}</td>
                                 </tr>
                                 <tr>
-                                    <td>REST</td>
-                                    <td>3</td>
+                                    <td>REST online</td>
+                                    <td>{{nodeService.restEnabledNodes | async}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
-                        <div class="width: 400px">
-                            <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Rewards'"></app-date-bar-chart>
-                        </div>
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Rewards'"></app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
-                        <div class="width: 400px">
-                            TBD
-                        </div>
+                    <div class="chart-container">
+                        <app-pie-chart [endpoint]="'node/NodeTypesChart'" [label]="'Discovered'"></app-pie-chart>
                     </div>
                 </div>
             </div>
