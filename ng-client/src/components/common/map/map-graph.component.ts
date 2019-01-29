@@ -12,6 +12,7 @@ import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { MapChart } from '@amcharts/amcharts4/maps';
+import { Router } from '@angular/router';
 
 am4core.useTheme(am4themes_animated);
 
@@ -46,17 +47,19 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private nodeService: NodeService,
         private zone: NgZone,
-        private peersSignalRService: PeersSignalRService
-    ) { }
+        private peersSignalRService: PeersSignalRService,
+        private router: Router) {
+
+        this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
+        this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
+    }
 
     ngOnInit(): void {
-        this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
         this.peersListInited.subscribe(x => {
             this.peers = x;
             this.checkStatus.emit();
         });
 
-        this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
         this.newPeerFound.subscribe(x => {
             this.peers.push(x);
         });
@@ -78,6 +81,12 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.chart.dispose();
             }
         });
+
+        this.nodeService.updateNodes.unsubscribe();
+
+        this.peersListInited.unsubscribe();
+        this.newPeerFound.unsubscribe();
+        this.peersSignalRService.connectionEstablished.unsubscribe();
     }
 
     ngAfterViewInit() {
@@ -257,7 +266,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
             polygonSeries.useGeodata = true;
             polygonSeries.mapPolygons.template.fill = chart.colors.getIndex(0).lighten(0.5);
 
-            this.addImageSeriesWithColor(chart, 100, 'blue');
+            this.addImageSeriesWithColor(chart, 100, 'blue', true);
             this.addImageSeriesWithColor(chart, 1, '#5cb85c');
             this.setLineSeries(chart, 6);
 
@@ -281,11 +290,21 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    addImageSeriesWithColor(chart: MapChart, index: number, color: string, borderColor: string = '#fff') {
+    addImageSeriesWithColor(chart: MapChart, index: number, color: string, clickable: boolean = false, borderColor: string = '#fff') {
         const imageSeries = chart.series.push(new am4maps.MapImageSeries());
         const imageTemplate = imageSeries.mapImages.template;
         imageTemplate.tooltipText = '{title}';
         imageTemplate.nonScaling = true;
+        imageTemplate.url = 'node/{id}';
+
+        // const that = this;
+        // if (clickable) {
+        //     imageSeries.mapImages.template.events.on('a', function (ev) {
+        //         console.log(`CLICKED`, ev.target);
+        //         console.log(`CLICKED`, this);
+        //         // that.router.navigate([`node/${ev.target.}`]);
+        //     });
+        // }
 
         // new marker introduced
         const marker = imageTemplate.createChild(am4core.Circle);
@@ -303,14 +322,16 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         const imageSeries = this.chart.series.values[1] as am4maps.MapImageSeries;
 
         for (const node of this.allNodes) {
-            if (imageSeries.data.findIndex(x => x.id === `node-${node.id}`) === -1) {
+            if (imageSeries.data.findIndex(x => x.id === node.id) === -1) {
                 imageSeries.data.push({
                     'id': node.id,
+                    'url': `node/${node.id}`,
                     'svgPath': this.targetSVG,
                     'title': node.url,
                     'latitude': node.latitude,
                     'longitude': node.longitude,
-                    'scale': 1
+                    'scale': 1,
+                    'clickable': true
                 });
             }
         }
