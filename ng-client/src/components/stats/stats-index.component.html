@@ -26,7 +26,7 @@
                 <div class="col-md-4">
                     <div class="chart-container">                    
                         <div class="width: 400px">
-                            TBD
+                            <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Rewards'"></app-date-bar-chart>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                             <tbody>
                                 <tr>
                                     <td class="col-md-6">Latest</td>
-                                    <td class="col-md-6">{{ latestBlock | number }}</td>
+                                    <td class="col-md-6">{{ serverBlockCount | number }}</td>
                                 </tr>
                                 <tr>
                                     <td>Average transactions</td>

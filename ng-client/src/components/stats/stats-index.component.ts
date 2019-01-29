@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
 import { BlockService, AddressService, AssetService } from '../../core/services/data';
-import { UnitOfTime, AssetTypeEnum } from '../../models';
+import { UnitOfTime, AssetTypeEnum, HeaderInfoModel } from '../../models';
 import * as CONST from '../../core/common/constants';
 
 @Component({
@@ -12,6 +12,8 @@ import * as CONST from '../../core/common/constants';
     ]
 })
 export class StatsIndexComponent implements OnInit {
+    headerUpdate = new EventEmitter<HeaderInfoModel>();
+
     // Block
     serverBlockCount: number;
     latestBlock: number = 0;
@@ -59,19 +61,22 @@ export class StatsIndexComponent implements OnInit {
         this.subscribeToEvents();
 
         // Blocks
-        this.statsSignalR.registerAdditionalEvent('total-block-count', this.blocksCountUpdate);
+        // this.statsSignalR.registerAdditionalEvent('total-block-count', this.blocksCountUpdate);
         this.statsSignalR.registerAdditionalEvent('total-block-time', this.blocksTotalTimeCountUpdate);
         this.statsSignalR.registerAdditionalEvent('total-block-size', this.blocksTotalSizeCountUpdate);
+        this.statsSignalR.registerAdditionalEvent('header', this.headerUpdate);
 
-        this.blocksCountUpdate.subscribe((x: number) => {
-            this.serverBlockCount = x;
+        this.headerUpdate.subscribe((x: HeaderInfoModel) => this.serverBlockCount = x.height);
 
-            if (!this.latestBlock) {
-                 this.latestBlock = this.serverBlockCount;
-            }
+        // this.blocksCountUpdate.subscribe((x: number) => {
+        //     this.serverBlockCount = x;
 
-            this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
-        });
+        //     if (!this.latestBlock) {
+        //          this.latestBlock = this.serverBlockCount;
+        //     }
+
+        //     this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
+        // });
 
         this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.averageBlockTime = x / this.serverBlockCount);
         this.blocksTotalSizeCountUpdate.subscribe((x: number) => this.averageBlockSize = x / this.serverBlockCount);
