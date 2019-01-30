@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonStateService } from 'src/core/services';
 import { SmartContractService } from 'src/core/services/data';
-import { SmartContractDetailsModel, NotificationModel } from 'src/models';
+import { SmartContractDetailsModel, NotificationModel, PageResultModel, BaseTxModel } from 'src/models';
 import { NotificationsSignalRService } from 'src/core/services/signal-r';
 
 @Component({
@@ -16,6 +16,7 @@ export class SmartContractDetailsComponent implements OnInit, OnDestroy {
     currentNotifications: NotificationModel[];
     allNotifications: NotificationModel[];
     pausedNotifications = false;
+    transactions: PageResultModel<BaseTxModel>;
 
     constructor(
         private route: ActivatedRoute,
@@ -28,15 +29,17 @@ export class SmartContractDetailsComponent implements OnInit, OnDestroy {
         this.state.changeRoute('Smart Contract');
 
         this.isLoading = true;
-        this.hash = this.route.snapshot.paramMap.get('hash');
 
         this.route.params.subscribe(params => {
             this.hash = params['hash'];
+
+            this.getTransactionsPage(1);
 
             this.scService.get(this.hash)
                 .subscribe(x => {
                     this.model = x;
                     this.isLoading = false;
+
                     console.log(x);
                 }, err => console.log(err));
         });
@@ -68,5 +71,14 @@ export class SmartContractDetailsComponent implements OnInit, OnDestroy {
         this.pausedNotifications = !this.pausedNotifications;
 
         if (!this.pausedNotifications) this.currentNotifications = this.allNotifications;
+    }
+
+    getTransactionsPage(page: number): void {
+        this.scService.getTransactionsPage(this.hash, page, 10)
+            .subscribe(x => {
+                this.transactions = x;
+            }, err => {
+                console.log(err);
+            });
     }
 }

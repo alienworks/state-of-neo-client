@@ -13,8 +13,8 @@
                 </a>
             </td>
             <td class="col-md-3" style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
-                <div title="{{tx.finalizedAt | date:'dd-MMM-yyyy | hh:mm:ss'}}">
-                    <small>{{tx.finalizedAt | timeAgo}}</small>
+                <div title="{{tx.timestamp | stampToDate | date:'dd-MMM-yyyy | hh:mm:ss'}}">
+                    <small>{{tx.timestamp | stampToDate | timeAgo}}</small>
                 </div>
             </td>
         </tr>
