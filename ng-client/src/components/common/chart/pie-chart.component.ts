@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartService } from 'src/core/services/data';
 import { ChartDataItemModel } from 'src/models';
 import * as CONST from 'src/core/common/constants';
@@ -20,12 +20,15 @@ export class PieChartComponent implements OnInit {
     isLoading: boolean;
     id: string;
 
+    isInitialized: boolean;
+
     constructor(private chartService: ChartService) { }
 
     ngOnInit(): void {
         this.id = this.endpoint.toLowerCase().split('/').join('-').split('?').join('-').split('=').join('-');
-        console.log(this.label);
+
         $(`#container-${this.id}`).hide();
+
         this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
                 this.data = x;
@@ -43,10 +46,10 @@ export class PieChartComponent implements OnInit {
         this.chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: this.getChartLabels(),
+                labels: this.chartLabels,
                 datasets: [{
                     label: this.label,
-                    data: this.getChartData(),
+                    data: this.chartData,
                     backgroundColor: CONST.ColorPalet,
                     borderWidth: 1
                 }]
@@ -58,13 +61,15 @@ export class PieChartComponent implements OnInit {
         $(`#container-${this.id}`).show(1000);
     }
 
-    private getChartLabels(): any {
-        const result = this.data.map(x => x.label.substr(0, x.label.indexOf('Transaction')));
+    get chartLabels(): any {
+        const result = this.data.map(x => x.label.indexOf('Transaction') === -1 
+            ? x.label 
+            : x.label.substr(0, x.label.indexOf('Transaction')));
+
         return result;
     }
 
-    private getChartData() {
-        const result = this.data.map(x => x.value);
-        return result;
+    get chartData() {
+        return this.data.map(x => x.value);
     }
 }

@@ -49,12 +49,12 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         private zone: NgZone,
         private peersSignalRService: PeersSignalRService,
         private router: Router) {
-
-        this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
-        this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
     }
 
     ngOnInit(): void {
+        this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
+        this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
+
         this.peersListInited.subscribe(x => {
             this.peers = x;
             this.checkStatus.emit();
@@ -81,12 +81,6 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.chart.dispose();
             }
         });
-
-        this.nodeService.updateNodes.unsubscribe();
-
-        this.peersListInited.unsubscribe();
-        this.newPeerFound.unsubscribe();
-        this.peersSignalRService.connectionEstablished.unsubscribe();
     }
 
     ngAfterViewInit() {
@@ -268,7 +262,7 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.addImageSeriesWithColor(chart, 100, 'blue', true);
             this.addImageSeriesWithColor(chart, 1, '#5cb85c');
-            this.setLineSeries(chart, 6);
+            this.setLineSeries(chart, 16);
 
             this.chart = chart;
 

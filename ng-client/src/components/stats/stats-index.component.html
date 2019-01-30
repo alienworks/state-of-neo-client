@@ -1,13 +1,248 @@
 <div class="row">
-    <div class="col-md-8 col-sm-8 col-xs-12">
-        <div class="panel-body">
-            <h4>Coming soon.</h4>
-        </div>
-    </div>
+    <div class="col-md-12">
+        <div class="panel-body" style="padding-top: 60px">
+            <div style="margin-bottom: 100px">
+                <div class="col-md-4">
+                    <div class="chart-container">      
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">NODES</h4>              
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Consensus online</td>
+                                    <td class="col-md-6">{{consensusNodes}}</td>
+                                </tr>
+                                <tr>
+                                    <td>RPC online</td>
+                                    <td>{{nodeService.rpcEnabledNodes | async}}</td>
+                                </tr>
+                                <tr>
+                                    <td>REST online</td>
+                                    <td>{{nodeService.restEnabledNodes | async}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Node Rewards'"></app-date-bar-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-pie-chart [endpoint]="'node/NodeTypesChart'" [label]="'Discovered'"></app-pie-chart>
+                    </div>
+                </div>
+            </div>
 
-    <div class="col-md-4 col-sm-4 col-xs-12">
-        <div class="panel-body">
+            <div class="clearfix"></div>            
+            <hr class="stats-divider">
 
+            <div style="margin-bottom: 100px">
+                <div class="col-md-4">
+                    <div class="chart-container">      
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">BLOCKS</h4>              
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Latest</td>
+                                    <td class="col-md-6">{{ serverBlockCount | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average tx</td>
+                                    <td>{{ averageTransactionsPerBlock | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average size</td>
+                                    <td>{{ averageBlockSize | number }} bytes</td>
+                                </tr>
+                                <tr>
+                                    <td>Average time</td>
+                                    <td>{{ averageBlockTime | number }} seconds</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
+                        <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Average Time'" [title]="'Average time per block'"></app-date-bar-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Average Size'" [title]="'Average size for block'"></app-date-bar-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>            
+            <hr class="stats-divider">
+
+            <div style="margin-bottom: 50px;">
+                <div class="col-md-4">
+                    <div class="chart-container">   
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">TRANSACTIONS</h4>                       
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Total transactions</td>
+                                    <td class="col-md-6">{{ totalTransactions | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average tx per second</td>
+                                    <td>{{ averageTxPerSecond | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average tx per day</td>
+                                    <td>{{ averageTxPerDay | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total gas claimed</td>
+                                    <td>{{ claimedGas | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'transactions/chart'" [label]="'Count'"></app-date-bar-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Types'"></app-pie-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr class="stats-divider">
+
+            <div style="margin-bottom: 50px">
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">ADDRESSES</h4>                       
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Created total</td>
+                                    <td class="col-md-6">{{ totalAddresses | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Created last day</td>
+                                    <td>{{ addressesCreatedLastDay | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Created last month</td>
+                                    <td>{{ addressesCreatedLastMonth | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Active last 3 months</td>
+                                    <td>{{ lastActiveAddresses | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'address/chart'" [label]="'Created'"></app-date-bar-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">  
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'address/activeChart'" [label]="'Active'"></app-date-bar-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr class="stats-divider">
+
+            <div style="margin-bottom: 50px">
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">ASSETS</h4>                       
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Global</td>
+                                    <td class="col-md-6">{{ totalAssets | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tokens</td>
+                                    <td>{{ nep5Assets | number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>TBD</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
+                        <app-pie-chart [endpoint]="'assets/assetTypesChart'" [label]="'Types'"></app-pie-chart>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <app-horizontal-bar-chart 
+                            [title]="'TOP-10 NEP-5 by transactions'"
+                            [endpoint]="'assets/tokenchart?count=10'" 
+                            [height]="'100px'"
+                            [label]="'Tokens'">
+                        </app-horizontal-bar-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr class="stats-divider">
+            <div style="margin-bottom: 50px">
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">CONTRACTS</h4>                       
+                        <table class="table no-top-border-first-row">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Created total</td>
+                                    <td class="col-md-6">92</td>
+                                </tr>
+                                <tr>
+                                    <td>TBD</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Created last month</td>
+                                    <td>2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
+                        TBD
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
+                        <app-horizontal-bar-chart 
+                            [title]="'TOP-10 Contracts by invocations'"
+                            [endpoint]="'assets/tokenchart?count=10'" 
+                            [height]="'100px'"
+                            [label]="'Contracts'">
+                        </app-horizontal-bar-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr class="stats-divider">
         </div>
     </div>
 </div>

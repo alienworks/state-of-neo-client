@@ -26,7 +26,12 @@
     <div class="col-md-4 col-sm-4 col-xs-12" style="padding-left: 10px">
         <div class="panel-body">
             <app-total-gas-claimed></app-total-gas-claimed>
-            <app-horizontal-bar-chart [endpoint]="'assets/tokenchart'" [label]="'Tokens'"></app-horizontal-bar-chart>
+            <app-horizontal-bar-chart 
+                [endpoint]="'assets/tokenchart'" 
+                [height]="'120px'"
+                [label]="'Tokens'" 
+                [title]="'TOP-20 NEP-5 By transactions count'">
+            </app-horizontal-bar-chart>
         </div>        
     </div>
 </div>

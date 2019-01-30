@@ -21,8 +21,8 @@ export class NodeService {
     public peers = new Map<string, Peer>();
 
     public nodeBlockInfo = new BehaviorSubject<number>(0);
-    public rpcEnabledNodes = new BehaviorSubject<number>(0);
-    public restEnabledNodes = new BehaviorSubject<number>(0);
+    public rpcEnabledNodes = new BehaviorSubject<any>(null);
+    public restEnabledNodes = new BehaviorSubject<any>(null);
     public updateNodes = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
@@ -125,20 +125,15 @@ export class NodeService {
 
     updateNodesData() {
         this.allNodes.forEach(x => {
-            // this.getConnectionsCount(x);
             this.getBlockCount(x);
             this.getVersion(x);
             this.getPeers(x);
         });
 
         this.sort();
-        // this.updateAllMarkers();
-
         this.updateNodes.next(this.allNodes);
         this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
         this.restEnabledNodes.next(this.allNodes.filter(x => x.restEnabled).length);
-
-        // this.updateMarkers.emit(this.markers);
 
         if (this.peers.size > 0) {
             this.sendPeersToServerCache().subscribe(
@@ -159,26 +154,11 @@ export class NodeService {
             x.displayText = this.getNodeDisplayText(x);
             x.p2pEnabled = true;
             x.isWalletOpen = false;
+            x.checks = 0;
+            x.available = true;
             that.allNodes.push(x);
         });
     }
-
-    // updateAllMarkers(): void {
-    //     if (!this.updateAll) return;
-
-    //     const markers = [];
-    //     this.allNodes.forEach(x => {
-    //         markers.push({
-    //             id: x.id,
-    //             latLng: [x.latitude, x.longitude],
-    //             name: this.getNodeDisplayText(x),
-    //             version: x.version,
-    //             blockCount: x.blockCount
-    //         });
-    //     });
-    //     this.markers = markers;
-    //     this.updateMarkers.emit(this.markers);
-    // }
 
     public getNodeNameByIp(ip: string): string {
         for (const node of this.allNodes) {
@@ -188,40 +168,6 @@ export class NodeService {
         }
 
         return ip;
-    }
-
-    public getPeers(x: any, addCollections: boolean = false): void {
-        if (!this.updateAll || !x.available) return;
-
-        this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
-            .subscribe(res => {
-                const json = res;
-
-                if (json.result) {
-                    // tslint:disable-next-line:radix
-                    x.peers = parseInt(json.result.connected.length);
-
-                    const model = res.result as GetPeersModel;
-
-                    this.handlePeers(model);
-
-                    if (model.connected && model.connected.length > 0) {
-                        x.connected = true;
-                    }
-
-                    x.connectedPeers = model.connected;
-                } else {
-                    x.peers = 0;
-                }
-
-                if (x.peers > 0) {
-                    x.p2pEnabled = true;
-                } else {
-                    x.p2pEnabled = false;
-                }
-            }, err => {
-                x.p2pEnabled = false;
-            });
     }
 
     private handlePeers(received: GetPeersModel): void {
@@ -242,50 +188,9 @@ export class NodeService {
         collection.set(x.address.startsWith('::ffff:') ? x.address.substring(7) : x.address, x);
     }
 
-    public getConnectionsCount(x: any) {
-        if (!this.updateAll || !x.available) return;
-
-        this.nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
-            .subscribe(res => {
-                x.lastResponseTime = Date.now();
-
-                const json = res;
-                if (json.result) {
-                    // tslint:disable-next-line:radix
-                    x.connected = parseInt(json.result);
-                    x.p2pEnabled = true;
-
-                    this.sort();
-                } else {
-                    console.log(res);
-                    x.connected = null;
-                    x.p2pEnabled = false;
-                }
-            });
-    }
-
-    public getVersion(x: any) {
-        if (!this.updateAll || !x.available) return;
-
-        const requestStart = Date.now();
-        this.nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
-            .subscribe(res => {
-                const now = Date.now();
-                x.lastResponseTime = now;
-                if (x.type === 'RPC') x.latency = Math.round((now - requestStart));
-
-                const response = res;
-                x.version = response.result.useragent;
-                x.rpcEnabled = true;
-            }, err => {
-                x.rpcEnabled = false;
-                if (x.type === 'RPC') x.latency = 0;
-            });
-    }
-
     public getBlockCount(node: any, getStamp: boolean = false) {
         // if (!this.updateAll) return;
-        if (!node.available && node.checks && node.checks < 10) {
+        if (!node.available && node.checks < 10) {
             node.checks++;
             return;
         } else {
@@ -390,8 +295,86 @@ export class NodeService {
         }
     }
 
+    public getVersion(x: any) {
+        if (!this.updateAll || !x.available || x.service) {
+            return;
+        }
+
+        const requestStart = Date.now();
+        this.nodeRpcService.callMethod(x.successUrl, 'getversion', 3)
+            .subscribe(res => {
+                const now = Date.now();
+                x.lastResponseTime = now;
+                if (x.type === 'RPC') x.latency = Math.round((now - requestStart));
+
+                const response = res;
+                x.version = response.result.useragent;
+                x.rpcEnabled = true;
+            }, err => {
+                x.rpcEnabled = false;
+                
+                if (x.type === 'RPC') x.latency = 0;
+            });
+    }
+
+    public getPeers(x: any, addCollections: boolean = false): void {
+        if (!this.updateAll || !x.available || x.service) return;
+
+        this.nodeRpcService.callMethod(x.successUrl, 'getpeers', 1)
+            .subscribe(res => {
+                const json = res;
+
+                if (json.result) {
+                    // tslint:disable-next-line:radix
+                    x.peers = parseInt(json.result.connected.length);
+
+                    const model = res.result as GetPeersModel;
+
+                    this.handlePeers(model);
+
+                    if (model.connected && model.connected.length > 0) {
+                        x.connected = true;
+                    }
+
+                    x.connectedPeers = model.connected;
+                } else {
+                    x.peers = 0;
+                }
+
+                if (x.peers > 0) {
+                    x.p2pEnabled = true;
+                } else {
+                    x.p2pEnabled = false;
+                }
+            }, err => {
+                x.p2pEnabled = false;
+            });
+    }
+
+    public getConnectionsCount(x: any) {
+        if (!this.updateAll || !x.available || x.service) return;
+
+        this.nodeRpcService.callMethod(x.successUrl, 'getconnectioncount', 1)
+            .subscribe(res => {
+                x.lastResponseTime = Date.now();
+
+                const json = res;
+                if (json.result) {
+                    // tslint:disable-next-line:radix
+                    x.connected = parseInt(json.result);
+                    x.p2pEnabled = true;
+
+                    this.sort();
+                } else {
+                    console.log(res);
+                    x.connected = null;
+                    x.p2pEnabled = false;
+                }
+            });
+    }
+
     public getRawMemPool(x: any) {
-        if (!this.updateAll || !x.available) return;
+        if (!this.updateAll || !x.available || x.service) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {
@@ -402,7 +385,7 @@ export class NodeService {
     }
 
     public getWalletState(x: any) {
-        if (!this.updateAll || !x.available) return;
+        if (!this.updateAll || !x.available || x.service) return;
 
         this.nodeRpcService.callMethod(x.successUrl, 'listaddress', 1)
             .subscribe(res => {
