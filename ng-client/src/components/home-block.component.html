@@ -1,28 +1,26 @@
 <div class="panel-body noradius padding-10 blocks-container" style="height: 255px; overflow-y: scroll">
     <div class="home-block-container" routerLink="/block/{{block.height}}" routerLinkActive="router-link-active" style="cursor: pointer"
         *ngFor="let block of blocks" @fadeIn>
-        <div class="col-md-4 no-padding block-info-card" style="margin-bottom: 5px">
+        <div class="col-md-4 no-padding" style="margin-bottom: 5px">
             <div class="custom-vcenter home-block" style="margin-bottom: -5px">
                 <small class="bold">{{block.height | number}}</small>
             </div>
-            <div class="custom-vcenter home-block text-center" style="margin-top: -15px; height: 40px">
+            <div class="custom-vcenter home-block text-center" style="margin-top: -20px; height: 35px">
                 <small>{{block.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
-        <div class="col-md-8 no-padding block-details-card" style="margin-bottom: 5px">
+        <div class="col-md-8 no-padding" style="margin-bottom: 5px">
             <div style="padding: 0 10px">
                 <div>
-                    <small>Validator <strong>{{(block.validator.length > 14) 
-                        ? (block.validator | slice:0:12) + '..'
-                        : (block.validator)}}</strong>
+                    <small>
+                        <strong>{{block.transactionsCount}}</strong> {{block.transactionsCount == 1 ? 'tx' : 'txns'}} in 
+                        <strong>{{block.timeInSeconds}}</strong> seconds
                     </small>
-                </div>
-                <div>
-                    <small>{{block.transactionsCount}} tx in {{block.timeInSeconds}} s</small>
                 </div>
                 <div>
                     <small><strong>{{block.collectedFees | number:'1.0-8'}}</strong> GAS fees</small>
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
