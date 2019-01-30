@@ -153,9 +153,7 @@
                 </div>
                 <div class="col-md-4">  
                     <div class="chart-container">
-                        <div class="width: 400px">
-                            TBD
-                        </div>
+                        <app-date-bar-chart [endpoint]="'address/activeChart'" [label]="'Active'"></app-date-bar-chart>
                     </div>
                 </div>
             </div>
@@ -170,7 +168,7 @@
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-6">Global Assets</td>
+                                    <td class="col-md-6">Global</td>
                                     <td class="col-md-6">{{ totalAssets | number }}</td>
                                 </tr>
                                 <tr>
@@ -228,17 +226,17 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">                    
+                        TBD
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">                    
                         <app-horizontal-bar-chart 
                             [title]="'TOP-10 Contracts by invocations'"
                             [endpoint]="'assets/tokenchart?count=10'" 
                             [height]="'100px'"
                             [label]="'Contracts'">
                         </app-horizontal-bar-chart>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="chart-container">                    
-                        TBD
                     </div>
                 </div>
             </div>
