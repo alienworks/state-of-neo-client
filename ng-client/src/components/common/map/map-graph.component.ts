@@ -305,16 +305,9 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
         const imageTemplate = imageSeries.mapImages.template;
         imageTemplate.tooltipText = '{title}';
         imageTemplate.nonScaling = true;
-        imageTemplate.url = 'node/{id}';
-
-        // const that = this;
-        // if (clickable) {
-        //     imageSeries.mapImages.template.events.on('a', function (ev) {
-        //         console.log(`CLICKED`, ev.target);
-        //         console.log(`CLICKED`, this);
-        //         // that.router.navigate([`node/${ev.target.}`]);
-        //     });
-        // }
+        if (clickable) {
+            imageTemplate.url = 'node/{id}';
+        }
 
         // new marker introduced
         const marker = imageTemplate.createChild(am4core.Circle);
