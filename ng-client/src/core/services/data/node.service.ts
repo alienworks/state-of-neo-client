@@ -160,14 +160,23 @@ export class NodeService {
         });
     }
 
-    public getNodeNameByIp(ip: string): string {
+    public getNodeNameByIp(ip: string): any {
+        let result = {
+            isNode: false,
+            address: ip,
+            id: null
+        };
+
         for (const node of this.allNodes) {
             if (node.ips.includes(ip)) {
-                return node.url;
+                result.address = node.url;
+                result.isNode = true;
+                result.id = node.id;
+                break;
             }
         }
 
-        return ip;
+        return result;
     }
 
     private handlePeers(received: GetPeersModel): void {
@@ -183,9 +192,15 @@ export class NodeService {
     }
 
     private checkOrAddToPeers(x: Peer, collection: Map<String, Peer>): void {
-        if (collection.has(x.address.startsWith('::ffff:') ? x.address.substring(7) : x.address)) return;
+        let peerAddress = x.address.startsWith('::ffff:') 
+            ? x.address.substring(7) 
+            : x.address;
 
-        collection.set(x.address.startsWith('::ffff:') ? x.address.substring(7) : x.address, x);
+        if (collection.has(peerAddress)) {
+            return;
+        }
+
+        collection.set(peerAddress, x);
     }
 
     public getBlockCount(node: any, getStamp: boolean = false) {
