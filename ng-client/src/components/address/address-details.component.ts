@@ -45,13 +45,13 @@ export class AddressDetailsComponent implements OnInit {
     get globalBalances() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.assetType != 'NEP5');
+            : this.addressDetails.balances.filter(x => x.assetType !== 'NEP5');
     }
 
     get tokens() {
         return this.addressDetails.balances == null
             ? []
-            : this.addressDetails.balances.filter(x => x.assetType == 'NEP5');
+            : this.addressDetails.balances.filter(x => x.assetType === 'NEP5');
     }
 
     getTransactionsPage(page: number): void {

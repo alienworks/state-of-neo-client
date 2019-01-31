@@ -60,6 +60,19 @@
         </div>
     </div>
     <div class="col-md-4">
+        <div class="panel panel-default" style="margin-bottom: 0">
+            <header class="panel-heading">
+                <h2 class="panel-title elipsis text-grey">
+                    <i class="fas fa-handshake" style="margin-left: 15px; margin-right: 20px"></i>
+                    TRANSACTIONS
+                    <span style="color: #676a6c !important" *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
+                </h2>
+            </header>
+            <div class="panel-body">
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)" *ngIf="transactions"></app-tx-small-list>
+                <app-loader *ngIf="!transactions"></app-loader>
+            </div>
+        </div>
         <div class="panel panel-default">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">
@@ -70,7 +83,8 @@
                         </button>
                     </span>
                     <span class="pull-right text-grey">
-                        <i class="fas fa-circle {{!pausedNotifications ? 'fa-pulse pulse text-success': 'text-error'}}" style="font-size:14px"></i>&nbsp;
+                        <i class="fas fa-circle {{!pausedNotifications ? 'fa-pulse pulse text-success': 'text-error'}}"
+                            style="font-size:14px"></i>&nbsp;
                         <span style="text-transform: lowercase">{{!pausedNotifications ? 'live': 'stopped'}}</span>
                     </span>
                 </h2>

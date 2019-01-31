@@ -9,24 +9,24 @@ import { RpcService } from './node-rpc.service';
 export class TxService {
     constructor(private http: HttpClient, private rpc: RpcService) { }
 
-    getPage(page: number = 1, 
-        pageSize: number = 10, 
-        blockHash: string = null, 
-        address: string = null, 
-        asset: string = null, 
+    getPage(page: number = 1,
+        pageSize: number = 10,
+        blockHash: string = null,
+        address: string = null,
+        asset: string = null,
         type: string = null) {
 
         let url = `${CONST.BASE_URL}/api/transactions/list?page=${page}&pageSize=${pageSize}`;
-        if (blockHash) { 
-            url += `&blockHash=${blockHash}`; 
+        if (blockHash) {
+            url += `&blockHash=${blockHash}`;
         }
 
-        if (address) { 
-            url += `&address=${address}`; 
+        if (address) {
+            url += `&address=${address}`;
         }
 
-        if (asset) { 
-            url += `&asset=${asset}`; 
+        if (asset) {
+            url += `&asset=${asset}`;
         }
 
         if (type || type === '0') {
