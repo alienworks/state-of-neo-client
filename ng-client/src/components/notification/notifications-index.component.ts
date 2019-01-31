@@ -1,12 +1,13 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { NotificationsSignalRService } from 'src/core/services/signal-r';
 import { CommonStateService } from 'src/core/services';
 import { NotificationModel } from 'src/models';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: './notifications-index.component.html'
 })
-export class NotificationsIndexComponent {
+export class NotificationsIndexComponent extends BaseComponent implements OnInit, OnDestroy {
     notifications: NotificationModel[];
     contract: string;
     contractFilter = false;
@@ -14,23 +15,40 @@ export class NotificationsIndexComponent {
 
     constructor(
         private state: CommonStateService,
-        private notificationsSignalR: NotificationsSignalRService
-    ) {
-        this.state.changeRoute('notifications');
-
-        this.subscribeToEvents();
+        private notificationsSignalR: NotificationsSignalRService) {
+        super();
     }
 
-    private subscribeToEvents(): void {
-        this.notificationsSignalR.allNotificationsReceive.subscribe((x: NotificationModel[]) => {
-            if (!this.contractFilter) this.notifications = x;
-        });
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
+    }
 
-        this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
-            if (this.contractFilter) this.notifications = x;
-        });
+    ngOnInit(): void {
+        this.state.changeRoute('notifications');
 
-        // this.notificationsSignalR.invokeOnServerEvent('InitInfo', 'caller');
+        this.addSubsctiption(
+            this.notificationsSignalR.allNotificationsReceive.subscribe((x: NotificationModel[]) => {
+                if (!this.contractFilter) this.notifications = x;
+            })
+        );
+
+        this.addSubsctiption(
+            this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
+                if (this.contractFilter) this.notifications = x;
+            })
+        );
+
+        this.addSubsctiption(
+            this.notificationsSignalR.connectionEstablished.subscribe((x: boolean) => {
+                if (x) {
+                    this.notificationsSignalR.invokeOnServerEvent('InitInfo', 'all');
+                }
+            })
+        );
+
+        if (this.notificationsSignalR.connectionIsEstablished) {
+            this.notificationsSignalR.invokeOnServerEvent('InitInfo', 'all');
+        }
     }
 
     subscribeToContract(hash: string) {

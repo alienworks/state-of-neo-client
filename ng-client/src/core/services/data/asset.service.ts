@@ -16,12 +16,12 @@ export class AssetService {
 
     constructor(
         private http: HttpClient,
-        private _nodeService: NodeService) {
+        private nodeService: NodeService) {
         this.subscribeToEvents();
     }
 
     private subscribeToEvents(): void {
-        this._nodeService.nodeBlockInfo.subscribe((x: number) => {
+        this.nodeService.nodeBlockInfo.subscribe((x: number) => {
             if (this.bestBlock < x) {
                 this.bestBlock = x;
                 this.bestBlockChanged.emit(this.bestBlock);
@@ -30,7 +30,9 @@ export class AssetService {
     }
 
     public getAssetsPage(page: number = 1, pageSize: number = 10, global: boolean = true) {
-        return this.http.get<PageResultModel<AssetListModel>>(`${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`);
+        return this.http.get<PageResultModel<AssetListModel>>(
+            `${CONST.BASE_URL}/api/assets/list?page=${page}&pageSize=${pageSize}&global=${global}`
+        );
     }
 
     public getAssetAddressCount(hash: string, unitOfTime: UnitOfTime = UnitOfTime.None, active: boolean = false) {

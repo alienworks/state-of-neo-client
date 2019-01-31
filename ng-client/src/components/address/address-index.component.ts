@@ -1,24 +1,27 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { AddressService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
 import { AddressListModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: './address-index.component.html'
 })
-export class AddressIndexComponent implements OnInit {
+export class AddressIndexComponent extends BaseComponent implements OnInit, OnDestroy {
     activeAddresses: PageResultModel<AddressListModel>;
     topNeo: AddressListModel[];
     topGas: AddressListModel[];
 
     totalCount: number;
     totalCountUpdate = new EventEmitter<number>();
+    totalCountSub: any;
 
     constructor(private addresses: AddressService,
         private state: CommonStateService,
         private statsService: StatsSignalRService) {
+        super();
     }
 
     ngOnInit(): void {
@@ -29,9 +32,13 @@ export class AddressIndexComponent implements OnInit {
         this.subscribeToEvents();
     }
 
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
+    }
+
     private subscribeToEvents(): void {
         this.statsService.registerAdditionalEvent('address-count', this.totalCountUpdate);
-        this.totalCountUpdate.subscribe((x: number) => this.totalCount = x);
+        this.addSubsctiption(this.totalCountUpdate.subscribe((x: number) => this.totalCount = x));
 
         this.statsService.invokeOnServerEvent(`InitInfo`, 'caller');
     }

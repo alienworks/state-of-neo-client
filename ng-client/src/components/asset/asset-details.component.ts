@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssetService, TxService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
 import { BaseTxModel, AssetDetailsModel, UnitOfTime } from '../../models';
 import { PageResultModel } from '../../models';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: `./asset-details.component.html`,
     styleUrls: ['./asset-details.component.css']
 })
-export class AssetDetailsComponent implements OnInit {
+export class AssetDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
     isLoading: boolean;
     hash: string;
     model: AssetDetailsModel = new AssetDetailsModel();
@@ -18,16 +19,19 @@ export class AssetDetailsComponent implements OnInit {
     totalAddressCount: number;
     activeAddressesLastMonth: number;
     newAddressesLastMonth: number;
+    routeSub: any;
 
     constructor(private route: ActivatedRoute,
         private assets: AssetService,
         private txService: TxService,
-        private state: CommonStateService) { }
+        private state: CommonStateService) {
+            super();
+         }
 
     ngOnInit(): void {
         this.state.changeRoute('asset');
 
-        this.route.params.subscribe(params => {
+        this.addSubsctiption(this.route.params.subscribe(params => {
             this.hash = params['hash'];
 
             this.getTransactionsPage(1);
@@ -53,7 +57,11 @@ export class AssetDetailsComponent implements OnInit {
 
                     console.log(this.model);
                 });
-        });
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     getTransactionsPage(page: number) {

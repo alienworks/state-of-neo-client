@@ -5,11 +5,12 @@ import { BlockService } from '../../core/services/data/block.service';
 import { CommonStateService } from '../../core/services';
 
 import { Network } from 'vis';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: `./node-details.component.html`
 })
-export class NodeDetailsComponent implements OnInit, OnDestroy {
+export class NodeDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
     id: number;
     node: any;
     bestBlock: number;
@@ -22,40 +23,50 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private _nodeService: NodeService,
+        private nodeService: NodeService,
         private state: CommonStateService,
-        private _blockService: BlockService) {
-
-        this._blockService.bestBlockChanged.subscribe((x: number) => {
-            this.bestBlock = x;
-        });
-
-        this.interval = window.setInterval(() => {
-            this.updateNodeInfo();
-            this.drawGraph();
-        }, 5000);
+        private blockService: BlockService) {
+        super();
     }
 
     ngOnDestroy(): void {
-        this._nodeService.stopUpdatingAll();
+        this.nodeService.stopUpdatingAll();
+        this.clearSubscriptions();
     }
 
     ngOnInit(): void {
         this.state.changeRoute('node');
 
-        this._nodeService.startUpdatingAll();
+        this.nodeService.startUpdatingAll();
 
-        this.id = +this.route.snapshot.paramMap.get('id');
+        this.addSubsctiption(
+            this.blockService.bestBlockChanged.subscribe((x: number) => {
+                this.bestBlock = x;
+            })
+        );
 
-        this._nodeService.getNode(this.id)
-            .subscribe((node: any) => {
-                this.node = node;
+        this.addSubsctiption(
+            this.interval = window.setInterval(() => {
                 this.updateNodeInfo();
+                this.drawGraph();
+            }, 5000)
+        );
 
-                if (this.node.firstRuntime) {
-                    this.node.trackedSeconds = this.getSecondsSinceTrackingStarted();
-                }
-            });
+        this.addSubsctiption(
+            this.route.params.subscribe(params => {
+                this.id = +params['id'];
+
+                this.nodeService.getNode(this.id)
+                    .subscribe((node: any) => {
+                        this.node = node;
+                        this.updateNodeInfo();
+
+                        if (this.node.firstRuntime) {
+                            this.node.trackedSeconds = this.getSecondsSinceTrackingStarted();
+                        }
+                    });
+            })
+        );
     }
 
     getClassForNodeLatency(node: any) {
@@ -74,18 +85,17 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
 
     updateNodeInfo() {
         if (this.node != null) {
-            this._nodeService.getRawMemPool(this.node);
-            this._nodeService.getBlockCount(this.node, true);
-            this._nodeService.getVersion(this.node);
-            this._nodeService.getPeers(this.node, true);
-            this._nodeService.getWalletState(this.node);
-            this._nodeService.getWsState(this.node);
+            this.nodeService.getRawMemPool(this.node);
+            this.nodeService.getBlockCount(this.node, true);
+            this.nodeService.getVersion(this.node);
+            this.nodeService.getPeers(this.node, true);
+            this.nodeService.getWalletState(this.node);
+            this.nodeService.getWsState(this.node);
         }
     }
 
     getSecondsSinceTrackingStarted(): number {
         if (this.node.secondsOnline && this.node.firstRuntime && this.node.latestRuntime) {
-            const currentDate = new Date(this.node.latestRuntime * 1000);
             const totalSeconds = this.node.latestRuntime - this.node.firstRuntime;
             return totalSeconds;
         }
@@ -118,7 +128,7 @@ export class NodeDetailsComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.node.connectedPeers.length; i++) {
             const peer = this.node.connectedPeers[i];
             const address = peer.address.startsWith('::ffff:') ? peer.address.substring(7) : peer.address;
-            const peerName = this._nodeService.getNodeNameByIp(address);
+            const peerName = this.nodeService.getNodeNameByIp(address);
             nodes.push({ id: i + 2, value: 1, label: peerName });
             this.oldPeers.add(address);
         }

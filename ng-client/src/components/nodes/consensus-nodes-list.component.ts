@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { NodeService } from '../../core/services/data/node.service';
 import { ConsensusNodeModel } from '../../models';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     selector: 'app-consensus-list',
     templateUrl: './consensus-nodes-list.component.html'
 })
-export class ConsensusNodesListComponent implements OnInit {
+export class ConsensusNodesListComponent extends BaseComponent implements OnInit {
     consensusNodes: ConsensusNodeModel[];
     candidateNodes: ConsensusNodeModel[];
 
-    constructor(private _nodeService: NodeService) { }
+    constructor(private _nodeService: NodeService) { super(); }
 
     ngOnInit(): void {
         this._nodeService.getConsensusNodes()
             .subscribe(data => {
-                console.log(data)
-                var nodes = data;
+                console.log(data);
+                const nodes = data;
 
                 this.consensusNodes = nodes.filter(x => x.Active);
                 this.candidateNodes = nodes.filter(x => !x.Active);
 
                 this.consensusNodes.sort((x, y) => {
-                    if (x.Info.Organization == 'NEO Foundation') {
+                    if (x.Info.Organization === 'NEO Foundation') {
                         return 1;
                     }
 

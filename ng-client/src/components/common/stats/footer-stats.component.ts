@@ -1,16 +1,17 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { BlockService, TxService, AddressService, AssetService } from 'src/core/services/data';
 import { UnitOfTime, AssetTypeEnum } from '../../../models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
 
 import * as CONST from './../../../core/common/constants';
+import { BaseComponent } from 'src/components/base/base.component';
 
 @Component({
     selector: `app-footer-stats`,
     templateUrl: './footer-stats.component.html',
     styleUrls: ['./footer-stats.component.css']
 })
-export class FooterStatsComponent implements OnInit {
+export class FooterStatsComponent extends BaseComponent implements OnInit, OnDestroy {
     // Blocks
     // Propertiess
     serverBlockCount: number;
@@ -57,7 +58,9 @@ export class FooterStatsComponent implements OnInit {
         private txService: TxService,
         private addrService: AddressService,
         private assetService: AssetService,
-        private statsSrService: StatsSignalRService) { }
+        private statsSrService: StatsSignalRService) {
+        super();
+    }
 
     ngOnInit(): void {
         this.subscribeToEvents();
@@ -68,31 +71,43 @@ export class FooterStatsComponent implements OnInit {
         this.statsSrService.registerAdditionalEvent('total-block-time', this.blocksTotalTimeCountUpdate);
         this.statsSrService.registerAdditionalEvent('total-block-size', this.blocksTotalSizeCountUpdate);
 
-        this.blocksCountUpdate.subscribe((x: number) => {
-            this.serverBlockCount = x;
-            if (!this.latestBlock) this.latestBlock = this.serverBlockCount;
-            this.avgTxCount = this.totalTx / this.serverBlockCount;
-        });
-        this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.avgTime = x / this.serverBlockCount);
-        this.blocksTotalSizeCountUpdate.subscribe((x: number) => {
-            this.avgSize = x / this.serverBlockCount;
-        });
+        this.addSubsctiption(
+            this.blocksCountUpdate.subscribe((x: number) => {
+                this.serverBlockCount = x;
+                if (!this.latestBlock) this.latestBlock = this.serverBlockCount;
+                this.avgTxCount = this.totalTx / this.serverBlockCount;
+            })
+        );
+        this.addSubsctiption(
+            this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.avgTime = x / this.serverBlockCount)
+        );
+        this.addSubsctiption(
+            this.blocksTotalSizeCountUpdate.subscribe((x: number) => {
+                this.avgSize = x / this.serverBlockCount;
+            })
+        );
 
         // Txs
         this.statsSrService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.totalClaimedUpdate.subscribe(x => this.claimedGas = x);
+        this.addSubsctiption(
+            this.totalClaimedUpdate.subscribe(x => this.claimedGas = x)
+        );
 
         this.statsSrService.registerAdditionalEvent('tx-count', this.txCountUpdate);
-        this.txCountUpdate.subscribe(x => {
-            this.totalTx = x;
-            this.avgTxCount = this.totalTx / this.serverBlockCount;
-            this.avgPerSecond = this.totalTx / this.secondsSinceFirstBlock();
-            this.avgPerDay = this.totalTx / this.daysSinceFirstBlock();
-        });
+        this.addSubsctiption(
+            this.txCountUpdate.subscribe(x => {
+                this.totalTx = x;
+                this.avgTxCount = this.totalTx / this.serverBlockCount;
+                this.avgPerSecond = this.totalTx / this.secondsSinceFirstBlock();
+                this.avgPerDay = this.totalTx / this.daysSinceFirstBlock();
+            })
+        );
 
         // Addresses
         this.statsSrService.registerAdditionalEvent('address-count', this.addressCountUpdate);
-        this.addressCountUpdate.subscribe((x: number) => this.totalAddressCount = x);
+        this.addSubsctiption(
+            this.addressCountUpdate.subscribe((x: number) => this.totalAddressCount = x)
+        );
 
         this.addrService.getActive()
             .subscribe(x => this.lastActiveAddresses = x);
@@ -106,19 +121,31 @@ export class FooterStatsComponent implements OnInit {
             .subscribe(x => this.nep5Assets = x);
 
         this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
-        this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x);
+        this.addSubsctiption(
+            this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x)
+        );
         this.statsSrService.registerAdditionalEvent('gas-neo-tx-count', this.neoGasTxCountUpdate);
-        this.neoGasTxCountUpdate.subscribe((x: number) => this.neoAndGasTxCount = x);
+        this.addSubsctiption(
+            this.neoGasTxCountUpdate.subscribe((x: number) => this.neoAndGasTxCount = x)
+        );
         this.statsSrService.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
-        this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x);
+        this.addSubsctiption(
+            this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x)
+        );
 
         this.statsSrService.invokeOnServerEvent(`InitInfo`, 'arg');
     }
 
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
+    }
+
     private subscribeToEvents() {
-        this.blockService.bestBlockChanged.subscribe((x: number) => {
-            this.latestBlock = x;
-        });
+        this.addSubsctiption(
+            this.blockService.bestBlockChanged.subscribe((x: number) => {
+                this.latestBlock = x;
+            })
+        );
     }
 
     private daysSinceFirstBlock(): number {

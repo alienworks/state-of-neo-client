@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { TxTypeEnum, TxAssetsModel } from '../models';
 import { TransactionSignalRService } from 'src/core/services/signal-r/tx-signal-r.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { BaseComponent } from './base/base.component';
 
 @Component({
     selector: `app-home-tx`,
@@ -16,54 +17,50 @@ import { trigger, transition, style, animate } from '@angular/animations';
         ])
     ]
 })
-export class HomeTxComponent implements OnInit {
-    model = {
-        type: 128,
-        hash: '	0xedf63b12438941683b35d0a5395138e5d5fcfc5ad4a914e8a9689cbdec064b2f',
-        from: 'Aeogee9jqqo3PJcosYVENHB7P7uLVYzHy4',
-        to: 'AFpXwLKa1LiJc3M1c7hvtgQGNM6nt1wyR3',
-        timestamp: 1547471169,
-        assets: [{
-            type: 'GAS',
-            amount: 123
-        }, {
-            type: 'NEO',
-            amount: 124
-        }]
-    };
+export class HomeTxComponent extends BaseComponent implements OnInit, OnDestroy {
     initialTransactionsEvent = new EventEmitter<TxAssetsModel[]>();
     newTransactionsEvent = new EventEmitter<TxAssetsModel[]>();
     transactions: TxAssetsModel[];
 
-    constructor(private txSignalRService: TransactionSignalRService) { }
+    constructor(private txSignalRService: TransactionSignalRService) { super(); }
 
     ngOnInit(): void {
         this.txSignalRService.registerAdditionalEvent('list', this.initialTransactionsEvent);
-        this.initialTransactionsEvent.subscribe((x: TxAssetsModel[]) => this.transactions = x);
+        this.addSubsctiption(
+            this.initialTransactionsEvent.subscribe((x: TxAssetsModel[]) => this.transactions = x)
+        );
 
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
-        this.newTransactionsEvent.subscribe((x: TxAssetsModel[]) => {
-            if (x.length < 10) {
-                for (const iterator of x) {
-                    this.transactions.pop();
+        this.addSubsctiption(
+            this.newTransactionsEvent.subscribe((x: TxAssetsModel[]) => {
+                if (x.length < 10) {
+                    for (const iterator of x) {
+                        this.transactions.pop();
+                    }
+                    for (const tx of x) {
+                        this.transactions.unshift(tx);
+                    }
+                } else {
+                    this.transactions = x;
                 }
-                for (const tx of x) {
-                    this.transactions.unshift(tx);
-                }
-            } else {
-                this.transactions = x;
-            }
-        });
+            })
+        );
 
-        this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
-            if (x) {
-                this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
-            }
-        });
+        this.addSubsctiption(
+            this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
+                if (x) {
+                    this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+                }
+            })
+        );
 
         if (this.txSignalRService.connectionIsEstablished) {
             this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
         }
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     iconClass(type: number): string {

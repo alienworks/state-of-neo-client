@@ -17,12 +17,12 @@ export class BlockService {
 
     constructor(
         private http: HttpClient,
-        private _nodeService: NodeService) {
+        private nodeService: NodeService) {
         this.subscribeToEvents();
     }
 
     private subscribeToEvents(): void {
-        this._nodeService.nodeBlockInfo.subscribe((x: number) => {
+        this.nodeService.nodeBlockInfo.subscribe((x: number) => {
             if (this.bestBlock < x) {
                 this.bestBlock = x;
                 this.bestBlockChanged.emit(this.bestBlock);

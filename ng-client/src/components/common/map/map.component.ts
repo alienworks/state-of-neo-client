@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NodeService } from '../../../core/services/data/node.service';
 import { Router } from '@angular/router';
+import { BaseComponent } from 'src/components/base/base.component';
 
 declare var $;
 
@@ -9,25 +10,27 @@ declare var $;
     templateUrl: `./map.component.html`,
     styleUrls: [`./map.component.css`]
 })
-export class MapComponent implements OnInit, OnDestroy {
+export class MapComponent extends BaseComponent implements OnInit, OnDestroy {
     mapSelector = '#world-map';
     isLoading = true;
     subscribtion: any;
 
-    constructor(private _nodeService: NodeService, private router: Router) { }
+    constructor(private _nodeService: NodeService, private router: Router) { super(); }
 
     ngOnInit(): void {
         this.subscribeToEvents();
     }
 
     ngOnDestroy(): void {
-        this.subscribtion.unsubscribe();
+        this.clearSubscriptions();
     }
 
     private subscribeToEvents() {
-        this.subscribtion = this._nodeService.updateMarkers.subscribe((markers: any[]) => {
-            this.initMap(markers);
-        });
+        this.addSubsctiption(
+            this._nodeService.updateMarkers.subscribe((markers: any[]) => {
+                this.initMap(markers);
+            })
+        );
     }
 
     private initMap(markers) {

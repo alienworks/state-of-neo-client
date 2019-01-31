@@ -1,17 +1,18 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { TxService } from '../../core/services/data';
 import { StatsSignalRService } from '../../core/services/signal-r';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     selector: 'app-total-gas-claimed',
     templateUrl: './total-gas-claimed.component.html'
 })
-export class TotalGasClaimedComponent implements OnInit {
+export class TotalGasClaimedComponent extends BaseComponent implements OnInit, OnDestroy {
     isLoading = true;
     total: number;
     totalClaimedUpdate = new EventEmitter<number>();
 
-    constructor(private txService: TxService, private statsRsService: StatsSignalRService) { }
+    constructor(private txService: TxService, private statsRsService: StatsSignalRService) { super(); }
 
     ngOnInit(): void {
 
@@ -22,7 +23,11 @@ export class TotalGasClaimedComponent implements OnInit {
             }, err => console.log(err));
 
         this.statsRsService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.totalClaimedUpdate.subscribe(x => this.total = x);
+        this.addSubsctiption(this.totalClaimedUpdate.subscribe(x => this.total = x));
 
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 }

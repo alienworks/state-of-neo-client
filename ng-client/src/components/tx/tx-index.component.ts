@@ -1,13 +1,14 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { PageResultModel, BaseTxModel } from '../../models';
 import { TxService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService, TransactionSignalRService } from 'src/core/services/signal-r';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: './tx-index.component.html'
 })
-export class TxIndexComponent implements OnInit {
+export class TxIndexComponent extends BaseComponent implements OnInit, OnDestroy {
     transactions: PageResultModel<BaseTxModel>;
     count: number;
     claimedGas: number;
@@ -33,7 +34,9 @@ export class TxIndexComponent implements OnInit {
         private txService: TxService,
         private state: CommonStateService,
         private statsSrService: StatsSignalRService,
-        private txSignalRService: TransactionSignalRService) { }
+        private txSignalRService: TransactionSignalRService) {
+        super();
+    }
 
     ngOnInit() {
         this.state.changeRoute('transactions');
@@ -41,43 +44,55 @@ export class TxIndexComponent implements OnInit {
         this.getPage(this.page);
 
         this.statsSrService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.totalClaimedUpdate.subscribe((x: number) => {
-            return this.claimedGas = x;
-        });
+        this.addSubsctiption(
+            this.totalClaimedUpdate.subscribe((x: number) => {
+                return this.claimedGas = x;
+            })
+        );
 
-        this.statsSrService.connectionEstablished.subscribe((x: boolean) => {
-            if (x) {
-                this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
-            }
-        });
+        this.addSubsctiption(
+            this.statsSrService.connectionEstablished.subscribe((x: boolean) => {
+                if (x) {
+                    this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
+                }
+            })
+        );
 
         if (this.statsSrService.connectionIsEstablished) {
             this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
         }
 
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
-        this.newTransactionsEvent.subscribe((x: BaseTxModel[]) => {
-            if (x.length < this.pageSize) {
-                for (const iterator of x) {
-                    this.transactions.items.pop();
+        this.addSubsctiption(
+            this.newTransactionsEvent.subscribe((x: BaseTxModel[]) => {
+                if (x.length < this.pageSize) {
+                    for (const iterator of x) {
+                        this.transactions.items.pop();
+                    }
+                    for (const tx of x) {
+                        this.transactions.items.unshift(tx);
+                    }
+                } else {
+                    this.transactions.items = x;
                 }
-                for (const tx of x) {
-                    this.transactions.items.unshift(tx);
-                }
-            } else {
-                this.transactions.items = x;
-            }
-        });
+            })
+        );
 
-        this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
-            if (x) {
-                this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
-            }
-        });
+        this.addSubsctiption(
+            this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
+                if (x) {
+                    this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+                }
+            })
+        );
 
         if (this.txSignalRService.connectionIsEstablished) {
             this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
         }
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     getPage(page: number): void {

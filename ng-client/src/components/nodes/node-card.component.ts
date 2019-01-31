@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { BlockService } from '../../core/services/data/block.service';
+import { BaseComponent } from '../base/base.component';
 
 declare var $;
 
@@ -8,19 +9,23 @@ declare var $;
     templateUrl: './node-card.component.html',
     styleUrls: ['./node-card.component.css']
 })
-export class NodeCardComponent {
+export class NodeCardComponent extends BaseComponent implements OnInit, OnDestroy {
     latestBlock = 0;
     @Input() node: any;
     @Input() index: number;
 
-    constructor(private _blockService: BlockService) {
-        this.subscribeToEvents();
+    constructor(private blockService: BlockService) { super(); }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
-    private subscribeToEvents() {
-        this._blockService.bestBlockChanged.subscribe((block: number) => {
-            this.latestBlock = block;
-        });
+    ngOnInit(): void {
+        this.addSubsctiption(
+            this.blockService.bestBlockChanged.subscribe((block: number) => {
+                this.latestBlock = block;
+            })
+        );
     }
 
     hoverOffNode(node: any) {
@@ -45,11 +50,11 @@ export class NodeCardComponent {
     }
 
     nodeIsBehind(node: any) {
-        return node.blockCount < this._blockService.bestBlock;
+        return node.blockCount < this.blockService.bestBlock;
     }
 
     getClassForNodeBlocks(node: any) {
-        const difference = this._blockService.bestBlock - node.blockCount;
+        const difference = this.blockService.bestBlock - node.blockCount;
         if (difference <= 1) {
             return '';
         }

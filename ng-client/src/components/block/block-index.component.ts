@@ -1,24 +1,27 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { BlockService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
 import { BlockListModel } from '../../models/block.models';
 import { PageResultModel, HeaderInfoModel } from '../../models';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: './block-index.component.html'
 })
-export class BlockIndexComponent implements OnInit {
+export class BlockIndexComponent extends BaseComponent implements OnInit, OnDestroy {
     blocks: PageResultModel<BlockListModel>;
     page = 1;
     pageSize = 32;
     headerUpdate = new EventEmitter<HeaderInfoModel>();
+    headerSub: any;
 
     constructor(
         private blockService: BlockService,
         private state: CommonStateService,
-        private stats: StatsSignalRService
-    ) { }
+        private stats: StatsSignalRService) {
+        super();
+    }
 
     ngOnInit(): void {
         this.state.changeRoute('blocks');
@@ -26,7 +29,7 @@ export class BlockIndexComponent implements OnInit {
         this.getPage(this.page);
 
         this.stats.registerAdditionalEvent('header', this.headerUpdate);
-        this.headerUpdate.subscribe((x: HeaderInfoModel) => {
+        this.addSubsctiption(this.headerUpdate.subscribe((x: HeaderInfoModel) => {
             if (this.blocks.items.findIndex(b => b.height === x.height) === -1) {
                 const newBlock = new BlockListModel();
                 newBlock.hash = x.hash;
@@ -41,7 +44,11 @@ export class BlockIndexComponent implements OnInit {
                 this.blocks.items.pop();
                 this.blocks.items.unshift(newBlock);
             }
-        });
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     getPage(page: number): void {

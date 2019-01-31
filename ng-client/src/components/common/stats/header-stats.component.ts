@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 
 import { NodeService } from 'src/core/services/data';
 import { CommonStateService } from 'src/core/services';
@@ -6,6 +6,7 @@ import { HeaderInfoModel } from 'src/models';
 import { StatsSignalRService } from 'src/core/services/signal-r';
 
 import * as CONST from 'src/core/common/constants';
+import { BaseComponent } from 'src/components/base/base.component';
 
 declare var $;
 
@@ -14,7 +15,7 @@ declare var $;
     templateUrl: './header-stats.component.html',
     styleUrls: ['./header-stats.component.css']
 })
-export class HeaderStatsComponent {
+export class HeaderStatsComponent extends BaseComponent implements OnDestroy, OnInit {
     secondsSinceLastBlock = 0;
     headerInfo: HeaderInfoModel;
     rpcNodes = 0;
@@ -26,25 +27,36 @@ export class HeaderStatsComponent {
         private statsSrService: StatsSignalRService,
         private state: CommonStateService,
         private nodeService: NodeService) {
+        super();
+    }
+
+    ngOnInit(): void {
         this.subscribeToEvents();
 
-        setInterval(() => {
-            if (this.headerInfo != null) {
-                if (this.headerInfo.createdOn != null) {
-                    const now = new Date().getTime();
-                    const then = new Date(this.headerInfo.createdOn).getTime();
-                    this.secondsSinceLastBlock = Math.floor((now - then) / 1000);
+        this.addSubsctiption(
+            setInterval(() => {
+                if (this.headerInfo != null) {
+                    if (this.headerInfo.createdOn != null) {
+                        const now = new Date().getTime();
+                        const then = new Date(this.headerInfo.createdOn).getTime();
+                        this.secondsSinceLastBlock = Math.floor((now - then) / 1000);
+                    }
                 }
-            }
-        }, 1000);
+            }, 1000)
+        );
+    }
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     private subscribeToEvents(): void {
         this.statsSrService.registerAdditionalEvent('header', this.headerUpdate);
-        this.headerUpdate.subscribe((x: HeaderInfoModel) => {
-            this.headerInfo = x;
-            this.updateBestBlock();
-        });
+        this.addSubsctiption(
+            this.headerUpdate.subscribe((x: HeaderInfoModel) => {
+                this.headerInfo = x;
+                this.updateBestBlock();
+            })
+        );
 
         this.nodeService.getConsensusNodes()
             .subscribe(x => {

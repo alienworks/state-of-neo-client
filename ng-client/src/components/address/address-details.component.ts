@@ -1,30 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from '../../core/services/data';
 import { CommonStateService } from '../../core/services';
 import { AddressDetailsModel, BaseTxModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { TxService } from '../../core/services/data';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: `./address-details.component.html`
 })
-export class AddressDetailsComponent implements OnInit {
+export class AddressDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
     isLoading: boolean;
     address: string;
     addressDetails: AddressDetailsModel = new AddressDetailsModel();
     transactions: PageResultModel<BaseTxModel>;
+    routeSubscibe: any;
 
     constructor(
         private route: ActivatedRoute,
         private addressService: AddressService,
         private state: CommonStateService,
-        private txService: TxService) { }
+        private txService: TxService) {
+        super();
+    }
 
     ngOnInit(): void {
         this.state.changeRoute('address');
 
-        this.route.params.subscribe(params => {
+        this.addSubsctiption(this.route.params.subscribe(params => {
             this.address = params['address'];
 
             this.getTransactionsPage(1);
@@ -35,7 +39,11 @@ export class AddressDetailsComponent implements OnInit {
                     this.isLoading = false;
                     this.addressDetails = x;
                 });
-        });
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     get transactionsEndpoint() {

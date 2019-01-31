@@ -4,6 +4,7 @@ import { NodeService } from '../../core/services/data/node.service';
 import { CommonStateService } from '../../core/services';
 import { PageResultModel, BaseNodeModel } from '../../models';
 import { BlockService } from '../../core/services/data';
+import { BaseComponent } from '../base/base.component';
 
 declare var $;
 
@@ -12,7 +13,7 @@ declare var $;
     templateUrl: './node-list.component.html',
     styleUrls: ['./node-list.component.css']
 })
-export class NodeListComponent implements OnInit, OnDestroy {
+export class NodeListComponent extends BaseComponent implements OnInit, OnDestroy {
     pageResults: PageResultModel<BaseNodeModel>;
     bestBlock: number;
     isLoading = false;
@@ -34,7 +35,9 @@ export class NodeListComponent implements OnInit, OnDestroy {
     constructor(
         private nodeService: NodeService,
         private state: CommonStateService,
-        private blockService: BlockService) { }
+        private blockService: BlockService) {
+        super();
+    }
 
     filter(): void {
         this.filteredNodes = this.nodes;
@@ -58,17 +61,22 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.state.changeRoute('nodes');
+        this.nodeService.startUpdatingAll();
 
         this.nodes = this.nodeService.getNodes();
-        this.nodeService.startUpdatingAll();
-        this.nodeService.updateNodes.subscribe((x: any[]) => {
-            this.nodes = x;
-            this.filter();
-            this.setNodeCountries();
-        });
+
+        this.addSubsctiption(
+            this.nodeService.updateNodes.subscribe((x: any[]) => {
+                this.nodes = x;
+                this.filter();
+                this.setNodeCountries();
+            })
+        );
 
         this.bestBlock = this.blockService.bestBlock;
-        this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block);
+        this.addSubsctiption(
+            this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block)
+        );
 
         $('.ngx-dropdown-container > .ngx-dropdown-button').css('border', '2px solid #E5E7E9');
         $('.ngx-dropdown-container > .ngx-dropdown-button').css('height', '34px');
@@ -76,6 +84,7 @@ export class NodeListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.nodeService.stopUpdatingAll();
+        this.clearSubscriptions();
     }
 
     setNodeCountries() {
@@ -88,25 +97,6 @@ export class NodeListComponent implements OnInit, OnDestroy {
         this.countries.sort((x, y) => x.location - y.location);
         this.countries = [...this.countries];
     }
-
-    // getPage(page: number): void {
-    //     this.isLoading = true;
-    //     this.nodeService.getNodesApi(page)
-    //         .subscribe(pageResults => {
-    //             this.pageResults = pageResults.json() as PageResultModel<BaseNodeModel>;
-    //             this.nodes = this.pageResults.items;
-    //             this.filteredNodes = this.nodes;
-
-    //             this.isLoading = false;
-    //             this.updateNodesList();
-
-    //             this.setNodeCountries();
-
-    //             this.interval = window.setInterval(() => {
-    //                 this.updateNodesList();
-    //             }, 5000);
-    //         });
-    // }
 
     updateNodesList() {
         this.pageResults.items.forEach(x => {

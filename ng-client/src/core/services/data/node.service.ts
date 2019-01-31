@@ -312,7 +312,7 @@ export class NodeService {
                 x.rpcEnabled = true;
             }, err => {
                 x.rpcEnabled = false;
-                
+
                 if (x.type === 'RPC') x.latency = 0;
             });
     }

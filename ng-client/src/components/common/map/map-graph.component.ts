@@ -13,6 +13,7 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { MapChart } from '@amcharts/amcharts4/maps';
 import { Router } from '@angular/router';
+import { BaseComponent } from 'src/components/base/base.component';
 
 am4core.useTheme(am4themes_animated);
 
@@ -22,7 +23,7 @@ declare var $;
     selector: 'app-map-graph',
     templateUrl: './map-graph.component.html'
 })
-export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapGraphComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     private chart: am4maps.MapChart;
     private chartSlider: am4core.Slider;
     allNodes: any[];
@@ -47,28 +48,34 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private nodeService: NodeService,
         private zone: NgZone,
-        private peersSignalRService: PeersSignalRService,
-        private router: Router) {
+        private peersSignalRService: PeersSignalRService) {
+        super();
     }
 
     ngOnInit(): void {
         this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
         this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
 
-        this.peersListInited.subscribe(x => {
-            this.peers = x;
-            this.checkStatus.emit();
-        });
+        this.addSubsctiption(
+            this.peersListInited.subscribe(x => {
+                this.peers = x;
+                this.checkStatus.emit();
+            })
+        );
 
-        this.newPeerFound.subscribe(x => {
-            this.peers.push(x);
-        });
+        this.addSubsctiption(
+            this.newPeerFound.subscribe(x => {
+                this.peers.push(x);
+            })
+        );
 
-        this.peersSignalRService.connectionEstablished.subscribe(x => {
-            if (x) {
-                this.peersSignalRService.invokeOnServerEvent('InitInfo', 'caller');
-            }
-        });
+        this.addSubsctiption(
+            this.peersSignalRService.connectionEstablished.subscribe(x => {
+                if (x) {
+                    this.peersSignalRService.invokeOnServerEvent('InitInfo', 'caller');
+                }
+            })
+        );
 
         if (this.peersSignalRService.connectionIsEstablished) {
             this.peersSignalRService.invokeOnServerEvent('InitInfo', 'caller');
@@ -81,6 +88,8 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.chart.dispose();
             }
         });
+
+        this.clearSubscriptions();
     }
 
     ngAfterViewInit() {
@@ -91,18 +100,21 @@ export class MapGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
         $('title:contains("Chart created using amCharts library")').parent().hide();
 
-        this.nodeService.updateNodes.subscribe(x => {
-            this.allNodes = x;
+        this.addSubsctiption(
+            this.nodeService.updateNodes.subscribe(x => {
+                this.allNodes = x;
 
-            this.checkStatus.emit();
-            // this.updateMapInfo();
-        });
+                this.checkStatus.emit();
+            })
+        );
 
-        this.checkStatus.subscribe(x => {
-            if (this.peers.length > 0 && this.allNodes.length > 0) {
-                this.updateMapInfo();
-            }
-        });
+        this.addSubsctiption(
+            this.checkStatus.subscribe(x => {
+                if (this.peers.length > 0 && this.allNodes.length > 0) {
+                    this.updateMapInfo();
+                }
+            })
+        );
     }
 
     updateMapInfo(): void {

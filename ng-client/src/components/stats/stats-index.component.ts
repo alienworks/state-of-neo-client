@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
 import { BlockService, AddressService, AssetService, NodeService } from '../../core/services/data';
 import { UnitOfTime, AssetTypeEnum, HeaderInfoModel } from 'src/models';
 import * as CONST from '../../core/common/constants';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
     templateUrl: './stats-index.component.html',
@@ -11,16 +12,16 @@ import * as CONST from '../../core/common/constants';
         './stats-index.component.css'
     ]
 })
-export class StatsIndexComponent implements OnInit {
+export class StatsIndexComponent extends BaseComponent implements OnInit, OnDestroy {
     headerUpdate = new EventEmitter<HeaderInfoModel>();
-    consensusNodes: number = 0;
+    consensusNodes = 0;
 
     // Block
     serverBlockCount: number;
-    latestBlock: number = 0;
-    averageBlockSize: number = 0;
-    averageBlockTime: number = 0;
-    averageTransactionsPerBlock: number = 0;    
+    latestBlock = 0;
+    averageBlockSize = 0;
+    averageBlockTime = 0;
+    averageTransactionsPerBlock = 0;
     blocksCountUpdate = new EventEmitter<number>();
     blocksTotalTimeCountUpdate = new EventEmitter<number>();
     blocksTotalSizeCountUpdate = new EventEmitter<number>();
@@ -53,10 +54,11 @@ export class StatsIndexComponent implements OnInit {
         private nodeService: NodeService,
         private state: CommonStateService,
         private statsSignalR: StatsSignalRService,
-        private blocks: BlockService,        
+        private blocks: BlockService,
         private addrService: AddressService,
-        private assetService: AssetService
-    ) { }
+        private assetService: AssetService) {
+        super();
+    }
 
     ngOnInit() {
         this.state.changeRoute('stats');
@@ -68,7 +70,7 @@ export class StatsIndexComponent implements OnInit {
         this.statsSignalR.registerAdditionalEvent('total-block-size', this.blocksTotalSizeCountUpdate);
         this.statsSignalR.registerAdditionalEvent('header', this.headerUpdate);
 
-        this.headerUpdate.subscribe((x: HeaderInfoModel) => this.serverBlockCount = x.height);
+        this.addSubsctiption(this.headerUpdate.subscribe((x: HeaderInfoModel) => this.serverBlockCount = x.height));
 
         // this.blocksCountUpdate.subscribe((x: number) => {
         //     this.serverBlockCount = x;
@@ -80,24 +82,30 @@ export class StatsIndexComponent implements OnInit {
         //     this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
         // });
 
-        this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.averageBlockTime = x / this.serverBlockCount);
-        this.blocksTotalSizeCountUpdate.subscribe((x: number) => this.averageBlockSize = x / this.serverBlockCount);
+        this.addSubsctiption(this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.averageBlockTime = x / this.serverBlockCount));
+        this.addSubsctiption(this.blocksTotalSizeCountUpdate.subscribe((x: number) => this.averageBlockSize = x / this.serverBlockCount));
 
         // Txs
         this.statsSignalR.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.totalClaimedUpdate.subscribe(x => this.claimedGas = x);
+        this.addSubsctiption(
+            this.totalClaimedUpdate.subscribe(x => this.claimedGas = x)
+        );
 
         this.statsSignalR.registerAdditionalEvent('tx-count', this.txCountUpdate);
-        this.txCountUpdate.subscribe(x => {
-            this.totalTransactions = x;
-            this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
-            this.averageTxPerSecond = this.totalTransactions / this.secondsSinceFirstBlock();
-            this.averageTxPerDay = this.totalTransactions / this.daysSinceFirstBlock();
-        });
+        this.addSubsctiption(
+            this.txCountUpdate.subscribe(x => {
+                this.totalTransactions = x;
+                this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
+                this.averageTxPerSecond = this.totalTransactions / this.secondsSinceFirstBlock();
+                this.averageTxPerDay = this.totalTransactions / this.daysSinceFirstBlock();
+            })
+        );
 
         // Addresses
         this.statsSignalR.registerAdditionalEvent('address-count', this.addressCountUpdate);
-        this.addressCountUpdate.subscribe((x: number) => this.totalAddresses = x);
+        this.addSubsctiption(
+            this.addressCountUpdate.subscribe((x: number) => this.totalAddresses = x)
+        );
 
         this.addrService.getActive().subscribe(x => this.lastActiveAddresses = x);
         this.addrService.getCreatedLast(UnitOfTime.Day).subscribe(x => this.addressesCreatedLastDay = x);
@@ -113,11 +121,25 @@ export class StatsIndexComponent implements OnInit {
         this.statsSignalR.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
         this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x);
 
-        this.statsSignalR.invokeOnServerEvent(`InitInfo`, 'arg');
+        this.addSubsctiption(
+            this.statsSignalR.connectionEstablished.subscribe((x: boolean) => {
+                if (x) {
+                    this.statsSignalR.invokeOnServerEvent(`InitInfo`, 'arg');
+                }
+            })
+        );
+
+        if (this.statsSignalR.connectionIsEstablished) {
+            this.statsSignalR.invokeOnServerEvent(`InitInfo`, 'arg');
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.clearSubscriptions();
     }
 
     private subscribeToEvents() {
-        this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x);
+        this.addSubsctiption(this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x));
 
         this.nodeService.getConsensusNodes()
             .subscribe((x: Array<any>) => this.consensusNodes = x.filter((y: any) => y.Active).length);

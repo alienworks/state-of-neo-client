@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { NodeService } from '../core/services/data/node.service';
 import { CommonStateService } from '../core/services';
+import { BaseComponent } from './base/base.component';
 
 declare var $;
 
@@ -10,13 +11,13 @@ declare var $;
     templateUrl: `./home.component.html`,
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
     allNodes: any[] = [];
 
     constructor(
         private nodeService: NodeService,
         private state: CommonStateService) {
-        this.subscribeToEvents();
+        super();
     }
 
     get savedRpc() {
@@ -29,19 +30,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.state.changeRoute('home');
-
         this.nodeService.startUpdatingAll();
+
         this.allNodes = this.nodeService.getNodes();
-        this.nodeService.updateNodes.subscribe((x: any[]) => {
-            this.allNodes = x;
-            // this.nodeService.updateAllMarkers();
-        });
+        this.addSubsctiption(
+            this.nodeService.updateNodes.subscribe((x: any[]) => {
+                this.allNodes = x;
+            })
+        );
 
         // window height - header - body padding top and bottom
         let height = $(window).height() - 50 - 60;
         if ($(window).width() <= 1265) {
             height -= 50;
-        }        
+        }
 
         $('#nodes-panel').css('height', height + 'px');
         $('#main-panel').css('height', height + 'px');
@@ -49,11 +51,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.nodeService.stopUpdatingAll();
-    }
-
-    private subscribeToEvents(): void {
-        this.nodeService.updateNodes.subscribe((nodes: any) => {
-            this.allNodes = nodes;
-        });
+        this.clearSubscriptions();
     }
 }

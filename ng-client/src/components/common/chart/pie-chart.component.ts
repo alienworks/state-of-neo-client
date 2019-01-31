@@ -32,7 +32,7 @@ export class PieChartComponent implements OnInit {
         this.chartService.getChartGet(this.endpoint)
             .subscribe(x => {
                 this.data = x;
-                
+
                 this.initChart();
             }, err => console.log(`could not load pie-chart from ${this.endpoint}`, err));
     }
@@ -62,8 +62,8 @@ export class PieChartComponent implements OnInit {
     }
 
     get chartLabels(): any {
-        const result = this.data.map(x => x.label.indexOf('Transaction') === -1 
-            ? x.label 
+        const result = this.data.map(x => x.label.indexOf('Transaction') === -1
+            ? x.label
             : x.label.substr(0, x.label.indexOf('Transaction')));
 
         return result;
