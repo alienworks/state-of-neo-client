@@ -168,16 +168,16 @@
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
+                                    <td>Total</td>
+                                    <td>{{ (totalAssets + nep5Assets) | number }}</td>
+                                </tr>
+                                <tr>
                                     <td class="col-md-6">Global</td>
                                     <td class="col-md-6">{{ totalAssets | number }}</td>
                                 </tr>
                                 <tr>
                                     <td>Tokens</td>
                                     <td>{{ nep5Assets | number }}</td>
-                                </tr>
-                                <tr>
-                                    <td>TBD</td>
-                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -209,16 +209,12 @@
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-6">Created total</td>
-                                    <td class="col-md-6">92</td>
-                                </tr>
-                                <tr>
-                                    <td>TBD</td>
-                                    <td></td>
+                                    <td class="col-md-6">Total</td>
+                                    <td class="col-md-6">{{contractsCreatedTotal}}</td>
                                 </tr>
                                 <tr>
                                     <td>Created last month</td>
-                                    <td>2</td>
+                                    <td>{{contractsCreatedLastMonth}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -232,8 +228,8 @@
                 <div class="col-md-4">
                     <div class="chart-container">                    
                         <app-horizontal-bar-chart 
-                            [title]="'TOP-10 Contracts by invocations'"
-                            [endpoint]="'assets/tokenchart?count=10'" 
+                            [title]="'TOP-10 Contracts by activity'"
+                            [endpoint]="'smartcontract/InvocationsChart?count=10'" 
                             [height]="'100px'"
                             [label]="'Contracts'">
                         </app-horizontal-bar-chart>
