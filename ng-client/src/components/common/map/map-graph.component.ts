@@ -348,6 +348,7 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
         for (const peer of peers) {
             if (nodeSeries.data.findIndex(x => x.id === peer.nodeId) === -1 &&
                 peerSeries.data.findIndex(x => x.id === peer.id) === -1 &&
+                peer.latitude && peer.longitude &&
                 this.connectedPeers.findIndex(x => x === peer.ip) !== -1) {
 
                 peerSeries.data.push({
