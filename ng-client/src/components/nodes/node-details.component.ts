@@ -32,11 +32,11 @@ export class NodeDetailsComponent extends BaseComponent implements OnInit, OnDes
     ngOnDestroy(): void {
         this.nodeService.stopUpdatingAll();
         this.clearSubscriptions();
+        window.clearInterval(this.interval);
     }
 
     ngOnInit(): void {
         this.state.changeRoute('node');
-
         this.nodeService.startUpdatingAll();
 
         this.addSubsctiption(
@@ -45,12 +45,10 @@ export class NodeDetailsComponent extends BaseComponent implements OnInit, OnDes
             })
         );
 
-        this.addSubsctiption(
-            this.interval = window.setInterval(() => {
-                this.updateNodeInfo();
-                this.drawGraph();
-            }, 5000)
-        );
+        this.interval = window.setInterval(() => {
+            this.updateNodeInfo();
+            this.drawGraph();
+        }, 5000);
 
         this.addSubsctiption(
             this.route.params.subscribe(params => {

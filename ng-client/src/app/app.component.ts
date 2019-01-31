@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NodeService } from 'src/core/services/data';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   intervalSeconds = 10000;
   iterations = 0;
+  interval: number;
 
   constructor(private nodeService: NodeService) {
     this.nodeService.stopUpdatingAll();
     this.nodeService.updateNodesData();
 
-    window.setInterval(() => {
+    this.interval = window.setInterval(() => {
       this.iterations++;
 
       if (this.nodeService.updateAll) {
@@ -24,5 +25,9 @@ export class AppComponent {
       }
       // this.nodeService.updateNodesData();
     }, this.intervalSeconds);
+  }
+
+  ngOnDestroy(): void {
+    window.clearInterval(this.interval);
   }
 }
