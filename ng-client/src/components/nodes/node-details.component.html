@@ -73,15 +73,22 @@
             <div class="col-md-12" style="padding-top: 35px">
                 <div class="col-md-6 col-xs-12 text-center">
                     <div style="max-width: 350px; display: inline-block">
-                        <app-date-bar-chart [endpoint]="'node/latencychart/' + node.id" [label]="'Average Latency'"></app-date-bar-chart>
+                        <app-date-bar-chart 
+                            [endpoint]="'node/latencychart/' + node.id" 
+                            [label]="'Average Latency'">
+                        </app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12 text-center">
                     <div style="max-width: 350px; display: inline-block">
-                        <app-date-bar-chart *ngIf="node.type === 'RPC'" [endpoint]="'node/peerschart/' + node.id"
-                            [label]="'Average Peers'"></app-date-bar-chart>
-                        <div class="text-center bold custom-vcenter" style="min-height: 360px" *ngIf="node.type === 'REST'">NO
-                            PEERS STATS FOR REST NODES</div>
+                        <app-date-bar-chart 
+                            *ngIf="node.type === 'RPC'" 
+                            [endpoint]="'node/peerschart/' + node.id"
+                            [label]="'Average Peers'">
+                        </app-date-bar-chart>
+                        <div class="text-center bold custom-vcenter" style="min-height: 360px" *ngIf="node.type === 'REST'">
+                            NOPEERS STATS FOR REST NODES
+                        </div>
                     </div>
                 </div>
             </div>
