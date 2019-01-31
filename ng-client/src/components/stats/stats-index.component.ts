@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonStateService } from '../../core/services';
 import { StatsSignalRService } from '../../core/services/signal-r';
-import { BlockService, AddressService, AssetService, NodeService } from '../../core/services/data';
+import { BlockService, AddressService, AssetService, NodeService, SmartContractService } from '../../core/services/data';
 import { UnitOfTime, AssetTypeEnum, HeaderInfoModel } from 'src/models';
 import * as CONST from '../../core/common/constants';
 import { BaseComponent } from '../base/base.component';
@@ -50,13 +50,18 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
     neoGasTxCountUpdate = new EventEmitter<number>();
     nep5TxCountUpdate = new EventEmitter<number>();
 
+    // Contracts
+    contractsCreatedTotal: number;
+    contractsCreatedLastMonth: number;
+
     constructor(
         private nodeService: NodeService,
         private state: CommonStateService,
         private statsSignalR: StatsSignalRService,
         private blocks: BlockService,
         private addrService: AddressService,
-        private assetService: AssetService) {
+        private assetService: AssetService,
+        private contractsService: SmartContractService) {
         super();
     }
 
@@ -140,9 +145,9 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
 
     private subscribeToEvents() {
         this.addSubsctiption(this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x));
-
-        this.nodeService.getConsensusNodes()
-            .subscribe((x: Array<any>) => this.consensusNodes = x.filter((y: any) => y.Active).length);
+        this.addSubsctiption(this.nodeService.getConsensusNodes().subscribe((x: Array<any>) => this.consensusNodes = x.filter((y: any) => y.Active).length))
+        this.addSubsctiption(this.contractsService.getCreatedTotal().subscribe(x => this.contractsCreatedTotal = x));
+        this.addSubsctiption(this.contractsService.getCreatedLastMonth().subscribe(x => this.contractsCreatedLastMonth = x));
     }
 
     private daysSinceFirstBlock(): number {

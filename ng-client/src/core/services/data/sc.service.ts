@@ -21,4 +21,12 @@ export class SmartContractService {
             `${CONST.BASE_URL}/api/smartcontract/InvocationTransactions/${hash}/${page}/${pageSize}`
         );
     }
+
+    public getCreatedTotal() {
+        return this.http.get<number>(`${CONST.BASE_URL}/api/smartcontract/createdTotal`);
+    }
+
+    public getCreatedLastMonth() {
+        return this.http.get<number>(`${CONST.BASE_URL}/api/smartcontract/createdLastMonth`);
+    }
 }
