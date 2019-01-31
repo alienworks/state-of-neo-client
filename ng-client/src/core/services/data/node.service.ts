@@ -161,7 +161,7 @@ export class NodeService {
     }
 
     public getNodeNameByIp(ip: string): any {
-        let result = {
+        const result = {
             isNode: false,
             address: ip,
             id: null
@@ -192,8 +192,8 @@ export class NodeService {
     }
 
     private checkOrAddToPeers(x: Peer, collection: Map<String, Peer>): void {
-        let peerAddress = x.address.startsWith('::ffff:') 
-            ? x.address.substring(7) 
+        const peerAddress = x.address.startsWith('::ffff:')
+            ? x.address.substring(7)
             : x.address;
 
         if (collection.has(peerAddress)) {

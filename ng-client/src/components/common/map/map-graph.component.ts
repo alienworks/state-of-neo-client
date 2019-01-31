@@ -53,6 +53,8 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     ngOnInit(): void {
+        this.nodeService.startUpdatingAll();
+
         this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
         this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
 
@@ -89,6 +91,7 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
             }
         });
 
+        this.chart = null;
         this.clearSubscriptions();
     }
 
@@ -110,7 +113,8 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
 
         this.addSubsctiption(
             this.checkStatus.subscribe(x => {
-                if (this.peers.length > 0 && this.allNodes.length > 0) {
+                const connections = this.allNodes.map(z => z.connectedPeers).filter(z => z !== undefined);
+                if (this.peers.length > 0 && this.allNodes.length > 0 && connections.length > 0) {
                     this.updateMapInfo();
                 }
             })
