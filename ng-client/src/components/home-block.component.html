@@ -8,8 +8,8 @@
             <div class="custom-vcenter home-block" style="margin-bottom: -5px">
                 <small class="bold">{{block.height | number}}</small>
             </div>
-            <div class="custom-vcenter home-block text-center" style="margin-top: -20px; height: 35px">
-                <small>{{block.timestamp | stampToDate | timeAgo}}</small>
+            <div class="custom-vcenter home-block text-center" style="margin-top: -15px; height: 30px">
+                <small style="font-size: 10px">{{block.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
         <div class="col-md-8 no-padding" style="margin-bottom: 5px">
@@ -20,7 +20,7 @@
                         <strong>{{block.timeInSeconds}}</strong> seconds
                     </small>
                 </div>
-                <div>
+                <div style="margin-top: 3px">
                     <small><strong>{{block.collectedFees | number:'1.0-8'}}</strong> GAS fees</small>
                 </div>
             </div>
