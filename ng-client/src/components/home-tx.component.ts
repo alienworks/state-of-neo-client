@@ -17,20 +17,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ]
 })
 export class HomeTxComponent implements OnInit {
-    model = {
-        type: 128,
-        hash: '	0xedf63b12438941683b35d0a5395138e5d5fcfc5ad4a914e8a9689cbdec064b2f',
-        from: 'Aeogee9jqqo3PJcosYVENHB7P7uLVYzHy4',
-        to: 'AFpXwLKa1LiJc3M1c7hvtgQGNM6nt1wyR3',
-        timestamp: 1547471169,
-        assets: [{
-            type: 'GAS',
-            amount: 123
-        }, {
-            type: 'NEO',
-            amount: 124
-        }]
-    };
     initialTransactionsEvent = new EventEmitter<TxAssetsModel[]>();
     newTransactionsEvent = new EventEmitter<TxAssetsModel[]>();
     transactions: TxAssetsModel[];

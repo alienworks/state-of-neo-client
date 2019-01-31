@@ -12,17 +12,17 @@
                 <!-- <div style="font-size: 12px; margin-bottom: 5px">
                     <strong>{{ (tx.hash.length > 34)? (tx.hash | slice:0:32)+'..':(tx.hash) }}</strong>
                 </div> -->
+                <div *ngIf="getReceivedAssetsMap(tx) && getReceivedAssetsMap(tx).size > 0">
+                    Sent
+                    <strong *ngFor="let asset of getReceivedAssetsMap(tx) | keyvalue">
+                        {{asset.key | number: '1.0-8'}} {{asset.value}}
+                    </strong>
+                </div>
                 <div *ngIf="getReceivedAssetsAddresses(tx) && getReceivedAssetsAddresses(tx).length > 0">
                     To
                     <a routerLink="/address/{{address}}" routerLinkActive="router-link-active" *ngFor="let address of getReceivedAssetsAddresses(tx)">
                         <strong>{{ address.length > 8 ? (address | slice:0:8) + '..' : address }}</strong>
                     </a>
-                </div>
-                <div *ngIf="getReceivedAssetsMap(tx) && getReceivedAssetsMap(tx).size > 0">
-                    amount
-                    <strong *ngFor="let asset of getReceivedAssetsMap(tx) | keyvalue">
-                        {{asset.key | number: '1.0-8'}} {{asset.value}}
-                    </strong>
                 </div>
             </div>
         </div>
