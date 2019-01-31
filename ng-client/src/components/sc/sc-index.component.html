@@ -6,8 +6,13 @@
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12">
         <div class="panel-body" style="padding-top: 30px">
-            <div>
-                <app-pie-chart [endpoint]="'transactions/piechart'" [label]="'Transaction Types'"></app-pie-chart>
+            <div>                    
+                <app-horizontal-bar-chart 
+                    [title]="'TOP-20 Contracts by activity'"
+                    [endpoint]="'smartcontract/InvocationsChart?count=20'" 
+                    [height]="'100px'"
+                    [label]="'Contracts'">
+                </app-horizontal-bar-chart>
             </div>
         </div>
     </div>
