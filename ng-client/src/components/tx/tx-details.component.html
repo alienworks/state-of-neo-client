@@ -14,6 +14,14 @@
                                 <td>Type</td>
                                 <td>{{getTypeName()}}</td>
                             </tr>
+                            <tr *ngIf="tx.contractName">
+                                <td>Contract</td>
+                                <td>
+                                    <a routerLink="/contract/{{tx.contractHash}}">
+                                        {{tx.contractName}}
+                                    </a>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>Block</td>
                                 <td><a routerLink="/block/{{tx?.blockHeight}}">{{tx.blockHeight | number}}</a></td>
