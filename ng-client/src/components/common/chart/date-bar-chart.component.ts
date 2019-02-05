@@ -122,9 +122,16 @@ export class DateBarChartComponent implements OnInit {
 
     private getChartLabels() {
         let format = 'dd/MM/yy';
-        if (this.filter.unitOfTime === UnitOfTime.Hour) { format = 'HH:mm|dd/MMM'; }
-        if (this.filter.unitOfTime === UnitOfTime.Day) { format = 'dd/MM/yyyy'; }
-        if (this.filter.unitOfTime === UnitOfTime.Month) { format = 'MMM yyyy'; }
+        if (this.filter.unitOfTime === UnitOfTime.Hour) { 
+            format = 'HH:mm|dd/MMM'; 
+        }
+        else if (this.filter.unitOfTime === UnitOfTime.Day) { 
+            format = 'dd/MM/yyyy'; 
+        }
+        else if (this.filter.unitOfTime === UnitOfTime.Month) { 
+            format = 'MMM yyyy'; 
+        }
+
         const result = this.chartData.map(x => this.datePipe.transform(x.startDate, format));
         return result;
     }

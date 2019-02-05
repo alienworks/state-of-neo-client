@@ -33,10 +33,11 @@ export class HomeTxComponent extends BaseComponent implements OnInit, OnDestroy 
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
         this.addSubsctiption(
             this.newTransactionsEvent.subscribe((x: TxAssetsModel[]) => {
-                if (x.length < 10) {
+                if (x.length < 30) {
                     for (const iterator of x) {
                         this.transactions.pop();
                     }
+
                     for (const tx of x) {
                         this.transactions.unshift(tx);
                     }

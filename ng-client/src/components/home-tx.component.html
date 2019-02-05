@@ -1,4 +1,7 @@
-<div class="tx-container" routerLink="/transaction/{{tx.hash}}" routerLinkActive="router-link-active" style="cursor: pointer"
+<div class="tx-container" 
+    routerLink="/transaction/{{tx.hash}}" 
+    routerLinkActive="router-link-active" 
+    style="cursor: pointer"
     *ngFor="let tx of transactions" @fadeIn>
     <div class="row home-tx-container no-padding">
         <div class="col-md-2 no-padding text-center" style="margin-bottom: 5px; padding-top: 5px !important" title="{{getTypeName(tx.type)}}">
@@ -8,21 +11,70 @@
             </div>
         </div>
         <div class="col-md-10 no-padding" style="margin-bottom: 5px">
-            <div style="padding: 0 10px; font-size: 9px">
-                <!-- <div style="font-size: 12px; margin-bottom: 5px">
-                    <strong>{{ (tx.hash.length > 34)? (tx.hash | slice:0:32)+'..':(tx.hash) }}</strong>
-                </div> -->
-                <div *ngIf="getReceivedAssetsMap(tx) && getReceivedAssetsMap(tx).size > 0">
-                    Sent
-                    <strong *ngFor="let asset of getReceivedAssetsMap(tx) | keyvalue">
-                        {{asset.key | number: '1.0-8'}} {{asset.value}}
-                    </strong>
-                </div>
-                <div *ngIf="getReceivedAssetsAddresses(tx) && getReceivedAssetsAddresses(tx).length > 0">
-                    To
-                    <a routerLink="/address/{{address}}" routerLinkActive="router-link-active" *ngFor="let address of getReceivedAssetsAddresses(tx)">
-                        <strong>{{ address.length > 8 ? (address | slice:0:8) + '..' : address }}</strong>
+            <div style="padding: 0 10px; font-size: 11px">
+
+                <!-- invoced smart contract -->
+                <div *ngIf="tx.contractName">
+                    Invoked 
+                    <a routerLink="/contract/{{tx.contractHash}}">
+                        <strong>{{tx.contractName}}</strong>
                     </a>
+                </div>
+
+                <!-- transfered tokens -->
+                <div *ngIf="tx.type == 209 && tx.assets && tx.assets && tx.assets.length > 0">
+                    <span *ngFor="let asset of tx.assets">
+                        <span *ngIf="asset.fromAddress">
+                            <a routerLink="/address/{{asset.fromAddress}}" routerLinkActive="router-link-active">
+                                {{asset.fromAddress.length > 8 ? (asset.fromAddress | slice:0:8) + '..' : asset.fromAddress}}
+                            </a>
+                            Sent
+                        </span>
+                        <span *ngIf="!asset.fromAddress">
+                            Minted
+                        </span>
+                        {{asset.value | number: '1.0-8'}} {{asset.assetSymbol}} 
+                        <a routerLink="/asset/{{asset.assetHash}}" routerLinkActive="router-link-active">
+                            {{asset.symbol}} 
+                        </a>
+                        to 
+                        <a routerLink="/address/{{asset.toAddress}}" routerLinkActive="router-link-active">
+                            {{asset.toAddress.length > 8 ? (asset.toAddress | slice:0:8) + '..' : asset.toAddress}}
+                        </a>
+                    </span>
+                </div>
+
+                <!-- transfered global assets -->
+                <div *ngIf="tx.assetsWithNewOwner && tx.assetsWithNewOwner.length">
+                    <span *ngFor="let asset of tx.assetsWithNewOwner">
+                        {{tx.type == 2 ? 'Claimed' : 'Sent'}}
+                        <a routerLink="/asset/{{asset.assetHash}}" routerLinkActive="router-link-active">
+                            <strong>{{asset.amount | number: '1.0-8'}} {{asset.assetSymbol}}</strong>                            
+                        </a>
+                        {{ tx.type == 0 ? 'collected fees' : '' }} to
+                        <a routerLink="/address/{{asset.toAddress}}" routerLinkActive="router-link-active">
+                            <strong>{{asset.toAddress.length > 8 ? (asset.toAddress | slice:0:8) + '..' : asset.toAddress}}</strong>
+                        </a>
+                    </span>
+                </div>
+
+                <!-- transfered global assets -->
+                <div *ngIf="tx.receivedAssets && tx.receivedAssets.length > 0 && tx.type != 209 && (!tx.assetsWithNewOwner || !tx.assetsWithNewOwner.length)">
+                    <span *ngFor="let asset of tx.receivedAssets">
+                        {{tx.type == 2 ? 'Claimed' : 'Sent'}}                        
+                        <a routerLink="/asset/{{asset.assetHash}}" routerLinkActive="router-link-active">
+                            <strong>{{asset.amount | number: '1.0-8'}} {{asset.assetSymbol}}</strong>
+                        </a>
+                        to
+                        <a routerLink="/address/{{asset.toAddress}}" routerLinkActive="router-link-active">
+                            <strong>{{ asset.toAddress.length > 8 ? (asset.toAddress | slice:0:8) + '..' : asset.toAddress }}</strong>
+                        </a>
+                    </span>
+                </div>
+
+                <!-- miner tx with no fees -->
+                <div *ngIf="tx.type == 0 && (!tx.receivedAssets || tx.receivedAssets.length == 0)">
+                    Collected no fees
                 </div>
             </div>
         </div>
