@@ -27,7 +27,7 @@ export class TxDetailsModel extends TxAssetsModel {
 export class TxUnconfirmedDetailsViewModel {
     txid: string;
     size: number;
-    type: TxTypeEnum;
+    type: string;
     version: string;
     attributes: TxAttribute[];
     vin: TxVin[];
@@ -39,6 +39,7 @@ export class TxUnconfirmedDetailsViewModel {
     gas: string;
 
     blockhash: string;
+    blockHeight: number;
     confirmations: string;
     blocktime: number;
 }

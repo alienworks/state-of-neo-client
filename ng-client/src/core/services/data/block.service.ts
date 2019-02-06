@@ -30,6 +30,10 @@ export class BlockService {
         });
     }
 
+    public getHeightByHash(hash: string) {
+        return this.http.get<number>(`${CONST.BASE_URL}/api/block/heightByHash/${hash}`);
+    }
+
     public getBlocksPage(page: number = 1, pageSize: number = 10) {
         return this.http.get<PageResultModel<BlockListModel>>(`${CONST.BASE_URL}/api/block/list?page=${page}&pageSize=${pageSize}`);
     }

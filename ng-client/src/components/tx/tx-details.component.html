@@ -88,9 +88,7 @@
                                     <span *ngIf="asset.toAddress" class="text-left">{{asset.fromAddress}}</span>
                                 </a>
                                 <div>
-                                    
-                                        <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to                                    
-                                    
+                                    <span>{{ asset.fromAddress ? 'sent' : 'minted'}}</span> {{asset.amount | number: '1.0-8'}} {{asset.name}} to
                                 </div>
                                 <a routerLink="/address/{{asset.toAddress}}">
                                     <span *ngIf="asset.toAddress" class="text-left">{{asset.toAddress}}</span>
