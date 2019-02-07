@@ -32,7 +32,7 @@ export class HomeBlockComponent extends BaseComponent implements OnInit, OnDestr
     constructor(private blocksService: BlockService, private stats: StatsSignalRService) { super(); }
 
     ngOnInit(): void {
-        this.blocksService.getBlocksPage(1, 10)
+        this.blocksService.getBlocksPage(1, 20)
             .subscribe(x => {
                 this.blocks = x.items;
 

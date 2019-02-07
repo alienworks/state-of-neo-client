@@ -22,7 +22,9 @@ export class HomeTxComponent extends BaseComponent implements OnInit, OnDestroy 
     newTransactionsEvent = new EventEmitter<TxAssetsModel[]>();
     transactions: TxAssetsModel[];
 
-    constructor(private txSignalRService: TransactionSignalRService) { super(); }
+    constructor(private txSignalRService: TransactionSignalRService) { 
+        super(); 
+    }
 
     ngOnInit(): void {
         this.txSignalRService.registerAdditionalEvent('list', this.initialTransactionsEvent);
