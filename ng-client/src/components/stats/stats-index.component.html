@@ -1,10 +1,12 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="panel-body" style="padding-top: 60px">
-            <div style="margin-bottom: 100px">
+        <div class="panel-body" style="padding-top: 30px">
+            <div style="margin-bottom: 50px">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">NODES</h3>
+                </div>
                 <div class="col-md-4">
-                    <div class="chart-container">      
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">NODES</h4>              
+                    <div class="chart-container">
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -25,7 +27,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'" [label]="'Consensus Node Rewards'"></app-date-bar-chart>
+                        <app-date-bar-chart [endpoint]="'node/ConsensusRewardsChart'"
+                            [label]="'Consensus Node Rewards'"></app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -35,13 +38,15 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>            
+            <div class="clearfix"></div>
             <hr class="stats-divider">
 
-            <div style="margin-bottom: 100px">
+            <div style="margin-bottom: 50px">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">BLOCKS</h3>
+                </div>
                 <div class="col-md-4">
-                    <div class="chart-container">      
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">BLOCKS</h4>              
+                    <div class="chart-container">
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -65,24 +70,28 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
-                        <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Average Time'" [title]="'Average time per block'"></app-date-bar-chart>
+                    <div class="chart-container">
+                        <app-date-bar-chart [endpoint]="'block/BlockTimeChart'" [label]="'Average Time'"
+                            [title]="'Average time per block'"></app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Average Size'" [title]="'Average size for block'"></app-date-bar-chart>
+                        <app-date-bar-chart [endpoint]="'block/BlockSizeChart'" [label]="'Average Size'"
+                            [title]="'Average size for block'"></app-date-bar-chart>
                     </div>
                 </div>
             </div>
 
-            <div class="clearfix"></div>            
+            <div class="clearfix"></div>
             <hr class="stats-divider">
 
             <div style="margin-bottom: 50px;">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">TRANSACTIONS</h3>
+                </div>
                 <div class="col-md-4">
-                    <div class="chart-container">   
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">TRANSACTIONS</h4>                       
+                    <div class="chart-container">
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -121,9 +130,11 @@
             <hr class="stats-divider">
 
             <div style="margin-bottom: 50px">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">ADDRESSES</h3>
+                </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">ADDRESSES</h4>                       
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -151,7 +162,7 @@
                         <app-date-bar-chart [endpoint]="'address/chart'" [label]="'Created'"></app-date-bar-chart>
                     </div>
                 </div>
-                <div class="col-md-4">  
+                <div class="col-md-4">
                     <div class="chart-container">
                         <app-date-bar-chart [endpoint]="'address/activeChart'" [label]="'Active'"></app-date-bar-chart>
                     </div>
@@ -162,9 +173,11 @@
             <hr class="stats-divider">
 
             <div style="margin-bottom: 50px">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">ASSETS</h3>
+                </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">ASSETS</h4>                       
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -184,17 +197,14 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
+                    <div class="chart-container">
                         <app-pie-chart [endpoint]="'assets/assetTypesChart'" [label]="'Types'"></app-pie-chart>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <app-horizontal-bar-chart 
-                            [title]="'TOP-10 NEP-5 by transactions'"
-                            [endpoint]="'assets/tokenchart?count=10'" 
-                            [height]="'100px'"
-                            [label]="'Tokens'">
+                        <app-horizontal-bar-chart [title]="'TOP-10 NEP-5 by transactions'"
+                            [endpoint]="'assets/tokenchart?count=10'" [height]="'100px'" [label]="'Tokens'">
                         </app-horizontal-bar-chart>
                     </div>
                 </div>
@@ -203,9 +213,11 @@
             <div class="clearfix"></div>
             <hr class="stats-divider">
             <div style="margin-bottom: 50px">
+                <div class="col-md-12 text-center">
+                    <h3 class="text-grey text-center bold" style="margin-bottom: 30px">CONTRACTS</h3>
+                </div>
                 <div class="col-md-4">
                     <div class="chart-container">
-                        <h4 class="text-grey text-center bold" style="margin-bottom: 30px">CONTRACTS</h4>                       
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr>
@@ -221,16 +233,14 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
+                    <div class="chart-container">
                         TBD
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="chart-container">                    
-                        <app-horizontal-bar-chart 
-                            [title]="'TOP-10 Contracts by activity'"
-                            [endpoint]="'smartcontract/InvocationsChart?count=10'" 
-                            [height]="'100px'"
+                    <div class="chart-container">
+                        <app-horizontal-bar-chart [title]="'TOP-10 Contracts by activity'"
+                            [endpoint]="'smartcontract/InvocationsChart?count=10'" [height]="'100px'"
                             [label]="'Contracts'">
                         </app-horizontal-bar-chart>
                     </div>
