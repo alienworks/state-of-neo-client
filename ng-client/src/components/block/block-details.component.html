@@ -14,6 +14,10 @@
                             <td style="word-break: break-all">{{block.hash}}</td>
                         </tr>
                         <tr>
+                            <td>Timestamp</td>
+                            <td>{{block.timestamp}}</td>
+                        </tr>
+                        <tr>
                             <td>Age</td>
                             <td>{{block.finalizedAt | timeAgo}} ({{block.finalizedAt | date:'dd-MMM-yyyy hh:mm:ss'}} UTC)</td>
                         </tr>
