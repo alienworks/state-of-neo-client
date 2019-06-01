@@ -2,14 +2,19 @@
     <div class="col-sm-8">
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey">
-                <div class="col-md-8">              
+                <div class="col-md-8">
                     <h4 class="text-grey" style="margin-top: 0; ">{{addressDetails.address}}</h4>
                     <div *ngIf="globalBalances && globalBalances.length">
                         <h5 class="bold text-grey" style="margin-bottom: 5px">Global Assets</h5>
                         <table class="table no-top-border-first-row">
                             <tbody>
                                 <tr *ngFor="let asset of globalBalances">
-                                    <td class="col-md-4">{{asset.name}}</td>
+                                    <td class="col-md-4">
+                                        <a routerLink="/asset/{{asset.assetHash}}"
+                                            routerLinkActive="router-link-active">
+                                            {{asset.name}}
+                                        </a>
+                                    </td>
                                     <td class="col-md-8">{{asset.balance | number: '1.0-8'}}</td>
                                 </tr>
                             </tbody>
@@ -21,7 +26,12 @@
                         <table class="table no-top-border-first-row" *ngIf="tokens && tokens.length">
                             <tbody>
                                 <tr *ngFor="let token of tokens">
-                                    <td class="col-md-4">{{token.name}}</td>
+                                    <td class="col-md-4">
+                                        <a routerLink="/asset/{{token.assetHash}}"
+                                            routerLinkActive="router-link-active">
+                                            {{token.name}}
+                                        </a>
+                                    </td>
                                     <td class="col-md-8">{{token.balance | number: '1.0-8'}}</td>
                                 </tr>
                             </tbody>
@@ -29,8 +39,8 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <app-pie-chart *ngIf="address" 
-                        [endpoint]="'transactions/TransactionTypesForAddress?address=' + address" 
+                    <app-pie-chart *ngIf="address"
+                        [endpoint]="'transactions/TransactionTypesForAddress?address=' + address"
                         [label]="'Transactions'">
                     </app-pie-chart>
                 </div>
@@ -41,13 +51,15 @@
         <div class="panel panel-default" style="margin-bottom: 0">
             <header class="panel-heading">
                 <h2 class="panel-title elipsis text-grey">
-                    <i class="fas fa-handshake" style="margin-left: 15px; margin-right: 20px"></i> 
-                    TRANSACTIONS 
-                    <span style="color: #676a6c !important" *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
+                    <i class="fas fa-handshake" style="margin-left: 15px; margin-right: 20px"></i>
+                    TRANSACTIONS
+                    <span style="color: #676a6c !important"
+                        *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">({{transactions.metaData.totalItemCount}})</span>
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-small-list>
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)">
+                </app-tx-small-list>
             </div>
         </div>
     </div>
