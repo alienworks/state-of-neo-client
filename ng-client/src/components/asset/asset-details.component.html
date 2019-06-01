@@ -3,18 +3,19 @@
         <div class="panel panel-default" style="margin-bottom: 0">
             <div class="panel-body text-grey" style="padding-top: 20px">
                 <div class="col-md-12">
-                    <h4 class="text-grey" style="margin-top: 0; font-weight: bold; " [style.margin-bottom]="model.symbol ? 0 : '32px'">
+                    <h4 class="text-grey" style="margin-top: 0; font-weight: bold; "
+                        [style.margin-bottom]="model.symbol ? 0 : '32px'">
                         {{model.name}}
                         <span *ngIf="model.symbol" class="text-grey" style="margin-top: 0; ">({{model.symbol}})</span>
                     </h4>
                     <h5 class="text-grey" style="margin-bottom: 32px">{{model.hash}}</h5>
                 </div>
-                <div class="col-md-6" *ngIf="!isLoading">
+                <div class="col-md-12" *ngIf="!isLoading">
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td>Total supply</td>
-                                <td>{{model.totalSupply | number}}</td>
+                                <td class="col-md-4">Total supply</td>
+                                <td class="col-md-8">{{model.totalSupply | number}}</td>
                             </tr>
                             <tr>
                                 <td>Total addresses</td>
@@ -22,7 +23,11 @@
                                     <span *ngIf="totalAddressCount">
                                         {{totalAddressCount | number}}
                                     </span>
-                                    <app-loader *ngIf="!totalAddressCount" [iconScale]="1"></app-loader>
+                                    <app-loader 
+                                        *ngIf="!totalAddressCount"
+                                        [iconScale]="1" 
+                                        [textPosition]="'text-left'"
+                                        [padding]="0"></app-loader>
                                 </td>
                             </tr>
                             <tr>
@@ -31,22 +36,33 @@
                                     <span *ngIf="activeAddressesLastMonth || activeAddressesLastMonth >= 0">
                                         {{activeAddressesLastMonth | number}}
                                     </span>
-                                    <app-loader *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0" [iconScale]="1"></app-loader>
+                                    <app-loader 
+                                        *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0"
+                                        [iconScale]="1" 
+                                        [textPosition]="'text-left'"
+                                        [padding]="0"></app-loader>
                                 </td>
                             </tr>
                             <tr>
                                 <td>New addresses last month</td>
                                 <td>
                                     <span *ngIf="newAddressesLastMonth">{{newAddressesLastMonth | number}}</span>
-                                    <app-loader *ngIf="!newAddressesLastMonth" [iconScale]="1"></app-loader>
+                                    <app-loader 
+                                        *ngIf="!newAddressesLastMonth" 
+                                        [iconScale]="1" 
+                                        [textPosition]="'text-left'"
+                                        [padding]="0"></app-loader>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6" *ngIf="!isLoading">
-                    <table class="table">
-                        <tbody>
+                            <tr>
+                                <td>Creator address</td>
+                                <td>
+                                    <a *ngIf="model.creatorAddressId" routerLink="/address/{{model.creatorAddressId}}" routerLinkActive="router-link-active">
+                                        {{model.creatorAddressId}}
+                                    </a>
+                                    <span *ngIf="!model.creatorAddressId"> - </span>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>Decimals</td>
                                 <td>{{model.decimals | number}}</td>
@@ -71,19 +87,15 @@
                 </div>
                 <div class="col-md-6 text-center" style="margin-top: 40px; margin-bottom: 10px">
                     <div style="max-width: 350px; display: inline-block">
-                        <app-date-bar-chart *ngIf="hash" 
-                            [endpoint]="'address/assetchart?assetHash=' + hash" 
-                            [label]="'Addresses'"
-                            [showLoader]="false">
+                        <app-date-bar-chart *ngIf="hash" [endpoint]="'address/assetchart?assetHash=' + hash"
+                            [label]="'Addresses'" [showLoader]="false">
                         </app-date-bar-chart>
                     </div>
                 </div>
                 <div class="col-md-6 text-center" style="margin-top: 40px; margin-bottom: 10px">
                     <div style="max-width: 350px; display: inline-block">
-                        <app-date-bar-chart *ngIf="hash" 
-                            [endpoint]="'transactions/assetchart?assetHash=' + hash" 
-                            [label]="'Transactions'"
-                            [showLoader]="false">
+                        <app-date-bar-chart *ngIf="hash" [endpoint]="'transactions/assetchart?assetHash=' + hash"
+                            [label]="'Transactions'" [showLoader]="false">
                         </app-date-bar-chart>
                     </div>
                 </div>
@@ -95,14 +107,15 @@
             <header class="panel-heading">
                 <h2 class="panel-title elipsis">
                     Transactions
-                    <span class="bold" style="color: #676a6c !important" 
+                    <span class="bold" style="color: #676a6c !important"
                         *ngIf="transactions?.metaData && transactions?.metaData.totalItemCount">
                         ({{transactions.metaData.totalItemCount | number}})
                     </span>
                 </h2>
             </header>
             <div class="panel-body">
-                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)"></app-tx-small-list>
+                <app-tx-small-list [model]="transactions" (emitGetPage)="getTransactionsPage($event)">
+                </app-tx-small-list>
             </div>
         </div>
     </div>
