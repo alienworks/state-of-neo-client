@@ -12,7 +12,9 @@ declare var $;
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
+    nodeNameFilter = '';
     allNodes: any[] = [];
+    filteredNodes: any = [];
 
     constructor(
         private nodeService: NodeService,
@@ -36,6 +38,7 @@ export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
         this.addSubsctiption(
             this.nodeService.updateNodes.subscribe((x: any[]) => {
                 this.allNodes = x;
+                this.filter();
             })
         );
 
@@ -52,5 +55,13 @@ export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.nodeService.stopUpdatingAll();
         this.clearSubscriptions();
+    }
+    
+    filter(): void {
+        this.filteredNodes = this.allNodes;
+
+        if (this.nodeNameFilter.length) {
+            this.filteredNodes = this.filteredNodes.filter(x => x.url.includes(this.nodeNameFilter));
+        }
     }
 }

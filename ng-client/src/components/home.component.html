@@ -12,8 +12,9 @@
                         <header class="panel-heading" style="padding: 10px">
                             <h2 class="panel-title elipsis text-grey">
                                 <i class="fas fa-cube" style="font-size: 20px"></i> BLOCKS
-                                <a class="btn btn-xs btn-info pull-right" style="color: white; text-transform: lowercase"
-                                    [routerLink]="['/blocks']" routerLinkActive="router-link-active">
+                                <a class="btn btn-xs btn-info pull-right"
+                                    style="color: white; text-transform: lowercase" [routerLink]="['/blocks']"
+                                    routerLinkActive="router-link-active">
                                     more
                                 </a>
                                 <!-- <button class="btn btn-xs btn-success pull-right">more</button> -->
@@ -27,13 +28,15 @@
                         <header class="panel-heading" style="padding: 10px">
                             <h2 class="panel-title elipsis text-grey">
                                 <i class="fas fa-handshake" style="font-size: 20px"></i> TRANSACTIONS
-                                <a class="btn btn-xs btn-info pull-right" style="color: white; text-transform: lowercase"
-                                    [routerLink]="['/transactions']" routerLinkActive="router-link-active">
+                                <a class="btn btn-xs btn-info pull-right"
+                                    style="color: white; text-transform: lowercase" [routerLink]="['/transactions']"
+                                    routerLinkActive="router-link-active">
                                     more
                                 </a>
                             </h2>
                         </header>
-                        <div class="panel-body noradius padding-10" style="height: 255px; overflow-y: scroll; overflow-x: hidden">
+                        <div class="panel-body noradius padding-10"
+                            style="height: 255px; overflow-y: scroll; overflow-x: hidden">
                             <app-home-tx></app-home-tx>
                         </div>
                     </div>
@@ -44,7 +47,19 @@
     <div class="col-sm-6">
         <div id="nodes-panel" class="panel panel-default" style="overflow-y: scroll; margin-bottom: 0">
             <div class="panel-body padding-10" *ngIf="allNodes" style="padding-top: 15px !important">
-                <app-node-card [node]="node" [index]="i" *ngFor="let node of allNodes; let i = index"></app-node-card>
+                <div class="col-md-12 custom-vcenter">
+                    <div class="col-md-6 no-padding">
+                        <input [(ngModel)]="nodeNameFilter" placeholder="Filter by name / IP" (keyup)="filter()"
+                            class="form-control" />
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <app-nodes-count-info [showTitle]="true"></app-nodes-count-info>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-10">
+                    <app-node-card [node]="node" [index]="i" *ngFor="let node of filteredNodes; let i = index">
+                    </app-node-card>
+                </div>
             </div>
             <div></div>
             <app-loader *ngIf="!allNodes" [title]="'Nodes'"></app-loader>
