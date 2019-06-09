@@ -39,9 +39,12 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-12" style="padding-top: 5px">
+                <app-nodes-count-info [showTitle]="true"></app-nodes-count-info>
+            </div>
 
             <div class="col-md-12">
-                <table class="table table-responsive table-hover" *ngIf="filteredNodes && !isLoading" style="margin-top: 30px">
+                <table class="table table-responsive table-hover" *ngIf="filteredNodes && !isLoading" style="margin-top: 20px">
                     <thead class="text-center">
                         <tr>
                             <th class="col-md-1">Flag</th>
