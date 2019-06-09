@@ -23,7 +23,7 @@ import {
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent, BlockListTableComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -61,7 +61,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     // Common
     MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent, FooterStatsComponent, FooterStatsBoxComponent,
     FooterStatsTrComponent, DateBarChartComponent, LoaderComponent, PieChartComponent, PercentBarComponent,
-    HorizontalBarChartComponent, SearchComponent,
+    HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent,
     // Nodes
     NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent,
     // Block
