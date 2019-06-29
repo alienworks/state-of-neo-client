@@ -8,7 +8,7 @@
             <div class="custom-vcenter home-block" style="margin-bottom: -5px">
                 <small class="bold">{{block.height | number}}</small>
             </div>
-            <div class="custom-vcenter home-block text-center" style="margin-top: -15px; height: 30px">
+            <div class="custom-vcenter home-block text-center" style="margin-top: -15px; height: 30px" *ngIf="block.timestamp">
                 <small style="font-size: 10px">{{block.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>

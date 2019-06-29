@@ -7,7 +7,7 @@
         <div class="col-md-2 no-padding text-center" style="margin-bottom: 5px; padding-top: 5px !important" title="{{getTypeName(tx.type)}}">
             <i class="{{iconClass(tx.type)}}" style="font-size: 18px"></i>
             <div style="font-size: 10px">
-                <small>{{tx.timestamp | stampToDate | timeAgo}}</small>
+                <small *ngIf="tx.timestamp">{{tx.timestamp | stampToDate | timeAgo}}</small>
             </div>
         </div>
         <div class="col-md-10 no-padding" style="margin-bottom: 5px">
