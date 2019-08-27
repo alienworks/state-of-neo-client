@@ -17,8 +17,9 @@ import { HomeBlockComponent } from 'src/components/home-block.component';
 import { HomeTxComponent } from 'src/components/home-tx.component';
 import { StatsIndexComponent } from 'src/components/stats/';
 import {
-  TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent,
-  TotalGasClaimedComponent, TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent,
+  TxDetailsComponent, TxListComponent, TxIndexComponent, TxIconComponent, TotalGasClaimedComponent,
+  TxListTableComponent, TxUnconfirmedComponent, SmallTxListTableComponent, TxSmallListComponent,
+  TxListUnconfirmedComponent, TxUnconfirmedIndexComponent
 } from '../components/tx';
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
@@ -78,6 +79,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     // Transactions
     TxIndexComponent, TxDetailsComponent, TxListComponent, TxIconComponent, TotalGasClaimedComponent,
     TxListTableComponent, SmallTxListTableComponent, TxUnconfirmedComponent, TxSmallListComponent,
+    TxListUnconfirmedComponent, TxUnconfirmedIndexComponent,
     // Notifications
     NotificationsIndexComponent, NotificationsListComponent,
     // Libs
@@ -107,6 +109,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
       { path: 'stats', component: StatsIndexComponent },
       { path: 'transactions', component: TxIndexComponent },
       { path: 'transaction/:hash', component: TxDetailsComponent },
+      { path: 'transactions-unconfirmed', component: TxUnconfirmedIndexComponent },
       { path: 'transaction/:hash/:nodeid', component: TxUnconfirmedComponent },
       { path: 'notifications', component: NotificationsIndexComponent },
       { path: 'contracts', component: SmartContractIndexComponent },

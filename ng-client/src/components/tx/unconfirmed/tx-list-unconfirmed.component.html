@@ -1,0 +1,31 @@
+<div class="no-margin no-padding" *ngIf="unconfirmedTxsFiltered && unconfirmedTxsFiltered.length > 0">
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th class="col-md-7">Hash</th>
+                <th class="col-md-5">Top 5 links by latency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tx of unconfirmedTxsFiltered | paginate: { itemsPerPage : 24, currentPage : page }">
+                <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px">
+                    {{tx.txHash}}
+                </td>
+                <td style="vertical-align: middle !important; padding-top: 5px; padding-bottom: 5px" class="text-grey">
+                    <a routerLink="/transaction/{{tx.txHash}}/{{node.id}}" routerLinkActive="router-link-active"
+                        class="badge padding-5" title="{{node.url}}" style="margin-right: 5px; background-color: #BBB"
+                        *ngFor="let node of topLatency(tx.nodes, 5)">
+                        <span *ngIf="node.latency" class="{{getClassForNodeLatency(node)}}">
+                            <i class="fas fa-signal"></i> {{node.latency}} ms
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-md-12 padding-10 text-center">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+</div>
+
+<app-loader *ngIf="!unconfirmedTxsFiltered || unconfirmedTxsFiltered.length < 1"></app-loader>

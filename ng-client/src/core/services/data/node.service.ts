@@ -24,9 +24,11 @@ export class NodeService {
     public rpcEnabledNodes = new BehaviorSubject<any>(null);
     public restEnabledNodes = new BehaviorSubject<any>(null);
     public updateNodes = new BehaviorSubject<any[]>([]);
+    public updateNodesMempool = new BehaviorSubject<any[]>([]);
     public updateMarkers = new EventEmitter<any[]>();
 
     public updateAll = false;
+    public getAllMemPool: boolean;
 
     private updatedServerPeersOn = new Date();
     private firstTimeGettingPeers = true;
@@ -142,6 +144,16 @@ export class NodeService {
                     this.firstTimeGettingPeers = false;
                 }, err => console.log(err));
         }
+    }
+
+    updateAllNodesMempool() {
+        this.allNodes.forEach(x => {
+            if (x && x.rpcEnabled) {
+                this.getRawMemPool(x, true);
+            }
+        });
+
+        this.updateNodesMempool.next(this.allNodes);
     }
 
     updateAllNodes(nodes: any): void {
@@ -279,10 +291,13 @@ export class NodeService {
                     });
             }
         } else {
+            const requestStart = Date.now();
+
             this.nodeRpcService.callMethod(node.successUrl, 'getblockcount', 3)
                 .subscribe(res => {
                     const now = Date.now();
                     node.lastResponseTime = now;
+                    node.latency = Math.round((now - requestStart));
                     const response = res;
                     node.lastBlockCount = node.blockCount;
                     node.blockCount = response.result;
@@ -303,7 +318,7 @@ export class NodeService {
                     node.available = false;
                     node.checks = 0;
                     node.rpcEnabled = false;
-                    node.latency = 0;
+                    node.latency = null;
 
                     this.rpcEnabledNodes.next(this.allNodes.filter(x => x.rpcEnabled).length);
                 });
@@ -388,8 +403,10 @@ export class NodeService {
             });
     }
 
-    public getRawMemPool(x: any) {
-        if (!this.updateAll || !x.available || x.service) return;
+    public getRawMemPool(x: any, overwriteCheck = false) {
+        if (!overwriteCheck) { 
+            if (!this.updateAll || !x.available || x.service) return;
+        }
 
         this.nodeRpcService.callMethod(x.successUrl, 'getrawmempool', 1)
             .subscribe(res => {

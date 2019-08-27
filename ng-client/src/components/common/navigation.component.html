@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -23,8 +23,19 @@
                 <li>
                     <a [routerLink]="['/blocks']" routerLinkActive="router-link-active">Blocks</a>
                 </li>
-                <li>
-                    <a [routerLink]="['/transactions']" routerLinkActive="router-link-active">Transactions</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">Transactions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a [routerLink]="['/transactions']" routerLinkActive="router-link-active">Confirmed</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a [routerLink]="['/transactions-unconfirmed']"
+                                routerLinkActive="router-link-active">Unconfirmed</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a [routerLink]="['/address']" routerLinkActive="router-link-active">Addresses</a>
@@ -41,7 +52,7 @@
                 <li>
                     <a [routerLink]="['/stats']" routerLinkActive="router-link-active">Stats</a>
                 </li>
-            </ul>            
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <app-nav-search></app-nav-search>
