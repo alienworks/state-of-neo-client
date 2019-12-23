@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Injectable()
 export class SignalRService {
@@ -18,6 +18,7 @@ export class SignalRService {
     protected createConnection(connection: string) {
         this._hubConnection = new HubConnectionBuilder()
             .withUrl(connection)
+            .withAutomaticReconnect()
             .build();
     }
 
