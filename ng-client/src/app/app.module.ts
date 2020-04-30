@@ -24,7 +24,8 @@ import {
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent,
+  HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent, BlockListTableComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';

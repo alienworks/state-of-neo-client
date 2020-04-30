@@ -29,10 +29,11 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
     totalPeersTrackedUpdate = new EventEmitter<number>();
 
     constructor(
+        public state: CommonStateService,
+        public nodeService: NodeService,
         private statsSrService: StatsSignalRService,
-        private state: CommonStateService,
-        private peersHub: PeersSignalRService,
-        private nodeService: NodeService) {
+        private peersHub: PeersSignalRService
+    ) {
         super();
     }
 
@@ -67,10 +68,10 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
         this.peersHub.registerAdditionalEvent('total-tracked', this.totalPeersTrackedUpdate);
         this.addSubsctiption(
             this.totalPeersTrackedUpdate.subscribe((x: number) => {
-                this.totalPeersTracked = x
+                this.totalPeersTracked = x;
             })
         );
-        
+
         this.addSubsctiption(
             this.peersHub.connectionEstablished.subscribe(x => {
                 if (x) {
@@ -82,7 +83,7 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
         if (this.peersHub.connectionIsEstablished) {
             this.peersHub.invokeOnServerEvent('InitInfo', 'caller');
         }
-        
+
         this.nodeService.getConsensusNodes()
             .subscribe(x => {
                 const result = x as Array<any>;

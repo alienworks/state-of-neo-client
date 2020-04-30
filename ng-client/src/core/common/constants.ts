@@ -1,5 +1,6 @@
-export const BASE_URL = 'http://localhost:5000';
-// export const BASE_URL = 'http://188.214.128.29';
+// export const BASE_URL = 'http://localhost:5000';
+// export const BASE_URL = 'http://47.103.123.18';
+export const BASE_URL = 'http://101.133.172.212';
 
 export const MainThemeColor = '#079098';
 export const ColorPalet = [

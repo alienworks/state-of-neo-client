@@ -23,9 +23,9 @@
                                     <span *ngIf="totalAddressCount">
                                         {{totalAddressCount | number}}
                                     </span>
-                                    <app-loader 
+                                    <app-loader
                                         *ngIf="!totalAddressCount"
-                                        [iconScale]="1" 
+                                        [iconScale]="1"
                                         [textPosition]="'text-left'"
                                         [padding]="0"></app-loader>
                                 </td>
@@ -36,9 +36,9 @@
                                     <span *ngIf="activeAddressesLastMonth || activeAddressesLastMonth >= 0">
                                         {{activeAddressesLastMonth | number}}
                                     </span>
-                                    <app-loader 
+                                    <app-loader
                                         *ngIf="!activeAddressesLastMonth && activeAddressesLastMonth < 0"
-                                        [iconScale]="1" 
+                                        [iconScale]="1"
                                         [textPosition]="'text-left'"
                                         [padding]="0"></app-loader>
                                 </td>
@@ -47,9 +47,9 @@
                                 <td>New addresses last month</td>
                                 <td>
                                     <span *ngIf="newAddressesLastMonth">{{newAddressesLastMonth | number}}</span>
-                                    <app-loader 
-                                        *ngIf="!newAddressesLastMonth" 
-                                        [iconScale]="1" 
+                                    <app-loader
+                                        *ngIf="!newAddressesLastMonth"
+                                        [iconScale]="1"
                                         [textPosition]="'text-left'"
                                         [padding]="0"></app-loader>
                                 </td>
@@ -57,10 +57,10 @@
                             <tr>
                                 <td>Creator address</td>
                                 <td>
-                                    <a *ngIf="model.creatorAddressId" routerLink="/address/{{model.creatorAddressId}}" routerLinkActive="router-link-active">
-                                        {{model.creatorAddressId}}
+                                    <a *ngIf="model?.creatorAddressId" routerLink="/address/{{model?.creatorAddressId}}" routerLinkActive="router-link-active">
+                                        {{model?.creatorAddressId}}
                                     </a>
-                                    <span *ngIf="!model.creatorAddressId"> - </span>
+                                    <span *ngIf="!model?.creatorAddressId"> - </span>
                                 </td>
                             </tr>
                             <tr>
