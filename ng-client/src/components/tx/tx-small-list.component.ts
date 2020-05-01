@@ -28,5 +28,5 @@ export class TxSmallListComponent implements OnChanges {
 
     getTypeName(index: number): string {
         return TxTypeEnum[index];
-    }    
+    }
 }

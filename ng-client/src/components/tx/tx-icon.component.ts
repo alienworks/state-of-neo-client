@@ -12,14 +12,11 @@ export class TxIconComponent implements OnInit {
     ngOnInit(): void {
         if (this.type === TxTypeEnum.MinerTransaction) {
             this.iconClass = 'fas fa-hammer';
-        }
-        else if (this.type === TxTypeEnum.InvocationTransaction) {
+        } else if (this.type === TxTypeEnum.InvocationTransaction) {
             this.iconClass = 'fa fa-paper-plane';
-        }
-        else if (this.type === TxTypeEnum.ClaimTransaction) {
+        } else if (this.type === TxTypeEnum.ClaimTransaction) {
             this.iconClass = 'fa fa-cubes';
-        }
-        else if (this.type === TxTypeEnum.ContractTransaction) {
+        } else if (this.type === TxTypeEnum.ContractTransaction) {
             this.iconClass = 'fas fa-handshake';
         }
     }

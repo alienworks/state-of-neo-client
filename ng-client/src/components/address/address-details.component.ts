@@ -6,7 +6,7 @@ import { AddressDetailsModel, BaseTxModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { TxService } from '../../core/services/data';
 import { BaseComponent } from '../base/base.component';
-import * as constants from "../../core/common/constants";
+import * as constants from '../../core/common/constants';
 
 @Component({
     templateUrl: `./address-details.component.html`

@@ -145,7 +145,9 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
 
     private subscribeToEvents() {
         this.addSubsctiption(this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x));
-        this.addSubsctiption(this.nodeService.getConsensusNodes().subscribe((x: Array<any>) => this.consensusNodes = x.filter((y: any) => y.Active).length))
+        this.addSubsctiption(this.nodeService.getConsensusNodes().subscribe((x: Array<any>) =>
+          this.consensusNodes = x.filter((y: any) => y.Active).length)
+        );
         this.addSubsctiption(this.contractsService.getCreatedTotal().subscribe(x => this.contractsCreatedTotal = x));
         this.addSubsctiption(this.contractsService.getCreatedLastMonth().subscribe(x => this.contractsCreatedLastMonth = x));
     }

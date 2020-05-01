@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TxService, NodeService, BlockService } from 'src/core/services/data';
 import { CommonStateService } from 'src/core/services';
-import { 
-    TxUnconfirmedDetailsViewModel, 
-    TransactedAssetModel, 
-    AssetTypeEnum 
+import {
+    TxUnconfirmedDetailsViewModel,
+    TransactedAssetModel,
+    AssetTypeEnum
 } from 'src/models';
 
 import * as CONST from 'src/core/common/constants';

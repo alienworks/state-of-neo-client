@@ -30,7 +30,7 @@ export class NodesCountInfoComponent extends BaseComponent implements OnInit, On
         this.peersHub.registerAdditionalEvent('total-tracked', this.totalPeersTrackedUpdate);
         this.addSubsctiption(
             this.totalPeersTrackedUpdate.subscribe((x: number) => {
-                this.totalPeersTracked = x
+                this.totalPeersTracked = x;
             })
         );
 

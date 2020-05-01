@@ -1,3 +1,11 @@
+export enum UnitOfTime {
+  Second,
+  Hour,
+  Day,
+  Month,
+  None = 99
+}
+
 export class ChartDataItemModel {
     startDate: Date;
     label: string;
@@ -10,12 +18,4 @@ export class ChartFilterModel {
     endDate: Date;
     endPeriod: number;
     unitOfTime = UnitOfTime.Hour;
-}
-
-export enum UnitOfTime {
-    Second,
-    Hour,
-    Day,
-    Month,
-    None = 99
 }

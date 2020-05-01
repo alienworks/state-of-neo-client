@@ -34,6 +34,8 @@ export class MapComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     private initMap(markers) {
+        const map = $(this.mapSelector).vectorMap('get', 'mapObject');
+
         $(this.mapSelector).html('');
         $(this.mapSelector).css('height', '412px');
         $(this.mapSelector).vectorMap({
@@ -74,7 +76,6 @@ export class MapComponent extends BaseComponent implements OnInit, OnDestroy {
             }
         });
 
-        const map = $(this.mapSelector).vectorMap('get', 'mapObject');
         $(this.mapSelector).css('height', '412px');
         $(this.mapSelector).show();
         this.isLoading = false;

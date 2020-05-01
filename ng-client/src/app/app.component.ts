@@ -24,10 +24,10 @@ export class AppComponent implements OnDestroy {
         this.iterations = 0;
       }
 
-      if (this.nodeService.getAllMemPool){
+      if (this.nodeService.getAllMemPool) {
         this.nodeService.updateAllNodesMempool();
       }
-      
+
       // this.nodeService.updateNodesData();
     }, this.intervalSeconds);
   }

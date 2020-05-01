@@ -7,7 +7,7 @@ import { SmartContractListModel } from 'src/models';
 })
 export class SmartContractTableListComponent implements OnInit {
     @Input() model: SmartContractListModel[];
-    @Input() pageSize: number = 32;
+    @Input() pageSize = 32;
 
     filteredModel: SmartContractListModel[];
     input: string;
