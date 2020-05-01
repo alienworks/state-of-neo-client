@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import {PreloadAllModules, RouterModule} from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
@@ -24,7 +24,8 @@ import {
 import {
   MapComponent, MapGraphComponent, NavigationComponent, HeaderStatsComponent,
   FooterStatsComponent, DateBarChartComponent, PieChartComponent,
-  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent, HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent
+  LoaderComponent, FooterStatsBoxComponent, FooterStatsTrComponent, PercentBarComponent,
+  HorizontalBarChartComponent, SearchComponent, NodesCountInfoComponent
 } from '../components/common';
 import { BlockDetailsComponent, BlockListComponent, BlockListTableComponent } from '../components/block';
 import { NodeCardComponent, NodeDetailsComponent, NodeListComponent, ConsensusNodesListComponent } from '../components/nodes';
@@ -116,7 +117,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
       { path: 'contract/:hash', component: SmartContractDetailsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home' }
-    ])
+    ], { preloadingStrategy: PreloadAllModules })
   ],
   providers: [
     // NG

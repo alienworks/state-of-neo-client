@@ -56,7 +56,7 @@ export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
         this.nodeService.stopUpdatingAll();
         this.clearSubscriptions();
     }
-    
+
     filter(): void {
         this.filteredNodes = this.allNodes;
 

@@ -1,4 +1,4 @@
-<div class="no-margin no-padding" *ngIf="unconfirmedTxsFiltered && unconfirmedTxsFiltered.length > 0">
+<div class="no-margin no-padding" *ngIf="unconfirmedTxsFiltered?.length > 0">
     <table class="table table-responsive table-hover">
         <thead>
             <tr>
@@ -28,4 +28,4 @@
     </div>
 </div>
 
-<app-loader *ngIf="!unconfirmedTxsFiltered || unconfirmedTxsFiltered.length < 1"></app-loader>
+<app-loader *ngIf="unconfirmedTxsFiltered?.length < 1"></app-loader>

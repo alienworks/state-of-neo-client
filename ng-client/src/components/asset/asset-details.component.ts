@@ -11,9 +11,9 @@ import { BaseComponent } from '../base/base.component';
     styleUrls: ['./asset-details.component.css']
 })
 export class AssetDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
+    public model: AssetDetailsModel = new AssetDetailsModel();
     isLoading: boolean;
     hash: string;
-    model: AssetDetailsModel = new AssetDetailsModel();
     transactions: PageResultModel<BaseTxModel>;
 
     totalAddressCount: number;

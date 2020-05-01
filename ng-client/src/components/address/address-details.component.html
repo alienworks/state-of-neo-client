@@ -10,7 +10,7 @@
                             <tbody>
                                 <tr *ngFor="let asset of globalBalances">
                                     <td class="col-md-4">
-                                        <a routerLink="/asset/{{asset.assetHash}}"
+                                        <a routerLink="/asset/{{tokenEnums[asset.name]}}"
                                             routerLinkActive="router-link-active">
                                             {{asset.name}}
                                         </a>
@@ -27,7 +27,7 @@
                             <tbody>
                                 <tr *ngFor="let token of tokens">
                                     <td class="col-md-4">
-                                        <a routerLink="/asset/{{token.assetHash}}"
+                                        <a routerLink="/asset/{{tokenEnums[token.name]}}"
                                             routerLinkActive="router-link-active">
                                             {{token.name}}
                                         </a>
