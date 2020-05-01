@@ -400,11 +400,11 @@ export class NodeService {
                     x.connected = null;
                     x.p2pEnabled = false;
                 }
-            });
+            }, console.error);
     }
 
     public getRawMemPool(x: any, overwriteCheck = false) {
-        if (!overwriteCheck) { 
+        if (!overwriteCheck) {
             if (!this.updateAll || !x.available || x.service) return;
         }
 
@@ -413,7 +413,7 @@ export class NodeService {
                 x.lastResponseTime = Date.now();
                 const response = res;
                 x.pendingTransactions = response.result;
-            });
+            }, console.error);
     }
 
     public getWalletState(x: any) {
@@ -424,7 +424,7 @@ export class NodeService {
                 x.isWalletOpen = true;
             }, err => {
                 x.isWalletOpen = false;
-            });
+            }, console.error);
     }
 
     private updateBestBlockCount(x: number) {

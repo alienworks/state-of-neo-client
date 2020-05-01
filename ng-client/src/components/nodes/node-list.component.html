@@ -4,19 +4,19 @@
             <div>
                 <div class="col-md-4">
                     <div>Name/IP</div>
-                    <input [(ngModel)]="nodeNameFilter" 
-                        style="width: 200px !important; display: inline-block" 
-                        placeholder="Filter by name / IP" 
-                        (keyup)="filter()" 
+                    <input [(ngModel)]="nodeNameFilter"
+                        style="width: 200px !important; display: inline-block"
+                        placeholder="Filter by name / IP"
+                        (keyup)="filter()"
                         class="form-control"/>
                 </div>
                 <div class="col-md-4">
                     <div>Location</div>
-                        <ngx-select-dropdown (change)="filter()" 
+                        <ngx-select-dropdown (change)="filter()"
                             (close)="filter()"
-                            [multiple]="true" 
-                            [(ngModel)]="countryFilter" 
-                            [config]="countriesFilterConfig" 
+                            [multiple]="true"
+                            [(ngModel)]="countryFilter"
+                            [config]="countriesFilterConfig"
                             [options]="countries"
                             class="location-filter"
                             style="width: 200px !important; display: inline-block; height: 34px !important">
@@ -56,7 +56,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-grey" 
+                        <tr class="text-grey"
                             *ngFor="let node of filteredNodes | paginate: { itemsPerPage: 64, currentPage: page }">
                             <td>
                                 <a routerLink="/node/{{node.id}}" routerLinkActive="router-link-active">
@@ -92,7 +92,7 @@
                 </table>
             </div>
             <div class="col-md-12 padding-10 text-center">
-                <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                <div class="spinner" [ngClass]="{ 'hidden': !isLoading }"></div>
                 <pagination-controls (pageChange)="page = $event"></pagination-controls>
             </div>
             <app-loader *ngIf="isLoading"></app-loader>

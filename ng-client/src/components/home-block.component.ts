@@ -24,7 +24,7 @@ declare var $;
     ]
 })
 export class HomeBlockComponent extends BaseComponent implements OnInit, OnDestroy {
-    blocks: BlockListModel[];
+    blocks: BlockListModel[] = [];
     headerUpdate = new EventEmitter<HeaderInfoModel>();
 
     private itemClass = 'home-block-container';

@@ -6,15 +6,16 @@ import { AddressDetailsModel, BaseTxModel } from '../../models';
 import { PageResultModel } from '../../models';
 import { TxService } from '../../core/services/data';
 import { BaseComponent } from '../base/base.component';
+import * as constants from "../../core/common/constants";
 
 @Component({
     templateUrl: `./address-details.component.html`
 })
 export class AddressDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
+    public transactions: PageResultModel<BaseTxModel>;
     isLoading: boolean;
     address: string;
     addressDetails: AddressDetailsModel = new AddressDetailsModel();
-    transactions: PageResultModel<BaseTxModel>;
     routeSubscibe: any;
 
     constructor(
@@ -60,6 +61,10 @@ export class AddressDetailsComponent extends BaseComponent implements OnInit, On
         return this.addressDetails.balances == null
             ? []
             : this.addressDetails.balances.filter(x => x.assetType === 'NEP5');
+    }
+
+    get tokenEnums() {
+      return constants.Assets;
     }
 
     getTransactionsPage(page: number): void {

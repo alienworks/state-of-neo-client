@@ -10,8 +10,8 @@ import { CommonStateService } from 'src/core/services';
 export class TxListUnconfirmedComponent extends BaseComponent implements OnInit, OnDestroy {
     isLoading: boolean;
     allNodes: any[];
-    unconfirmedTxs: any = null;
-    unconfirmedTxsFiltered: any = null;
+    unconfirmedTxs = [];
+    unconfirmedTxsFiltered = [];
     latestBlock: number;
     _filterHash: string;
     page = 1;
@@ -22,7 +22,7 @@ export class TxListUnconfirmedComponent extends BaseComponent implements OnInit,
         this.filter();
     }
 
-    @Output() totalNumberUpdate: EventEmitter<number> = new EventEmitter();;
+    @Output() totalNumberUpdate: EventEmitter<number> = new EventEmitter();
 
     constructor(
         private nodeService: NodeService,
@@ -38,8 +38,6 @@ export class TxListUnconfirmedComponent extends BaseComponent implements OnInit,
     }
 
     ngOnInit(): void {
-        this.state.changeRoute("current global mempool");
-
         this.addSubsctiption(
             this.blockService.bestBlockChanged.subscribe(x => {
                 this.latestBlock = x;
@@ -81,7 +79,7 @@ export class TxListUnconfirmedComponent extends BaseComponent implements OnInit,
     }
 
     generateArray(obj: any): Array<any> {
-        return Object.keys(obj).map((key) => { return obj[key] });
+        return Object.keys(obj).map((key) => obj[key]);
     }
 
     filter(): void {
@@ -105,7 +103,7 @@ export class TxListUnconfirmedComponent extends BaseComponent implements OnInit,
     }
 
     topLatency(nodes: any[], maxTopNumber: number = 5): any[] {
-        const result = nodes.sort((n1, n2) => n1.latency - n2.latency).slice(0, maxTopNumber)
+        const result = nodes.sort((n1, n2) => n1.latency - n2.latency).slice(0, maxTopNumber);
         return result;
     }
 }

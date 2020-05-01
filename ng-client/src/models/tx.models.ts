@@ -5,7 +5,7 @@ export class BaseTxModel {
     size: number;
     type: TxTypeEnum;
     timestamp: number;
-    finalizedAt: Date;
+    finalizedAt: Date | string;
 }
 
 export class TxAssetsModel extends BaseTxModel {
@@ -22,6 +22,22 @@ export class TxDetailsModel extends TxAssetsModel {
     version: number;
     blockHash: string;
     blockHeight: number;
+    contractName: string;
+    contractHash: string;
+    witnesses: ITxWitness[];
+    attributes: ITxAttribute[];
+}
+
+export interface ITxWitness {
+  address: string;
+  invocationScriptAsHexString: string;
+  verificationScriptAsHexString: string;
+}
+
+export interface ITxAttribute {
+  usage: number;
+  type: string;
+  dataAsHexString: string;
 }
 
 export class TxUnconfirmedDetailsViewModel {

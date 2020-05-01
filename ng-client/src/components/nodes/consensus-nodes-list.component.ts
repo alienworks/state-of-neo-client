@@ -16,7 +16,6 @@ export class ConsensusNodesListComponent extends BaseComponent implements OnInit
     ngOnInit(): void {
         this._nodeService.getConsensusNodes()
             .subscribe(data => {
-                console.log(data);
                 const nodes = data;
 
                 this.consensusNodes = nodes.filter(x => x.Active);

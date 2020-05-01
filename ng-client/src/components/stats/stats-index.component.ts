@@ -55,7 +55,7 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
     contractsCreatedLastMonth: number;
 
     constructor(
-        private nodeService: NodeService,
+        public nodeService: NodeService,
         private state: CommonStateService,
         private statsSignalR: StatsSignalRService,
         private blocks: BlockService,

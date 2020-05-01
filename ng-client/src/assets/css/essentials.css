@@ -1404,37 +1404,37 @@ blockquote cite {
 /** 10. Background Patterns
 *************************************************** **/
 .pattern1 {
-	background:url('../images/patterns/pattern1.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern1.png') repeat fixed;
 }
 .pattern2 {
-	background:url('../images/patterns/pattern2.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern2.png') repeat fixed;
 }
 .pattern3 {
-	background:url('../images/patterns/pattern3.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern3.png') repeat fixed;
 }
 .pattern4 {
-	background:url('../images/patterns/pattern4.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern4.png') repeat fixed;
 }
 .pattern5 {
-	background:url('../images/patterns/pattern5.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern5.png') repeat fixed;
 }
 .pattern6 {
-	background:url('../images/patterns/pattern6.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern6.png') repeat fixed;
 }
 .pattern7 {
-	background:url('../images/patterns/pattern7.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern7.png') repeat fixed;
 }
 .pattern8 {
-	background:url('../images/patterns/pattern8.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern8.png') repeat fixed;
 }
 .pattern9 {
-	background:url('../images/patterns/pattern9.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern9.png') repeat fixed;
 }
 .pattern10 {
-	background:url('../images/patterns/pattern10.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern10.png') repeat fixed;
 }
 .pattern11 {
-	background:url('../images/patterns/pattern11.png') repeat fixed;
+	background:url('/assets/images/patterns/pattern11.png') repeat fixed;
 }
 
 
@@ -2047,7 +2047,7 @@ img.mfp-img {
 
 /* mouse grab icon */
 .grabbing {
-    cursor:url(../grabbing.png) 8 8, move;
+    cursor:url('/assets/images/grabbing.png') 8 8, move;
 }
 
 /* fix */
@@ -2239,12 +2239,12 @@ img.mfp-img {
 *************************************************** **/
 @font-face{
 	font-family:'FontAwesome';
-	src:url('../fonts/fontawesome-webfont.eot?v=4.4.0');
-	src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'),
-		url('../fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'),
-		url('../fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'),
-		url('../fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'),
-		url('../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+	src:url('/assets/fonts/fontawesome-webfont.eot?v=4.4.0');
+	src:url('/assets/fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'),
+		url('/assets/fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'),
+		url('/assets/fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'),
+		url('/assets/fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'),
+		url('/assets/fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
 	font-weight:normal;
 	font-style:normal;
 }
@@ -2259,11 +2259,11 @@ img.mfp-img {
 /* Et-Line */
 @font-face {
 	font-family: 'et-line';
-	src:url('../fonts/et-line.eot');
-	src:url('../fonts/et-line.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/et-line.woff') format('woff'),
-		url('../fonts/et-line.ttf') format('truetype'),
-		url('../fonts/et-line.svg#et-line') format('svg');
+	src:url('/assets/fonts/et-line.eot');
+	src:url('/assets/fonts/et-line.eot?#iefix') format('embedded-opentype'),
+		url('/assets/fonts/et-line.woff') format('woff'),
+		url('/assets/fonts/et-line.ttf') format('truetype'),
+		url('/assets/fonts/et-line.svg#et-line') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -2276,21 +2276,21 @@ img.mfp-img {
 @font-face {
   font-family: 'Open Sans';
   src:local('Open Sans'),
-      url('../fonts/OpenSans-Regular.ttf') format('truetype');
+      url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
-  src: url('../fonts/OpenSans-Light.ttf') format('truetype');
+  src: url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: 300;
 }
 @font-face {
   font-family: 'Open Sans';
-  src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
+  src: url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 @font-face {
   font-family: 'Open Sans';
-  src: url('../fonts/OpenSans-ExtraBold.ttf') format('truetype');
+  src: url('/assets/fonts/OpenSans-ExtraBold.ttf') format('truetype');
   font-weight: 800;
 }
 
@@ -7670,10 +7670,10 @@ div.tabs div.tab-content.transparent {
 	background: #f9fafc;
 	background-size: 100%;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9fafc), color-stop(100%, #f7f7f7));
-	background-image: -webkit-linear-gradient(top, #f9fafc, #f7f7f7);
-	background-image: -moz-linear-gradient(top, #f9fafc, #f7f7f7);
-	background-image: -o-linear-gradient(top, #f9fafc, #f7f7f7);
-	background-image: linear-gradient(top, #f9fafc, #f7f7f7);
+	background-image: -webkit-linear-gradient(to bottom, #f9fafc, #f7f7f7);
+	background-image: -moz-linear-gradient(to bottom, #f9fafc, #f7f7f7);
+	background-image: -o-linear-gradient(to bottom, #f9fafc, #f7f7f7);
+	background-image: linear-gradient(to bottom, #f9fafc, #f7f7f7);
 
 	border-bottom:#eee 1px solid;
 
@@ -8381,7 +8381,7 @@ img.mfp-img {
 
 /* mouse grab icon */
 .grabbing {
-    cursor:url(../images/grabbing.png) 8 8, move;
+    cursor:url('/assets/images/grabbing.png') 8 8, move;
 }
 
 /* fix */
