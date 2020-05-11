@@ -50,8 +50,7 @@ import {
   StatsSignalRService, NotificationsSignalRService, TransactionSignalRService, PeersSignalRService
 } from '../core/services/signal-r';
 
-import { TimeAgoPipe } from 'time-ago-pipe';
-import { TimestampFormatPipe } from '../core/pipes';
+import { TimeAgoExtPipe, TimestampFormatPipe } from '../core/pipes';
 import { NotificationsIndexComponent, NotificationsListComponent } from 'src/components/notification';
 import { BlockIndexComponent } from '../components/block/block-index.component';
 
@@ -83,7 +82,7 @@ import { BlockIndexComponent } from '../components/block/block-index.component';
     // Notifications
     NotificationsIndexComponent, NotificationsListComponent,
     // Libs
-    TimeAgoPipe,
+    TimeAgoExtPipe,
     // Custom pipes
     TimestampFormatPipe
   ],
