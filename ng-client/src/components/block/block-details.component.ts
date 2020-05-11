@@ -30,7 +30,7 @@ export class BlockDetailsComponent extends BaseComponent implements OnInit, OnDe
         this.state.changeRoute('block');
 
         this.isLoading = true;
-        this.addSubsctiption(this.route.params.subscribe(params => {
+        this.addSubscription(this.route.params.subscribe(params => {
             this.index = +params['index'];
 
             if (params['index'].startsWith('0x')) {

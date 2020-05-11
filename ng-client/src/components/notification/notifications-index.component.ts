@@ -26,19 +26,19 @@ export class NotificationsIndexComponent extends BaseComponent implements OnInit
     ngOnInit(): void {
         this.state.changeRoute('notifications');
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.notificationsSignalR.allNotificationsReceive.subscribe((x: NotificationModel[]) => {
                 if (!this.contractFilter) this.notifications = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
                 if (this.contractFilter) this.notifications = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.notificationsSignalR.connectionEstablished.subscribe((x: boolean) => {
                 if (x) {
                     this.notificationsSignalR.invokeOnServerEvent('InitInfo', 'all');

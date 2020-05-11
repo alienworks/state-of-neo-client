@@ -71,17 +71,17 @@ export class FooterStatsComponent extends BaseComponent implements OnInit, OnDes
         this.statsSrService.registerAdditionalEvent('total-block-time', this.blocksTotalTimeCountUpdate);
         this.statsSrService.registerAdditionalEvent('total-block-size', this.blocksTotalSizeCountUpdate);
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.blocksCountUpdate.subscribe((x: number) => {
                 this.serverBlockCount = x;
                 if (!this.latestBlock) this.latestBlock = this.serverBlockCount;
                 this.avgTxCount = this.totalTx / this.serverBlockCount;
             })
         );
-        this.addSubsctiption(
+        this.addSubscription(
             this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.avgTime = x / this.serverBlockCount)
         );
-        this.addSubsctiption(
+        this.addSubscription(
             this.blocksTotalSizeCountUpdate.subscribe((x: number) => {
                 this.avgSize = x / this.serverBlockCount;
             })
@@ -89,12 +89,12 @@ export class FooterStatsComponent extends BaseComponent implements OnInit, OnDes
 
         // Txs
         this.statsSrService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalClaimedUpdate.subscribe(x => this.claimedGas = x)
         );
 
         this.statsSrService.registerAdditionalEvent('tx-count', this.txCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.txCountUpdate.subscribe(x => {
                 this.totalTx = x;
                 this.avgTxCount = this.totalTx / this.serverBlockCount;
@@ -105,7 +105,7 @@ export class FooterStatsComponent extends BaseComponent implements OnInit, OnDes
 
         // Addresses
         this.statsSrService.registerAdditionalEvent('address-count', this.addressCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.addressCountUpdate.subscribe((x: number) => this.totalAddressCount = x)
         );
 
@@ -121,15 +121,15 @@ export class FooterStatsComponent extends BaseComponent implements OnInit, OnDes
             .subscribe(x => this.nep5Assets = x);
 
         this.statsSrService.registerAdditionalEvent('assets-count', this.assetsCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.assetsCountUpdate.subscribe((x: number) => this.totalAssetCount = x)
         );
         this.statsSrService.registerAdditionalEvent('gas-neo-tx-count', this.neoGasTxCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.neoGasTxCountUpdate.subscribe((x: number) => this.neoAndGasTxCount = x)
         );
         this.statsSrService.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x)
         );
 
@@ -141,7 +141,7 @@ export class FooterStatsComponent extends BaseComponent implements OnInit, OnDes
     }
 
     private subscribeToEvents() {
-        this.addSubsctiption(
+        this.addSubscription(
             this.blockService.bestBlockChanged.subscribe((x: number) => {
                 this.latestBlock = x;
             })

@@ -26,7 +26,7 @@ export class MapComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     private subscribeToEvents() {
-        this.addSubsctiption(
+        this.addSubscription(
             this._nodeService.updateMarkers.subscribe((markers: any[]) => {
                 this.initMap(markers);
             })

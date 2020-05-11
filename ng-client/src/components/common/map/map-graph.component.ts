@@ -63,16 +63,16 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
         this.peersSignalRService.registerAdditionalEvent('list', this.peersListInited);
         this.peersSignalRService.registerAdditionalEvent('new', this.newPeerFound);
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.peersListInited.subscribe(x => {
                 this.peers = x;
                 this.checkStatus.emit();
             })
         );
 
-        this.addSubsctiption(this.newPeerFound.subscribe(x => this.peers.push(x)));
+        this.addSubscription(this.newPeerFound.subscribe(x => this.peers.push(x)));
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.peersSignalRService.connectionEstablished.subscribe(x => {
                 if (x) {
                     this.peersSignalRService.invokeOnServerEvent('InitInfo', 'caller');
@@ -104,14 +104,14 @@ export class MapGraphComponent extends BaseComponent implements OnInit, AfterVie
 
         $('title:contains("Chart created using amCharts library")').parent().hide();
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.nodeService.updateNodes.subscribe(x => {
                 this.allNodes = x;
                 this.checkStatus.emit();
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.checkStatus.subscribe(x => {
                 const connections = this.allNodes.map(z => z.connectedPeers).filter(z => z !== undefined);
                 if (this.peers.length > 0 && this.allNodes.length > 0 && connections.length > 0) {

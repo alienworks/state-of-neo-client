@@ -44,13 +44,13 @@ export class TxIndexComponent extends BaseComponent implements OnInit, OnDestroy
         this.getPage(this.page);
 
         this.statsSrService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalClaimedUpdate.subscribe((x: number) => {
                 return this.claimedGas = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.statsSrService.connectionEstablished.subscribe((x: boolean) => {
                 if (x) {
                     this.statsSrService.invokeOnServerEvent(`InitInfo`, 'caller');
@@ -63,7 +63,7 @@ export class TxIndexComponent extends BaseComponent implements OnInit, OnDestroy
         }
 
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
-        this.addSubsctiption(
+        this.addSubscription(
             this.newTransactionsEvent.subscribe((x: BaseTxModel[]) => {
                 if (x.length < this.pageSize) {
                     for (const iterator of x) {
@@ -78,7 +78,7 @@ export class TxIndexComponent extends BaseComponent implements OnInit, OnDestroy
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
                 if (x) {
                     this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');

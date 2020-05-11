@@ -1,8 +1,7 @@
 
 import { throwError as observableThrowError, Observable, BehaviorSubject } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Response, RequestOptions, Headers } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { RpcService } from './node-rpc.service';
 
@@ -109,8 +108,10 @@ export class NodeService {
     }
 
     protected getJsonHeaders(): any {
-        const headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-        return { headers: headers };
+        return { headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }) };
     }
 
     public getConsensusNodes(): Observable<any> {

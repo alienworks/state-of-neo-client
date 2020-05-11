@@ -65,7 +65,7 @@ export class NodeListComponent extends BaseComponent implements OnInit, OnDestro
 
         this.nodes = this.nodeService.getNodes();
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.nodeService.updateNodes.subscribe((x: any[]) => {
                 this.nodes = x;
                 this.filter();
@@ -74,7 +74,7 @@ export class NodeListComponent extends BaseComponent implements OnInit, OnDestro
         );
 
         this.bestBlock = this.blockService.bestBlock;
-        this.addSubsctiption(
+        this.addSubscription(
             this.blockService.bestBlockChanged.subscribe((block: number) => this.bestBlock = block)
         );
 

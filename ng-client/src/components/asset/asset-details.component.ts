@@ -31,7 +31,7 @@ export class AssetDetailsComponent extends BaseComponent implements OnInit, OnDe
     ngOnInit(): void {
         this.state.changeRoute('asset');
 
-        this.addSubsctiption(this.route.params.subscribe(params => {
+        this.addSubscription(this.route.params.subscribe(params => {
             this.hash = params['hash'];
 
             this.getTransactionsPage(1);

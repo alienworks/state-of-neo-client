@@ -81,7 +81,7 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "dev": {
+            "fast": {
               "outputPath": "dist/dev",
               "sourceMap": true
             }
@@ -95,6 +95,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-client:build:production"
+            },
+            "fast": {
+              "browserTarget": "ng-client:build:fast"
             }
           }
         },

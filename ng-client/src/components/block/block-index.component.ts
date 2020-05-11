@@ -29,7 +29,7 @@ export class BlockIndexComponent extends BaseComponent implements OnInit, OnDest
         this.getPage(this.page);
 
         this.stats.registerAdditionalEvent('header', this.headerUpdate);
-        this.addSubsctiption(this.headerUpdate.subscribe((x: HeaderInfoModel) => {
+        this.addSubscription(this.headerUpdate.subscribe((x: HeaderInfoModel) => {
             if (this.blocks.items.findIndex(b => b.height === x.height) === -1) {
                 const newBlock = new BlockListModel();
                 newBlock.hash = x.hash;

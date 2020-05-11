@@ -38,7 +38,7 @@ export class AddressIndexComponent extends BaseComponent implements OnInit, OnDe
 
     private subscribeToEvents(): void {
         this.statsService.registerAdditionalEvent('address-count', this.totalCountUpdate);
-        this.addSubsctiption(this.totalCountUpdate.subscribe((x: number) => this.totalCount = x));
+        this.addSubscription(this.totalCountUpdate.subscribe((x: number) => this.totalCount = x));
 
         this.statsService.invokeOnServerEvent(`InitInfo`, 'caller');
     }

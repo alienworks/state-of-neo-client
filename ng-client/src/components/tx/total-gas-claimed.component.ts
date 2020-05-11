@@ -23,7 +23,7 @@ export class TotalGasClaimedComponent extends BaseComponent implements OnInit, O
             }, err => console.log(err));
 
         this.statsRsService.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.addSubsctiption(this.totalClaimedUpdate.subscribe(x => this.total = x));
+        this.addSubscription(this.totalClaimedUpdate.subscribe(x => this.total = x));
 
     }
 

@@ -75,7 +75,7 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
         this.statsSignalR.registerAdditionalEvent('total-block-size', this.blocksTotalSizeCountUpdate);
         this.statsSignalR.registerAdditionalEvent('header', this.headerUpdate);
 
-        this.addSubsctiption(this.headerUpdate.subscribe((x: HeaderInfoModel) => this.serverBlockCount = x.height));
+        this.addSubscription(this.headerUpdate.subscribe((x: HeaderInfoModel) => this.serverBlockCount = x.height));
 
         // this.blocksCountUpdate.subscribe((x: number) => {
         //     this.serverBlockCount = x;
@@ -87,17 +87,17 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
         //     this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
         // });
 
-        this.addSubsctiption(this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.averageBlockTime = x / this.serverBlockCount));
-        this.addSubsctiption(this.blocksTotalSizeCountUpdate.subscribe((x: number) => this.averageBlockSize = x / this.serverBlockCount));
+        this.addSubscription(this.blocksTotalTimeCountUpdate.subscribe((x: number) => this.averageBlockTime = x / this.serverBlockCount));
+        this.addSubscription(this.blocksTotalSizeCountUpdate.subscribe((x: number) => this.averageBlockSize = x / this.serverBlockCount));
 
         // Txs
         this.statsSignalR.registerAdditionalEvent('total-claimed', this.totalClaimedUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalClaimedUpdate.subscribe(x => this.claimedGas = x)
         );
 
         this.statsSignalR.registerAdditionalEvent('tx-count', this.txCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.txCountUpdate.subscribe(x => {
                 this.totalTransactions = x;
                 this.averageTransactionsPerBlock = this.totalTransactions / this.serverBlockCount;
@@ -108,7 +108,7 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
 
         // Addresses
         this.statsSignalR.registerAdditionalEvent('address-count', this.addressCountUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.addressCountUpdate.subscribe((x: number) => this.totalAddresses = x)
         );
 
@@ -126,7 +126,7 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
         this.statsSignalR.registerAdditionalEvent('nep-5-tx-count', this.nep5TxCountUpdate);
         this.nep5TxCountUpdate.subscribe((x: number) => this.nep5AssetTxCount = x);
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.statsSignalR.connectionEstablished.subscribe((x: boolean) => {
                 if (x) {
                     this.statsSignalR.invokeOnServerEvent(`InitInfo`, 'arg');
@@ -144,12 +144,12 @@ export class StatsIndexComponent extends BaseComponent implements OnInit, OnDest
     }
 
     private subscribeToEvents() {
-        this.addSubsctiption(this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x));
-        this.addSubsctiption(this.nodeService.getConsensusNodes().subscribe((x: Array<any>) =>
+        this.addSubscription(this.blocks.bestBlockChanged.subscribe((x: number) => this.latestBlock = x));
+        this.addSubscription(this.nodeService.getConsensusNodes().subscribe((x: Array<any>) =>
           this.consensusNodes = x.filter((y: any) => y.Active).length)
         );
-        this.addSubsctiption(this.contractsService.getCreatedTotal().subscribe(x => this.contractsCreatedTotal = x));
-        this.addSubsctiption(this.contractsService.getCreatedLastMonth().subscribe(x => this.contractsCreatedLastMonth = x));
+        this.addSubscription(this.contractsService.getCreatedTotal().subscribe(x => this.contractsCreatedTotal = x));
+        this.addSubscription(this.contractsService.getCreatedLastMonth().subscribe(x => this.contractsCreatedLastMonth = x));
     }
 
     private daysSinceFirstBlock(): number {
