@@ -38,13 +38,13 @@ export class TxListUnconfirmedComponent extends BaseComponent implements OnInit,
     }
 
     ngOnInit(): void {
-        this.addSubsctiption(
+        this.addSubscription(
             this.blockService.bestBlockChanged.subscribe(x => {
                 this.latestBlock = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.nodeService.updateNodesMempool.subscribe(x => {
                 // Add new txs and remove confirmed ones
                 // Think of the best approach

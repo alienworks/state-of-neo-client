@@ -41,7 +41,7 @@ export class NodeDetailsComponent extends BaseComponent implements OnInit, OnDes
         this.state.changeRoute('node');
         this.nodeService.startUpdatingAll();
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.blockService.bestBlockChanged.subscribe((x: number) => {
                 this.bestBlock = x;
             })
@@ -52,7 +52,7 @@ export class NodeDetailsComponent extends BaseComponent implements OnInit, OnDes
             this.drawGraph();
         }, 5000);
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.route.params.subscribe(x => {
                 this.id = x['id'];
                 this.node = null;

@@ -21,20 +21,20 @@ export class NodesCountInfoComponent extends BaseComponent implements OnInit, On
 
     ngOnInit(): void {
         this.peersHub.registerAdditionalEvent('total-found', this.totalPeersFoundUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalPeersFoundUpdate.subscribe((x: number) => {
                 this.totalPeersFound = x;
             })
         );
 
         this.peersHub.registerAdditionalEvent('total-tracked', this.totalPeersTrackedUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalPeersTrackedUpdate.subscribe((x: number) => {
                 this.totalPeersTracked = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.peersHub.connectionEstablished.subscribe(x => {
                 if (x) {
                     this.peersHub.invokeOnServerEvent('InitInfo', 'caller');

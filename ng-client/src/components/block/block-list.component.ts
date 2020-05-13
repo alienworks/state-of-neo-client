@@ -35,7 +35,7 @@ export class BlockListComponent extends BaseComponent implements OnInit, OnDestr
         this.getPage(1);
 
         this.statsSrService.registerAdditionalEvent('header', this.headerUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.headerUpdate.subscribe((x: HeaderInfoModel) => {
                 if (this.pageResults.items.findIndex(b => b.height === x.height) === -1) {
                     const newBlock = new BlockListModel();

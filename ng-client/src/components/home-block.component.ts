@@ -37,7 +37,7 @@ export class HomeBlockComponent extends BaseComponent implements OnInit, OnDestr
                 this.blocks = x.items;
 
                 this.stats.registerAdditionalEvent('header', this.headerUpdate);
-                this.addSubsctiption(
+                this.addSubscription(
                     this.headerUpdate.subscribe((header: HeaderInfoModel) => {
                         if (this.blocks.findIndex(b => b.height === header.height) === -1) {
                             const newBlock = new BlockListModel();

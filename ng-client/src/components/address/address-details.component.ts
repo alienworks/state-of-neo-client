@@ -29,7 +29,7 @@ export class AddressDetailsComponent extends BaseComponent implements OnInit, On
     ngOnInit(): void {
         this.state.changeRoute('address');
 
-        this.addSubsctiption(this.route.params.subscribe(params => {
+        this.addSubscription(this.route.params.subscribe(params => {
             this.address = params['address'];
 
             this.getTransactionsPage(1);

@@ -8,7 +8,7 @@ export class BaseComponent {
         }
     }
 
-    addSubsctiption(any) {
+    addSubscription(any) {
         this.subscriptions.push(any);
     }
 }

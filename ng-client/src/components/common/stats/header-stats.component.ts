@@ -40,7 +40,7 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
     ngOnInit(): void {
         this.subscribeToEvents();
 
-        this.addSubsctiption(
+        this.addSubscription(
             setInterval(() => {
                 if (this.headerInfo != null) {
                     if (this.headerInfo.createdOn != null) {
@@ -58,7 +58,7 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
 
     private subscribeToEvents(): void {
         this.statsSrService.registerAdditionalEvent('header', this.headerUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.headerUpdate.subscribe((x: HeaderInfoModel) => {
                 this.headerInfo = x;
                 this.updateBestBlock();
@@ -66,13 +66,13 @@ export class HeaderStatsComponent extends BaseComponent implements OnDestroy, On
         );
 
         this.peersHub.registerAdditionalEvent('total-tracked', this.totalPeersTrackedUpdate);
-        this.addSubsctiption(
+        this.addSubscription(
             this.totalPeersTrackedUpdate.subscribe((x: number) => {
                 this.totalPeersTracked = x;
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.peersHub.connectionEstablished.subscribe(x => {
                 if (x) {
                     this.peersHub.invokeOnServerEvent('InitInfo', 'caller');

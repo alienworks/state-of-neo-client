@@ -35,7 +35,7 @@ export class HomeComponent extends BaseComponent implements OnInit, OnDestroy {
         this.nodeService.startUpdatingAll();
 
         this.allNodes = this.nodeService.getNodes();
-        this.addSubsctiption(
+        this.addSubscription(
             this.nodeService.updateNodes.subscribe((x: any[]) => {
                 this.allNodes = x;
                 this.filter();

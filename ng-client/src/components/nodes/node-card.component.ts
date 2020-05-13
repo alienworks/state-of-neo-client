@@ -21,7 +21,7 @@ export class NodeCardComponent extends BaseComponent implements OnInit, OnDestro
     }
 
     ngOnInit(): void {
-        this.addSubsctiption(
+        this.addSubscription(
             this.blockService.bestBlockChanged.subscribe((block: number) => {
                 this.latestBlock = block;
             })

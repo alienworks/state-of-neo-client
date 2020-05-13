@@ -1,7 +1,7 @@
 #app-loader {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 32px/2);
+  left: calc(50% - 178px/2);
   margin-top: -50px;
   margin-left: -16px;
   text-align: center

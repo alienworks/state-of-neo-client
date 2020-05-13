@@ -32,7 +32,7 @@ export class SmartContractDetailsComponent extends BaseComponent implements OnIn
 
         this.isLoading = true;
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.route.params.subscribe(params => {
                 this.hash = params['hash'];
 
@@ -48,7 +48,7 @@ export class SmartContractDetailsComponent extends BaseComponent implements OnIn
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.notificationsSignalR.contractNotificationUpdate.subscribe((x: NotificationModel[]) => {
                 this.allNotifications = x;
 
@@ -58,7 +58,7 @@ export class SmartContractDetailsComponent extends BaseComponent implements OnIn
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.notificationsSignalR.connectionEstablished.subscribe((x: Boolean) => {
                 if (x) {
                     this.notificationsSignalR.invokeOnServerEvent('TrackContract', this.hash);

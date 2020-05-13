@@ -28,12 +28,12 @@ export class HomeTxComponent extends BaseComponent implements OnInit, OnDestroy 
 
     ngOnInit(): void {
         this.txSignalRService.registerAdditionalEvent('list', this.initialTransactionsEvent);
-        this.addSubsctiption(
+        this.addSubscription(
             this.initialTransactionsEvent.subscribe((x: TxAssetsModel[]) => this.transactions = x)
         );
 
         this.txSignalRService.registerAdditionalEvent('new', this.newTransactionsEvent);
-        this.addSubsctiption(
+        this.addSubscription(
             this.newTransactionsEvent.subscribe((x: TxAssetsModel[]) => {
                 if (x.length < 30) {
                     for (const iterator of x) {
@@ -49,7 +49,7 @@ export class HomeTxComponent extends BaseComponent implements OnInit, OnDestroy 
             })
         );
 
-        this.addSubsctiption(
+        this.addSubscription(
             this.txSignalRService.connectionEstablished.subscribe((x: boolean) => {
                 if (x) {
                     this.txSignalRService.invokeOnServerEvent('InitInfo', 'caller');
