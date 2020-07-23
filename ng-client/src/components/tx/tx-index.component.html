@@ -2,13 +2,19 @@
   <div class="col-md-8 col-sm-6 col-xs-12">
     <div class="panel-body">
       <div>
-        <div
-          class="pull-left"
-          style="width: 9rem; margin-top: 1rem; margin-bottom: 1rem;"
-        >
-          <div>Type</div>
-          <mat-form-field>
-            <mat-select [(ngModel)]="type" style="z-index: 1000;">
+        <div class="pull-left clearfix">
+          <div
+            class="pull-left"
+            style="height: 47px; line-height: 47px; margin-right: 1.5rem;"
+          >
+            Type:
+          </div>
+          <mat-form-field class="pull-left">
+            <mat-select
+              [(ngModel)]="type"
+              style="z-index: 1000;"
+              (selectionChange)="getPage(pageEvent)"
+            >
               <mat-option *ngFor="let t of txTypes" [value]="t.value">
                 {{ t.label }}
               </mat-option>

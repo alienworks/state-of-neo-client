@@ -209,7 +209,9 @@ select {
 .navbar {
   z-index: 10 !important;
 }
-
+.neo-row:hover {
+  background-color: #eee;
+}
 @-webkit-keyframes pulse {
   0% {
     opacity: 1;
