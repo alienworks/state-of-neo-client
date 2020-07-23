@@ -1,231 +1,264 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .padding-2 {
-    padding: 2px !important;
+  padding: 2px !important;
 }
 
 .padding-5 {
-    padding: 5px !important;
+  padding: 5px !important;
 }
 
 .padding-10 {
-    padding: 10px !important;
+  padding: 10px !important;
 }
 
 .margin-2 {
-    margin: 2px;
+  margin: 2px;
 }
 
 .margin-5 {
-    margin: 5px;
+  margin: 5px;
 }
 
 .margin-10 {
-    margin: 10px;
+  margin: 10px;
 }
 
 .margin-bot-10 {
-    margin: 0 0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 .no-padding {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .no-margin {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 .border-box {
-    border: 1px solid #B1B1B1 !important;
+  border: 1px solid #b1b1b1 !important;
 }
 
 .border-box-shadow {
-    border: 1px solid #EFEFEF !important;
-    box-shadow: 3px 3px 5px #B1B1B1;
-    height: 100%;
+  border: 1px solid #efefef !important;
+  box-shadow: 3px 3px 5px #b1b1b1;
+  height: 100%;
 }
 
-.node-card {    
-    border: 1px solid #CCC;
+.node-card {
+  border: 1px solid #ccc;
 }
 
 .node-card:hover {
-    box-shadow: 3px 3px 5px #B1B1B1;
+  box-shadow: 3px 3px 5px #b1b1b1;
 }
 
 .box-shadowed {
-    box-shadow: 3px 3px 5px #B1B1B1;
+  box-shadow: 3px 3px 5px #b1b1b1;
 }
 
 .custom-vcenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .row.match-my-cols {
-    overflow: hidden; 
+  overflow: hidden;
 }
 
-.row.match-my-cols [class*="col-"]{
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
-} 
+.row.match-my-cols [class*="col-"] {
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
 
 .word-wraped {
-    word-wrap: break-word;
-    word-break: break-all;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .stat {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .info-signiture {
-    font-style: italic;
-    font-size: 0.5em;
-    padding-right: 10px;
+  font-style: italic;
+  font-size: 0.5em;
+  padding-right: 10px;
 }
 
 .warm-cyan {
-    color: #079098;
+  color: #079098;
 }
 
 .text-grey {
-    color: #676a6c !important;
+  color: #676a6c !important;
 }
 
 .ngx-pagination .current {
-    background: #337ab7 !important;
+  background: #337ab7 !important;
 }
 
-li.active a h3, li.active a h4 {
-    color: #337ab7 !important;
+li.active a h3,
+li.active a h4 {
+  color: #337ab7 !important;
 }
 
 .label {
-    padding-top: 0.1em !important;
+  padding-top: 0.1em !important;
 }
 
 body {
-    padding-top: 50px;
+  padding-top: 50px;
 }
 
 .text-warm {
-    color: #079098;
+  color: #079098;
 }
 
 @media only screen and (max-width: 1265px) {
-    body {
-        padding-top: 100px !important;
-    }
+  body {
+    padding-top: 100px !important;
+  }
 }
 
 .fas {
-    display: inline-block;
-    font: normal normal normal 14px/1;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font: normal normal normal 14px/1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 i.fas {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 
 .box .box-title i.fas {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 70px;
-    color: rgba(0,0,0,0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 70px;
+  color: rgba(0, 0, 0, 0.1);
 }
 
 .box {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .box .box-title {
-    padding-bottom: 10px !important;
-    padding-top: 0 !important;
+  padding-bottom: 10px !important;
+  padding-top: 0 !important;
 }
 
 .section-title {
-    padding-left: 15px !important; 
-    margin-bottom: 10px !important;
-    margin-top: 0 !important;
+  padding-left: 15px !important;
+  margin-bottom: 10px !important;
+  margin-top: 0 !important;
 }
 
 #aside {
-    top: 0;
+  top: 0;
 }
 
 .ngx-pagination {
-    padding-left: 0 !important;
+  padding-left: 0 !important;
 }
 
-select, input {
-    height: 34px !important;
+select,
+input {
+  height: 34px !important;
 }
 
 select {
-    padding: 5px !important;
+  padding: 5px !important;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
-  
+
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+  background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+  background: #555;
 }
 
 .table.no-top-border-first-row tbody tr:first-child td {
-    border-top: 0 !important;
+  border-top: 0 !important;
 }
 
 .fa-pulse {
-	display: inline-block;
-	-moz-animation: pulse 3s infinite linear;
-	-o-animation: pulse 3s infinite linear;
-	-webkit-animation: pulse 3s infinite linear;
-	animation: pulse 3s infinite linear;
+  display: inline-block;
+  -moz-animation: pulse 3s infinite linear;
+  -o-animation: pulse 3s infinite linear;
+  -webkit-animation: pulse 3s infinite linear;
+  animation: pulse 3s infinite linear;
 }
 
 @-webkit-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @-moz-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @-o-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @-ms-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

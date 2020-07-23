@@ -42,7 +42,9 @@
               "src/assets/plugins/vis/vis.min.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/assets"]
+              "includePaths": [
+                "src/assets"
+              ]
             }
           },
           "configurations": {
@@ -167,5 +169,8 @@
       }
     }
   },
-  "defaultProject": "ng-client"
+  "defaultProject": "ng-client",
+  "cli": {
+    "analytics": "ffc356ae-b531-4e5e-a069-d231466f33d6"
+  }
 }
